@@ -3,6 +3,10 @@ import SwiftUI
 struct ResultsView: View {
     @Environment(AppState.self) private var appState
 
+    private var result: MorningResult {
+        MorningData.result(from: appState.answers)
+    }
+
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -14,7 +18,7 @@ struct ResultsView: View {
                     Text("Your mode today")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.5))
-                    Text("Focus Mode")
+                    Text(result.mode)
                         .font(.system(size: 36, weight: .bold))
                         .foregroundStyle(.white)
                 }
@@ -23,7 +27,7 @@ struct ResultsView: View {
                     Text("Do this now")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.5))
-                    Text("Pick your one most important task before opening any app.")
+                    Text(result.suggestion)
                         .font(.body)
                         .foregroundStyle(.white)
                 }
@@ -32,7 +36,7 @@ struct ResultsView: View {
                     Text("Watch out for")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.5))
-                    Text("Don't waste this window — avoid meetings or social media for the first hour.")
+                    Text(result.warning)
                         .font(.body)
                         .foregroundStyle(.white)
                 }

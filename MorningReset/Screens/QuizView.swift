@@ -28,6 +28,7 @@ struct QuizView: View {
                         Button {
                             guard selected == nil else { return }
                             selected = option
+                            appState.recordAnswer(option)
                             appState.resetInactivityTimer()
                             advance()
                         } label: {

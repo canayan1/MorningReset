@@ -11,12 +11,18 @@ enum Screen {
 @Observable
 final class AppState {
     var screen: Screen = .alarm
+    var answers: [String] = []
 
     private var inactivityTimer: Timer?
 
     func startFlow() {
+        answers = []
         screen = .quiz
         resetInactivityTimer()
+    }
+
+    func recordAnswer(_ answer: String) {
+        answers.append(answer)
     }
 
     func showResults() {
