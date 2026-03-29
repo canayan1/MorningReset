@@ -63,7 +63,7 @@ Xcode auto-generates files you don't need. Delete both:
    - **"Add to targets: MorningReset"** → **checked**
 6. Click **Add**
 
-You should now see 7 Swift files in the sidebar.
+You should now see 8 Swift files in the sidebar.
 
 ---
 
