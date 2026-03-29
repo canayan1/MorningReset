@@ -1,0 +1,644 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F3CDF1632F79C565005E6880 /* MorningResetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF1572F79C565005E6880 /* MorningResetApp.swift */; };
+		F3CDF1642F79C565005E6880 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF15E2F79C565005E6880 /* QuizView.swift */; };
+		F3CDF1652F79C565005E6880 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF1612F79C565005E6880 /* AppState.swift */; };
+		F3CDF1662F79C565005E6880 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF1582F79C565005E6880 /* RootView.swift */; };
+		F3CDF1672F79C565005E6880 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF15F2F79C565005E6880 /* ResultsView.swift */; };
+		F3CDF1682F79C565005E6880 /* MorningData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF15A2F79C565005E6880 /* MorningData.swift */; };
+		F3CDF1692F79C565005E6880 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF15C2F79C565005E6880 /* ActionView.swift */; };
+		F3CDF16A2F79C565005E6880 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CDF15D2F79C565005E6880 /* AlarmView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F3CDF13B2F79C31C005E6880 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3CDF1252F79C31A005E6880 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CDF12C2F79C31A005E6880;
+			remoteInfo = MorningReset;
+		};
+		F3CDF1452F79C31C005E6880 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3CDF1252F79C31A005E6880 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CDF12C2F79C31A005E6880;
+			remoteInfo = MorningReset;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F3CDF12D2F79C31A005E6880 /* MorningReset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningReset.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3CDF13A2F79C31C005E6880 /* MorningResetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MorningResetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3CDF1442F79C31C005E6880 /* MorningResetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MorningResetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3CDF1572F79C565005E6880 /* MorningResetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningResetApp.swift; sourceTree = "<group>"; };
+		F3CDF1582F79C565005E6880 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F3CDF15A2F79C565005E6880 /* MorningData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningData.swift; sourceTree = "<group>"; };
+		F3CDF15C2F79C565005E6880 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		F3CDF15D2F79C565005E6880 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
+		F3CDF15E2F79C565005E6880 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		F3CDF15F2F79C565005E6880 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		F3CDF1612F79C565005E6880 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F3CDF12F2F79C31A005E6880 /* MorningReset */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MorningReset;
+			sourceTree = "<group>";
+		};
+		F3CDF13D2F79C31C005E6880 /* MorningResetTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MorningResetTests;
+			sourceTree = "<group>";
+		};
+		F3CDF1472F79C31C005E6880 /* MorningResetUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MorningResetUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F3CDF12A2F79C31A005E6880 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1372F79C31C005E6880 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1412F79C31C005E6880 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F3CDF1242F79C31A005E6880 = {
+			isa = PBXGroup;
+			children = (
+				F3CDF1592F79C565005E6880 /* App */,
+				F3CDF15B2F79C565005E6880 /* Data */,
+				F3CDF1602F79C565005E6880 /* Screens */,
+				F3CDF1622F79C565005E6880 /* State */,
+				F3CDF12F2F79C31A005E6880 /* MorningReset */,
+				F3CDF13D2F79C31C005E6880 /* MorningResetTests */,
+				F3CDF1472F79C31C005E6880 /* MorningResetUITests */,
+				F3CDF12E2F79C31A005E6880 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F3CDF12E2F79C31A005E6880 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F3CDF12D2F79C31A005E6880 /* MorningReset.app */,
+				F3CDF13A2F79C31C005E6880 /* MorningResetTests.xctest */,
+				F3CDF1442F79C31C005E6880 /* MorningResetUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F3CDF1592F79C565005E6880 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F3CDF1572F79C565005E6880 /* MorningResetApp.swift */,
+				F3CDF1582F79C565005E6880 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F3CDF15B2F79C565005E6880 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F3CDF15A2F79C565005E6880 /* MorningData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F3CDF1602F79C565005E6880 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				F3CDF15C2F79C565005E6880 /* ActionView.swift */,
+				F3CDF15D2F79C565005E6880 /* AlarmView.swift */,
+				F3CDF15E2F79C565005E6880 /* QuizView.swift */,
+				F3CDF15F2F79C565005E6880 /* ResultsView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		F3CDF1622F79C565005E6880 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				F3CDF1612F79C565005E6880 /* AppState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F3CDF12C2F79C31A005E6880 /* MorningReset */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3CDF14E2F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningReset" */;
+			buildPhases = (
+				F3CDF1292F79C31A005E6880 /* Sources */,
+				F3CDF12A2F79C31A005E6880 /* Frameworks */,
+				F3CDF12B2F79C31A005E6880 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F3CDF12F2F79C31A005E6880 /* MorningReset */,
+			);
+			name = MorningReset;
+			packageProductDependencies = (
+			);
+			productName = MorningReset;
+			productReference = F3CDF12D2F79C31A005E6880 /* MorningReset.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F3CDF1392F79C31C005E6880 /* MorningResetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3CDF1512F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningResetTests" */;
+			buildPhases = (
+				F3CDF1362F79C31C005E6880 /* Sources */,
+				F3CDF1372F79C31C005E6880 /* Frameworks */,
+				F3CDF1382F79C31C005E6880 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F3CDF13C2F79C31C005E6880 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F3CDF13D2F79C31C005E6880 /* MorningResetTests */,
+			);
+			name = MorningResetTests;
+			packageProductDependencies = (
+			);
+			productName = MorningResetTests;
+			productReference = F3CDF13A2F79C31C005E6880 /* MorningResetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F3CDF1432F79C31C005E6880 /* MorningResetUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3CDF1542F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningResetUITests" */;
+			buildPhases = (
+				F3CDF1402F79C31C005E6880 /* Sources */,
+				F3CDF1412F79C31C005E6880 /* Frameworks */,
+				F3CDF1422F79C31C005E6880 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F3CDF1462F79C31C005E6880 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F3CDF1472F79C31C005E6880 /* MorningResetUITests */,
+			);
+			name = MorningResetUITests;
+			packageProductDependencies = (
+			);
+			productName = MorningResetUITests;
+			productReference = F3CDF1442F79C31C005E6880 /* MorningResetUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F3CDF1252F79C31A005E6880 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					F3CDF12C2F79C31A005E6880 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					F3CDF1392F79C31C005E6880 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = F3CDF12C2F79C31A005E6880;
+					};
+					F3CDF1432F79C31C005E6880 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = F3CDF12C2F79C31A005E6880;
+					};
+				};
+			};
+			buildConfigurationList = F3CDF1282F79C31A005E6880 /* Build configuration list for PBXProject "MorningReset" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F3CDF1242F79C31A005E6880;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F3CDF12E2F79C31A005E6880 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F3CDF12C2F79C31A005E6880 /* MorningReset */,
+				F3CDF1392F79C31C005E6880 /* MorningResetTests */,
+				F3CDF1432F79C31C005E6880 /* MorningResetUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F3CDF12B2F79C31A005E6880 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1382F79C31C005E6880 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1422F79C31C005E6880 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F3CDF1292F79C31A005E6880 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3CDF1632F79C565005E6880 /* MorningResetApp.swift in Sources */,
+				F3CDF1642F79C565005E6880 /* QuizView.swift in Sources */,
+				F3CDF1652F79C565005E6880 /* AppState.swift in Sources */,
+				F3CDF1662F79C565005E6880 /* RootView.swift in Sources */,
+				F3CDF1672F79C565005E6880 /* ResultsView.swift in Sources */,
+				F3CDF1682F79C565005E6880 /* MorningData.swift in Sources */,
+				F3CDF1692F79C565005E6880 /* ActionView.swift in Sources */,
+				F3CDF16A2F79C565005E6880 /* AlarmView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1362F79C31C005E6880 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3CDF1402F79C31C005E6880 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F3CDF13C2F79C31C005E6880 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CDF12C2F79C31A005E6880 /* MorningReset */;
+			targetProxy = F3CDF13B2F79C31C005E6880 /* PBXContainerItemProxy */;
+		};
+		F3CDF1462F79C31C005E6880 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CDF12C2F79C31A005E6880 /* MorningReset */;
+			targetProxy = F3CDF1452F79C31C005E6880 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F3CDF14C2F79C31C005E6880 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F3CDF14D2F79C31C005E6880 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F3CDF14F2F79C31C005E6880 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningReset;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F3CDF1502F79C31C005E6880 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningReset;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F3CDF1522F79C31C005E6880 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningResetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MorningReset.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MorningReset";
+			};
+			name = Debug;
+		};
+		F3CDF1532F79C31C005E6880 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningResetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MorningReset.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MorningReset";
+			};
+			name = Release;
+		};
+		F3CDF1552F79C31C005E6880 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningResetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MorningReset;
+			};
+			name = Debug;
+		};
+		F3CDF1562F79C31C005E6880 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.canayan.MorningResetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MorningReset;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F3CDF1282F79C31A005E6880 /* Build configuration list for PBXProject "MorningReset" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3CDF14C2F79C31C005E6880 /* Debug */,
+				F3CDF14D2F79C31C005E6880 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3CDF14E2F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningReset" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3CDF14F2F79C31C005E6880 /* Debug */,
+				F3CDF1502F79C31C005E6880 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3CDF1512F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningResetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3CDF1522F79C31C005E6880 /* Debug */,
+				F3CDF1532F79C31C005E6880 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3CDF1542F79C31C005E6880 /* Build configuration list for PBXNativeTarget "MorningResetUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3CDF1552F79C31C005E6880 /* Debug */,
+				F3CDF1562F79C31C005E6880 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F3CDF1252F79C31A005E6880 /* Project object */;
+}
