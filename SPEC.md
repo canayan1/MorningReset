@@ -61,7 +61,7 @@ Three choices presented as large tappable cards:
 | Choice | Behaviour |
 |--------|-----------|
 | **Learn one thing** | Opens a placeholder URL (future: curated article or tip) |
-| **Choose your mode** | Saves selected mode to UserDefaults; shows confirmation |
+| **Choose your mode** | Opens a sub-panel with three music mode options (Focus, Chill, Energy); each taps open a placeholder URL |
 | **Skip** | Dismisses and ends the flow |
 
 ---
@@ -78,7 +78,7 @@ Three choices presented as large tappable cards:
 ## State & persistence
 
 - All flow state is in-memory (`@Observable` class)
-- UserDefaults stores only: last chosen mode (String), last completed date (Date)
+- No persistence is implemented in the current MVP
 - No user account, no cloud sync
 
 ---

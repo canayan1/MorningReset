@@ -27,7 +27,7 @@ When your alarm fires, Morning Reset forces a 2-minute guided flow before you ca
 
 - SwiftUI
 - iOS 17+
-- Local state only (UserDefaults for persistence)
+- Local state only (in-memory, no persistence)
 
 ## Build
 

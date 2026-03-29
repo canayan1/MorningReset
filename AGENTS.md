@@ -25,7 +25,8 @@ Flat and simple. Do not add layers.
 ```
 MorningReset/
 ├── App/
-│   └── MorningResetApp.swift      @main entry, injects AppState
+│   ├── MorningResetApp.swift      @main entry, injects AppState
+│   └── RootView.swift             Screen switcher, reads AppState.screen
 ├── State/
 │   └── AppState.swift             Single @Observable state object
 ├── Data/
@@ -37,7 +38,7 @@ MorningReset/
     └── ActionView.swift
 ```
 
-Total: 7 files. Do not create additional files unless strictly necessary.
+Total: 8 files. Do not create additional files unless strictly necessary.
 
 ---
 
@@ -48,7 +49,6 @@ Total: 7 files. Do not create additional files unless strictly necessary.
 - Make small, focused commits with clear messages
 - Keep each file under ~120 lines where possible
 - Use `@Observable` for state (iOS 17 pattern)
-- Use `UserDefaults` for persistence (last mode, last date only)
 - Use `@State` in views for local ephemeral state (e.g. timer countdown display)
 
 ### Do not
@@ -90,11 +90,7 @@ Does NOT run on Results or Action screens.
 
 ## Persistence
 
-Only two keys in UserDefaults:
-- `"lastMode"` — String — the mode label chosen or derived on last session
-- `"lastResetDate"` — Date — when the last flow was completed
-
-Do not add more UserDefaults keys without updating this file.
+All flow state is in-memory (`AppState`). No persistence is implemented in the current MVP. Do not add UserDefaults or SwiftData without a concrete product requirement.
 
 ---
 
