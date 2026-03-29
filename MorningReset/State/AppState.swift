@@ -12,11 +12,15 @@ enum Screen {
 final class AppState {
     var screen: Screen = .alarm
 
+    private var inactivityTimer: Timer?
+
     func startFlow() {
         screen = .quiz
+        resetInactivityTimer()
     }
 
     func showResults() {
+        stopInactivityTimer()
         screen = .results
     }
 
@@ -25,6 +29,19 @@ final class AppState {
     }
 
     func endFlow() {
+        stopInactivityTimer()
         screen = .alarm
+    }
+
+    func resetInactivityTimer() {
+        stopInactivityTimer()
+        inactivityTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async { self?.endFlow() }
+        }
+    }
+
+    private func stopInactivityTimer() {
+        inactivityTimer?.invalidate()
+        inactivityTimer = nil
     }
 }

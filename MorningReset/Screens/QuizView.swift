@@ -14,8 +14,8 @@ struct QuizView: View {
             Color.black.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 32) {
-                Text("\(index + 1) of \(MorningData.questions.count)")
-                    .font(.caption)
+                Text("\(index + 1)/\(MorningData.questions.count)")
+                    .font(.caption.monospacedDigit())
                     .foregroundStyle(.white.opacity(0.5))
                     .padding(.top, 24)
 
@@ -28,6 +28,7 @@ struct QuizView: View {
                         Button {
                             guard selected == nil else { return }
                             selected = option
+                            appState.resetInactivityTimer()
                             advance()
                         } label: {
                             HStack {
