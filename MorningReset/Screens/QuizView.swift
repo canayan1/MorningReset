@@ -6,7 +6,7 @@ struct QuizView: View {
     @State private var selected: String? = nil
 
     private var question: Question {
-        MorningData.questions[index]
+        MorningData.questions[min(index, MorningData.questions.count - 1)]
     }
 
     var body: some View {

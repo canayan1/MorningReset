@@ -70,12 +70,12 @@ Total: 7 files. Do not create additional files unless strictly necessary.
 enum Screen {
     case alarm
     case quiz
-    case results(MorningResult)
-    case action(MorningResult)
+    case results
+    case action
 }
 ```
 
-`AppState` holds `currentScreen: Screen` and drives all navigation.
+`AppState` holds `screen: Screen` and drives all navigation.
 Views read from `AppState` and call methods on it — no direct mutation from views.
 
 ---
@@ -83,7 +83,7 @@ Views read from `AppState` and call methods on it — no direct mutation from vi
 ## Inactivity timer
 
 Lives in `AppState`. Starts when quiz begins. Resets on every answer tap.
-On expiry (60s): set `currentScreen = .alarm` and reset all quiz state.
+On expiry (60s): sets `screen = .alarm` and stops the timer.
 Does NOT run on Results or Action screens.
 
 ---
