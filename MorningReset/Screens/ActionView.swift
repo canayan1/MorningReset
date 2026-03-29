@@ -1,9 +1,7 @@
 import SwiftUI
 
 struct ActionView: View {
-    @Environment(AppState.self) private var state
-    let result: MorningResult
-    @State private var modeSaved = false
+    @Environment(AppState.self) private var appState
 
     var body: some View {
         ZStack {
@@ -16,59 +14,34 @@ struct ActionView: View {
                     .font(.title2.bold())
                     .foregroundStyle(.white)
 
-                actionCard(
-                    title: "Learn one thing",
-                    subtitle: "Read something worth your time.",
-                    icon: "book.fill"
-                ) {
-                    // Placeholder — open a URL in a future iteration
-                    if let url = URL(string: "https://example.com") {
-                        UIApplication.shared.open(url)
+                VStack(spacing: 12) {
+                    actionCard(title: "Learn one thing", subtitle: "Read something worth your time.") {
+                        // Placeholder — URL will be added later
+                    }
+
+                    actionCard(title: "Choose your mode", subtitle: "Lock in your intention for the day.") {
+                        // Placeholder — mode selection will be added later
                     }
                 }
 
-                actionCard(
-                    title: modeSaved ? "Mode saved ✓" : "Lock in \(result.modeLabel)",
-                    subtitle: "Save your mode for the day.",
-                    icon: "flag.fill"
-                ) {
-                    state.saveMode(result.modeLabel)
-                    modeSaved = true
-                }
-                .disabled(modeSaved)
-
                 Spacer()
 
-                Button {
-                    state.endFlow()
-                } label: {
-                    Text("Skip")
-                        .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.4))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
+                Button("Skip") {
+                    appState.endFlow()
                 }
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.4))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
                 .padding(.bottom, 32)
             }
             .padding(.horizontal, 24)
         }
     }
 
-    private func actionCard(
-        title: String,
-        subtitle: String,
-        icon: String,
-        action: @escaping () -> Void
-    ) -> some View {
+    private func actionCard(title: String, subtitle: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: 16) {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundStyle(.black)
-                    .frame(width: 44, height: 44)
-                    .background(Color.white)
-                    .clipShape(Circle())
-
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.headline)

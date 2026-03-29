@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AlarmView: View {
-    @Environment(AppState.self) private var state
+    @Environment(AppState.self) private var appState
 
     var body: some View {
         ZStack {
@@ -12,8 +12,9 @@ struct AlarmView: View {
 
                 VStack(spacing: 12) {
                     Text("Morning Reset")
-                        .font(.system(size: 34, weight: .bold))
+                        .font(.largeTitle.bold())
                         .foregroundStyle(.white)
+
                     Text("Take 2 minutes before you scroll.")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.6))
@@ -21,17 +22,15 @@ struct AlarmView: View {
 
                 Spacer()
 
-                Button {
-                    state.startFlow()
-                } label: {
-                    Text("Start")
-                        .font(.title2.bold())
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(.white)
-                        .foregroundStyle(.black)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                Button("Start") {
+                    appState.startFlow()
                 }
+                .font(.title2.bold())
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(.white)
+                .foregroundStyle(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
                 .padding(.horizontal, 32)
                 .padding(.bottom, 48)
             }

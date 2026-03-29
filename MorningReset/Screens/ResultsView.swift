@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct ResultsView: View {
-    @Environment(AppState.self) private var state
-    let result: MorningResult
+    @Environment(AppState.self) private var appState
 
     var body: some View {
         ZStack {
@@ -11,57 +10,47 @@ struct ResultsView: View {
             VStack(alignment: .leading, spacing: 32) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Your morning mode")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Your mode today")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.5))
-                    Text(result.modeLabel)
+                    Text("Focus Mode")
                         .font(.system(size: 36, weight: .bold))
                         .foregroundStyle(.white)
                 }
 
-                Divider().overlay(Color.white.opacity(0.2))
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Do this now")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.5))
+                    Text("Pick your one most important task before opening any app.")
+                        .font(.body)
+                        .foregroundStyle(.white)
+                }
 
-                resultRow(
-                    label: "Do this now",
-                    icon: "arrow.right.circle.fill",
-                    text: result.suggestion
-                )
-
-                resultRow(
-                    label: "Watch out for",
-                    icon: "exclamationmark.triangle.fill",
-                    text: result.warning
-                )
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Watch out for")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.5))
+                    Text("Don't waste this window — avoid meetings or social media for the first hour.")
+                        .font(.body)
+                        .foregroundStyle(.white)
+                }
 
                 Spacer()
 
-                Button {
-                    state.proceedToAction(result: result)
-                } label: {
-                    Text("Continue")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(.white)
-                        .foregroundStyle(.black)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                Button("Continue") {
+                    appState.showAction()
                 }
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(.white)
+                .foregroundStyle(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
                 .padding(.bottom, 48)
             }
             .padding(.horizontal, 24)
-        }
-    }
-
-    private func resultRow(label: String, icon: String, text: String) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label(label, systemImage: icon)
-                .font(.caption.bold())
-                .foregroundStyle(.white.opacity(0.5))
-            Text(text)
-                .font(.body)
-                .foregroundStyle(.white)
-                .lineSpacing(4)
         }
     }
 }

@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct QuizView: View {
-    @Environment(AppState.self) private var state
-    @State private var selectedOption: String? = nil
-    @State private var questionIndex: Int = 0
+    @Environment(AppState.self) private var appState
+    @State private var index: Int = 0
+    @State private var selected: String? = nil
 
     private var question: Question {
-        MorningData.questions[questionIndex]
+        MorningData.questions[index]
     }
 
     var body: some View {
@@ -14,16 +14,33 @@ struct QuizView: View {
             Color.black.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 32) {
-                progressBar
-                    .padding(.top, 16)
+                Text("\(index + 1) of \(MorningData.questions.count)")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .padding(.top, 24)
 
                 Text(question.text)
                     .font(.title3.bold())
                     .foregroundStyle(.white)
 
                 VStack(spacing: 12) {
-                    ForEach(question.options, id: \.text) { option in
-                        optionButton(option)
+                    ForEach(question.options, id: \.self) { option in
+                        Button {
+                            guard selected == nil else { return }
+                            selected = option
+                            advance()
+                        } label: {
+                            HStack {
+                                Text(option)
+                                    .foregroundStyle(selected == option ? .black : .white)
+                                    .multilineTextAlignment(.leading)
+                                Spacer()
+                            }
+                            .padding()
+                            .background(selected == option ? Color.white : Color.white.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                        .disabled(selected != nil)
                     }
                 }
 
@@ -31,44 +48,17 @@ struct QuizView: View {
             }
             .padding(.horizontal, 24)
         }
-        .onChange(of: state.answers.count) { _, newCount in
-            if newCount < MorningData.questions.count {
-                selectedOption = nil
-                questionIndex = newCount
-            }
-        }
     }
 
-    private var progressBar: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<MorningData.questions.count, id: \.self) { i in
-                RoundedRectangle(cornerRadius: 2)
-                    .frame(height: 4)
-                    .foregroundStyle(i <= questionIndex ? Color.white : Color.white.opacity(0.2))
+    private func advance() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            let next = index + 1
+            if next < MorningData.questions.count {
+                index = next
+                selected = nil
+            } else {
+                appState.showResults()
             }
         }
-    }
-
-    private func optionButton(_ option: Option) -> some View {
-        let isSelected = selectedOption == option.text
-
-        return Button {
-            guard selectedOption == nil else { return }
-            selectedOption = option.text
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                state.recordAnswer(option.text)
-            }
-        } label: {
-            HStack {
-                Text(option.text)
-                    .foregroundStyle(isSelected ? .black : .white)
-                    .multilineTextAlignment(.leading)
-                Spacer()
-            }
-            .padding()
-            .background(isSelected ? Color.white : Color.white.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .disabled(selectedOption != nil)
     }
 }
