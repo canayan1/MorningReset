@@ -11,18 +11,18 @@ struct AlarmView: View {
                 Spacer()
 
                 VStack(spacing: 12) {
-                    Text("Morning Reset")
+                    Text(Strings.Alarm.title)
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
 
-                    Text("Take 2 minutes before you scroll.")
+                    Text("Get up. Take two minutes.")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.6))
                 }
 
                 Spacer()
 
-                Button("Start") {
+                Button(Strings.Alarm.startButton) {
                     appState.startFlow()
                 }
                 .font(.title2.bold())

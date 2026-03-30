@@ -14,6 +14,8 @@ struct ResultsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
 
+                row(label: Strings.Results.startWithLabel, value: result.startWith)
+
                 VStack(alignment: .leading, spacing: 8) {
                     Text(result.mode)
                         .font(.system(size: 40, weight: .bold))
@@ -23,9 +25,8 @@ struct ResultsView: View {
                         .foregroundStyle(.white.opacity(0.7))
                 }
 
-                row(label: "Start with", value: result.startWith)
-                row(label: "Avoid", value: result.avoid)
-                row(label: "Win today", value: result.win)
+                row(label: Strings.Results.avoidLabel, value: result.avoid)
+                row(label: Strings.Results.winTodayLabel, value: result.win)
 
                 Text(result.bonus)
                     .font(.caption)
@@ -33,7 +34,7 @@ struct ResultsView: View {
 
                 Spacer()
 
-                Button("Continue") {
+                Button(Strings.Results.continueButton) {
                     appState.showAction()
                 }
                 .font(.headline)

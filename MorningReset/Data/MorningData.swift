@@ -67,11 +67,11 @@ enum MorningData {
                 "Not a high-capacity morning. Keep demands low."
             ][i],
             startWith: [
-                "one easy, grounding task",
-                "water, light, and one low-friction action",
-                "something simple you can finish",
-                "one task with a clear end point",
-                "your most predictable task"
+                "feet on the floor, then water — nothing else yet",
+                "up slowly, curtains open, water before anything",
+                "bathroom, water, one easy thing — in that order",
+                "stand up, drink water, then one task with a clear end point",
+                "get up gently, water first, then your most predictable task"
             ][i],
             avoid: [
                 "messages before you settle",
@@ -109,11 +109,11 @@ enum MorningData {
                 "A clean start this morning. Use it."
             ][i],
             startWith: [
-                "the task that gives the day shape",
-                "one deliberate action before input",
-                "your clearest priority",
-                "the task you've been postponing for no real reason",
-                "one concrete deliverable — not a planning session"
+                "up, water, then the task that gives the day shape",
+                "get up now, water, then one deliberate action before input",
+                "feet down, water, then your clearest priority",
+                "stand up, water, then the task you've been postponing for no real reason",
+                "up, water, then one concrete deliverable — not a planning session"
             ][i],
             avoid: [
                 "random scrolling disguised as warming up",
@@ -151,11 +151,11 @@ enum MorningData {
                 "The morning is leaning toward output. Give it a direction."
             ][i],
             startWith: [
-                "the hardest meaningful task",
-                "real work before the feed opens",
-                "the task with the highest return",
-                "something concrete before you open anything",
-                "the work that needs your full attention"
+                "up fast, water, then the hardest task — in that order",
+                "out of bed, water, then real work before the feed opens",
+                "stand up, water, then the task with the highest return",
+                "up now, water, then something concrete before you open anything",
+                "get up, water first, then the work that needs your full attention"
             ][i],
             avoid: [
                 "admin before output",
