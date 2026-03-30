@@ -10,7 +10,7 @@ struct ActionView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            Group {
+            ZStack {
                 switch panel {
                 case .main:  mainPanel
                 case .learn: learnPanel
@@ -95,9 +95,11 @@ struct ActionView: View {
     // MARK: - Shared components
 
     private var backButton: some View {
-        Button("← Back") { panel = .main }
-            .font(.caption)
-            .foregroundStyle(.white.opacity(0.5))
+        Button { panel = .main } label: {
+            Label("Back", systemImage: "chevron.left")
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.6))
+        }
     }
 
     private func sectionCard(title: String, subtitle: String, action: @escaping () -> Void) -> some View {

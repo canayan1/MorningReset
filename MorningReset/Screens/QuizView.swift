@@ -49,6 +49,8 @@ struct QuizView: View {
                 Spacer()
             }
             .padding(.horizontal, 24)
+            .id(index)
+            .transition(.opacity)
         }
     }
 
@@ -56,8 +58,10 @@ struct QuizView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             let next = index + 1
             if next < MorningData.questions.count {
-                index = next
-                selected = nil
+                withAnimation(.linear(duration: 0.1)) {
+                    index = next
+                    selected = nil
+                }
             } else {
                 appState.showResults()
             }

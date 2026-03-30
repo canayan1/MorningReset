@@ -7,8 +7,11 @@ struct Question {
 
 struct MorningResult {
     let mode: String
-    let suggestion: String
-    let warning: String
+    let meaning: String
+    let startWith: String
+    let avoid: String
+    let win: String
+    let bonus: String
 }
 
 enum MorningData {
@@ -35,10 +38,9 @@ enum MorningData {
         ),
     ]
 
-    // MARK: - Scoring
-    //
-    // Each question's options are ordered: [focus, recovery, survival]
-    // Tally by option index. Tiebreak: higher-stress mode wins (survival > recovery > focus).
+    private static var variantIndex: Int {
+        Calendar.current.component(.day, from: Date()) % 5
+    }
 
     static func result(from answers: [String]) -> MorningResult {
         var tally = [0, 0, 0]
@@ -48,28 +50,134 @@ enum MorningData {
                 tally[min(idx, 2)] += 1
             }
         }
-        if tally[2] >= tally[1] && tally[2] >= tally[0] { return survival }
-        if tally[1] >= tally[0]                          { return recovery }
-        return focus
+        if tally[2] >= tally[1] && tally[2] >= tally[0] { return protect }
+        if tally[1] >= tally[0]                          { return steady }
+        return push
     }
 
-    // MARK: - Results
+    private static var protect: MorningResult {
+        let i = variantIndex
+        return MorningResult(
+            mode: "Protect",
+            meaning: [
+                "Starting low this morning. Adjust the day accordingly.",
+                "Today starts sensitive. Keep it usable.",
+                "Lean toward stability today. Intensity can wait.",
+                "The signals this morning are mixed. Stabilize before you take on more.",
+                "Not a high-capacity morning. Keep demands low."
+            ][i],
+            startWith: [
+                "one easy, grounding task",
+                "water, light, and one low-friction action",
+                "something simple you can finish",
+                "one task with a clear end point",
+                "your most predictable task"
+            ][i],
+            avoid: [
+                "messages before you settle",
+                "reactive planning",
+                "news and feeds",
+                "high-stakes decisions before you've settled",
+                "decisions you can push to tomorrow"
+            ][i],
+            win: [
+                "a calm first hour",
+                "no spiral, no crash",
+                "clear enough to move, without draining yourself",
+                "finishing the morning intact",
+                "one task done without running yourself down"
+            ][i],
+            bonus: [
+                "Today's line: protect the system before you push it.",
+                "Music cue: slow, spacious, non-lyrical.",
+                "Morning signal: low signal day. protect your pace.",
+                "Today's line: a stable floor beats a shaky ceiling.",
+                "Morning signal: low day. don't overextend."
+            ][i]
+        )
+    }
 
-    private static let focus = MorningResult(
-        mode: "Focus Mode",
-        suggestion: "Start with your hardest task before opening any app.",
-        warning: "This window closes fast. Protect the first hour."
-    )
+    private static var steady: MorningResult {
+        let i = variantIndex
+        return MorningResult(
+            mode: "Steady",
+            meaning: [
+                "You're stable enough to move. Use the day properly.",
+                "This morning is workable. Don't waste it.",
+                "No major drag this morning. Use it cleanly.",
+                "Neither high nor low. Work with what you have.",
+                "A clean start this morning. Use it."
+            ][i],
+            startWith: [
+                "the task that gives the day shape",
+                "one deliberate action before input",
+                "your clearest priority",
+                "the task you've been postponing for no real reason",
+                "one concrete deliverable — not a planning session"
+            ][i],
+            avoid: [
+                "random scrolling disguised as warming up",
+                "noise before momentum",
+                "fake productivity",
+                "optimizing instead of executing",
+                "over-preparing what you should just start"
+            ][i],
+            win: [
+                "one meaningful thing done cleanly",
+                "clean movement from morning to noon",
+                "clarity, rhythm, no unnecessary detours",
+                "real progress on one item before the morning ends",
+                "forward movement before the morning runs out"
+            ][i],
+            bonus: [
+                "Today's line: rhythm beats intensity.",
+                "Music cue: focused, light, mid-tempo.",
+                "Morning signal: stable air. good day for clean execution.",
+                "Today's line: use it. don't overthink it.",
+                "Morning signal: clean baseline. good conditions to work."
+            ][i]
+        )
+    }
 
-    private static let recovery = MorningResult(
-        mode: "Recovery Mode",
-        suggestion: "Drink water. Pick one task. Skip the news.",
-        warning: "Don't schedule anything demanding before midday."
-    )
-
-    private static let survival = MorningResult(
-        mode: "Survival Mode",
-        suggestion: "Pick one small thing you can finish today. Just one.",
-        warning: "Keep the load light. No big decisions today."
-    )
+    private static var push: MorningResult {
+        let i = variantIndex
+        return MorningResult(
+            mode: "Push",
+            meaning: [
+                "Strong signals this morning. Act on them early.",
+                "This morning has leverage. Don't dilute it.",
+                "There's usable momentum here. Direct it.",
+                "Conditions are good. Don't let the morning drift.",
+                "The morning is leaning toward output. Give it a direction."
+            ][i],
+            startWith: [
+                "the hardest meaningful task",
+                "real work before the feed opens",
+                "the task with the highest return",
+                "something concrete before you open anything",
+                "the work that needs your full attention"
+            ][i],
+            avoid: [
+                "admin before output",
+                "checking everything before doing anything",
+                "scattered effort",
+                "warming up for too long before you commit",
+                "low-value tasks that borrow time from the real work"
+            ][i],
+            win: [
+                "one strong block of real progress",
+                "progress before noon",
+                "turn energy into something concrete",
+                "real output in the first two hours",
+                "one substantial move on what actually matters"
+            ][i],
+            bonus: [
+                "Today's line: high signal morning. don't spend it on small tasks.",
+                "Music cue: energizing, focused, low-chaos.",
+                "Morning signal: forward motion is high. choose your target well.",
+                "Today's line: don't ease into a morning like this.",
+                "Morning signal: strong signal. set the target early."
+            ][i]
+        )
+    }
 }

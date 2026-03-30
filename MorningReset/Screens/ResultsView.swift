@@ -11,35 +11,25 @@ struct ResultsView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 32) {
+            VStack(alignment: .leading, spacing: 24) {
                 Spacer()
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Your mode today")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.5))
                     Text(result.mode)
-                        .font(.system(size: 36, weight: .bold))
+                        .font(.system(size: 40, weight: .bold))
                         .foregroundStyle(.white)
+                    Text(result.meaning)
+                        .font(.body)
+                        .foregroundStyle(.white.opacity(0.7))
                 }
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Do this now")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.5))
-                    Text(result.suggestion)
-                        .font(.body)
-                        .foregroundStyle(.white)
-                }
+                row(label: "Start with", value: result.startWith)
+                row(label: "Avoid", value: result.avoid)
+                row(label: "Win today", value: result.win)
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Watch out for")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.5))
-                    Text(result.warning)
-                        .font(.body)
-                        .foregroundStyle(.white)
-                }
+                Text(result.bonus)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.35))
 
                 Spacer()
 
@@ -55,6 +45,17 @@ struct ResultsView: View {
                 .padding(.bottom, 48)
             }
             .padding(.horizontal, 24)
+        }
+    }
+
+    private func row(label: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.4))
+            Text(value)
+                .font(.body)
+                .foregroundStyle(.white)
         }
     }
 }
