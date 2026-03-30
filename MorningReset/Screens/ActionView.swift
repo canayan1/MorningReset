@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ActionView: View {
     @Environment(AppState.self) private var appState
-    @Environment(\.openURL) private var openURL
     @State private var panel: Panel = .main
 
     private enum Panel { case main, learn, mode }
@@ -60,9 +59,9 @@ struct ActionView: View {
             backButton
 
             VStack(spacing: 12) {
-                linkCard(headline: "Why your first hour shapes the whole day", url: "https://example.com")
-                linkCard(headline: "The case for a no-phone morning", url: "https://example.com")
-                linkCard(headline: "One habit that changes everything", url: "https://example.com")
+                ForEach(ActionContent.articles, id: \.headline) { article in
+                    contentCard(headline: article.headline, body: article.body)
+                }
             }
 
             Spacer()
@@ -79,9 +78,9 @@ struct ActionView: View {
             backButton
 
             VStack(spacing: 12) {
-                linkCard(headline: "Focus",  url: "https://example.com")
-                linkCard(headline: "Chill",  url: "https://example.com")
-                linkCard(headline: "Energy", url: "https://example.com")
+                ForEach(ActionContent.playlists, id: \.title) { playlist in
+                    contentCard(headline: playlist.title, body: playlist.description)
+                }
             }
 
             Spacer()
@@ -118,23 +117,19 @@ struct ActionView: View {
         }
     }
 
-    private func linkCard(headline: String, url: String) -> some View {
-        Button {
-            if let u = URL(string: url) { openURL(u) }
-        } label: {
-            HStack {
-                Text(headline)
-                    .font(.subheadline)
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.leading)
-                Spacer()
-                Image(systemName: "arrow.up.right")
-                    .font(.caption)
-                    .foregroundStyle(.white.opacity(0.4))
-            }
-            .padding()
-            .background(Color.white.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+    private func contentCard(headline: String, body: String) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(headline)
+                .font(.subheadline.bold())
+                .foregroundStyle(.white)
+            Text(body)
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.5))
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Color.white.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }

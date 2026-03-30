@@ -4,6 +4,7 @@ import Observation
 enum Screen {
     case alarm
     case quiz
+    case intention
     case results
     case action
 }
@@ -23,6 +24,10 @@ final class AppState {
 
     func recordAnswer(_ answer: String) {
         answers.append(answer)
+    }
+
+    func showIntention() {
+        screen = .intention
     }
 
     func showResults() {

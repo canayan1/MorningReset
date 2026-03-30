@@ -17,26 +17,11 @@ struct MorningResult {
 
 enum MorningData {
     static let questions: [Question] = [
-        Question(
-            text: "How did you sleep?",
-            options: ["Deeply — felt rested", "Light but okay", "Poorly — still tired"]
-        ),
-        Question(
-            text: "What's your energy level right now?",
-            options: ["High — ready to go", "Medium — warming up", "Low — barely awake"]
-        ),
-        Question(
-            text: "How's your mood?",
-            options: ["Positive and calm", "Neutral", "Anxious or stressed"]
-        ),
-        Question(
-            text: "Can you focus on a single task right now?",
-            options: ["Yes, easily", "Probably, with effort", "Not really"]
-        ),
-        Question(
-            text: "What do you want from today?",
-            options: ["Make real progress", "Get through it fine", "Just survive it"]
-        ),
+        Question(text: "Did you sleep well?",                  options: ["Yes", "No"]),
+        Question(text: "Do you feel energized right now?",     options: ["Yes", "No"]),
+        Question(text: "Is your head clear?",                  options: ["Yes", "No"]),
+        Question(text: "Ready to take on something hard?",     options: ["Yes", "No"]),
+        Question(text: "Do you want to push forward today?",   options: ["Yes", "No"]),
     ]
 
     private static var variantIndex: Int {
@@ -44,16 +29,10 @@ enum MorningData {
     }
 
     static func result(from answers: [String]) -> MorningResult {
-        var tally = [0, 0, 0]
-        for (i, answer) in answers.enumerated() {
-            guard i < questions.count else { continue }
-            if let idx = questions[i].options.firstIndex(of: answer) {
-                tally[min(idx, 2)] += 1
-            }
-        }
-        if tally[2] >= tally[1] && tally[2] >= tally[0] { return protect }
-        if tally[1] >= tally[0]                          { return steady }
-        return push
+        let yesCount = answers.filter { $0 == "Yes" }.count
+        if yesCount >= 4 { return push }
+        if yesCount >= 2 { return steady }
+        return protect
     }
 
     private static var protect: MorningResult {

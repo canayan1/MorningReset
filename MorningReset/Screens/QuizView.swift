@@ -3,67 +3,81 @@ import SwiftUI
 struct QuizView: View {
     @Environment(AppState.self) private var appState
     @State private var index: Int = 0
-    @State private var selected: String? = nil
+    @State private var answered: Bool = false
 
     private var question: Question {
-        MorningData.questions[min(index, MorningData.questions.count - 1)]
+        MorningData.questions[index]
     }
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 32) {
-                Text(Strings.Quiz.progress(current: index + 1, total: MorningData.questions.count))
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.white.opacity(0.5))
-                    .padding(.top, 24)
-
-                Text(question.text)
-                    .font(.title3.bold())
-                    .foregroundStyle(.white)
-
-                VStack(spacing: 12) {
-                    ForEach(question.options, id: \.self) { option in
-                        Button {
-                            guard selected == nil else { return }
-                            selected = option
-                            appState.recordAnswer(option)
-                            appState.resetInactivityTimer()
-                            advance()
-                        } label: {
-                            HStack {
-                                Text(option)
-                                    .foregroundStyle(selected == option ? .black : .white)
-                                    .multilineTextAlignment(.leading)
-                                Spacer()
-                            }
-                            .padding()
-                            .background(selected == option ? Color.white : Color.white.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        .disabled(selected != nil)
-                    }
+            VStack(spacing: 0) {
+                HStack {
+                    Text(Strings.Quiz.progress(current: index + 1, total: MorningData.questions.count))
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.white.opacity(0.4))
+                    Spacer()
                 }
+                .padding(.top, 24)
+                .padding(.horizontal, 24)
 
                 Spacer()
+
+                Text(question.text)
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .padding(40)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white.opacity(0.06))
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .padding(.horizontal, 24)
+                    .id(index)
+                    .transition(.opacity)
+
+                Spacer()
+
+                HStack(spacing: 12) {
+                    answerButton(label: "No", answer: "No")
+                    answerButton(label: "Yes", answer: "Yes")
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 48)
             }
-            .padding(.horizontal, 24)
-            .id(index)
-            .transition(.opacity)
         }
     }
 
+    private func answerButton(label: String, answer: String) -> some View {
+        Button {
+            guard !answered else { return }
+            answered = true
+            appState.recordAnswer(answer)
+            appState.resetInactivityTimer()
+            advance()
+        } label: {
+            Text(label)
+                .font(.headline)
+                .foregroundStyle(answer == "Yes" ? .black : .white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(answer == "Yes" ? Color.white : Color.white.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .disabled(answered)
+    }
+
     private func advance() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             let next = index + 1
             if next < MorningData.questions.count {
-                withAnimation(.linear(duration: 0.1)) {
+                withAnimation(.linear(duration: 0.15)) {
                     index = next
-                    selected = nil
+                    answered = false
                 }
             } else {
-                appState.showResults()
+                appState.showIntention()
             }
         }
     }
