@@ -11,6 +11,7 @@ struct MorningResult {
     let startWith: String
     let avoid: String
     let win: String
+    let music: String
     let bonus: String
 }
 
@@ -87,9 +88,16 @@ enum MorningData {
                 "finishing the morning intact",
                 "one task done without running yourself down"
             ][i],
+            music: [
+                "slow, spacious, non-lyrical",
+                "ambient, minimal, no beat pressure",
+                "low tempo, sparse arrangement",
+                "instrumental, nothing demanding",
+                "quiet, unobtrusive, background"
+            ][i],
             bonus: [
                 "Today's line: protect the system before you push it.",
-                "Music cue: slow, spacious, non-lyrical.",
+                "Morning signal: recovery day. move gently.",
                 "Morning signal: low signal day. protect your pace.",
                 "Today's line: a stable floor beats a shaky ceiling.",
                 "Morning signal: low day. don't overextend."
@@ -129,9 +137,16 @@ enum MorningData {
                 "real progress on one item before the morning ends",
                 "forward movement before the morning runs out"
             ][i],
+            music: [
+                "focused, light, mid-tempo",
+                "instrumental, consistent rhythm",
+                "lo-fi, moderate pace, no spikes",
+                "clean background, steady beat",
+                "low distraction, balanced energy"
+            ][i],
             bonus: [
                 "Today's line: rhythm beats intensity.",
-                "Music cue: focused, light, mid-tempo.",
+                "Morning signal: no friction this morning. stay in motion.",
                 "Morning signal: stable air. good day for clean execution.",
                 "Today's line: use it. don't overthink it.",
                 "Morning signal: clean baseline. good conditions to work."
@@ -171,9 +186,16 @@ enum MorningData {
                 "real output in the first two hours",
                 "one substantial move on what actually matters"
             ][i],
+            music: [
+                "energizing, focused, low-chaos",
+                "driving tempo, no lyrics",
+                "high energy, structured rhythm",
+                "fast-paced, clean arrangement",
+                "momentum-building, no distraction"
+            ][i],
             bonus: [
                 "Today's line: high signal morning. don't spend it on small tasks.",
-                "Music cue: energizing, focused, low-chaos.",
+                "Today's line: the output window is open. go through it.",
                 "Morning signal: forward motion is high. choose your target well.",
                 "Today's line: don't ease into a morning like this.",
                 "Morning signal: strong signal. set the target early."

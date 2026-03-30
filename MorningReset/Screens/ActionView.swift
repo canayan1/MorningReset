@@ -26,7 +26,7 @@ struct ActionView: View {
         VStack(alignment: .leading, spacing: 24) {
             Spacer()
 
-            Text("What's next?")
+            Text(Strings.Action.heading)
                 .font(.title2.bold())
                 .foregroundStyle(.white)
 
@@ -41,7 +41,7 @@ struct ActionView: View {
 
             Spacer()
 
-            Button("Skip") { appState.endFlow() }
+            Button(Strings.Action.skipButton) { appState.endFlow() }
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.4))
                 .frame(maxWidth: .infinity)
@@ -60,12 +60,9 @@ struct ActionView: View {
             backButton
 
             VStack(spacing: 12) {
-                linkCard(headline: "Why your first hour shapes the whole day",
-                         url: "https://example.com")
-                linkCard(headline: "The case for a no-phone morning",
-                         url: "https://example.com")
-                linkCard(headline: "One habit that changes everything",
-                         url: "https://example.com")
+                linkCard(headline: "Why your first hour shapes the whole day", url: "https://example.com")
+                linkCard(headline: "The case for a no-phone morning", url: "https://example.com")
+                linkCard(headline: "One habit that changes everything", url: "https://example.com")
             }
 
             Spacer()
@@ -82,7 +79,7 @@ struct ActionView: View {
             backButton
 
             VStack(spacing: 12) {
-                linkCard(headline: "Focus", url: "https://example.com")
+                linkCard(headline: "Focus",  url: "https://example.com")
                 linkCard(headline: "Chill",  url: "https://example.com")
                 linkCard(headline: "Energy", url: "https://example.com")
             }
@@ -96,7 +93,7 @@ struct ActionView: View {
 
     private var backButton: some View {
         Button { panel = .main } label: {
-            Label("Back", systemImage: "chevron.left")
+            Label(Strings.Action.backButton, systemImage: "chevron.left")
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.6))
         }

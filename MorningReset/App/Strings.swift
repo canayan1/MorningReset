@@ -17,6 +17,7 @@ enum Strings {
         static let startWithLabel = "Start with"
         static let avoidLabel     = "Avoid"
         static let winTodayLabel  = "First win"
+        static let musicLabel     = "Music"
         static let continueButton = "Continue"
     }
 

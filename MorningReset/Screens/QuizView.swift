@@ -14,7 +14,7 @@ struct QuizView: View {
             Color.black.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 32) {
-                Text("\(index + 1)/\(MorningData.questions.count)")
+                Text(Strings.Quiz.progress(current: index + 1, total: MorningData.questions.count))
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(.white.opacity(0.5))
                     .padding(.top, 24)
