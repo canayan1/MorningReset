@@ -17,11 +17,11 @@ struct MorningResult {
 
 enum MorningData {
     static let questions: [Question] = [
-        Question(text: "Do you feel ready to move, not just think?",                options: ["Yes", "No"]),
-        Question(text: "Does today feel manageable from where you are right now?",  options: ["Yes", "No"]),
-        Question(text: "Can you give one important thing your full attention?",     options: ["Yes", "No"]),
-        Question(text: "Would momentum help you more than rest today?",             options: ["Yes", "No"]),
-        Question(text: "Do you want your morning to feel active rather than gentle?", options: ["Yes", "No"]),
+        Question(text: "Are you still lying in bed?",                        options: ["Yes", "No"]),
+        Question(text: "Do you feel low on energy right now?",               options: ["Yes", "No"]),
+        Question(text: "Would getting up feel difficult right now?",         options: ["Yes", "No"]),
+        Question(text: "Do you want a slow start today?",                    options: ["Yes", "No"]),
+        Question(text: "Can you handle something slightly active right now?", options: ["Yes", "No"]),
     ]
 
     private static var variantIndex: Int {
@@ -29,9 +29,15 @@ enum MorningData {
     }
 
     static func result(from answers: [String]) -> MorningResult {
-        let yesCount = answers.filter { $0 == "Yes" }.count
-        if yesCount >= 4 { return push }
-        if yesCount >= 2 { return steady }
+        // Q1–Q4: "No" = positive signal (not in bed, not low, not difficult, no slow start)
+        // Q5: "Yes" = positive signal (can handle something active)
+        var positive = 0
+        for (i, answer) in answers.enumerated() {
+            if i < 4,  answer == "No"  { positive += 1 }
+            if i == 4, answer == "Yes" { positive += 1 }
+        }
+        if positive >= 4 { return push }
+        if positive >= 2 { return steady }
         return protect
     }
 

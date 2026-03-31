@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AlarmView: View {
     @Environment(AppState.self) private var appState
+    @State private var showAbout = false
 
     var body: some View {
         ZStack {
@@ -32,8 +33,17 @@ struct AlarmView: View {
                 .foregroundStyle(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .padding(.horizontal, 32)
+
+                Button("About") {
+                    showAbout = true
+                }
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.25))
                 .padding(.bottom, 48)
             }
+        }
+        .sheet(isPresented: $showAbout) {
+            AboutView()
         }
     }
 }

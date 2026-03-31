@@ -37,6 +37,13 @@ struct WinView: View {
 
                 Spacer()
 
+                Text("Optional: take a quick photo of yourself.\nA small smile is enough.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.25))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 24)
+
                 Button("Continue") {
                     appState.showAction()
                 }
