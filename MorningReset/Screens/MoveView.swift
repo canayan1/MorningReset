@@ -58,14 +58,14 @@ struct MoveView: View {
                 Spacer()
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("One thing first.")
+                    Text("Right now.")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.4))
 
                     Text(action)
-                        .font(.title3.bold())
+                        .font(.title2.bold())
                         .foregroundStyle(.white)
-                        .lineSpacing(6)
+                        .lineSpacing(8)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(28)

@@ -10,9 +10,9 @@ struct WinView: View {
 
     private var message: String {
         switch MorningMode(from: result.mode) ?? .steady {
-        case .protect: return "You showed up.\nThat's enough for now."
-        case .steady:  return "You're in motion.\nKeep it clean."
-        case .push:    return "Good.\nBuild on that."
+        case .protect: return "You showed up.\nThat's all you needed to do."
+        case .steady:  return "You started.\nKeep it clean."
+        case .push:    return "Good start.\nNow build on it."
         }
     }
 
@@ -24,7 +24,7 @@ struct WinView: View {
                 Spacer()
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("First win")
+                    Text("First win ✓")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.4))
 
@@ -69,7 +69,7 @@ struct WinView: View {
                 Text("Optional")
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.4))
-                Text("Take a quick photo of yourself.\nJust a small smile is enough.")
+                Text("Capture this moment.\nA small smile is enough.")
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.7))
                     .lineSpacing(3)

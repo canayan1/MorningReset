@@ -3,6 +3,8 @@ import SwiftUI
 struct ActionView: View {
     @Environment(AppState.self) private var appState
     @State private var panel: Panel = .main
+    @State private var fetchedHeadlines: [String]? = nil
+    @State private var loadingHeadlines = false
 
     private enum Panel { case main, learn, headlines, action }
 
@@ -27,7 +29,7 @@ struct ActionView: View {
             Spacer()
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Keep going")
+                Text("Want to keep going?")
                     .font(.title2.bold())
                     .foregroundStyle(.white)
                 Text("Optional.")
@@ -38,13 +40,13 @@ struct ActionView: View {
             Spacer().frame(height: 28)
 
             VStack(spacing: 12) {
-                sectionCard(title: "Learn something", subtitle: "One insight worth keeping.") {
+                sectionCard(title: "Learn something new", subtitle: "One insight worth keeping.") {
                     panel = .learn
                 }
-                sectionCard(title: "See what's happening", subtitle: "Brief and neutral.") {
+                sectionCard(title: "Stay informed", subtitle: "Brief and neutral.") {
                     panel = .headlines
                 }
-                sectionCard(title: "Do one more thing", subtitle: "One small action.") {
+                sectionCard(title: "One more step", subtitle: "One small action.") {
                     panel = .action
                 }
             }
@@ -84,6 +86,10 @@ struct ActionView: View {
 
     // MARK: - Headlines
 
+    private var displayHeadlines: [String] {
+        fetchedHeadlines ?? ActionContent.todayHeadlines
+    }
+
     private var headlinesPanel: some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
@@ -93,14 +99,14 @@ struct ActionView: View {
             Spacer().frame(height: 28)
 
             VStack(alignment: .leading, spacing: 0) {
-                ForEach(Array(ActionContent.todayHeadlines.enumerated()), id: \.offset) { index, headline in
+                ForEach(Array(displayHeadlines.enumerated()), id: \.offset) { index, headline in
                     Text(headline)
                         .font(.subheadline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(loadingHeadlines ? .white.opacity(0.3) : .white)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 16)
                         .padding(.horizontal, 20)
-                    if index < ActionContent.todayHeadlines.count - 1 {
+                    if index < displayHeadlines.count - 1 {
                         Rectangle()
                             .fill(Color.white.opacity(0.08))
                             .frame(height: 1)
@@ -110,12 +116,19 @@ struct ActionView: View {
             }
             .background(Color.white.opacity(0.06))
             .clipShape(RoundedRectangle(cornerRadius: 16))
+            .animation(.easeOut(duration: 0.2), value: loadingHeadlines)
 
             Spacer()
 
             doneButton
         }
         .padding(.horizontal, 24)
+        .task {
+            guard fetchedHeadlines == nil, !loadingHeadlines else { return }
+            loadingHeadlines = true
+            fetchedHeadlines = await NewsService.fetchHeadlines()
+            loadingHeadlines = false
+        }
     }
 
     // MARK: - Action
