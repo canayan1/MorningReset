@@ -115,14 +115,15 @@ struct ScheduleSetupView: View {
         updated.weekendMinute = weComps.minute ?? 0
         updated.isEnabled     = true
 
-        let authorized = await AlarmScheduler.requestAuthorization()
+        let backend    = AlarmManager.current
+        let authorized = await backend.requestAuthorization()
         guard authorized else {
             authDenied = true
             return
         }
 
         WakeScheduleStore.save(updated)
-        AlarmScheduler.schedule(updated)
+        await backend.schedule(updated)
         appState.endFlow()
     }
 }

@@ -85,7 +85,7 @@ struct AlarmView: View {
 
     @ViewBuilder
     private var nextAlarmLine: some View {
-        if schedule.isEnabled, let next = AlarmScheduler.nextFireDate(for: schedule) {
+        if schedule.isEnabled, let next = AlarmManager.current.nextFireDate(for: schedule) {
             Text(formatNextAlarm(next))
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
