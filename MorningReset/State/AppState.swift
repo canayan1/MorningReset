@@ -6,6 +6,8 @@ enum Screen {
     case quiz
     case intention
     case results
+    case move
+    case win
     case action
 }
 
@@ -33,6 +35,14 @@ final class AppState {
     func showResults() {
         stopInactivityTimer()
         screen = .results
+    }
+
+    func showMove() {
+        screen = .move
+    }
+
+    func showWin() {
+        screen = .win
     }
 
     func showAction() {

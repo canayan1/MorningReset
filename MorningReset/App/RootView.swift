@@ -10,6 +10,8 @@ struct RootView: View {
             case .quiz:      QuizView().transition(.opacity)
             case .intention: IntentionView().transition(.opacity)
             case .results:   ResultsView().transition(.opacity)
+            case .move:      MoveView().transition(.opacity)
+            case .win:       WinView().transition(.opacity)
             case .action:    ActionView().transition(.opacity)
             }
         }

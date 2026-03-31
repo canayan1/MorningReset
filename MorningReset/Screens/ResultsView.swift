@@ -67,7 +67,7 @@ struct ResultsView: View {
                 Spacer()
 
                 Button(Strings.Results.continueButton) {
-                    appState.showAction()
+                    appState.showMove()
                 }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
