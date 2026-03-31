@@ -1,25 +1,23 @@
 import Foundation
 import UserNotifications
 
-// MARK: - UNAlarmBackend (iOS 17.6+)
+// MARK: - LocalNotificationAlarmManager (iOS 17.6+)
 //
-// Schedules repeating UNCalendarNotificationTrigger requests —
-// one per day-of-week — based on the WakeSchedule.
+// Schedules one repeating UNCalendarNotificationTrigger per day-of-week.
+// Fires at the correct weekday/weekend time from WakeSchedule.
 //
-// Limitation: notification sound respects the device mute switch.
-// UNNotificationSound.defaultCritical bypasses mute, but requires
-// the critical-alerts entitlement (Apple review required).
-// Until that entitlement is granted, .default is used.
+// Wake tap path:
+//   Notification fires → user taps → NotificationDelegate.didReceive →
+//   AlarmEntryRouter.routeToWakeFlow() → appState.startFlow()
 //
-// Wake flow entry: notification fires → user taps banner →
-// NotificationDelegate.didReceive reads userInfo["action"] == "startWakeFlow"
-// → appState.startFlow().
+// Known limitation:
+//   sound = .default respects the device mute switch.
+//   To bypass: use .defaultCritical — requires critical-alerts entitlement
+//   (Apple review required, not yet applied for).
 
-final class UNAlarmBackend: AlarmBackend {
+final class LocalNotificationAlarmManager: AlarmManaging {
 
     private let idPrefix = "mr_wake_"
-
-    // MARK: Authorization
 
     func requestAuthorization() async -> Bool {
         let center   = UNUserNotificationCenter.current()
@@ -30,8 +28,6 @@ final class UNAlarmBackend: AlarmBackend {
         else { return false }
         return granted
     }
-
-    // MARK: Schedule
 
     func schedule(_ schedule: WakeSchedule) async {
         cancel()
@@ -61,14 +57,10 @@ final class UNAlarmBackend: AlarmBackend {
         }
     }
 
-    // MARK: Cancel
-
     func cancel() {
         let ids = (1...7).map { idPrefix + "\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
     }
-
-    // MARK: Next fire date
 
     func nextFireDate(for schedule: WakeSchedule) -> Date? {
         guard schedule.isEnabled else { return nil }
@@ -88,37 +80,39 @@ final class UNAlarmBackend: AlarmBackend {
     }
 }
 
-// MARK: - AlarmKitBackend (iOS 26+)
+// MARK: - AlarmKitManager (iOS 26+)
 //
 // ─────────────────────────────────────────────────────────────────────────
-// ALARMKIT INTEGRATION — STRUCTURE READY, IMPLEMENTATION PENDING
+// STATUS: Structure ready. AlarmKit calls not yet written.
 //
-// When AlarmKit is ready to wire:
-//   1. Add `import AlarmKit` at the top of this file
-//   2. Link AlarmKit.framework in Xcode target → Build Phases → Link Binary
-//   3. Verify required entitlement in Apple developer docs
-//   4. Replace the UNAlarmBackend delegation below with AlarmKit calls:
-//        - AlarmManager.shared (or equivalent) to schedule an alarm
-//        - Handle the AlarmKit wake callback and route to appState.startFlow()
+// To complete this implementation:
+//   1. Add `import AlarmKit` here
+//   2. Link AlarmKit.framework in Xcode → Build Phases → Link Binary With Libraries
+//   3. Verify entitlement requirements at developer.apple.com
+//   4. Replace the LocalNotificationAlarmManager delegation below with AlarmKit calls
+//   5. In AlarmEntryRouter, add any AlarmKit-specific delegate conformance
+//      and call routeToWakeFlow() from the AlarmKit wake callback
 //
-// Until then: this class conforms correctly to AlarmBackend and delegates
-// to UNAlarmBackend. AlarmManager.current will return this type on iOS 26+,
-// so the dual-backend selection path is live end-to-end — only the
-// AlarmKit-specific calls need to be filled in here.
+// AlarmKit provides: bypass silent mode, system-level alarm UI,
+// no critical-alerts entitlement needed. All routing still goes through
+// AlarmEntryRouter — this manager only handles scheduling, not navigation.
+//
+// Until implementation is complete: delegates to LocalNotificationAlarmManager
+// so AlarmManager.current works end-to-end on iOS 26+ devices.
 // ─────────────────────────────────────────────────────────────────────────
 
 @available(iOS 26, *)
-final class AlarmKitBackend: AlarmBackend {
+final class AlarmKitManager: AlarmManaging {
 
-    private let base = UNAlarmBackend()
+    private let base = LocalNotificationAlarmManager()
 
     func requestAuthorization() async -> Bool {
-        // TODO: Request AlarmKit authorization here (if separate from UNUserNotificationCenter).
+        // TODO: Replace with AlarmKit authorization request.
         await base.requestAuthorization()
     }
 
     func schedule(_ schedule: WakeSchedule) async {
-        // TODO: Replace with AlarmKit scheduling call.
+        // TODO: Replace with AlarmKit.AlarmManager.shared.schedule(...) or equivalent.
         await base.schedule(schedule)
     }
 

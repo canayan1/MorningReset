@@ -1,30 +1,36 @@
 import Foundation
 
-// MARK: - AlarmBackend protocol
+// MARK: - AlarmManaging
 //
-// All alarm scheduling in MorningReset goes through this protocol.
-// Views and controllers never reference a specific backend directly.
+// The only interface any scheduling call site touches.
+// Views, ScheduleSetupView, and AlarmEntryRouter depend on this protocol —
+// never on a specific manager class.
 //
-// Implementations:
-//   UNAlarmBackend   — iOS 17.6+, UNUserNotificationCenter, respects mute switch
-//   AlarmKitBackend  — iOS 26+,   AlarmKit, bypasses silent mode (stub until API verified)
+// Current implementations:
+//   LocalNotificationAlarmManager  — iOS 17.6+  (UNUserNotificationCenter)
+//   AlarmKitManager                — iOS 26+    (stub, ready for wiring)
+//
+// To add a new backend:
+//   1. Conform to AlarmManaging
+//   2. Add an availability branch in AlarmManager.current
+//   No other file needs to change.
 
-protocol AlarmBackend {
+protocol AlarmManaging {
     func requestAuthorization() async -> Bool
     func schedule(_ schedule: WakeSchedule) async
     func cancel()
     func nextFireDate(for schedule: WakeSchedule) -> Date?
 }
 
-// MARK: - AlarmManager factory
+// MARK: - AlarmManager
 
 enum AlarmManager {
-    /// Returns the best available backend for the current OS.
-    /// Always call through this — never instantiate a backend directly.
-    static var current: any AlarmBackend {
+    /// Returns the best available manager for the current OS.
+    /// This is the only place that knows which backend is active.
+    static var current: any AlarmManaging {
         if #available(iOS 26, *) {
-            return AlarmKitBackend()
+            return AlarmKitManager()
         }
-        return UNAlarmBackend()
+        return LocalNotificationAlarmManager()
     }
 }

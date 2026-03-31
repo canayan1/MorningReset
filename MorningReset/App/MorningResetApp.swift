@@ -4,40 +4,45 @@ import UserNotifications
 @main
 struct MorningResetApp: App {
     @State private var appState = AppState()
-    private let notificationDelegate = NotificationDelegate()
+
+    // Both objects are created before the scene is ready.
+    // The delegate is registered in init() so cold-launch notification
+    // responses are captured before the first run loop tick.
+    private let router               = AlarmEntryRouter()
+    private let notificationDelegate = WakeNotificationDelegate()
+
+    init() {
+        UNUserNotificationCenter.current().delegate = notificationDelegate
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(appState)
                 .onAppear {
-                    notificationDelegate.appState = appState
-                    UNUserNotificationCenter.current().delegate = notificationDelegate
+                    // Wire appState into the router here, not in init(),
+                    // because @State is not accessible before the scene renders.
+                    router.appState               = appState
+                    notificationDelegate.router   = router
                 }
         }
     }
 }
 
-// MARK: - NotificationDelegate
+// MARK: - WakeNotificationDelegate
 //
-// Intercepts UNUserNotificationCenter callbacks for both backends:
+// Handles UNUserNotificationCenter callbacks for LocalNotificationAlarmManager.
+// Delegates all navigation decisions to AlarmEntryRouter — this class only
+// reads the notification payload and decides whether to route.
 //
-//   UNAlarmBackend path:
-//     Notification fires → user taps banner → didReceive fires →
-//     userInfo["action"] == "startWakeFlow" → appState.startFlow()
-//
-//   AlarmKitBackend path (iOS 26+):
-//     AlarmKit may deliver its own wake callback in addition to or instead of
-//     a standard notification response. When AlarmKitBackend is implemented,
-//     add the AlarmKit delegate conformance here alongside this class,
-//     or extend NotificationDelegate to also conform to the AlarmKit delegate protocol.
-//
-// Both paths route into the same appState.startFlow() entry point.
+// AlarmKit integration note:
+//   When AlarmKitManager is wired, add the AlarmKit delegate conformance
+//   alongside this class (or extend it). Both call router.routeToWakeFlow().
 
-final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
-    var appState: AppState?
+final class WakeNotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
+    var router: AlarmEntryRouter?
 
-    // App is foregrounded when notification fires — show banner and play sound.
+    // Keep banner + sound visible even when app is in foreground.
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
@@ -46,7 +51,7 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
         completionHandler([.banner, .sound])
     }
 
-    // User tapped the notification banner.
+    // User tapped the alarm notification.
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
@@ -54,9 +59,7 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
     ) {
         let action = response.notification.request.content.userInfo["action"] as? String
         if action == "startWakeFlow" {
-            DispatchQueue.main.async {
-                self.appState?.startFlow()
-            }
+            router?.routeToWakeFlow()
         }
         completionHandler()
     }
