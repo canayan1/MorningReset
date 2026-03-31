@@ -11,13 +11,13 @@ struct QuizView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 HStack(spacing: 6) {
                     ForEach(0..<MorningData.questions.count, id: \.self) { i in
                         Capsule()
-                            .fill(i <= index ? Color.white : Color.white.opacity(0.2))
+                            .fill(i <= index ? DS.textPrimary : DS.border)
                             .frame(width: 20, height: 3)
                     }
                 }
@@ -27,7 +27,7 @@ struct QuizView: View {
 
                 Text(question.text)
                     .font(.title.bold())
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DS.textPrimary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
                     .id(index)
@@ -55,10 +55,10 @@ struct QuizView: View {
         } label: {
             Text(label)
                 .font(.headline)
-                .foregroundStyle(isYes ? .black : .white)
+                .foregroundStyle(isYes ? DS.background : DS.textPrimary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(isYes ? Color.white : Color.white.opacity(0.1))
+                .background(isYes ? DS.textPrimary : DS.surface)
                 .clipShape(Capsule())
         }
         .disabled(answered)

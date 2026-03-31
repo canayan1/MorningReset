@@ -15,7 +15,7 @@ struct IntentionView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -23,10 +23,10 @@ struct IntentionView: View {
                 VStack(spacing: 8) {
                     Text("Choose today's direction")
                         .font(.title3.bold())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DS.textPrimary)
                     Text("Pick the quality you want to return to today.")
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.4))
+                        .foregroundStyle(DS.textSecondary)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.horizontal, 24)
@@ -51,8 +51,8 @@ struct IntentionView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(.white)
-                .foregroundStyle(.black)
+                .background(DS.textPrimary)
+                .foregroundStyle(DS.background)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .padding(.horizontal, 24)
                 .padding(.bottom, 48)
@@ -68,19 +68,19 @@ struct IntentionView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(intention.label)
                     .font(.subheadline.bold())
-                    .foregroundStyle(selected ? .black : .white)
+                    .foregroundStyle(selected ? DS.background : DS.textPrimary)
                 Text(descriptors[intention] ?? "")
                     .font(.caption)
-                    .foregroundStyle(selected ? .black.opacity(0.6) : .white.opacity(0.25))
+                    .foregroundStyle(selected ? DS.background.opacity(0.7) : DS.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
             .padding(16)
-            .background(selected ? Color.white : Color.white.opacity(0.07))
+            .background(selected ? DS.textPrimary : DS.surface)
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .overlay(
                 RoundedRectangle(cornerRadius: 14)
-                    .strokeBorder(Color.white.opacity(selected ? 0 : 0.08), lineWidth: 1)
+                    .strokeBorder(selected ? Color.clear : DS.border, lineWidth: 1)
             )
         }
         .animation(.easeOut(duration: 0.15), value: selected)
