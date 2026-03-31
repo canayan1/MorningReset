@@ -40,18 +40,18 @@ enum PatternReader {
         if Set(modes3).count == 1, let mode = modes3.first {
             switch mode {
             case "protect":
-                return "Lately your mornings have been starting slow. That's a pattern — not a problem, just something to work with."
+                return "This morning feels slower — keep it simple."
             case "steady":
-                return "It looks like your mornings have been consistent lately. That kind of baseline is worth holding."
+                return "Start steady. No need to rush."
             case "push":
-                return "Your mornings have had good signal lately. That doesn't mean push harder — it means direct it somewhere useful."
+                return "Move with intention today."
             default: break
             }
         }
 
         let intentions7 = last7.map { $0.intention }
         if let top = intentions7.mostFrequent(), intentions7.filter({ $0 == top }).count >= 3 {
-            return "This week you keep coming back to \(top.capitalized). That kind of pull is usually pointing at something real."
+            return "Today you're leaning toward \(top.capitalized)."
         }
 
         return nil
@@ -65,17 +65,17 @@ enum PatternReader {
         if let top = modes.mostFrequent(), modes.filter({ $0 == top }).count >= 5 {
             switch top {
             case "protect":
-                return "Most of your mornings this week have been in low-energy territory. That's the body asking for margin, not more. Protect that before you push."
+                return "Your mornings have been slower lately."
             case "steady":
-                return "This week your mornings have been consistently workable. That's not boring — it's a rhythm. The question is what you're doing with it."
+                return "You've been leaning toward steadiness recently."
             case "push":
-                return "You've had strong signal most mornings this week. It looks like conditions are good right now. That window won't stay open indefinitely."
+                return "You're building consistency, even if it feels small."
             default: break
             }
         }
 
         if let top = intentions.mostFrequent(), intentions.filter({ $0 == top }).count >= 5 {
-            return "You've been orienting toward \(top.capitalized) most of this week. That kind of consistency usually means it's either still unresolved, or it's where you actually want to go."
+            return "You've been returning to \(top.capitalized) a lot this week."
         }
 
         return nil
@@ -86,41 +86,41 @@ enum PatternReader {
     static func todayReflection(mode: MorningMode, intention: IntentionType) -> String {
         switch (mode, intention) {
         case (.protect, .calm):
-            return "This morning reads as low. That's not a bad thing — it's just information. Calm is the right call."
+            return "Today begins with a lighter step."
         case (.protect, .focus):
-            return "It looks like a slow start today. Focus, in this case, might mean fewer things rather than harder ones."
+            return "Keep your attention where it matters."
         case (.protect, .energy):
-            return "Today's signal is low. Energy today is probably better protected than spent."
+            return "Start steady. No need to rush."
         case (.protect, .confidence):
-            return "This morning reads as low. Confidence today isn't about doing more — it's about not letting that stop you."
+            return "Today is about clarity, not intensity."
         case (.protect, .connection):
-            return "Today starts slow. Showing up quietly is still showing up."
+            return "Move with intention today."
         case (.protect, .discipline):
-            return "This morning is a low one. Discipline today looks like holding the line, not pushing through it."
+            return "This morning feels slower — keep it simple."
         case (.steady, .focus):
-            return "Today looks stable. That's a good condition for staying with one thing — use it before it shifts."
+            return "Keep your attention where it matters."
         case (.steady, .calm):
-            return "You're starting steady today. Calm here isn't passive — it's how you keep the morning clean."
+            return "You're starting with calm today."
         case (.steady, .energy):
-            return "Today has a usable baseline. Not a push day, but enough to make real progress if you direct it."
+            return "Start steady. No need to rush."
         case (.steady, .confidence):
-            return "Steady morning today. The next move doesn't need to be bold — it just needs to happen."
+            return "Today is about clarity, not intensity."
         case (.steady, .connection):
-            return "Today starts on a level surface. Presence is easier when you're not already running behind."
+            return "Move with intention today."
         case (.steady, .discipline):
-            return "This morning looks clean. Discipline in conditions like this is about not wasting the window."
+            return "Today is about clarity, not intensity."
         case (.push, .calm):
-            return "Strong signal this morning. Calm here means directing the energy, not suppressing it."
+            return "You're starting with calm today."
         case (.push, .focus):
-            return "This morning has real momentum. Focus today means picking a target before the window closes."
+            return "Today you're leaning toward Focus."
         case (.push, .energy):
-            return "High signal this morning. The question isn't whether the energy is there — it's where it goes."
+            return "Move with intention today."
         case (.push, .confidence):
-            return "It looks like a strong morning. Conditions like this don't require certainty — they require motion."
+            return "Today is about clarity, not intensity."
         case (.push, .connection):
-            return "Today has good momentum. Presence in a morning like this means bringing something, not just showing up."
+            return "Move with intention today."
         case (.push, .discipline):
-            return "Strong signal today. Discipline here means using it on what actually matters, not just whatever's in front of you."
+            return "Today is about clarity, not intensity."
         }
     }
 }
