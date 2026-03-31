@@ -17,31 +17,39 @@ struct IntentionView: View {
         ZStack {
             DS.background.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                Spacer()
+            VStack(alignment: .leading, spacing: 0) {
 
-                VStack(spacing: 8) {
-                    Text("Choose today's direction")
-                        .font(.title3.bold())
+                // Header — anchored near top, left-aligned
+                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    Text("INTENTION")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(DS.textDim)
+                        .kerning(1.2)
+
+                    Text("Choose today's direction.")
+                        .font(.title2.bold())
                         .foregroundStyle(DS.textPrimary)
+
                     Text("Pick the quality you want to return to today.")
-                        .font(.subheadline)
+                        .font(.footnote)
                         .foregroundStyle(DS.textSecondary)
-                        .multilineTextAlignment(.center)
+                        .lineSpacing(2)
                 }
-                .padding(.horizontal, 24)
+                .padding(.top, 56)
+                .padding(.horizontal, DS.Space.lg)
 
-                Spacer().frame(height: 36)
+                Spacer().frame(height: 32)
 
+                // Intention grid
                 LazyVGrid(
                     columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    spacing: 10
+                    spacing: 12
                 ) {
                     ForEach(IntentionType.allCases, id: \.self) { intention in
                         intentionCard(intention)
                     }
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
@@ -54,7 +62,7 @@ struct IntentionView: View {
                 .background(DS.textPrimary)
                 .foregroundStyle(DS.background)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 24)
+                .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, 48)
             }
         }
@@ -65,18 +73,18 @@ struct IntentionView: View {
         return Button {
             selectedIntention = intention.rawValue
         } label: {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
                 Text(intention.label)
-                    .font(.subheadline.bold())
+                    .font(.callout.bold())
                     .foregroundStyle(selected ? DS.background : DS.textPrimary)
                 Text(descriptors[intention] ?? "")
                     .font(.caption)
-                    .foregroundStyle(selected ? DS.background.opacity(0.7) : DS.textSecondary)
+                    .foregroundStyle(selected ? DS.background.opacity(0.8) : DS.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
-            .padding(16)
-            .background(selected ? DS.textPrimary : DS.surface)
+            .frame(maxWidth: .infinity, minHeight: 80, alignment: .topLeading)
+            .padding(DS.Space.md)
+            .background(selected ? DS.accent : DS.surface)
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .overlay(
                 RoundedRectangle(cornerRadius: 14)
