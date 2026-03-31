@@ -8,13 +8,11 @@ struct ActionView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
-            ZStack {
-                switch panel {
-                case .main:   mainPanel
-                case .learn:  learnPanel
-                case .action: actionPanel
-                }
+            DS.background.ignoresSafeArea()
+            switch panel {
+            case .main:   mainPanel
+            case .learn:  learnPanel
+            case .action: actionPanel
             }
         }
     }
@@ -25,33 +23,43 @@ struct ActionView: View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
 
-            Text("Want to keep going?")
-                .font(.title2.bold())
-                .foregroundStyle(.white)
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text("OPTIONAL")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DS.textDim)
+                    .kerning(1.2)
+
+                Text("Keep going?")
+                    .font(.title2.bold())
+                    .foregroundStyle(DS.textPrimary)
+            }
 
             Spacer().frame(height: 28)
 
-            VStack(spacing: 16) {
-                sectionCard(title: "Learn something new", subtitle: "One insight worth keeping.") {
-                    panel = .learn
-                }
-                sectionCard(title: "One more step", subtitle: "One small action.") {
-                    panel = .action
-                }
+            VStack(spacing: DS.Space.md) {
+                sectionCard(
+                    label: "INSIGHT",
+                    preview: ActionContent.todayInsight
+                ) { panel = .learn }
+
+                sectionCard(
+                    label: "ONE MORE STEP",
+                    preview: ActionContent.todayBonusAction
+                ) { panel = .action }
             }
 
-            Spacer().frame(height: 20)
+            Spacer().frame(height: DS.Space.lg)
 
             Text("No bad vibes. No negative noise.")
                 .font(.caption)
-                .foregroundStyle(.white.opacity(0.25))
+                .foregroundStyle(DS.textDim)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Spacer()
 
             doneButton
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, DS.Space.lg)
     }
 
     // MARK: - Learn
@@ -62,22 +70,15 @@ struct ActionView: View {
 
             backButton
 
-            Spacer().frame(height: 28)
+            Spacer().frame(height: DS.Space.lg)
 
-            Text(ActionContent.todayInsight)
-                .font(.title3.bold())
-                .foregroundStyle(.white)
-                .lineSpacing(5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(28)
-                .background(Color.white.opacity(0.06))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            InfoCard(label: "INSIGHT", value: ActionContent.todayInsight)
 
             Spacer()
 
             doneButton
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, DS.Space.lg)
     }
 
     // MARK: - Action
@@ -88,27 +89,15 @@ struct ActionView: View {
 
             backButton
 
-            Spacer().frame(height: 28)
+            Spacer().frame(height: DS.Space.lg)
 
-            VStack(alignment: .leading, spacing: 16) {
-                Text("One more.")
-                    .font(.caption)
-                    .foregroundStyle(.white.opacity(0.4))
-                Text(ActionContent.todayBonusAction)
-                    .font(.title3.bold())
-                    .foregroundStyle(.white)
-                    .lineSpacing(5)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(28)
-            .background(Color.white.opacity(0.06))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            InfoCard(label: "ONE MORE STEP", value: ActionContent.todayBonusAction)
 
             Spacer()
 
             doneButton
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, DS.Space.lg)
     }
 
     // MARK: - Shared
@@ -117,35 +106,36 @@ struct ActionView: View {
         Button { panel = .main } label: {
             Label(Strings.Action.backButton, systemImage: "chevron.left")
                 .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(DS.textSecondary)
         }
     }
 
     private var doneButton: some View {
         Button("Done") { appState.endFlow() }
             .font(.subheadline)
-            .foregroundStyle(.white.opacity(0.4))
+            .foregroundStyle(DS.textSecondary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .padding(.bottom, 32)
     }
 
-    private func sectionCard(title: String, subtitle: String, action: @escaping () -> Void) -> some View {
+    private func sectionCard(label: String, preview: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(title)
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                    Text(subtitle)
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.5))
-                }
-                Spacer()
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text(label)
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DS.textSecondary)
+                    .kerning(1.2)
+                Text(preview)
+                    .font(.callout)
+                    .foregroundStyle(DS.textPrimary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
             }
-            .padding()
-            .background(Color.white.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DS.Space.md)
+            .background(DS.surface)
+            .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
         }
     }
 }
