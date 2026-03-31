@@ -57,41 +57,38 @@ struct MoveView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Right now.")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.4))
-
-                    Text(action)
-                        .font(.title2.bold())
-                        .foregroundStyle(.white)
-                        .lineSpacing(8)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(28)
-                .background(Color.white.opacity(0.06))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 24)
+                Text(action)
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                    .lineSpacing(8)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
 
                 Spacer()
 
-                Button("Do it now") {
-                    guard !tapped else { return }
-                    tapped = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        appState.showWin()
+                VStack(spacing: 16) {
+                    Button("Start") {
+                        guard !tapped else { return }
+                        tapped = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            appState.showWin()
+                        }
                     }
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 18)
+                    .background(Color.white)
+                    .foregroundStyle(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .disabled(tapped)
+                    .sensoryFeedback(.success, trigger: tapped)
+
+                    Text("Stay here.")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.3))
                 }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(Color.white)
-                .foregroundStyle(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
                 .padding(.horizontal, 24)
                 .padding(.bottom, 48)
-                .disabled(tapped)
-                .sensoryFeedback(.success, trigger: tapped)
             }
         }
     }

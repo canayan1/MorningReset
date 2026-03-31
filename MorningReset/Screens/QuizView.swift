@@ -14,26 +14,22 @@ struct QuizView: View {
             Color.black.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                HStack {
-                    Text(Strings.Quiz.progress(current: index + 1, total: MorningData.questions.count))
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.white.opacity(0.4))
-                    Spacer()
+                HStack(spacing: 6) {
+                    ForEach(0..<MorningData.questions.count, id: \.self) { i in
+                        Capsule()
+                            .fill(i <= index ? Color.white : Color.white.opacity(0.2))
+                            .frame(width: 20, height: 3)
+                    }
                 }
                 .padding(.top, 24)
-                .padding(.horizontal, 24)
 
                 Spacer()
 
                 Text(question.text)
-                    .font(.title2.bold())
+                    .font(.title.bold())
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-                    .padding(40)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.white.opacity(0.06))
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, 40)
                     .id(index)
                     .transition(.opacity)
 
@@ -57,23 +53,13 @@ struct QuizView: View {
             appState.resetInactivityTimer()
             advance()
         } label: {
-            HStack(spacing: 8) {
-                if !isYes {
-                    Image(systemName: "arrow.left")
-                        .font(.caption.bold())
-                }
-                Text(label)
-                    .font(.headline)
-                if isYes {
-                    Image(systemName: "arrow.right")
-                        .font(.caption.bold())
-                }
-            }
-            .foregroundStyle(isYes ? .black : .white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 18)
-            .background(isYes ? Color.white : Color.white.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            Text(label)
+                .font(.headline)
+                .foregroundStyle(isYes ? .black : .white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(isYes ? Color.white : Color.white.opacity(0.1))
+                .clipShape(Capsule())
         }
         .disabled(answered)
     }

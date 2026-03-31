@@ -4,18 +4,6 @@ struct WinView: View {
     @Environment(AppState.self) private var appState
     @AppStorage("selfie_step_seen") private var selfieStepSeen = false
 
-    private var result: MorningResult {
-        MorningData.result(from: appState.answers)
-    }
-
-    private var message: String {
-        switch MorningMode(from: result.mode) ?? .steady {
-        case .protect: return "You showed up.\nThat's all you needed to do."
-        case .steady:  return "You started.\nKeep it clean."
-        case .push:    return "Good start.\nNow build on it."
-        }
-    }
-
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -28,20 +16,19 @@ struct WinView: View {
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.4))
 
-                    Text(message)
-                        .font(.title2.bold())
+                    Text("You started.")
+                        .font(.largeTitle.bold())
                         .foregroundStyle(.white)
-                        .lineSpacing(4)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 40)
 
                 Spacer()
 
                 if !selfieStepSeen {
                     selfieSection
                 } else {
-                    continueButton
+                    doneButton
                 }
             }
         }
@@ -75,7 +62,7 @@ struct WinView: View {
                     .lineSpacing(3)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 40)
             .padding(.bottom, 20)
 
             HStack(spacing: 12) {
@@ -90,7 +77,7 @@ struct WinView: View {
                 .background(Color.white.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
-                Button("Continue") {
+                Button("Done") {
                     selfieStepSeen = true
                     proceed()
                 }
@@ -108,8 +95,8 @@ struct WinView: View {
 
     // MARK: - Normal continue
 
-    private var continueButton: some View {
-        Button("Continue") {
+    private var doneButton: some View {
+        Button("Done") {
             proceed()
         }
         .font(.headline)
