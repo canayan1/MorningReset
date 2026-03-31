@@ -17,11 +17,11 @@ struct MorningResult {
 
 enum MorningData {
     static let questions: [Question] = [
-        Question(text: "Are you still lying in bed?",                        options: ["Yes", "No"]),
-        Question(text: "Do you feel low on energy right now?",               options: ["Yes", "No"]),
-        Question(text: "Would getting up feel difficult right now?",         options: ["Yes", "No"]),
-        Question(text: "Do you want a slow start today?",                    options: ["Yes", "No"]),
-        Question(text: "Can you handle something slightly active right now?", options: ["Yes", "No"]),
+        Question(text: "Are you still lying in bed?",                          options: ["Yes", "No"]),
+        Question(text: "Do you feel low on energy right now?",                 options: ["Yes", "No"]),
+        Question(text: "Would getting up feel difficult?",                     options: ["Yes", "No"]),
+        Question(text: "Do you want a slower start today?",                    options: ["Yes", "No"]),
+        Question(text: "Could you handle a quick physical reset right now?",   options: ["Yes", "No"]),
     ]
 
     private static var variantIndex: Int {

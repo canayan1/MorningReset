@@ -18,27 +18,33 @@ struct MoveView: View {
         switch MorningMode(from: result.mode) ?? .steady {
         case .protect:
             pool = [
-                "Sit up.\nFeet flat on the floor.\nFive slow breaths.",
-                "Roll to your side.\nSit up slowly.\nThree breaths before standing.",
-                "Sit at the edge of the bed.\nOpen the curtains.\nLet the light in.",
-                "Sit up.\nDo three slow shoulder rolls.\nThen stand.",
-                "Feet on the floor.\nSit still for thirty seconds.\nThen stand slowly.",
+                "Sit up.\nFeet down.\nThree slow breaths.",
+                "Sit up.\nLook around the room.\nStay for 10 seconds.",
+                "Feet on the floor.\nHands on your knees.\nBreathe slowly.",
+                "Sit up.\nStretch your neck slowly.\nLeft and right.",
+                "Sit at the edge of the bed.\nStay there.\nBreathe.",
+                "Feet down.\nBack straight.\nThree slow inhales.",
+                "Sit up.\nPlace one hand on your chest.\nBreathe slowly.",
             ]
         case .steady:
             pool = [
-                "Stand up.\nWalk to the kitchen.\nDrink a glass of water.",
-                "Stand up.\nOpen the curtains.\nDrink a glass of water.",
-                "Stand up.\nSplash cold water on your face.",
-                "Stand up.\nStretch your arms overhead for ten seconds.\nThen get water.",
-                "Stand up.\nStep outside for thirty seconds.\nThen get water.",
+                "Stand up.\nGet water.\nDrink slowly.",
+                "Stand up.\nWalk to the kitchen.\nPause there.",
+                "Stand up.\nOpen a window.\nTake one breath.",
+                "Stand up.\nTurn on the light.\nStep forward.",
+                "Stand up.\nTake 5 steps.\nStop.",
+                "Stand up.\nStretch your arms up.\nHold for 5 seconds.",
+                "Stand up.\nWalk across the room.\nTurn back.",
             ]
         case .push:
             pool = [
-                "Stand up.\nDo 10 quick squats.",
-                "Drop and do 10 push-ups.\nRight now.",
-                "Stand up.\nJump 10 times.\nGo.",
-                "Splash cold water on your face.\nThen do 5 fast squats.",
-                "15 jumping jacks.\nNo warmup needed.",
+                "Ten squats.\nNow.",
+                "Jump in place.\n10 seconds.",
+                "Five push-ups.\nRight now.",
+                "Fast walk across the room.\nTwice.",
+                "Arms up.\nShake out your body.\n10 seconds.",
+                "Step forward fast.\nTurn.\nRepeat.",
+                "Quick stretch.\nReach high.\nThen move.",
             ]
         }
         return pool[Self.dayIndex % pool.count]
