@@ -32,6 +32,7 @@ final class AppState {
     var paywallContext: PaywallContext = .contextual
     var insightStrength: InsightStrength = .none
     var insightText: String = ""
+    var sessionMode: MorningMode = .steady
 
     private var inactivityTimer: Timer?
 
@@ -60,6 +61,7 @@ final class AppState {
         paywallContext = .contextual
         insightStrength = .none
         insightText = ""
+        sessionMode = .steady
         screen = .quiz
         resetInactivityTimer()
     }
@@ -115,6 +117,7 @@ final class AppState {
         let intention = IntentionType(rawValue: intentionStr) ?? .focus
         let result = MorningData.result(from: answers)
         let mode = MorningMode(from: result.mode) ?? .steady
+        sessionMode = mode
 
         switch strength {
         case .none:

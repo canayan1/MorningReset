@@ -51,6 +51,19 @@ struct InsightPreviewView: View {
 
                 contentCard
 
+                Spacer().frame(height: DS.Space.md)
+
+                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    Text("THIS WEEK")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(DS.textDim)
+                        .kerning(1.2)
+                    Text(MantraEngine.weeklyMantra())
+                        .font(.caption)
+                        .foregroundStyle(DS.textSecondary)
+                        .lineSpacing(3)
+                }
+
                 Spacer()
 
                 Button("Continue") {

@@ -2,9 +2,41 @@ import SwiftUI
 
 struct ActionView: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.openURL) private var openURL
     @State private var panel: Panel = .main
+    @State private var soundDirection: SoundDirection = .focus
 
     private enum Panel { case main, learn, action }
+
+    private enum SoundDirection: CaseIterable, Identifiable {
+        case calm, focus, energy
+
+        var id: Self { self }
+
+        var label: String {
+            switch self {
+            case .calm:   return "Calm"
+            case .focus:  return "Focus"
+            case .energy: return "Energy"
+            }
+        }
+
+        var url: URL? {
+            switch self {
+            case .calm:   return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY")
+            case .focus:  return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DXZeyjIkhend1")
+            case .energy: return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP")
+            }
+        }
+
+        static func recommended(for mode: MorningMode) -> SoundDirection {
+            switch mode {
+            case .protect: return .calm
+            case .steady:  return .focus
+            case .push:    return .energy
+            }
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -36,6 +68,22 @@ struct ActionView: View {
 
             Spacer().frame(height: 28)
 
+            // MARK: Sound direction
+            VStack(alignment: .leading, spacing: DS.Space.sm) {
+                Text("SOUND")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DS.textDim)
+                    .kerning(1.2)
+
+                HStack(spacing: DS.Space.sm) {
+                    ForEach(SoundDirection.allCases) { direction in
+                        soundChip(direction)
+                    }
+                }
+            }
+
+            Spacer().frame(height: DS.Space.md)
+
             VStack(spacing: DS.Space.md) {
                 sectionCard(
                     label: "INSIGHT",
@@ -64,6 +112,7 @@ struct ActionView: View {
             doneButton
         }
         .padding(.horizontal, DS.Space.lg)
+        .onAppear { soundDirection = SoundDirection.recommended(for: appState.sessionMode) }
     }
 
     // MARK: - Learn
@@ -121,6 +170,22 @@ struct ActionView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .padding(.bottom, 32)
+    }
+
+    private func soundChip(_ direction: SoundDirection) -> some View {
+        let selected = soundDirection == direction
+        return Button {
+            soundDirection = direction
+            if let url = direction.url { openURL(url) }
+        } label: {
+            Text(direction.label)
+                .font(.system(size: 13, weight: selected ? .semibold : .regular))
+                .foregroundStyle(selected ? DS.background : DS.textSecondary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(selected ? DS.textPrimary : DS.surface)
+                .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        }
     }
 
     private var mobilityCard: some View {
