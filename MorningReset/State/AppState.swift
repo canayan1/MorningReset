@@ -14,6 +14,7 @@ enum Screen {
     case insightPreview
     case paywall
     case guidedPause
+    case mobilityFlow
 }
 
 @Observable
@@ -33,6 +34,13 @@ final class AppState {
     var insightText: String = ""
 
     private var inactivityTimer: Timer?
+
+    // MARK: - Mobility state
+    var currentMobilityFlow: MobilityFlow? = nil
+    var currentMobilityMoveIndex: Int = 0
+    var mobilitySecondsRemaining: Int = 0
+    var isMobilityRunning: Bool = false
+    private var mobilityTimer: Timer?
 
     init() {
         isPremium            = UserDefaults.standard.bool(forKey: "premium_unlocked")
@@ -172,6 +180,66 @@ final class AppState {
         paywallLastShownDate = Date().timeIntervalSince1970
         paywallShownThisFlow = true
         UserDefaults.standard.set(paywallLastShownDate, forKey: "paywall_last_shown_date")
+    }
+
+    // MARK: - Mobility methods
+
+    func openMobilityFlow() {
+        let flow = MobilityLibrary.flow()
+        currentMobilityFlow = flow
+        currentMobilityMoveIndex = 0
+        mobilitySecondsRemaining = flow.moves.first?.duration ?? 0
+        isMobilityRunning = false
+        screen = .mobilityFlow
+    }
+
+    func startMobility() {
+        guard currentMobilityFlow != nil else { return }
+        isMobilityRunning = true
+        mobilityTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            DispatchQueue.main.async { self?.tickMobility() }
+        }
+    }
+
+    func pauseMobility() {
+        mobilityTimer?.invalidate()
+        mobilityTimer = nil
+        isMobilityRunning = false
+    }
+
+    func resumeMobility() {
+        guard currentMobilityFlow != nil, !isMobilityRunning else { return }
+        startMobility()
+    }
+
+    func advanceMobilityMove() {
+        guard let flow = currentMobilityFlow else { return }
+        let nextIndex = currentMobilityMoveIndex + 1
+        if nextIndex < flow.moves.count {
+            currentMobilityMoveIndex = nextIndex
+            mobilitySecondsRemaining = flow.moves[nextIndex].duration
+        } else {
+            completeMobilityFlow()
+        }
+    }
+
+    func completeMobilityFlow() {
+        mobilityTimer?.invalidate()
+        mobilityTimer = nil
+        isMobilityRunning = false
+        currentMobilityFlow = nil
+        screen = .action
+    }
+
+    private func tickMobility() {
+        if mobilitySecondsRemaining > 1 {
+            mobilitySecondsRemaining -= 1
+        } else {
+            mobilityTimer?.invalidate()
+            mobilityTimer = nil
+            isMobilityRunning = false
+            advanceMobilityMove()
+        }
     }
 
     // MARK: - Inactivity timer

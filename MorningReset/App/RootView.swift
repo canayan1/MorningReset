@@ -33,6 +33,7 @@ struct RootView: View {
             case .insightPreview: InsightPreviewView().transition(.opacity)
             case .paywall:        PaywallView(context: appState.paywallContext).transition(.opacity)
             case .guidedPause:    GuidedPauseView().transition(.opacity)
+            case .mobilityFlow:   MobilityFlowView().transition(.opacity)
             }
         }
         .animation(.easeOut(duration: 0.2), value: appState.screen)
