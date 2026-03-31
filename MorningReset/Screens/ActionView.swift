@@ -46,6 +46,10 @@ struct ActionView: View {
                     label: "ONE MORE STEP",
                     preview: ActionContent.todayBonusAction
                 ) { panel = .action }
+
+                if appState.isPremium {
+                    mobilityCard
+                }
             }
 
             Spacer().frame(height: DS.Space.lg)
@@ -117,6 +121,32 @@ struct ActionView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .padding(.bottom, 32)
+    }
+
+    private var mobilityCard: some View {
+        let flow = MobilityLibrary.flow()
+        return Button { appState.openMobilityFlow() } label: {
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text("MOBILITY · 5 MIN")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DS.textSecondary)
+                    .kerning(1.2)
+                Text(flow.title)
+                    .font(.callout)
+                    .foregroundStyle(DS.textPrimary)
+                    .multilineTextAlignment(.leading)
+                Text(flow.subtitle)
+                    .font(.caption)
+                    .foregroundStyle(DS.textSecondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 2)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DS.Space.md)
+            .background(DS.surface)
+            .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        }
     }
 
     private func sectionCard(label: String, preview: String, action: @escaping () -> Void) -> some View {
