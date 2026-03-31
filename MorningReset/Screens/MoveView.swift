@@ -10,9 +10,9 @@ struct MoveView: View {
 
     private var action: String {
         switch MorningMode(from: result.mode) ?? .steady {
-        case .protect: return "Sit at the edge of your bed.\nFeet flat on the floor.\nThree slow breaths."
-        case .steady:  return "Stand up.\nPour a glass of water.\nDrink it slowly."
-        case .push:    return "Ten squats.\nRight now, before anything else."
+        case .protect: return "Sit up. Put your feet on the floor.\nTake 5 slow breaths."
+        case .steady:  return "Stand up. Walk to the kitchen.\nDrink a glass of water."
+        case .push:    return "Stand up and do 10 quick squats."
         }
     }
 
@@ -41,7 +41,7 @@ struct MoveView: View {
 
                 Spacer()
 
-                Button("I did it") {
+                Button("Do it now") {
                     guard !tapped else { return }
                     tapped = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
