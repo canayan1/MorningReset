@@ -47,6 +47,22 @@ struct WinView: View {
         }
     }
 
+    // MARK: - Shared progression
+
+    private func proceed() {
+        let current = UserDefaults.standard.integer(forKey: "completed_wins")
+        let updated = current + 1
+        if updated >= 7 {
+            UserDefaults.standard.set(0, forKey: "completed_wins")
+            appState.showCycleComplete()
+        } else {
+            UserDefaults.standard.set(updated, forKey: "completed_wins")
+            appState.showAction()
+        }
+    }
+
+    // MARK: - Selfie step (first run only)
+
     private var selfieSection: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
@@ -65,7 +81,7 @@ struct WinView: View {
             HStack(spacing: 12) {
                 Button("Skip") {
                     selfieStepSeen = true
-                    appState.showAction()
+                    proceed()
                 }
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.5))
@@ -76,7 +92,7 @@ struct WinView: View {
 
                 Button("Continue") {
                     selfieStepSeen = true
-                    appState.showAction()
+                    proceed()
                 }
                 .font(.headline)
                 .foregroundStyle(.black)
@@ -90,9 +106,11 @@ struct WinView: View {
         }
     }
 
+    // MARK: - Normal continue
+
     private var continueButton: some View {
         Button("Continue") {
-            appState.showAction()
+            proceed()
         }
         .font(.headline)
         .frame(maxWidth: .infinity)

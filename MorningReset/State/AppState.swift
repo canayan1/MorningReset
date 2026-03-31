@@ -8,6 +8,7 @@ enum Screen {
     case results
     case move
     case win
+    case cycleComplete
     case action
 }
 
@@ -43,6 +44,10 @@ final class AppState {
 
     func showWin() {
         screen = .win
+    }
+
+    func showCycleComplete() {
+        screen = .cycleComplete
     }
 
     func showAction() {
