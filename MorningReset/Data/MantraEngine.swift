@@ -42,32 +42,32 @@ enum MantraEngine {
 
         let modifier: String
         switch intention {
-        case .calm:        modifier = "Begin with calm."
-        case .focus:       modifier = "Stay on one thing."
-        case .energy:      modifier = "Channel what you have."
-        case .confidence:  modifier = "Move as if it's already done."
-        case .connection:  modifier = "Start with presence."
-        case .discipline:  modifier = "Do the work first."
+        case .calm:        modifier = "Calm is the method."
+        case .focus:       modifier = "One thing at a time."
+        case .energy:      modifier = "Direct what you have."
+        case .confidence:  modifier = "Act on what you know."
+        case .connection:  modifier = "Presence over performance."
+        case .discipline:  modifier = "Do the first thing."
         }
 
         return "\(base) \(modifier)"
     }
 
     private static let protectBases = [
-        "Protect your energy today.",
-        "This morning calls for stability.",
-        "Move slow and stay intact."
+        "Slow is still forward.",
+        "Protect the baseline first.",
+        "Less today means more tomorrow."
     ]
 
     private static let steadyBases = [
-        "Use this morning well.",
-        "You have enough to move forward.",
-        "Keep the rhythm, not the rush."
+        "Use the window while it's open.",
+        "Clean conditions. Don't waste them.",
+        "Momentum doesn't need a perfect start."
     ]
 
     private static let pushBases = [
-        "Your drive is here. Use it.",
-        "The morning is yours.",
-        "Move early. Move deliberately."
+        "The signal is here. Move on it.",
+        "Don't ease into a morning like this.",
+        "Move before the day finds you."
     ]
 }
