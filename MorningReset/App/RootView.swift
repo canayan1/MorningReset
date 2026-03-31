@@ -30,6 +30,9 @@ struct RootView: View {
             case .win:           WinView().transition(.opacity)
             case .cycleComplete: CycleCompleteView().transition(.opacity)
             case .action:        ActionView().transition(.opacity)
+            case .insightPreview: InsightPreviewView().transition(.opacity)
+            case .paywall:        PaywallView(context: appState.paywallContext).transition(.opacity)
+            case .guidedPause:    GuidedPauseView().transition(.opacity)
             }
         }
         .animation(.easeOut(duration: 0.2), value: appState.screen)
