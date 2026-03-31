@@ -53,7 +53,11 @@ final class LocalNotificationAlarmManager: AlarmManaging {
                 content:    content,
                 trigger:    trigger
             )
-            center.add(request)
+            do {
+                try await center.add(request)
+            } catch {
+                // Scheduling failure for a single slot is non-fatal; continue remaining days.
+            }
         }
     }
 
