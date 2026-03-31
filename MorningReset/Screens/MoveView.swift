@@ -8,12 +8,40 @@ struct MoveView: View {
         MorningData.result(from: appState.answers)
     }
 
+    // Deterministic: same action for the entire calendar day, cycles through pool.
+    private static var dayIndex: Int {
+        Calendar.current.component(.day, from: Date())
+    }
+
     private var action: String {
+        let pool: [String]
         switch MorningMode(from: result.mode) ?? .steady {
-        case .protect: return "Sit up. Put your feet on the floor.\nTake 5 slow breaths."
-        case .steady:  return "Stand up. Walk to the kitchen.\nDrink a glass of water."
-        case .push:    return "Stand up and do 10 quick squats."
+        case .protect:
+            pool = [
+                "Sit up.\nFeet flat on the floor.\nFive slow breaths.",
+                "Lie still.\nThree deep breaths.\nThen sit up slowly.",
+                "Sit at the edge of the bed.\nRoll your shoulders back.\nTwo minutes of stillness.",
+                "Put your feet on the floor.\nSit upright.\nNotice how you feel.",
+                "Breathe in for four counts.\nHold for four.\nOut for four.\nRepeat three times.",
+            ]
+        case .steady:
+            pool = [
+                "Stand up.\nWalk to the kitchen.\nDrink a glass of water.",
+                "Stand up.\nStretch your arms overhead.\nHold for ten seconds.\nThen get water.",
+                "Walk to the nearest window.\nLook outside for thirty seconds.\nThen get water.",
+                "Stand up.\nWalk to another room and back.\nThen sit down with water.",
+                "Stand up.\nRoll your neck side to side.\nDrink a glass of water.",
+            ]
+        case .push:
+            pool = [
+                "Stand up.\nDo 10 quick squats.",
+                "Drop and do 10 push-ups.\nRight now.",
+                "Stand up.\nJump 10 times.\nGo.",
+                "15 jumping jacks.\nDon't think, just move.",
+                "10 squats, 5 push-ups.\nDone.",
+            ]
         }
+        return pool[Self.dayIndex % pool.count]
     }
 
     var body: some View {
