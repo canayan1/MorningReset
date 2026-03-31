@@ -19,26 +19,26 @@ struct MoveView: View {
         case .protect:
             pool = [
                 "Sit up.\nFeet flat on the floor.\nFive slow breaths.",
-                "Lie still.\nThree deep breaths.\nThen sit up slowly.",
-                "Sit at the edge of the bed.\nRoll your shoulders back.\nTwo minutes of stillness.",
-                "Put your feet on the floor.\nSit upright.\nNotice how you feel.",
-                "Breathe in for four counts.\nHold for four.\nOut for four.\nRepeat three times.",
+                "Roll to your side.\nSit up slowly.\nThree breaths before standing.",
+                "Sit at the edge of the bed.\nOpen the curtains.\nLet the light in.",
+                "Sit up.\nDo three slow shoulder rolls.\nThen stand.",
+                "Feet on the floor.\nSit still for thirty seconds.\nThen stand slowly.",
             ]
         case .steady:
             pool = [
                 "Stand up.\nWalk to the kitchen.\nDrink a glass of water.",
-                "Stand up.\nStretch your arms overhead.\nHold for ten seconds.\nThen get water.",
-                "Walk to the nearest window.\nLook outside for thirty seconds.\nThen get water.",
-                "Stand up.\nWalk to another room and back.\nThen sit down with water.",
-                "Stand up.\nRoll your neck side to side.\nDrink a glass of water.",
+                "Stand up.\nOpen the curtains.\nDrink a glass of water.",
+                "Stand up.\nSplash cold water on your face.",
+                "Stand up.\nStretch your arms overhead for ten seconds.\nThen get water.",
+                "Stand up.\nStep outside for thirty seconds.\nThen get water.",
             ]
         case .push:
             pool = [
                 "Stand up.\nDo 10 quick squats.",
                 "Drop and do 10 push-ups.\nRight now.",
                 "Stand up.\nJump 10 times.\nGo.",
-                "15 jumping jacks.\nDon't think, just move.",
-                "10 squats, 5 push-ups.\nDone.",
+                "Splash cold water on your face.\nThen do 5 fast squats.",
+                "15 jumping jacks.\nNo warmup needed.",
             ]
         }
         return pool[Self.dayIndex % pool.count]
