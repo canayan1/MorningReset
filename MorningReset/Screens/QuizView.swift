@@ -40,8 +40,8 @@ struct QuizView: View {
                 Spacer()
 
                 HStack(spacing: 12) {
-                    answerButton(label: "No", answer: "No")
-                    answerButton(label: "Yes", answer: "Yes")
+                    answerButton(label: "No", answer: "No", isYes: false)
+                    answerButton(label: "Yes", answer: "Yes", isYes: true)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 48)
@@ -49,7 +49,7 @@ struct QuizView: View {
         }
     }
 
-    private func answerButton(label: String, answer: String) -> some View {
+    private func answerButton(label: String, answer: String, isYes: Bool) -> some View {
         Button {
             guard !answered else { return }
             answered = true
@@ -57,13 +57,23 @@ struct QuizView: View {
             appState.resetInactivityTimer()
             advance()
         } label: {
-            Text(label)
-                .font(.headline)
-                .foregroundStyle(answer == "Yes" ? .black : .white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(answer == "Yes" ? Color.white : Color.white.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+            HStack(spacing: 8) {
+                if !isYes {
+                    Image(systemName: "arrow.left")
+                        .font(.caption.bold())
+                }
+                Text(label)
+                    .font(.headline)
+                if isYes {
+                    Image(systemName: "arrow.right")
+                        .font(.caption.bold())
+                }
+            }
+            .foregroundStyle(isYes ? .black : .white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 18)
+            .background(isYes ? Color.white : Color.white.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
         }
         .disabled(answered)
     }

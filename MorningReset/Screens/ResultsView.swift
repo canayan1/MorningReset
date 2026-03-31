@@ -82,19 +82,19 @@ struct ResultsView: View {
             .padding(.horizontal, 24)
         }
         .task {
-            try? await Task.sleep(nanoseconds: 100_000_000)
+            try? await Task.sleep(nanoseconds:  80_000_000)
             revealed = 1
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 120_000_000)
             revealed = 2
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 220_000_000)
             revealed = 3
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 240_000_000)
             revealed = 4
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 260_000_000)
             revealed = 5
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 300_000_000)
             revealed = 6
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 350_000_000)
             revealed = 7
         }
     }

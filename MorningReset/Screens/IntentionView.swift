@@ -5,33 +5,37 @@ struct IntentionView: View {
     @AppStorage("selected_intention") private var selectedIntention: String = IntentionType.focus.rawValue
 
     private let descriptors: [IntentionType: String] = [
-        .calm:        "settle the morning",
-        .focus:       "one clear target",
-        .energy:      "get it moving",
-        .confidence:  "own what's ahead",
-        .connection:  "open to others",
-        .discipline:  "do it anyway",
+        .calm:        "Move without noise",
+        .focus:       "Stay with what matters",
+        .energy:      "Protect and use your fuel well",
+        .confidence:  "Trust your next move",
+        .connection:  "Show up with presence",
+        .discipline:  "Return to clean action",
     ]
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            VStack(spacing: 32) {
+            VStack(spacing: 0) {
                 Spacer()
 
                 VStack(spacing: 8) {
-                    Text("What do you want from today?")
+                    Text("Choose today's direction")
                         .font(.title3.bold())
                         .foregroundStyle(.white)
-                    Text("Pick one.")
+                    Text("Pick the quality you want to return to today.")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.4))
+                        .multilineTextAlignment(.center)
                 }
+                .padding(.horizontal, 24)
+
+                Spacer().frame(height: 36)
 
                 LazyVGrid(
                     columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    spacing: 12
+                    spacing: 10
                 ) {
                     ForEach(IntentionType.allCases, id: \.self) { intention in
                         intentionCard(intention)
@@ -61,18 +65,24 @@ struct IntentionView: View {
         return Button {
             selectedIntention = intention.rawValue
         } label: {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(intention.label)
-                    .font(.headline)
+                    .font(.subheadline.bold())
                     .foregroundStyle(selected ? .black : .white)
                 Text(descriptors[intention] ?? "")
                     .font(.caption)
-                    .foregroundStyle(selected ? .black.opacity(0.55) : .white.opacity(0.4))
+                    .foregroundStyle(selected ? .black.opacity(0.6) : .white.opacity(0.25))
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
             .padding(16)
-            .background(selected ? Color.white : Color.white.opacity(0.08))
+            .background(selected ? Color.white : Color.white.opacity(0.07))
             .clipShape(RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(Color.white.opacity(selected ? 0 : 0.08), lineWidth: 1)
+            )
         }
+        .animation(.easeOut(duration: 0.15), value: selected)
     }
 }
