@@ -3,38 +3,42 @@ import SwiftUI
 // MARK: - Context
 
 enum PaywallContext {
+    case onboarding  // soft entry, first-launch or About
     case contextual  // triggered after strong pattern insight
     case periodic    // triggered after 21-day gap
-    case manual      // opened from About
 }
 
 // MARK: - Copy model
 
 private struct PaywallCopy {
     let headline: String
-    let body: String?          // nil → show feature rows instead
+    let body: String
+    let features: [String]
     let primaryCTA: String
     let secondaryCTA: String
 
+    static let onboarding = PaywallCopy(
+        headline: "Start your mornings differently",
+        body: "Take a moment before the day takes over.",
+        features: [],
+        primaryCTA: "Try Morning Reset",
+        secondaryCTA: "Continue"
+    )
+
     static let contextual = PaywallCopy(
-        headline: "There's more to this pattern.",
-        body: "Premium shows you what's been showing up in your mornings — and gives you a moment to use it.",
-        primaryCTA: "Unlock Premium",
-        secondaryCTA: "Continue without"
+        headline: "Go deeper with your mornings",
+        body: "Notice your patterns.\nAdjust your direction.\nBuild consistency over time.",
+        features: ["Pattern-based insights", "Adaptive daily guidance", "Extended reset flow"],
+        primaryCTA: "Start free trial",
+        secondaryCTA: "Continue free"
     )
 
     static let periodic = PaywallCopy(
-        headline: "A deeper reset exists.",
-        body: nil,
-        primaryCTA: "Unlock Premium",
+        headline: "Want to go deeper?",
+        body: "Unlock a more personalized reset experience.",
+        features: [],
+        primaryCTA: "Learn more",
         secondaryCTA: "Not now"
-    )
-
-    static let manual = PaywallCopy(
-        headline: "Your reset, deeper.",
-        body: "Pattern awareness, adaptive guidance, and a guided reflection — built into the same morning flow. All local.",
-        primaryCTA: "Unlock Premium",
-        secondaryCTA: "Maybe later"
     )
 }
 
@@ -49,9 +53,9 @@ struct PaywallView: View {
 
     private var copy: PaywallCopy {
         switch context {
+        case .onboarding: return .onboarding
         case .contextual: return .contextual
         case .periodic:   return .periodic
-        case .manual:     return .manual
         }
     }
 
@@ -75,16 +79,15 @@ struct PaywallView: View {
 
                 Spacer().frame(height: DS.Space.lg)
 
-                if let body = copy.body {
-                    Text(body)
-                        .font(.callout)
-                        .foregroundStyle(DS.textSecondary)
-                        .lineSpacing(3)
-                } else {
+                Text(copy.body)
+                    .font(.callout)
+                    .foregroundStyle(DS.textSecondary)
+                    .lineSpacing(3)
+
+                if !copy.features.isEmpty {
+                    Spacer().frame(height: DS.Space.md)
                     VStack(spacing: DS.Space.sm) {
-                        featureRow("Pattern awareness over time")
-                        featureRow("Adaptive morning guidance")
-                        featureRow("Guided reflection pause")
+                        ForEach(copy.features, id: \.self) { featureRow($0) }
                     }
                 }
 
