@@ -90,25 +90,21 @@ struct AlarmView: View {
     // MARK: - Onboarding card
 
     private var onboardingCard: some View {
-        HStack(alignment: .top, spacing: DS.Space.md) {
-            VStack(alignment: .leading, spacing: DS.Space.xs) {
-                Text("Begin before autopilot does.")
-                    .font(.callout.bold())
-                    .foregroundStyle(DS.background)
-                Text("A short reset that helps you choose how your morning starts.")
-                    .font(.caption)
-                    .foregroundStyle(DS.background.opacity(0.65))
-                    .lineSpacing(2)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer()
-            Button {
+        VStack(alignment: .leading, spacing: DS.Space.sm) {
+            Text("Start your day on your terms")
+                .font(.callout.bold())
+                .foregroundStyle(DS.background)
+            Text("Before notifications.\nBefore the scroll.\nTake a moment to set your direction.")
+                .font(.caption)
+                .foregroundStyle(DS.background.opacity(0.65))
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+            Button("Start your first reset") {
                 appState.dismissOnboarding()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(DS.background.opacity(0.35))
+                appState.startFlow()
             }
+            .font(.caption.bold())
+            .foregroundStyle(DS.background)
         }
         .padding(DS.Space.md)
         .background(DS.textPrimary)
