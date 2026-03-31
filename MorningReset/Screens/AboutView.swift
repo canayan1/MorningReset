@@ -72,7 +72,7 @@ struct AboutView: View {
             }
         }
         .sheet(isPresented: $showPaywall) {
-            PaywallView(context: .manual, isSheet: true)
+            PaywallView(context: .onboarding, isSheet: true)
         }
     }
 }
