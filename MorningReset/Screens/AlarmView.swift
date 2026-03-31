@@ -36,6 +36,10 @@ struct AlarmView: View {
                         .font(.system(size: 38, weight: .bold))
                         .foregroundStyle(DS.textPrimary)
 
+                    Text("No bad vibes. No negative noise.")
+                        .font(.callout)
+                        .foregroundStyle(DS.textSecondary)
+
                     nextAlarmLine
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
