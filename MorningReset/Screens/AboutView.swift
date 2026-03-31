@@ -19,29 +19,36 @@ struct AboutView: View {
 
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 28) {
                     Text("About Morning Reset")
                         .font(.title3.bold())
                         .foregroundStyle(.white)
 
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Morning Reset helps you break the habit of reaching for your phone when you wake up.")
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Most mornings don't really start.")
+                            .font(.body.bold())
+                            .foregroundStyle(.white)
+
+                        Text("You wake up,\nreach for your phone,\nand begin reacting to everything around you.")
                             .foregroundStyle(.white.opacity(0.8))
 
-                        Text("Instead of scrolling, you take one small action.\n\nThat action becomes your first win.\n\nFrom there, the day feels easier to start.")
+                        Text("It feels harmless.\n\nBut it sets the tone of your day.")
                             .foregroundStyle(.white.opacity(0.8))
 
-                        Text("You don't need motivation.\nYou just need one small movement.\n\nThat's enough.")
+                        Text("Morning Reset interrupts that pattern.")
+                            .foregroundStyle(.white.opacity(0.8))
+
+                        Text("Instead of scrolling,\nyou take one small action.\n\nThat action becomes your first win.\n\nFrom there,\nyou start your day on your own terms.")
                             .foregroundStyle(.white.opacity(0.8))
                     }
                     .font(.body)
-                    .lineSpacing(3)
+                    .lineSpacing(4)
                 }
                 .padding(.horizontal, 24)
 
                 Spacer()
 
-                Text("Break the scroll. Start with a win.")
+                Text("Start with a win.")
                     .font(.caption)
                     .italic()
                     .foregroundStyle(.white.opacity(0.2))

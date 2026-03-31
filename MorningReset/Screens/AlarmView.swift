@@ -16,7 +16,7 @@ struct AlarmView: View {
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
 
-                    Text("Get up. Take two minutes.")
+                    Text("Start before you react.")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.6))
                 }
