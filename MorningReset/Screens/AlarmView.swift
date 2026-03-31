@@ -4,6 +4,7 @@ struct AlarmView: View {
     @Environment(AppState.self) private var appState
     @State private var showAbout = false
     @State private var schedule  = WakeScheduleStore.load()
+    @State private var autoAdvanceTask: Task<Void, Never>? = nil
 
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
@@ -49,17 +50,8 @@ struct AlarmView: View {
 
                 // Actions
                 VStack(spacing: DS.Space.sm) {
-                    Button("Begin") {
-                        appState.startFlow()
-                    }
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(DS.textPrimary)
-                    .foregroundStyle(DS.background)
-                    .clipShape(Rectangle())
-
                     Button("Set wake schedule") {
+                        cancelAutoAdvance()
                         appState.showScheduleSetup()
                     }
                     .font(.subheadline)
@@ -75,10 +67,31 @@ struct AlarmView: View {
         }
         .onAppear {
             schedule = WakeScheduleStore.load()
+            scheduleAutoAdvance()
+        }
+        .onDisappear {
+            cancelAutoAdvance()
         }
         .sheet(isPresented: $showAbout) {
             AboutView()
         }
+    }
+
+    // MARK: - Auto-advance
+
+    private func scheduleAutoAdvance() {
+        autoAdvanceTask = Task {
+            try? await Task.sleep(for: .seconds(1.5))
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                appState.startFlow()
+            }
+        }
+    }
+
+    private func cancelAutoAdvance() {
+        autoAdvanceTask?.cancel()
+        autoAdvanceTask = nil
     }
 
     // MARK: - Next alarm display
