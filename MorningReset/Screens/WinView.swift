@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WinView: View {
     @Environment(AppState.self) private var appState
+    @AppStorage("selfie_step_seen") private var selfieStepSeen = false
 
     private var result: MorningResult {
         MorningData.result(from: appState.answers)
@@ -37,25 +38,69 @@ struct WinView: View {
 
                 Spacer()
 
-                Text("Optional: take a quick photo of yourself.\nA small smile is enough.")
+                if !selfieStepSeen {
+                    selfieSection
+                } else {
+                    continueButton
+                }
+            }
+        }
+    }
+
+    private var selfieSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Optional")
                     .font(.caption)
-                    .foregroundStyle(.white.opacity(0.25))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 24)
+                    .foregroundStyle(.white.opacity(0.4))
+                Text("Take a quick photo of yourself.\nJust a small smile is enough.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.7))
+                    .lineSpacing(3)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 20)
+
+            HStack(spacing: 12) {
+                Button("Skip") {
+                    selfieStepSeen = true
+                    appState.showAction()
+                }
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.5))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(Color.white.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
 
                 Button("Continue") {
+                    selfieStepSeen = true
                     appState.showAction()
                 }
                 .font(.headline)
+                .foregroundStyle(.black)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(.white)
-                .foregroundStyle(.black)
+                .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
             }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 48)
         }
+    }
+
+    private var continueButton: some View {
+        Button("Continue") {
+            appState.showAction()
+        }
+        .font(.headline)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 18)
+        .background(.white)
+        .foregroundStyle(.black)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 24)
+        .padding(.bottom, 48)
     }
 }

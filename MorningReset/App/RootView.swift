@@ -2,8 +2,23 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AppState.self) private var appState
+    @AppStorage("onboarding_complete") private var onboardingComplete = false
 
     var body: some View {
+        ZStack {
+            if !onboardingComplete {
+                OnboardingView()
+                    .transition(.opacity)
+            } else {
+                mainFlow
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeOut(duration: 0.3), value: onboardingComplete)
+    }
+
+    @ViewBuilder
+    private var mainFlow: some View {
         ZStack {
             switch appState.screen {
             case .alarm:     AlarmView().transition(.opacity)

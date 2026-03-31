@@ -25,7 +25,7 @@ struct AboutView: View {
                         .foregroundStyle(.white)
 
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Morning Reset helps you break the habit of reaching for your phone the moment you wake up.")
+                        Text("Morning Reset helps you break the habit of reaching for your phone when you wake up.")
                             .foregroundStyle(.white.opacity(0.8))
 
                         Text("Instead of scrolling, you take one small action.\n\nThat action becomes your first win.\n\nFrom there, the day feels easier to start.")
