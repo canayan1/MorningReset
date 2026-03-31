@@ -33,6 +33,10 @@ enum MantraEngine {
     }
 
     static func generate(mode: MorningMode, intention: IntentionType) -> String {
+        if mode == .protect && intention == .calm       { return "Today, you move gently and protect your attention." }
+        if mode == .steady  && intention == .focus      { return "Today, you stay clear and follow what matters." }
+        if mode == .push    && intention == .discipline { return "Today, you take action and build momentum." }
+
         let base: String
         switch mode {
         case .protect: base = protectBases[cycleIndex]
@@ -54,20 +58,20 @@ enum MantraEngine {
     }
 
     private static let protectBases = [
-        "Slow is still forward.",
-        "Protect the baseline first.",
-        "Less today means more tomorrow."
+        "You've been showing up — continue from there.",
+        "You've been showing up — continue from there.",
+        "You've been showing up — continue from there."
     ]
 
     private static let steadyBases = [
-        "Use the window while it's open.",
-        "Clean conditions. Don't waste them.",
-        "Momentum doesn't need a perfect start."
+        "You've been moving steadily — keep that direction.",
+        "You've been moving steadily — keep that direction.",
+        "You've been moving steadily — keep that direction."
     ]
 
     private static let pushBases = [
-        "The signal is here. Move on it.",
-        "Don't ease into a morning like this.",
-        "Move before the day finds you."
+        "You're building something consistent — stay with it.",
+        "You're building something consistent — stay with it.",
+        "You're building something consistent — stay with it."
     ]
 }
