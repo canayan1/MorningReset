@@ -2,6 +2,8 @@ import SwiftUI
 
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppState.self) private var appState
+    @State private var showPaywall = false
 
     var body: some View {
         ZStack {
@@ -48,6 +50,18 @@ struct AboutView: View {
 
                 Spacer()
 
+                if !appState.isPremium {
+                    Button("Upgrade to Premium") {
+                        appState.recordManualPaywallShown()
+                        showPaywall = true
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 16)
+                }
+
                 Text("Start with a win.")
                     .font(.caption)
                     .italic()
@@ -56,6 +70,9 @@ struct AboutView: View {
                     .padding(.horizontal, 24)
                     .padding(.bottom, 48)
             }
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(context: .manual, isSheet: true)
         }
     }
 }

@@ -4,7 +4,6 @@ struct AlarmView: View {
     @Environment(AppState.self) private var appState
     @State private var showAbout = false
     @State private var schedule  = WakeScheduleStore.load()
-    @State private var autoAdvanceTask: Task<Void, Never>? = nil
 
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
@@ -48,10 +47,25 @@ struct AlarmView: View {
 
                 Spacer()
 
+                // Soft premium intro (first launch only)
+                if !appState.onboardingSeen {
+                    onboardingCard
+                    Spacer().frame(height: DS.Space.sm)
+                }
+
                 // Actions
                 VStack(spacing: DS.Space.sm) {
+                    Button("Start Morning Reset") {
+                        appState.startFlow()
+                    }
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 18)
+                    .background(DS.textPrimary)
+                    .foregroundStyle(DS.background)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+
                     Button("Set wake schedule") {
-                        cancelAutoAdvance()
                         appState.showScheduleSetup()
                     }
                     .font(.subheadline)
@@ -67,31 +81,38 @@ struct AlarmView: View {
         }
         .onAppear {
             schedule = WakeScheduleStore.load()
-            scheduleAutoAdvance()
-        }
-        .onDisappear {
-            cancelAutoAdvance()
         }
         .sheet(isPresented: $showAbout) {
             AboutView()
         }
     }
 
-    // MARK: - Auto-advance
+    // MARK: - Onboarding card
 
-    private func scheduleAutoAdvance() {
-        autoAdvanceTask = Task {
-            try? await Task.sleep(for: .seconds(1.5))
-            guard !Task.isCancelled else { return }
-            await MainActor.run {
-                appState.startFlow()
+    private var onboardingCard: some View {
+        HStack(alignment: .top, spacing: DS.Space.md) {
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text("Begin before autopilot does.")
+                    .font(.callout.bold())
+                    .foregroundStyle(DS.background)
+                Text("A short reset that helps you choose how your morning starts.")
+                    .font(.caption)
+                    .foregroundStyle(DS.background.opacity(0.65))
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+            Button {
+                appState.dismissOnboarding()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(DS.background.opacity(0.35))
             }
         }
-    }
-
-    private func cancelAutoAdvance() {
-        autoAdvanceTask?.cancel()
-        autoAdvanceTask = nil
+        .padding(DS.Space.md)
+        .background(DS.textPrimary)
+        .padding(.horizontal, DS.Space.lg)
     }
 
     // MARK: - Next alarm display
