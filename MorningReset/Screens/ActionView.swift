@@ -4,16 +4,17 @@ struct ActionView: View {
     @Environment(AppState.self) private var appState
     @State private var panel: Panel = .main
 
-    private enum Panel { case main, learn, mode }
+    private enum Panel { case main, learn, headlines, action }
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
             ZStack {
                 switch panel {
-                case .main:  mainPanel
-                case .learn: learnPanel
-                case .mode:  modePanel
+                case .main:      mainPanel
+                case .learn:     learnPanel
+                case .headlines: headlinesPanel
+                case .action:    actionPanel
                 }
             }
         }
@@ -22,30 +23,35 @@ struct ActionView: View {
     // MARK: - Main
 
     private var mainPanel: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 0) {
             Spacer()
 
-            Text(Strings.Action.heading)
-                .font(.title2.bold())
-                .foregroundStyle(.white)
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Keep going")
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                Text("Optional.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.4))
+            }
+
+            Spacer().frame(height: 28)
 
             VStack(spacing: 12) {
-                sectionCard(title: "Learn one thing", subtitle: "Read something worth your time.") {
+                sectionCard(title: "Learn something", subtitle: "One insight worth keeping.") {
                     panel = .learn
                 }
-                sectionCard(title: "Choose your mode", subtitle: "Pick a soundtrack for the day.") {
-                    panel = .mode
+                sectionCard(title: "See what's happening", subtitle: "Brief and neutral.") {
+                    panel = .headlines
+                }
+                sectionCard(title: "Do one more thing", subtitle: "One small action.") {
+                    panel = .action
                 }
             }
 
             Spacer()
 
-            Button(Strings.Action.skipButton) { appState.endFlow() }
-                .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.4))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .padding(.bottom, 32)
+            doneButton
         }
         .padding(.horizontal, 24)
     }
@@ -53,42 +59,97 @@ struct ActionView: View {
     // MARK: - Learn
 
     private var learnPanel: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 0) {
             Spacer()
 
             backButton
 
-            VStack(spacing: 12) {
-                ForEach(ActionContent.articles, id: \.headline) { article in
-                    contentCard(headline: article.headline, body: article.body)
-                }
-            }
+            Spacer().frame(height: 28)
+
+            Text(ActionContent.todayInsight)
+                .font(.title3.bold())
+                .foregroundStyle(.white)
+                .lineSpacing(5)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(28)
+                .background(Color.white.opacity(0.06))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
 
             Spacer()
+
+            doneButton
         }
         .padding(.horizontal, 24)
     }
 
-    // MARK: - Mode
+    // MARK: - Headlines
 
-    private var modePanel: some View {
-        VStack(alignment: .leading, spacing: 24) {
+    private var headlinesPanel: some View {
+        VStack(alignment: .leading, spacing: 0) {
             Spacer()
 
             backButton
 
-            VStack(spacing: 12) {
-                ForEach(ActionContent.playlists, id: \.title) { playlist in
-                    contentCard(headline: playlist.title, body: playlist.description)
+            Spacer().frame(height: 28)
+
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(ActionContent.todayHeadlines.enumerated()), id: \.offset) { index, headline in
+                    Text(headline)
+                        .font(.subheadline)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 16)
+                        .padding(.horizontal, 20)
+                    if index < ActionContent.todayHeadlines.count - 1 {
+                        Rectangle()
+                            .fill(Color.white.opacity(0.08))
+                            .frame(height: 1)
+                            .padding(.horizontal, 20)
+                    }
                 }
             }
+            .background(Color.white.opacity(0.06))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
 
             Spacer()
+
+            doneButton
         }
         .padding(.horizontal, 24)
     }
 
-    // MARK: - Shared components
+    // MARK: - Action
+
+    private var actionPanel: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer()
+
+            backButton
+
+            Spacer().frame(height: 28)
+
+            VStack(alignment: .leading, spacing: 16) {
+                Text("One more.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.4))
+                Text(ActionContent.todayBonusAction)
+                    .font(.title3.bold())
+                    .foregroundStyle(.white)
+                    .lineSpacing(5)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(28)
+            .background(Color.white.opacity(0.06))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+
+            Spacer()
+
+            doneButton
+        }
+        .padding(.horizontal, 24)
+    }
+
+    // MARK: - Shared
 
     private var backButton: some View {
         Button { panel = .main } label: {
@@ -96,6 +157,15 @@ struct ActionView: View {
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.6))
         }
+    }
+
+    private var doneButton: some View {
+        Button("Done") { appState.endFlow() }
+            .font(.subheadline)
+            .foregroundStyle(.white.opacity(0.4))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .padding(.bottom, 32)
     }
 
     private func sectionCard(title: String, subtitle: String, action: @escaping () -> Void) -> some View {
@@ -115,21 +185,5 @@ struct ActionView: View {
             .background(Color.white.opacity(0.08))
             .clipShape(RoundedRectangle(cornerRadius: 14))
         }
-    }
-
-    private func contentCard(headline: String, body: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(headline)
-                .font(.subheadline.bold())
-                .foregroundStyle(.white)
-            Text(body)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.5))
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color.white.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }
