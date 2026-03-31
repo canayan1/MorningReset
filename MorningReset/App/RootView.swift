@@ -21,7 +21,8 @@ struct RootView: View {
     private var mainFlow: some View {
         ZStack {
             switch appState.screen {
-            case .alarm:     AlarmView().transition(.opacity)
+            case .alarm:         AlarmView().transition(.opacity)
+            case .scheduleSetup: ScheduleSetupView().transition(.opacity)
             case .quiz:      QuizView().transition(.opacity)
             case .intention: IntentionView().transition(.opacity)
             case .results:   ResultsView().transition(.opacity)

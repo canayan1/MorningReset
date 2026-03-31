@@ -19,48 +19,42 @@ struct ResultsView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: DS.Space.sm) {
                 Spacer()
 
-                row(label: Strings.Results.startWithLabel, value: result.startWith)
+                modeBlock
                     .opacity(revealed >= 1 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(result.mode)
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundStyle(.white)
-                    Text(result.meaning)
-                        .font(.body)
-                        .foregroundStyle(.white.opacity(0.7))
-                }
-                .opacity(revealed >= 2 ? 1 : 0)
-                .animation(.easeOut(duration: 0.3), value: revealed)
+                InfoCard(label: Strings.Results.startWithLabel, value: result.startWith)
+                    .opacity(revealed >= 2 ? 1 : 0)
+                    .animation(.easeOut(duration: 0.3), value: revealed)
 
-                row(label: Strings.Results.avoidLabel, value: result.avoid)
+                InfoCard(label: Strings.Results.avoidLabel, value: result.avoid)
                     .opacity(revealed >= 3 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
-                row(label: Strings.Results.winTodayLabel, value: result.win)
+                InfoCard(label: Strings.Results.winTodayLabel, value: result.win)
                     .opacity(revealed >= 4 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
-                row(label: Strings.Results.musicLabel, value: result.music)
+                InfoCard(label: Strings.Results.musicLabel, value: result.music)
                     .opacity(revealed >= 5 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
                 Text(result.bonus)
                     .font(.caption)
-                    .foregroundStyle(.white.opacity(0.35))
+                    .foregroundStyle(DS.textDim)
+                    .padding(.top, DS.Space.sm)
                     .opacity(revealed >= 6 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
                 Text(mantra)
                     .font(.caption)
                     .italic()
-                    .foregroundStyle(.white.opacity(0.2))
+                    .foregroundStyle(DS.textDim)
                     .opacity(revealed >= 7 ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: revealed)
 
@@ -72,14 +66,14 @@ struct ResultsView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(.white)
-                .foregroundStyle(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .background(DS.textPrimary)
+                .foregroundStyle(DS.background)
+                .clipShape(Rectangle())
                 .padding(.bottom, 48)
                 .opacity(revealed >= 7 ? 1 : 0)
                 .animation(.easeOut(duration: 0.3), value: revealed)
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, DS.Space.lg)
         }
         .task {
             try? await Task.sleep(nanoseconds:  80_000_000)
@@ -99,14 +93,32 @@ struct ResultsView: View {
         }
     }
 
-    private func row(label: String, value: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.4))
-            Text(value)
-                .font(.body)
-                .foregroundStyle(.white)
+    // MARK: - Mode block
+
+    private var modeBlock: some View {
+        HStack(spacing: 0) {
+            Rectangle()
+                .fill(DS.accent)
+                .frame(width: 2)
+
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text("MODE")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DS.textSecondary)
+                    .kerning(1.2)
+                Text(result.mode.uppercased())
+                    .font(.system(size: 34, weight: .bold))
+                    .foregroundStyle(DS.textPrimary)
+                Text(result.meaning)
+                    .font(.callout)
+                    .foregroundStyle(DS.textSecondary)
+                    .lineSpacing(3)
+            }
+            .padding(.vertical, DS.Space.md)
+            .padding(.horizontal, DS.Space.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(DS.surface)
         }
+        .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
     }
 }

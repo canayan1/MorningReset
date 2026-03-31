@@ -3,6 +3,7 @@ import Observation
 
 enum Screen {
     case alarm
+    case scheduleSetup
     case quiz
     case intention
     case results
@@ -18,6 +19,10 @@ final class AppState {
     var answers: [String] = []
 
     private var inactivityTimer: Timer?
+
+    func showScheduleSetup() {
+        screen = .scheduleSetup
+    }
 
     func startFlow() {
         answers = []
