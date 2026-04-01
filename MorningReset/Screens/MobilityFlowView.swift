@@ -79,6 +79,12 @@ struct MobilityFlowView: View {
                             .font(.title3.bold())
                             .foregroundStyle(DS.textPrimary)
                             .animation(.easeInOut(duration: 0.25), value: moveIndex)
+
+                        Text(move.cue)
+                            .font(.callout)
+                            .foregroundStyle(DS.textSecondary)
+                            .lineLimit(2)
+                            .animation(.easeInOut(duration: 0.25), value: moveIndex)
                     }
 
                     Spacer().frame(height: DS.Space.lg)

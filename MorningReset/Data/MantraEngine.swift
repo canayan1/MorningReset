@@ -94,20 +94,20 @@ enum MantraEngine {
     }
 
     private static let protectBases = [
-        "You've been showing up — continue from there.",
-        "You've been showing up — continue from there.",
-        "You've been showing up — continue from there."
+        "Today doesn't need to be big. Just a little lighter than yesterday.",
+        "You don't have to fight the morning. Meet it where it is.",
+        "Less noise, less pressure. That's enough to work with."
     ]
 
     private static let steadyBases = [
-        "You've been moving steadily — keep that direction.",
-        "You've been moving steadily — keep that direction.",
-        "You've been moving steadily — keep that direction."
+        "You know what to do. Stay with it and don't overcomplicate today.",
+        "No sudden moves. Keep the rhythm you already have.",
+        "Today is a continuation, not a restart. Pick up where you left off."
     ]
 
     private static let pushBases = [
-        "You're building something consistent — stay with it.",
-        "You're building something consistent — stay with it.",
-        "You're building something consistent — stay with it."
+        "You have something going. Use it cleanly and don't overload the day.",
+        "Move forward. Not faster — just forward.",
+        "One good decision builds the next. Start there."
     ]
 }

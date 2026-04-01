@@ -8,6 +8,7 @@ enum MobilityFlowType {
 struct MobilityMove: Identifiable {
     let id: UUID
     let name: String
+    let cue: String
     let duration: Int
     let animationName: String
 }
