@@ -73,7 +73,7 @@ struct QuizView: View {
                     answered = false
                 }
             } else {
-                appState.showIntention()
+                appState.showWeeklyAffirmation()
             }
         }
     }

@@ -5,7 +5,8 @@ enum Screen {
     case alarm
     case scheduleSetup
     case quiz
-    case intention
+    case weeklyAffirmation
+    case morningSound
     case results
     case move
     case win
@@ -33,6 +34,7 @@ final class AppState {
     var insightStrength: InsightStrength = .none
     var insightText: String = ""
     var sessionMode: MorningMode = .steady
+    var selectedSoundDirection: SoundDirection = .focus
 
     private var inactivityTimer: Timer?
 
@@ -49,7 +51,7 @@ final class AppState {
         paywallLastShownDate = UserDefaults.standard.double(forKey: "paywall_last_shown_date")
     }
 
-    // MARK: - Existing navigation
+    // MARK: - Navigation
 
     func showScheduleSetup() {
         screen = .scheduleSetup
@@ -62,6 +64,7 @@ final class AppState {
         insightStrength = .none
         insightText = ""
         sessionMode = .steady
+        selectedSoundDirection = .focus
         screen = .quiz
         resetInactivityTimer()
     }
@@ -70,8 +73,20 @@ final class AppState {
         answers.append(answer)
     }
 
-    func showIntention() {
-        screen = .intention
+    func showWeeklyAffirmation() {
+        let result = MorningData.result(from: answers)
+        let mode = MorningMode(from: result.mode) ?? .steady
+        sessionMode = mode
+        selectedSoundDirection = SoundDirection.recommended(for: mode)
+        screen = .weeklyAffirmation
+    }
+
+    func showMorningSound() {
+        screen = .morningSound
+    }
+
+    func setSoundDirection(_ direction: SoundDirection) {
+        selectedSoundDirection = direction
     }
 
     func showResults() {
@@ -117,7 +132,6 @@ final class AppState {
         let intention = IntentionType(rawValue: intentionStr) ?? .focus
         let result = MorningData.result(from: answers)
         let mode = MorningMode(from: result.mode) ?? .steady
-        sessionMode = mode
 
         switch strength {
         case .none:

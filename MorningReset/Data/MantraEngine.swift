@@ -14,6 +14,36 @@ enum IntentionType: String, CaseIterable {
     var label: String { rawValue.capitalized }
 }
 
+enum SoundDirection: CaseIterable, Identifiable {
+    case calm, focus, energy
+
+    var id: Self { self }
+
+    var label: String {
+        switch self {
+        case .calm:   return "Calm"
+        case .focus:  return "Focus"
+        case .energy: return "Energy"
+        }
+    }
+
+    var playlistURL: URL? {
+        switch self {
+        case .calm:   return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY")
+        case .focus:  return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DXZeyjIkhend1")
+        case .energy: return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP")
+        }
+    }
+
+    static func recommended(for mode: MorningMode) -> SoundDirection {
+        switch mode {
+        case .protect: return .calm
+        case .steady:  return .focus
+        case .push:    return .energy
+        }
+    }
+}
+
 enum MantraEngine {
 
     private static let startDateKey = "mantra_start_date"
