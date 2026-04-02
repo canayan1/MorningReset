@@ -10,6 +10,7 @@ struct MobilityFlowView: View {
         }
         let move = flow.moves[appState.currentMobilityMoveIndex]
         let family = PoseFamily.resolve(move.animationName)
+        let anim = PoseVariation.resolve(move.animationName).apply(to: family)
         let moveIndex = appState.currentMobilityMoveIndex
         let totalMoves = flow.moves.count
         let progress = moveFraction(move: move)
@@ -42,9 +43,9 @@ struct MobilityFlowView: View {
 
                     // MARK: Animation area
                     AnimatedStickFigureView(
-                        from: family.from,
-                        to: family.to,
-                        duration: family.duration,
+                        from: anim.from,
+                        to: anim.to,
+                        duration: anim.duration,
                         isAnimating: appState.isMobilityRunning,
                         color: DS.textSecondary
                     )

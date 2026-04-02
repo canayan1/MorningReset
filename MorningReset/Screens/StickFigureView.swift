@@ -238,6 +238,122 @@ extension StickFigurePose {
     )
 }
 
+// MARK: - PoseVariation
+
+struct PoseVariation {
+    enum Amplitude {
+        case small, medium, large
+        var scale: CGFloat {
+            switch self { case .small: return 0.40; case .medium: return 0.75; case .large: return 1.00 }
+        }
+    }
+    enum Speed {
+        case slow, medium
+        var multiplier: Double {
+            switch self { case .slow: return 1.0; case .medium: return 0.65 }
+        }
+    }
+
+    var isDynamic: Bool
+    var amplitude: Amplitude
+    var speed: Speed
+
+    func apply(to family: PoseFamily) -> (from: StickFigurePose, to: StickFigurePose, duration: Double) {
+        let baseTarget = isDynamic ? family.to : family.from.breathing
+        let adjustedTo = family.from.lerp(to: baseTarget, t: amplitude.scale)
+        return (family.from, adjustedTo, family.duration * speed.multiplier)
+    }
+}
+
+extension PoseVariation {
+    static func resolve(_ name: String) -> PoseVariation {
+        switch name {
+
+        // Yin static holds — breathe gently into the pose
+        case "neck_release_right", "neck_release_left",
+             "neck_release_right_short", "neck_release_left_short",
+             "side_neck_right", "side_neck_left",
+             "neck_stretch_right", "neck_stretch_left",
+             "ear_shoulder_right", "ear_shoulder_left",
+             "shoulder_opener_clasp",
+             "forward_fold_hold", "seated_forward_fold", "seated_fold_hold",
+             "figure_four_right", "figure_four_left",
+             "low_lunge_right_hold", "low_lunge_left_hold",
+             "hip_opener_right_hold", "hip_opener_left_hold",
+             "child_pose", "supine_twist", "resting_knees_bent",
+             "chest_opener_hold", "shoulder_fold":
+            return PoseVariation(isDynamic: false, amplitude: .medium, speed: .slow)
+
+        // Stillness / breath moments — barely any motion
+        case "stillness", "pause", "stand_breathe", "long_exhale",
+             "posture_reset", "neck_nods", "neck_turns", "stand_tall":
+            return PoseVariation(isDynamic: false, amplitude: .small, speed: .slow)
+
+        // Static vinyasa holds
+        case "forward_fold", "fold", "fold_down",
+             "half_lift", "half_fold",
+             "down_dog_soft", "downward_dog",
+             "plank", "plank_option", "plank_tap", "plank_shoulder_tap",
+             "chair_pose_light", "supported_squat",
+             "lunge_right", "lunge_left",
+             "low_lunge_right", "low_lunge_left",
+             "runner_lunge_right", "runner_lunge_left",
+             "high_lunge_right", "high_lunge_left",
+             "hip_opener_right", "hip_opener_left",
+             "step_back_right", "step_back_left",
+             "side_lunge_right", "side_lunge_left",
+             "quad_stretch_right", "quad_stretch_left",
+             "shoulder_cross_right", "shoulder_cross_left",
+             "chest_open", "gentle_backbend",
+             "rise_open_chest":
+            return PoseVariation(isDynamic: false, amplitude: .medium, speed: .slow)
+
+        // Transitional / walking — slight movement implied
+        case "walk_to_top", "walk_forward", "walk_in",
+             "fold_sway", "rise_up", "roll_up", "roll_up_slow":
+            return PoseVariation(isDynamic: true, amplitude: .small, speed: .slow)
+
+        // Side reach — slow, medium range
+        case "side_reach_right", "side_reach_left",
+             "side_bend_right", "side_bend_left":
+            return PoseVariation(isDynamic: true, amplitude: .medium, speed: .slow)
+
+        // Twists — slow, medium range
+        case "standing_twist_right", "standing_twist_left",
+             "torso_twist", "standing_twist",
+             "twist_right", "twist_left":
+            return PoseVariation(isDynamic: true, amplitude: .medium, speed: .slow)
+
+        // Reach up — slow, medium
+        case "reach_up", "inhale_reach", "rise_reach",
+             "stand_reach", "reach_high", "arm_reach", "arm_reach_up":
+            return PoseVariation(isDynamic: true, amplitude: .medium, speed: .slow)
+
+        // Shoulder rolls — gentle, slightly faster
+        case "shoulder_rolls", "shoulder_roll_forward", "shoulder_roll_back",
+             "shoulder_circles", "shoulder_opener":
+            return PoseVariation(isDynamic: true, amplitude: .small, speed: .medium)
+
+        // Arm movements — medium amplitude, medium speed
+        case "arm_circles", "arm_sweep",
+             "shake_arms", "shake_out":
+            return PoseVariation(isDynamic: true, amplitude: .medium, speed: .medium)
+
+        // March / knee lifts — large, active
+        case "march_in_place", "knee_hug_right", "knee_hug_left",
+             "knee_chest_right", "knee_chest_left":
+            return PoseVariation(isDynamic: true, amplitude: .large, speed: .medium)
+
+        // Calf / heel raises — active
+        case "calf_raises", "heel_raises", "calf_raise":
+            return PoseVariation(isDynamic: true, amplitude: .medium, speed: .medium)
+
+        default:
+            return PoseVariation(isDynamic: false, amplitude: .medium, speed: .slow)
+        }
+    }
+}
+
 // MARK: - PoseFamily
 
 enum PoseFamily {
