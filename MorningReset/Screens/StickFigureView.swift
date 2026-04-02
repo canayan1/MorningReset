@@ -118,6 +118,156 @@ struct StickFigureView: View {
     }
 }
 
+// MARK: - Named pose presets
+
+extension StickFigurePose {
+    static let neckTiltRight = StickFigurePose(headTilt:  0.40)
+    static let neckTiltLeft  = StickFigurePose(headTilt: -0.40)
+
+    static let sideReachRight = StickFigurePose(
+        torsoLean:     -0.12,
+        leftArmAngle:  -0.35,
+        rightArmAngle:  2.85
+    )
+    static let sideReachLeft = StickFigurePose(
+        torsoLean:     0.12,
+        leftArmAngle: -2.85,
+        rightArmAngle: 0.35
+    )
+
+    static let forwardFold = StickFigurePose(
+        torsoLean:     1.30,
+        leftArmAngle:  0.05,
+        rightArmAngle: -0.05
+    )
+    static let halfLift = StickFigurePose(
+        torsoLean:     0.75,
+        leftArmAngle:  0.30,
+        rightArmAngle: -0.30
+    )
+
+    static let lungeRight = StickFigurePose(
+        torsoLean:     0.18,
+        leftArmAngle: -0.50,
+        rightArmAngle: 0.20,
+        leftLegAngle: -0.30,
+        rightLegAngle: 0.65
+    )
+    static let lungeLeft = StickFigurePose(
+        torsoLean:    -0.18,
+        leftArmAngle: -0.20,
+        rightArmAngle: 0.50,
+        leftLegAngle: -0.65,
+        rightLegAngle: 0.30
+    )
+
+    static let plank = StickFigurePose(
+        torsoLean:     1.50,
+        leftArmAngle: -0.30,
+        rightArmAngle: 0.30,
+        leftLegAngle: -0.05,
+        rightLegAngle: 0.05
+    )
+    static let downwardDog = StickFigurePose(
+        torsoLean:     1.15,
+        leftArmAngle:  1.00,
+        rightArmAngle: 1.00,
+        leftLegAngle: -0.22,
+        rightLegAngle: 0.22
+    )
+    static let childPose = StickFigurePose(
+        torsoLean:     1.45,
+        leftArmAngle:  1.20,
+        rightArmAngle: 1.20,
+        leftLegAngle: -0.08,
+        rightLegAngle: 0.08
+    )
+
+    static let twistRight = StickFigurePose(
+        torsoLean:     0.12,
+        leftArmAngle:  0.75,
+        rightArmAngle: -0.30
+    )
+    static let twistLeft = StickFigurePose(
+        torsoLean:    -0.12,
+        leftArmAngle:  0.30,
+        rightArmAngle: -0.75
+    )
+
+    static let calfRaiseDown = StickFigurePose()
+    static let calfRaiseUp   = StickFigurePose(verticalOffset: -5)
+
+    static let marchA = StickFigurePose(
+        leftArmAngle:  -0.65,
+        rightArmAngle:  0.20,
+        leftLegAngle:  -0.60,
+        rightLegAngle:  0.18
+    )
+    static let marchB = StickFigurePose(
+        leftArmAngle:  -0.20,
+        rightArmAngle:  0.65,
+        leftLegAngle:  -0.18,
+        rightLegAngle:  0.60
+    )
+}
+
+// MARK: - PoseFamily
+
+enum PoseFamily {
+    case neutral
+    case neckTiltRight, neckTiltLeft
+    case sideReachRight, sideReachLeft
+    case forwardFold, halfLift
+    case lungeRight, lungeLeft
+    case plank
+    case downwardDog
+    case childPose
+    case twistRight, twistLeft
+    case calfRaise
+    case march
+    case stillness
+
+    var from: StickFigurePose {
+        switch self {
+        case .neutral:        return .neutral
+        case .neckTiltRight:  return .neckTiltRight
+        case .neckTiltLeft:   return .neckTiltLeft
+        case .sideReachRight: return .sideReachRight
+        case .sideReachLeft:  return .sideReachLeft
+        case .forwardFold:    return .forwardFold
+        case .halfLift:       return .halfLift
+        case .lungeRight:     return .lungeRight
+        case .lungeLeft:      return .lungeLeft
+        case .plank:          return .plank
+        case .downwardDog:    return .downwardDog
+        case .childPose:      return .childPose
+        case .twistRight:     return .twistRight
+        case .twistLeft:      return .twistLeft
+        case .calfRaise:      return .calfRaiseDown
+        case .march:          return .marchA
+        case .stillness:      return .neutral
+        }
+    }
+
+    var to: StickFigurePose {
+        switch self {
+        case .calfRaise: return .calfRaiseUp
+        case .march:     return .marchB
+        default:         return from.breathing
+        }
+    }
+
+    var duration: Double {
+        switch self {
+        case .march:                          return 1.4
+        case .calfRaise:                      return 1.6
+        case .sideReachRight, .sideReachLeft: return 3.0
+        case .twistRight, .twistLeft:         return 3.5
+        default:                              return 4.0
+        }
+    }
+}
+
 // MARK: - AnimatedStickFigureView
 
 struct AnimatedStickFigureView: View {
@@ -160,16 +310,26 @@ struct AnimatedStickFigureView: View {
     }
 }
 
-#Preview("Static") {
-    StickFigureView(pose: .neutral, color: .primary)
-        .frame(width: 140, height: 140)
-        .padding()
-        .background(Color(.systemBackground))
+#Preview("neutral") {
+    let f = PoseFamily.neutral
+    return AnimatedStickFigureView(from: f.from, to: f.to, duration: f.duration)
+        .frame(width: 140, height: 140).padding().background(Color(.systemBackground))
 }
 
-#Preview("Animated — breathing") {
-    AnimatedStickFigureView(duration: 3.0, color: .primary)
-        .frame(width: 140, height: 140)
-        .padding()
-        .background(Color(.systemBackground))
+#Preview("forwardFold") {
+    let f = PoseFamily.forwardFold
+    return AnimatedStickFigureView(from: f.from, to: f.to, duration: f.duration)
+        .frame(width: 140, height: 140).padding().background(Color(.systemBackground))
+}
+
+#Preview("sideReachRight") {
+    let f = PoseFamily.sideReachRight
+    return AnimatedStickFigureView(from: f.from, to: f.to, duration: f.duration)
+        .frame(width: 140, height: 140).padding().background(Color(.systemBackground))
+}
+
+#Preview("march") {
+    let f = PoseFamily.march
+    return AnimatedStickFigureView(from: f.from, to: f.to, duration: f.duration)
+        .frame(width: 140, height: 140).padding().background(Color(.systemBackground))
 }
