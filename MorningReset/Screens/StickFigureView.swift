@@ -268,6 +268,62 @@ enum PoseFamily {
     }
 }
 
+// MARK: - Animation name → PoseFamily
+
+extension PoseFamily {
+    static func resolve(_ name: String) -> PoseFamily {
+        // Neck
+        if name.hasPrefix("neck") || name.hasPrefix("side_neck") || name.hasPrefix("ear_shoulder") {
+            return name.contains("left") ? .neckTiltLeft : .neckTiltRight
+        }
+        // Side reach / bend
+        if name.hasPrefix("side_reach") || name.hasPrefix("side_bend") {
+            return name.contains("left") ? .sideReachLeft : .sideReachRight
+        }
+        // Forward fold (check specific prefixes before bare "fold")
+        if name.hasPrefix("forward_fold") || name.hasPrefix("seated_forward") || name.hasPrefix("seated_fold") {
+            return .forwardFold
+        }
+        if name == "fold" || name == "fold_sway" { return .forwardFold }
+        // Half lift
+        if name.hasPrefix("half_lift") || name.hasPrefix("half_fold") { return .halfLift }
+        // Lunge family
+        if name.hasPrefix("lunge") || name.hasPrefix("low_lunge") || name.hasPrefix("hip_opener") ||
+           name.hasPrefix("runner_lunge") || name.hasPrefix("step_back") || name.hasPrefix("high_lunge") {
+            return name.contains("left") ? .lungeLeft : .lungeRight
+        }
+        // Plank
+        if name.hasPrefix("plank") { return .plank }
+        // Downward dog
+        if name.hasPrefix("down_dog") || name.hasPrefix("downward") { return .downwardDog }
+        // Child pose
+        if name == "child_pose" { return .childPose }
+        // Twist (covers standing_twist_*, twist_*, supine_twist)
+        if name.contains("twist") {
+            return name.contains("left") ? .twistLeft : .twistRight
+        }
+        // Shoulder cross (arm-crossing motion, reads like a twist)
+        if name.hasPrefix("shoulder_cross") {
+            return name.contains("left") ? .twistLeft : .twistRight
+        }
+        // Calf / heel raises
+        if name.hasPrefix("calf") || name.hasPrefix("heel") { return .calfRaise }
+        // March / knee lifts
+        if name.hasPrefix("march") || name.hasPrefix("knee") { return .march }
+        // Reach up / rise reach / inhale reach
+        if name.contains("reach") || name.hasPrefix("inhale") || name.hasPrefix("rise_reach") {
+            return .sideReachRight
+        }
+        // Moving arms (circles, rolls, shake)
+        if name.hasPrefix("arm_circle") || name.hasPrefix("arm_sweep") ||
+           name.hasPrefix("shoulder_roll") || name.hasPrefix("shake") {
+            return .march
+        }
+        // Everything else: stillness
+        return .stillness
+    }
+}
+
 // MARK: - AnimatedStickFigureView
 
 struct AnimatedStickFigureView: View {

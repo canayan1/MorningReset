@@ -9,6 +9,7 @@ struct MobilityFlowView: View {
             return AnyView(DS.background.ignoresSafeArea())
         }
         let move = flow.moves[appState.currentMobilityMoveIndex]
+        let family = PoseFamily.resolve(move.animationName)
         let moveIndex = appState.currentMobilityMoveIndex
         let totalMoves = flow.moves.count
         let progress = moveFraction(move: move)
@@ -40,31 +41,15 @@ struct MobilityFlowView: View {
                     Spacer().frame(height: DS.Space.lg)
 
                     // MARK: Animation area
-                    ZStack {
-                        DS.surface
-                            .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
-
-                        VStack(spacing: DS.Space.sm) {
-                            Circle()
-                                .fill(DS.accent.opacity(0.12))
-                                .frame(width: 44, height: 44)
-                                .overlay(Circle().stroke(DS.accent.opacity(0.25), lineWidth: 1))
-                                .scaleEffect(appState.isMobilityRunning ? 1.10 : 1.0)
-                                .animation(
-                                    appState.isMobilityRunning
-                                        ? .easeInOut(duration: 2.4).repeatForever(autoreverses: true)
-                                        : .easeOut(duration: 0.3),
-                                    value: appState.isMobilityRunning
-                                )
-
-                            Text(move.animationName.replacingOccurrences(of: "_", with: " "))
-                                .font(.system(size: 10, weight: .regular))
-                                .foregroundStyle(DS.textDim)
-                                .kerning(0.5)
-                        }
-                    }
+                    AnimatedStickFigureView(
+                        from: family.from,
+                        to: family.to,
+                        duration: family.duration,
+                        isAnimating: appState.isMobilityRunning,
+                        color: DS.textSecondary
+                    )
                     .frame(maxWidth: .infinity)
-                    .frame(height: 140)
+                    .frame(height: 160)
 
                     Spacer().frame(height: DS.Space.lg)
 
