@@ -209,6 +209,33 @@ extension StickFigurePose {
         leftLegAngle:  -0.18,
         rightLegAngle:  0.60
     )
+
+    static let shoulderOpenA = StickFigurePose(
+        leftArmAngle:  -1.30,
+        rightArmAngle:  1.30
+    )
+    static let shoulderOpenB = StickFigurePose(
+        leftArmAngle:  -1.50,
+        rightArmAngle:  1.50
+    )
+
+    static let shoulderCrossA = StickFigurePose(
+        leftArmAngle:  0.50,
+        rightArmAngle: -0.50
+    )
+    static let shoulderCrossB = StickFigurePose(
+        leftArmAngle:  0.55,
+        rightArmAngle: -0.55
+    )
+
+    static let squat = StickFigurePose(
+        torsoLean:     0.15,
+        leftArmAngle: -0.30,
+        rightArmAngle: 0.30,
+        leftLegAngle: -0.55,
+        rightLegAngle: 0.55,
+        verticalOffset: 3
+    )
 }
 
 // MARK: - PoseFamily
@@ -216,6 +243,8 @@ extension StickFigurePose {
 enum PoseFamily {
     case neutral
     case neckTiltRight, neckTiltLeft
+    case shoulderOpen
+    case shoulderCross
     case sideReachRight, sideReachLeft
     case forwardFold, halfLift
     case lungeRight, lungeLeft
@@ -225,6 +254,7 @@ enum PoseFamily {
     case twistRight, twistLeft
     case calfRaise
     case march
+    case squat
     case stillness
 
     var from: StickFigurePose {
@@ -232,6 +262,8 @@ enum PoseFamily {
         case .neutral:        return .neutral
         case .neckTiltRight:  return .neckTiltRight
         case .neckTiltLeft:   return .neckTiltLeft
+        case .shoulderOpen:   return .shoulderOpenA
+        case .shoulderCross:  return .shoulderCrossA
         case .sideReachRight: return .sideReachRight
         case .sideReachLeft:  return .sideReachLeft
         case .forwardFold:    return .forwardFold
@@ -245,15 +277,18 @@ enum PoseFamily {
         case .twistLeft:      return .twistLeft
         case .calfRaise:      return .calfRaiseDown
         case .march:          return .marchA
+        case .squat:          return .squat
         case .stillness:      return .neutral
         }
     }
 
     var to: StickFigurePose {
         switch self {
-        case .calfRaise: return .calfRaiseUp
-        case .march:     return .marchB
-        default:         return from.breathing
+        case .calfRaise:     return .calfRaiseUp
+        case .march:         return .marchB
+        case .shoulderOpen:  return .shoulderOpenB
+        case .shoulderCross: return .shoulderCrossB
+        default:             return from.breathing
         }
     }
 
@@ -261,6 +296,7 @@ enum PoseFamily {
         switch self {
         case .march:                          return 1.4
         case .calfRaise:                      return 1.6
+        case .shoulderOpen:                   return 2.5
         case .sideReachRight, .sideReachLeft: return 3.0
         case .twistRight, .twistLeft:         return 3.5
         default:                              return 4.0
@@ -272,55 +308,107 @@ enum PoseFamily {
 
 extension PoseFamily {
     static func resolve(_ name: String) -> PoseFamily {
+        switch name {
         // Neck
-        if name.hasPrefix("neck") || name.hasPrefix("side_neck") || name.hasPrefix("ear_shoulder") {
-            return name.contains("left") ? .neckTiltLeft : .neckTiltRight
-        }
-        // Side reach / bend
-        if name.hasPrefix("side_reach") || name.hasPrefix("side_bend") {
-            return name.contains("left") ? .sideReachLeft : .sideReachRight
-        }
-        // Forward fold (check specific prefixes before bare "fold")
-        if name.hasPrefix("forward_fold") || name.hasPrefix("seated_forward") || name.hasPrefix("seated_fold") {
+        case "neck_release_right", "neck_release_right_short",
+             "side_neck_right", "neck_stretch_right",
+             "ear_shoulder_right", "neck_turns", "neck_nods":
+            return .neckTiltRight
+        case "neck_release_left", "neck_release_left_short",
+             "side_neck_left", "neck_stretch_left", "ear_shoulder_left":
+            return .neckTiltLeft
+
+        // Shoulder open
+        case "shoulder_opener_clasp", "chest_opener_hold", "chest_open",
+             "shoulder_opener", "arm_circles", "shoulder_rolls",
+             "shoulder_roll_forward", "shoulder_roll_back", "shoulder_circles",
+             "shake_arms", "shake_out", "reach_up", "inhale_reach",
+             "rise_reach", "stand_reach", "reach_high", "arm_reach",
+             "arm_reach_up", "rise_open_chest", "arm_sweep",
+             "gentle_backbend", "posture_reset":
+            return .shoulderOpen
+
+        // Shoulder cross
+        case "shoulder_fold", "shoulder_cross_right", "shoulder_cross_left":
+            return .shoulderCross
+
+        // Forward fold
+        case "forward_fold_hold", "forward_fold", "fold", "fold_down",
+             "seated_forward_fold", "seated_fold_hold", "fold_sway",
+             "walk_to_top", "walk_forward", "walk_in":
             return .forwardFold
-        }
-        if name == "fold" || name == "fold_sway" { return .forwardFold }
+
         // Half lift
-        if name.hasPrefix("half_lift") || name.hasPrefix("half_fold") { return .halfLift }
-        // Lunge family
-        if name.hasPrefix("lunge") || name.hasPrefix("low_lunge") || name.hasPrefix("hip_opener") ||
-           name.hasPrefix("runner_lunge") || name.hasPrefix("step_back") || name.hasPrefix("high_lunge") {
-            return name.contains("left") ? .lungeLeft : .lungeRight
-        }
-        // Plank
-        if name.hasPrefix("plank") { return .plank }
-        // Downward dog
-        if name.hasPrefix("down_dog") || name.hasPrefix("downward") { return .downwardDog }
-        // Child pose
-        if name == "child_pose" { return .childPose }
-        // Twist (covers standing_twist_*, twist_*, supine_twist)
-        if name.contains("twist") {
-            return name.contains("left") ? .twistLeft : .twistRight
-        }
-        // Shoulder cross (arm-crossing motion, reads like a twist)
-        if name.hasPrefix("shoulder_cross") {
-            return name.contains("left") ? .twistLeft : .twistRight
-        }
-        // Calf / heel raises
-        if name.hasPrefix("calf") || name.hasPrefix("heel") { return .calfRaise }
-        // March / knee lifts
-        if name.hasPrefix("march") || name.hasPrefix("knee") { return .march }
-        // Reach up / rise reach / inhale reach
-        if name.contains("reach") || name.hasPrefix("inhale") || name.hasPrefix("rise_reach") {
+        case "half_lift", "half_fold":
+            return .halfLift
+
+        // Side reach
+        case "side_reach_right", "side_bend_right":
             return .sideReachRight
-        }
-        // Moving arms (circles, rolls, shake)
-        if name.hasPrefix("arm_circle") || name.hasPrefix("arm_sweep") ||
-           name.hasPrefix("shoulder_roll") || name.hasPrefix("shake") {
+        case "side_reach_left", "side_bend_left":
+            return .sideReachLeft
+
+        // Lunge — right
+        case "low_lunge_right", "low_lunge_right_hold",
+             "hip_opener_right", "hip_opener_right_hold",
+             "lunge_right", "runner_lunge_right", "step_back_right",
+             "high_lunge_right", "side_lunge_right", "quad_stretch_right":
+            return .lungeRight
+
+        // Lunge — left
+        case "low_lunge_left", "low_lunge_left_hold",
+             "hip_opener_left", "hip_opener_left_hold",
+             "lunge_left", "runner_lunge_left", "step_back_left",
+             "high_lunge_left", "side_lunge_left", "quad_stretch_left":
+            return .lungeLeft
+
+        // Plank
+        case "plank", "plank_option", "plank_tap", "plank_shoulder_tap":
+            return .plank
+
+        // Downward dog
+        case "down_dog_soft", "downward_dog", "plank_to_dog":
+            return .downwardDog
+
+        // Child pose
+        case "child_pose":
+            return .childPose
+
+        // Supine rest
+        case "supine_twist", "torso_twist", "standing_twist",
+             "standing_twist_right", "twist_right":
+            return .twistRight
+        case "standing_twist_left", "twist_left":
+            return .twistLeft
+
+        // Floor rest
+        case "resting_knees_bent":
+            return .stillness
+
+        // March / knee
+        case "march_in_place", "knee_hug_right", "knee_hug_left",
+             "knee_chest_right", "knee_chest_left":
             return .march
+
+        // Squat
+        case "supported_squat", "chair_pose_light":
+            return .squat
+
+        // Calf / heel
+        case "calf_raises", "heel_raises", "calf_raise":
+            return .calfRaise
+
+        // Neutral rise
+        case "rise_up", "roll_up", "roll_up_slow", "stand_tall":
+            return .neutral
+
+        // Stillness
+        case "stand_breathe", "long_exhale", "stillness", "pause":
+            return .stillness
+
+        default:
+            return .stillness
         }
-        // Everything else: stillness
-        return .stillness
     }
 }
 
