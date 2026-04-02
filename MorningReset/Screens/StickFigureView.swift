@@ -14,6 +14,27 @@ struct StickFigurePose {
     var verticalOffset: CGFloat = 0    // positive = shift figure down
 
     static let neutral = StickFigurePose()
+
+    func lerp(to other: StickFigurePose, t: CGFloat) -> StickFigurePose {
+        func mix(_ a: CGFloat, _ b: CGFloat) -> CGFloat { a + (b - a) * t }
+        return StickFigurePose(
+            headTilt:       mix(headTilt,       other.headTilt),
+            torsoLean:      mix(torsoLean,      other.torsoLean),
+            leftArmAngle:   mix(leftArmAngle,   other.leftArmAngle),
+            rightArmAngle:  mix(rightArmAngle,  other.rightArmAngle),
+            leftLegAngle:   mix(leftLegAngle,   other.leftLegAngle),
+            rightLegAngle:  mix(rightLegAngle,  other.rightLegAngle),
+            verticalOffset: mix(verticalOffset, other.verticalOffset)
+        )
+    }
+
+    var breathing: StickFigurePose {
+        var p = self
+        p.leftArmAngle  -= 0.05
+        p.rightArmAngle += 0.05
+        p.verticalOffset -= 2
+        return p
+    }
 }
 
 struct StickFigureView: View {
@@ -97,8 +118,57 @@ struct StickFigureView: View {
     }
 }
 
-#Preview {
+// MARK: - AnimatedStickFigureView
+
+struct AnimatedStickFigureView: View {
+    let from: StickFigurePose
+    let to: StickFigurePose
+    var duration: Double
+    var isAnimating: Bool
+    var color: Color
+
+    init(
+        from: StickFigurePose = .neutral,
+        to: StickFigurePose? = nil,
+        duration: Double = 3.0,
+        isAnimating: Bool = true,
+        color: Color = .primary
+    ) {
+        self.from        = from
+        self.to          = to ?? from.breathing
+        self.duration    = duration
+        self.isAnimating = isAnimating
+        self.color       = color
+    }
+
+    var body: some View {
+        if isAnimating {
+            TimelineView(.animation) { timeline in
+                StickFigureView(
+                    pose: from.lerp(to: to, t: Self.phase(for: timeline.date, duration: duration)),
+                    color: color
+                )
+            }
+        } else {
+            StickFigureView(pose: from, color: color)
+        }
+    }
+
+    private static func phase(for date: Date, duration: Double) -> CGFloat {
+        let t = date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: duration) / duration
+        return CGFloat((sin(t * 2 * .pi - .pi / 2) + 1) / 2)
+    }
+}
+
+#Preview("Static") {
     StickFigureView(pose: .neutral, color: .primary)
+        .frame(width: 140, height: 140)
+        .padding()
+        .background(Color(.systemBackground))
+}
+
+#Preview("Animated — breathing") {
+    AnimatedStickFigureView(duration: 3.0, color: .primary)
         .frame(width: 140, height: 140)
         .padding()
         .background(Color(.systemBackground))
