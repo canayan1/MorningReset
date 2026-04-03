@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 // MARK: - Context
 
@@ -51,6 +52,9 @@ struct PaywallView: View {
     var context: PaywallContext = .contextual
     var isSheet: Bool = false
 
+    @State private var purchaseError: String? = nil
+    @State private var isLoading: Bool = false
+
     private var copy: PaywallCopy {
         switch context {
         case .onboarding: return .onboarding
@@ -99,16 +103,43 @@ struct PaywallView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom, DS.Space.md)
 
-                Button(copy.primaryCTA) {
-                    appState.unlockPremium()
-                    advance()
+                if let error = purchaseError {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, DS.Space.sm)
                 }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
+
+                Button {
+                    isLoading = true
+                    purchaseError = nil
+                    Task {
+                        do {
+                            try await appState.purchase()
+                            advance()
+                        } catch {
+                            purchaseError = "Something went wrong. Please try again."
+                        }
+                        isLoading = false
+                    }
+                } label: {
+                    if isLoading {
+                        ProgressView()
+                            .tint(DS.background)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 18)
+                    } else {
+                        Text(copy.primaryCTA)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 18)
+                    }
+                }
                 .background(DS.accent)
                 .foregroundStyle(DS.background)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
+                .disabled(isLoading)
 
                 Button(copy.secondaryCTA) {
                     advance()
@@ -117,7 +148,21 @@ struct PaywallView: View {
                 .foregroundStyle(DS.textSecondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
+
+                Button("Restore Purchases") {
+                    isLoading = true
+                    purchaseError = nil
+                    Task {
+                        await appState.restorePurchases()
+                        isLoading = false
+                        if appState.isPremium { advance() }
+                    }
+                }
+                .font(.caption)
+                .foregroundStyle(DS.textDim)
+                .frame(maxWidth: .infinity)
                 .padding(.bottom, 32)
+                .disabled(isLoading)
             }
             .padding(.horizontal, DS.Space.lg)
         }

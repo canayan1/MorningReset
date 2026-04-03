@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import StoreKit
 
 enum Screen {
     case alarm
@@ -49,6 +50,7 @@ final class AppState {
         isPremium            = UserDefaults.standard.bool(forKey: "premium_unlocked")
         onboardingSeen       = UserDefaults.standard.bool(forKey: "onboarding_seen")
         paywallLastShownDate = UserDefaults.standard.double(forKey: "paywall_last_shown_date")
+        Task { await self.checkEntitlement() }
     }
 
     // MARK: - Navigation
@@ -186,6 +188,56 @@ final class AppState {
     func unlockPremium() {
         isPremium = true
         UserDefaults.standard.set(true, forKey: "premium_unlocked")
+    }
+
+    // MARK: - StoreKit 2
+
+    private static let productID = "com.canayan.MorningReset.premium.annual"
+
+    @MainActor
+    func purchase() async throws {
+        guard let product = try await Product.products(for: [Self.productID]).first else { return }
+        let result = try await product.purchase()
+        switch result {
+        case .success(let verification):
+            if case .verified(let transaction) = verification {
+                await transaction.finish()
+                unlockPremium()
+            }
+        case .userCancelled, .pending:
+            break
+        @unknown default:
+            break
+        }
+    }
+
+    @MainActor
+    func restorePurchases() async {
+        do {
+            try await AppStore.sync()
+        } catch {
+            return
+        }
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result,
+               transaction.productID == Self.productID,
+               transaction.revocationDate == nil {
+                unlockPremium()
+                return
+            }
+        }
+    }
+
+    @MainActor
+    func checkEntitlement() async {
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result,
+               transaction.productID == Self.productID,
+               transaction.revocationDate == nil {
+                unlockPremium()
+                return
+            }
+        }
     }
 
     func dismissOnboarding() {

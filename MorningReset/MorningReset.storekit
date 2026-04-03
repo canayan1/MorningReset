@@ -1,0 +1,67 @@
+{
+  "identifier" : "6DFBE7CA",
+  "nonConsumableProducts" : [
+
+  ],
+  "nonRenewingSubscriptionProducts" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_availableInAllEnvironments" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storeKitVersion" : 2,
+    "_timeRate" : "MONTHLY_RENEWAL_EVERY_THIRTY_MINUTES"
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21497758",
+      "localizations" : [
+
+      ],
+      "name" : "Premium",
+      "performanceData" : {
+
+      },
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "19.99",
+          "familySharable" : false,
+          "groupNumber" : 1,
+          "internalID" : "9A2B3C4D",
+          "introductoryOffer" : {
+            "duration" : "P7D",
+            "offerID" : "intro_offer",
+            "offerMode" : "FREE_TRIAL",
+            "offerType" : "introductory"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to Morning Reset Premium features including pattern insights, guided pauses, and mobility flows.",
+              "displayName" : "Morning Reset Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.canayan.MorningReset.premium.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Annual Premium",
+          "subscriptionGroupID" : "21497758",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
