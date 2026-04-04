@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct ActionView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(AppState.self)      private var appState
+    @Environment(InsightEngine.self) private var insightEngine
     @State private var panel: Panel = .main
 
     private enum Panel { case main, learn, action }
@@ -24,10 +25,7 @@ struct ActionView: View {
             Spacer()
 
             VStack(spacing: DS.Space.md) {
-                sectionCard(
-                    label: "INSIGHT",
-                    preview: ActionContent.todayInsight
-                ) { panel = .learn }
+                aiInsightBlock
 
                 sectionCard(
                     label: "ONE MORE STEP",
@@ -95,12 +93,35 @@ struct ActionView: View {
     }
 
     private var doneButton: some View {
-        Button("Done") { appState.endFlow() }
+        Button("Done") { appState.showFlowCheckout() }
             .font(.subheadline)
             .foregroundStyle(DS.textSecondary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .padding(.bottom, 32)
+    }
+
+    @ViewBuilder
+    private var aiInsightBlock: some View {
+        if appState.isPremium {
+            if insightEngine.isRefreshing {
+                AIInsightCardView(
+                    eyebrow: "YOUR INSIGHT",
+                    text: "",
+                    isLoading: true
+                )
+            } else if let insight = insightEngine.dailyInsight {
+                AIInsightCardView(
+                    eyebrow: "YOUR INSIGHT",
+                    text: insight.reflection,
+                    isAIGenerated: insight.isAIGenerated
+                )
+            } else {
+                sectionCard(label: "INSIGHT", preview: ActionContent.todayInsight) { panel = .learn }
+            }
+        } else {
+            sectionCard(label: "INSIGHT", preview: ActionContent.todayInsight) { panel = .learn }
+        }
     }
 
     private var mobilityCard: some View {

@@ -36,6 +36,7 @@ struct RootView: View {
             case .guidedPause:        GuidedPauseView().transition(.opacity)
             case .mobilityFlow:       MobilityFlowView().transition(.opacity)
             case .feedback:           FeedbackView().transition(.opacity)
+            case .flowCheckout:       FlowCheckoutView().transition(.opacity)
             }
         }
         .animation(.easeOut(duration: 0.2), value: appState.screen)

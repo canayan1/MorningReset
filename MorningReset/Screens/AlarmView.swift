@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct AlarmView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(AppState.self)      private var appState
+    @Environment(InsightEngine.self) private var insightEngine
     @State private var showAbout   = false
     @State private var showSignIn  = false
     @State private var schedule    = WakeScheduleStore.load()
@@ -63,6 +64,13 @@ struct AlarmView: View {
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
+
+                // Weekly AI insight (premium only, shown when available)
+                if appState.isPremium, let summary = insightEngine.weeklySummary {
+                    WeeklyInsightCardView(summary: summary)
+                        .padding(.horizontal, DS.Space.lg)
+                    Spacer().frame(height: DS.Space.sm)
+                }
 
                 // Soft premium intro (first launch only)
                 if !appState.onboardingSeen {

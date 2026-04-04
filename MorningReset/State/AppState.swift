@@ -19,6 +19,7 @@ enum Screen {
     case guidedPause
     case mobilityFlow
     case feedback
+    case flowCheckout
 }
 
 @Observable
@@ -161,6 +162,10 @@ final class AppState {
 
     func dismissFeedback() {
         screen = .alarm
+    }
+
+    func showFlowCheckout() {
+        screen = .flowCheckout
     }
 
     // MARK: - Premium flow navigation
