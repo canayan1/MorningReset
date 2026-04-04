@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import StoreKit
+import AuthenticationServices
 
 enum Screen {
     case alarm
@@ -17,6 +18,7 @@ enum Screen {
     case paywall
     case guidedPause
     case mobilityFlow
+    case feedback
 }
 
 @Observable
@@ -28,6 +30,10 @@ final class AppState {
     var isPremium: Bool
     var onboardingSeen: Bool
     private var paywallLastShownDate: Double
+
+    // Apple Sign In (persisted via UserDefaults)
+    var userAppleID: String?
+    var userName: String?
 
     // Session-scoped (reset each flow)
     var paywallShownThisFlow: Bool = false
@@ -50,7 +56,32 @@ final class AppState {
         isPremium            = UserDefaults.standard.bool(forKey: "premium_unlocked")
         onboardingSeen       = UserDefaults.standard.bool(forKey: "onboarding_seen")
         paywallLastShownDate = UserDefaults.standard.double(forKey: "paywall_last_shown_date")
+        userAppleID          = UserDefaults.standard.string(forKey: "apple_user_id")
+        userName             = UserDefaults.standard.string(forKey: "apple_user_name")
         Task { await self.checkEntitlement() }
+    }
+
+    // MARK: - Streak
+
+    var streakCount: Int {
+        let entries = DailyEntryStore.load()
+        guard !entries.isEmpty else { return 0 }
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        let yesterday = cal.date(byAdding: .day, value: -1, to: today)!
+        let days = Array(Set(entries.map { cal.startOfDay(for: $0.date) })).sorted(by: >)
+        guard let first = days.first, first == today || first == yesterday else { return 0 }
+        var streak = 0
+        var expected = first
+        for day in days {
+            if day == expected {
+                streak += 1
+                expected = cal.date(byAdding: .day, value: -1, to: expected)!
+            } else {
+                break
+            }
+        }
+        return streak
     }
 
     // MARK: - Navigation
@@ -120,6 +151,15 @@ final class AppState {
             let intentionStr = UserDefaults.standard.string(forKey: "selected_intention") ?? IntentionType.focus.rawValue
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
         }
+        let s = streakCount
+        if s == 3 || s == 7 || s == 14 || s == 30 {
+            screen = .feedback
+        } else {
+            screen = .alarm
+        }
+    }
+
+    func dismissFeedback() {
         screen = .alarm
     }
 
@@ -245,6 +285,28 @@ final class AppState {
         UserDefaults.standard.set(true, forKey: "onboarding_seen")
     }
 
+    // MARK: - Apple Sign In
+
+    func handleAppleSignIn(result: ASAuthorization) {
+        guard let credential = result.credential as? ASAuthorizationAppleIDCredential else { return }
+        let id = credential.user
+        let name = [credential.fullName?.givenName, credential.fullName?.familyName]
+            .compactMap { $0 }.joined(separator: " ")
+        userAppleID = id
+        UserDefaults.standard.set(id, forKey: "apple_user_id")
+        if !name.isEmpty {
+            userName = name
+            UserDefaults.standard.set(name, forKey: "apple_user_name")
+        }
+    }
+
+    func signOut() {
+        userAppleID = nil
+        userName = nil
+        UserDefaults.standard.removeObject(forKey: "apple_user_id")
+        UserDefaults.standard.removeObject(forKey: "apple_user_name")
+    }
+
     func recordManualPaywallShown() {
         paywallLastShownDate = Date().timeIntervalSince1970
         paywallShownThisFlow = true
@@ -254,6 +316,11 @@ final class AppState {
     // MARK: - Mobility methods
 
     func openMobilityFlow() {
+        guard isPremium else {
+            paywallContext = .riseAndFlow
+            screen = .paywall
+            return
+        }
         let flow = MobilityLibrary.flow()
         currentMobilityFlow = flow
         currentMobilityMoveIndex = 0
@@ -297,7 +364,12 @@ final class AppState {
         mobilityTimer = nil
         isMobilityRunning = false
         currentMobilityFlow = nil
-        screen = .action
+        let s = streakCount
+        if s == 3 || s == 7 || s == 14 || s == 30 {
+            screen = .feedback
+        } else {
+            screen = .action
+        }
     }
 
     private func tickMobility() {

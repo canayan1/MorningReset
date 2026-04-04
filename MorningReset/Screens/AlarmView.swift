@@ -2,8 +2,9 @@ import SwiftUI
 
 struct AlarmView: View {
     @Environment(AppState.self) private var appState
-    @State private var showAbout = false
-    @State private var schedule  = WakeScheduleStore.load()
+    @State private var showAbout   = false
+    @State private var showSignIn  = false
+    @State private var schedule    = WakeScheduleStore.load()
 
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
@@ -20,7 +21,23 @@ struct AlarmView: View {
 
                 // Top nav
                 HStack {
+                    if appState.streakCount > 0 {
+                        HStack(spacing: 4) {
+                            Rectangle()
+                                .fill(DS.accent)
+                                .frame(width: 2, height: 11)
+                            Text("\(appState.streakCount)d")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(DS.textDim)
+                        }
+                    }
                     Spacer()
+                    if appState.userAppleID == nil {
+                        Button("Sign in") { showSignIn = true }
+                            .font(.caption)
+                            .foregroundStyle(DS.textDim)
+                            .padding(.trailing, DS.Space.sm)
+                    }
                     Button("About") { showAbout = true }
                         .font(.caption)
                         .foregroundStyle(DS.textDim)
@@ -84,6 +101,9 @@ struct AlarmView: View {
         }
         .sheet(isPresented: $showAbout) {
             AboutView()
+        }
+        .sheet(isPresented: $showSignIn) {
+            SignInView()
         }
     }
 

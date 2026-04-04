@@ -4,9 +4,10 @@ import StoreKit
 // MARK: - Context
 
 enum PaywallContext {
-    case onboarding  // soft entry, first-launch or About
-    case contextual  // triggered after strong pattern insight
-    case periodic    // triggered after 21-day gap
+    case onboarding   // soft entry, first-launch or About
+    case contextual   // triggered after strong pattern insight
+    case periodic     // triggered after 21-day gap
+    case riseAndFlow  // triggered when non-premium taps Rise & Flow
 }
 
 // MARK: - Copy model
@@ -41,6 +42,14 @@ private struct PaywallCopy {
         primaryCTA: "Learn more",
         secondaryCTA: "Not now"
     )
+
+    static let riseAndFlow = PaywallCopy(
+        headline: "Move with intention",
+        body: "A guided 5-minute morning movement flow.\nAnimated cues. No equipment. No rush.",
+        features: ["Rise & Flow — 5 min guided movement", "Adaptive mobility flows by season", "Animated stick figure cues"],
+        primaryCTA: "Start free trial",
+        secondaryCTA: "Not now"
+    )
 }
 
 // MARK: - View
@@ -57,9 +66,10 @@ struct PaywallView: View {
 
     private var copy: PaywallCopy {
         switch context {
-        case .onboarding: return .onboarding
-        case .contextual: return .contextual
-        case .periodic:   return .periodic
+        case .onboarding:  return .onboarding
+        case .contextual:  return .contextual
+        case .periodic:    return .periodic
+        case .riseAndFlow: return .riseAndFlow
         }
     }
 
@@ -167,7 +177,9 @@ struct PaywallView: View {
             .padding(.horizontal, DS.Space.lg)
         }
         .onAppear {
-            appState.onPaywallPresented()
+            if context != .riseAndFlow {
+                appState.onPaywallPresented()
+            }
         }
     }
 
