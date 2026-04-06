@@ -7,6 +7,14 @@ struct AlarmView: View {
     @State private var showSignIn  = false
     @State private var schedule    = WakeScheduleStore.load()
 
+    private var advisorMessage: String? {
+        IntentionAdvisor.advise(
+            entries:      DailyEntryStore.load(),
+            checkouts:    FlowCheckoutStore.last(7),
+            streakCount:  appState.streakCount
+        )
+    }
+
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
         if h < 12 { return "Good morning." }
@@ -75,6 +83,13 @@ struct AlarmView: View {
                 // Soft premium intro (first launch only)
                 if !appState.onboardingSeen {
                     onboardingCard
+                    Spacer().frame(height: DS.Space.sm)
+                }
+
+                // Intention advisor (all users, rule-based)
+                if let advice = advisorMessage {
+                    InfoCard(label: "TODAY", value: advice)
+                        .padding(.horizontal, DS.Space.lg)
                     Spacer().frame(height: DS.Space.sm)
                 }
 

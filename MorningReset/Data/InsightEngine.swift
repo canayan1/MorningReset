@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import FoundationModels
 
 // MARK: - InsightEngine
 //
@@ -18,14 +19,18 @@ final class InsightEngine {
     var weeklySummary: WeeklySummary? = nil
     var isRefreshing: Bool            = false
 
-    // Swap this for RemoteAIInsightService(apiKey: "sk-...") when ready.
-    private let primary: any AIInsightService = LocalAIInsightService()
+    private let primary: any AIInsightService
     private let fallback: any AIInsightService = LocalAIInsightService()
 
     private static let dailyKey  = "insight_daily_cache"
     private static let weeklyKey = "insight_weekly_cache"
 
     init() {
+        if #available(iOS 26, *), case .available = SystemLanguageModel.default.availability {
+            primary = AppleIntelligenceInsightService()
+        } else {
+            primary = LocalAIInsightService()
+        }
         dailyInsight  = loadCached(key: Self.dailyKey)
         weeklySummary = loadCached(key: Self.weeklyKey)
     }

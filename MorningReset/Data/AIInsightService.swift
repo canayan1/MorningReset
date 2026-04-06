@@ -1,4 +1,5 @@
 import Foundation
+import FoundationModels
 
 // MARK: - Protocol
 
@@ -146,6 +147,90 @@ final class LocalAIInsightService: AIInsightService {
         case "protect": return "This was a quieter week. Sometimes that's exactly what's needed."
         default:        return "Steady across the week. That kind of consistency compounds quietly."
         }
+    }
+}
+
+// MARK: - Apple Intelligence (iOS 26+, on-device, no cost)
+
+@available(iOS 26, *)
+final class AppleIntelligenceInsightService: AIInsightService {
+
+    func dailyInsight(context: AIInsightContext) async throws -> DailyInsight {
+        guard case .available = SystemLanguageModel.default.availability else {
+            throw CocoaError(.featureUnsupported)
+        }
+        let session = LanguageModelSession(instructions: AIInsightPromptBuilder.systemPrompt)
+        let response = try await session.respond(
+            to: AIInsightPromptBuilder.buildDailyPrompt(context: context)
+        )
+        return DailyInsight(
+            reflection:         response.content,
+            recommendation:     "",
+            nextFlowSuggestion: "",
+            generatedAt:        Date(),
+            isAIGenerated:      true
+        )
+    }
+
+    func weeklySummary(context: AIInsightContext) async throws -> WeeklySummary {
+        guard case .available = SystemLanguageModel.default.availability else {
+            throw CocoaError(.featureUnsupported)
+        }
+        let session = LanguageModelSession(instructions: AIInsightPromptBuilder.systemPrompt)
+        let response = try await session.respond(
+            to: AIInsightPromptBuilder.buildWeeklyPrompt(context: context)
+        )
+        return WeeklySummary(
+            headline:        "This week",
+            body:            response.content,
+            completionCount: context.recentEntries.count,
+            generatedAt:     Date(),
+            isAIGenerated:   true
+        )
+    }
+}
+
+// MARK: - Intention Advisor (rule-based, all users)
+
+enum IntentionAdvisor {
+
+    static func advise(entries: [DailyEntry], checkouts: [FlowCheckout], streakCount: Int) -> String? {
+        let recentEntries   = Array(entries.suffix(7))
+        let recentCheckouts = Array(checkouts.suffix(5))
+
+        let hardCount  = recentCheckouts.filter { $0.difficulty == .hard }.count
+        let notHelpful = recentCheckouts.filter { $0.helpfulness == .no }.count
+        if hardCount >= 3 || notHelpful >= 2 {
+            return "Recent flows have felt heavy. Consider a lighter start today."
+        }
+
+        if recentEntries.count >= 3 {
+            let modes = recentEntries.map { $0.mode }
+            if let dominant = mostFrequent(modes), modes.filter({ $0 == dominant }).count >= 3 {
+                switch dominant {
+                case "protect": return "You've been in protect mode lately. A lighter start might carry better today."
+                case "push":    return "You've been pushing consistently. Notice if today calls for a softer start."
+                default: break
+                }
+            }
+        }
+
+        if streakCount == 6 || streakCount == 13 || streakCount == 29 {
+            return "One more reset and you'll hit \(streakCount + 1) days in a row."
+        }
+
+        if recentCheckouts.count >= 3,
+           recentCheckouts.suffix(3).allSatisfy({ $0.helpfulness == .yes }) {
+            return "Your last few flows have all landed well. Keep that rhythm."
+        }
+
+        return nil
+    }
+
+    private static func mostFrequent<T: Hashable>(_ items: [T]) -> T? {
+        var counts: [T: Int] = [:]
+        for item in items { counts[item, default: 0] += 1 }
+        return counts.max(by: { $0.value < $1.value })?.key
     }
 }
 
