@@ -106,6 +106,9 @@ struct AlarmView: View {
         }
         .onAppear {
             schedule = WakeScheduleStore.load()
+            Task {
+                await AlarmManager.current.requestAuthorization()
+            }
         }
         .sheet(isPresented: $showAbout) {
             AboutView()

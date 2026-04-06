@@ -55,7 +55,7 @@ final class AppState {
 
     init() {
         isPremium            = UserDefaults.standard.bool(forKey: "premium_unlocked")
-        onboardingSeen       = UserDefaults.standard.bool(forKey: "onboarding_seen")
+        onboardingSeen       = UserDefaults.standard.bool(forKey: "onboarding_complete")
         paywallLastShownDate = UserDefaults.standard.double(forKey: "paywall_last_shown_date")
         userAppleID          = UserDefaults.standard.string(forKey: "apple_user_id")
         userName             = UserDefaults.standard.string(forKey: "apple_user_name")
@@ -287,7 +287,7 @@ final class AppState {
 
     func dismissOnboarding() {
         onboardingSeen = true
-        UserDefaults.standard.set(true, forKey: "onboarding_seen")
+        UserDefaults.standard.set(true, forKey: "onboarding_complete")
     }
 
     // MARK: - Apple Sign In
