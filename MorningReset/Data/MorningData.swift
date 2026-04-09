@@ -16,32 +16,95 @@ struct MorningResult {
 }
 
 enum MorningData {
-    static let questions: [Question] = [
-        Question(text: "Still in bed?",             options: ["Yes", "No"]),
-        Question(text: "Low on energy?",            options: ["Yes", "No"]),
-        Question(text: "Getting up feels hard?",    options: ["Yes", "No"]),
-        Question(text: "Want a slow start?",        options: ["Yes", "No"]),
-        Question(text: "Ready for a quick reset?",  options: ["Yes", "No"]),
-    ]
+    static var questions: [Question] {
+        switch lang {
+        case "tr":
+            return [
+                Question(text: "Hâlâ yatakta mısın?",            options: ["Evet", "Hayır"]),
+                Question(text: "Enerjin düşük mü?",              options: ["Evet", "Hayır"]),
+                Question(text: "Kalkmak zor geliyor mu?",        options: ["Evet", "Hayır"]),
+                Question(text: "Yavaş bir başlangıç ister misin?", options: ["Evet", "Hayır"]),
+                Question(text: "Kısa bir reset'e hazır mısın?",  options: ["Evet", "Hayır"]),
+            ]
+        case "es":
+            return [
+                Question(text: "¿Sigues en la cama?",              options: ["Sí", "No"]),
+                Question(text: "¿Poca energía?",                   options: ["Sí", "No"]),
+                Question(text: "¿Levantarse se siente difícil?",   options: ["Sí", "No"]),
+                Question(text: "¿Quieres un inicio lento?",        options: ["Sí", "No"]),
+                Question(text: "¿Listo para un reset rápido?",     options: ["Sí", "No"]),
+            ]
+        default:
+            return [
+                Question(text: "Still in bed?",             options: ["Yes", "No"]),
+                Question(text: "Low on energy?",            options: ["Yes", "No"]),
+                Question(text: "Getting up feels hard?",    options: ["Yes", "No"]),
+                Question(text: "Want a slow start?",        options: ["Yes", "No"]),
+                Question(text: "Ready for a quick reset?",  options: ["Yes", "No"]),
+            ]
+        }
+    }
 
     private static let variantPoolSize = 12
 
-    private static var variantIndex: Int {
+    static var variantIndex: Int {
         let day = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         return day % variantPoolSize
     }
 
+    static var lang: String {
+        Locale.current.language.languageCode?.identifier ?? "en"
+    }
+
+    private static var positiveAnswer: String {
+        switch lang {
+        case "tr": return "Hayır"
+        case "es": return "No"
+        default:   return "No"
+        }
+    }
+
+    private static var positiveQ5: String {
+        switch lang {
+        case "tr": return "Evet"
+        case "es": return "Sí"
+        default:   return "Yes"
+        }
+    }
+
     static func result(from answers: [String]) -> MorningResult {
-        // Q1–Q4: "No" = positive signal (not in bed, not low, not difficult, no slow start)
-        // Q5: "Yes" = positive signal (can handle something active)
         var positive = 0
         for (i, answer) in answers.enumerated() {
-            if i < 4,  answer == "No"  { positive += 1 }
-            if i == 4, answer == "Yes" { positive += 1 }
+            if i < 4,  answer == positiveAnswer { positive += 1 }
+            if i == 4, answer == positiveQ5     { positive += 1 }
         }
-        if positive >= 4 { return push }
-        if positive >= 2 { return steady }
-        return protect
+        if positive >= 4 { return pushResult }
+        if positive >= 2 { return steadyResult }
+        return protectResult
+    }
+
+    private static var protectResult: MorningResult {
+        switch lang {
+        case "tr": return protectTR
+        case "es": return protectES
+        default:   return protect
+        }
+    }
+
+    private static var steadyResult: MorningResult {
+        switch lang {
+        case "tr": return steadyTR
+        case "es": return steadyES
+        default:   return steady
+        }
+    }
+
+    private static var pushResult: MorningResult {
+        switch lang {
+        case "tr": return pushTR
+        case "es": return pushES
+        default:   return push
+        }
     }
 
     private static var protect: MorningResult {

@@ -167,9 +167,10 @@ final class AppState {
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
             invalidateStreakCache()
             WidgetSnapshot.write(
-                mode:   mode.rawValue,
-                mantra: MantraEngine.generate(mode: mode, intention: intention),
-                streak: streakCount
+                mode:     mode.rawValue,
+                mantra:   MantraEngine.generate(mode: mode, intention: intention),
+                modeLine: result.meaning,
+                streak:   streakCount
             )
         }
         let s = streakCount

@@ -71,10 +71,18 @@ struct MorningWidgetView: View {
                 }
             }
             Spacer()
+            if !entry.snapshot.modeLine.isEmpty {
+                Text(entry.snapshot.modeLine)
+                    .font(.system(.caption2, design: .default))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                Spacer().frame(height: 4)
+            }
             Text(entry.snapshot.mantra)
                 .font(.system(.footnote, design: .serif))
                 .foregroundStyle(.primary)
-                .lineLimit(4)
+                .lineLimit(3)
                 .multilineTextAlignment(.leading)
             Spacer()
             Text("Morning Reset")

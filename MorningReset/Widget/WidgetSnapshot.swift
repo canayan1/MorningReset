@@ -19,12 +19,14 @@ import WidgetKit
 struct WidgetSnapshot: Codable {
     let mode: String
     let mantra: String
+    let modeLine: String
     let streak: Int
 
     static let placeholder = WidgetSnapshot(
-        mode:   "steady",
-        mantra: "Begin with what you can hold.",
-        streak: 0
+        mode:     "steady",
+        mantra:   "Begin with what you can hold.",
+        modeLine: "Use the day properly.",
+        streak:   0
     )
 
     private static let suiteName = "group.com.canayan.MorningReset"
@@ -34,8 +36,8 @@ struct WidgetSnapshot: Codable {
         UserDefaults(suiteName: suiteName)
     }
 
-    static func write(mode: String, mantra: String, streak: Int) {
-        let snapshot = WidgetSnapshot(mode: mode, mantra: mantra, streak: streak)
+    static func write(mode: String, mantra: String, modeLine: String = "", streak: Int) {
+        let snapshot = WidgetSnapshot(mode: mode, mantra: mantra, modeLine: modeLine, streak: streak)
         guard let data = try? JSONEncoder().encode(snapshot) else { return }
         defaults?.set(data, forKey: key)
         #if canImport(WidgetKit)
