@@ -14,6 +14,12 @@
 // The widget reads a tiny snapshot from the app group and renders today's
 // mode + mantra. It refreshes once per hour and is force-refreshed by the
 // main app whenever the user completes a flow (see WidgetSnapshot.write).
+//
+// This entire file is guarded behind WIDGET_EXTENSION so it does NOT compile
+// in the main app target. When you create the widget target, add
+// WIDGET_EXTENSION=1 to its Swift Active Compilation Conditions (Build Settings).
+
+#if WIDGET_EXTENSION
 
 import WidgetKit
 import SwiftUI
@@ -116,3 +122,5 @@ struct MorningResetWidgetBundle: WidgetBundle {
         MorningResetWidget()
     }
 }
+
+#endif
