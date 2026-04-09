@@ -155,7 +155,7 @@ struct FlowCheckoutView: View {
     // MARK: - Actions
 
     private func saveAndContinue() {
-        let intentionStr = UserDefaults.standard.string(forKey: "selected_intention")
+        let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention)
             ?? IntentionType.focus.rawValue
 
         let checkout = FlowCheckout(

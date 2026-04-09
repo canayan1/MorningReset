@@ -39,9 +39,50 @@ struct ActionView: View {
 
             Spacer()
 
+            pastDaysStrip
+                .padding(.bottom, DS.Space.sm)
+
             doneButton
         }
         .padding(.horizontal, DS.Space.lg)
+    }
+
+    // MARK: - Past 14 days
+
+    private var pastDaysStrip: some View {
+        let entries = DailyEntryStore.load()
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        let byDay: [Date: String] = Dictionary(
+            uniqueKeysWithValues: entries.map { (cal.startOfDay(for: $0.date), $0.mode) }
+        )
+        let days: [(date: Date, mode: String?)] = (0..<14).reversed().map { offset in
+            let d = cal.date(byAdding: .day, value: -offset, to: today)!
+            return (d, byDay[d])
+        }
+        return VStack(alignment: .leading, spacing: DS.Space.sm) {
+            Text("LAST 14 DAYS")
+                .font(DS.Typo.micro)
+                .foregroundStyle(DS.textDim)
+                .kerning(1.4)
+            HStack(spacing: 6) {
+                ForEach(days, id: \.date) { day in
+                    Circle()
+                        .fill(color(for: day.mode))
+                        .frame(width: 8, height: 8)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func color(for mode: String?) -> Color {
+        switch mode {
+        case "protect": return DS.modeProtect
+        case "steady":  return DS.modeSteady
+        case "push":    return DS.modePush
+        default:        return DS.divider
+        }
     }
 
     // MARK: - Learn

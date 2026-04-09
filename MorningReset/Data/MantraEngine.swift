@@ -27,12 +27,12 @@ enum SoundDirection: CaseIterable, Identifiable {
         }
     }
 
+    var todayPick: SoundPick {
+        SoundLibrary.todayPick(for: self)
+    }
+
     var playlistURL: URL? {
-        switch self {
-        case .calm:   return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY")
-        case .focus:  return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DXZeyjIkhend1")
-        case .energy: return URL(string: "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP")
-        }
+        todayPick.url
     }
 
     static func recommended(for mode: MorningMode) -> SoundDirection {

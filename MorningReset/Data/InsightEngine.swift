@@ -20,17 +20,23 @@ final class InsightEngine {
     var isRefreshing: Bool            = false
 
     private let primary: any AIInsightService
-    private let fallback: any AIInsightService = LocalAIInsightService()
+    private let fallback: any AIInsightService
 
-    private static let dailyKey  = "insight_daily_cache"
-    private static let weeklyKey = "insight_weekly_cache"
+    private static let dailyKey  = UDKey.insightDailyCache
+    private static let weeklyKey = UDKey.insightWeeklyCache
 
-    init() {
-        if #available(iOS 26, *), case .available = SystemLanguageModel.default.availability {
-            primary = AppleIntelligenceInsightService()
+    init(
+        primary: (any AIInsightService)? = nil,
+        fallback: any AIInsightService = LocalAIInsightService()
+    ) {
+        if let primary {
+            self.primary = primary
+        } else if #available(iOS 26, *), case .available = SystemLanguageModel.default.availability {
+            self.primary = AppleIntelligenceInsightService()
         } else {
-            primary = LocalAIInsightService()
+            self.primary = LocalAIInsightService()
         }
+        self.fallback = fallback
         dailyInsight  = loadCached(key: Self.dailyKey)
         weeklySummary = loadCached(key: Self.weeklyKey)
     }

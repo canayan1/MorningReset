@@ -36,17 +36,24 @@ struct ScheduleSetupView: View {
                 .padding(.top, 20)
                 .padding(.bottom, DS.Space.lg)
 
-                Text("WAKE SCHEDULE")
-                    .font(.system(size: 10, weight: .semibold))
+                Text("MORNING NOTIFICATION")
+                    .font(DS.Typo.label)
                     .foregroundStyle(DS.textSecondary)
-                    .kerning(1.2)
+                    .kerning(1.4)
 
                 Spacer().frame(height: DS.Space.sm)
 
-                Text("Set your\nmorning times.")
-                    .font(.title2.bold())
+                Text("When should\nwe ping you?")
+                    .font(DS.Typo.title)
                     .foregroundStyle(DS.textPrimary)
-                    .lineSpacing(4)
+                    .lineSpacing(6)
+
+                Spacer().frame(height: DS.Space.sm)
+
+                Text("Tap the notification instead of opening Instagram.\nThat single tap starts a different day.")
+                    .font(.caption)
+                    .foregroundStyle(DS.textDim)
+                    .lineSpacing(3)
 
                 Spacer().frame(height: 40)
 
@@ -65,16 +72,17 @@ struct ScheduleSetupView: View {
 
                 Spacer()
 
-                Button("Save Schedule") {
+                Button("Save notification") {
                     Task { await saveAndSchedule() }
                 }
-                .font(.headline)
+                .font(.system(.body, design: .serif))
+                .tracking(0.5)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(DS.textPrimary)
+                .background(DS.accent)
                 .foregroundStyle(DS.background)
-                .clipShape(Rectangle())
-                .padding(.bottom, 48)
+                .clipShape(Capsule())
+                .padding(.bottom, DS.Space.xl)
             }
             .padding(.horizontal, DS.Space.lg)
         }

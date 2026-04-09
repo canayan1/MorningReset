@@ -59,12 +59,13 @@ struct AlarmView: View {
                 // Greeting + next alarm
                 VStack(alignment: .leading, spacing: DS.Space.sm) {
                     Text(greeting)
-                        .font(.system(size: 38, weight: .bold))
+                        .font(.system(size: 40, design: .serif).weight(.regular))
                         .foregroundStyle(DS.textPrimary)
 
-                    Text("No bad vibes. No negative noise.")
+                    Text("When the morning notification arrives,\ntap it instead of Instagram.")
                         .font(.callout)
                         .foregroundStyle(DS.textSecondary)
+                        .lineSpacing(2)
 
                     nextAlarmLine
                 }
@@ -98,14 +99,15 @@ struct AlarmView: View {
                     Button("Start Morning Reset") {
                         appState.startFlow()
                     }
-                    .font(.headline)
+                    .font(.system(.body, design: .serif))
+                    .tracking(0.5)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
-                    .background(DS.textPrimary)
+                    .background(DS.accent)
                     .foregroundStyle(DS.background)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(Capsule())
 
-                    Button("Set wake schedule") {
+                    Button("Set morning notification") {
                         appState.showScheduleSetup()
                     }
                     .font(.subheadline)
@@ -113,7 +115,8 @@ struct AlarmView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
                     .background(DS.surface)
-                    .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+                    .clipShape(Capsule())
+                    .overlay(Capsule().stroke(DS.border, lineWidth: DS.hairline))
                 }
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, 48)
@@ -137,23 +140,23 @@ struct AlarmView: View {
 
     private var onboardingCard: some View {
         VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text("Start your day on your terms")
-                .font(.callout.bold())
+            Text("Set your morning notification")
+                .font(.callout.weight(.semibold))
                 .foregroundStyle(DS.background)
-            Text("Before notifications.\nBefore the scroll.\nTake a moment to set your direction.")
+            Text("Each morning, this app will send you a quiet ping.\nTap it instead of opening Instagram —\nthat single tap is the start of a different day.")
                 .font(.caption)
-                .foregroundStyle(DS.background.opacity(0.65))
-                .lineSpacing(2)
+                .foregroundStyle(DS.background.opacity(0.75))
+                .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
             Button("Start your first reset") {
                 appState.dismissOnboarding()
                 appState.startFlow()
             }
-            .font(.caption.bold())
+            .font(.caption.weight(.semibold))
             .foregroundStyle(DS.background)
         }
         .padding(DS.Space.md)
-        .background(DS.textPrimary)
+        .background(DS.accent)
         .padding(.horizontal, DS.Space.lg)
     }
 
@@ -175,6 +178,6 @@ struct AlarmView: View {
     private func formatNextAlarm(_ date: Date) -> String {
         let f = DateFormatter()
         f.dateFormat = "EEEE 'at' h:mm a"
-        return "Next: \(f.string(from: date))"
+        return "Next ping: \(f.string(from: date))"
     }
 }

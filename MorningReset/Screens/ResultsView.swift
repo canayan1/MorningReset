@@ -3,7 +3,7 @@ import SwiftUI
 struct ResultsView: View {
     @Environment(AppState.self) private var appState
 
-    @AppStorage("selected_intention") private var selectedIntention: String = IntentionType.focus.rawValue
+    @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
 
     private var result: MorningResult {
         MorningData.result(from: appState.answers)

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct IntentionView: View {
     @Environment(AppState.self) private var appState
-    @AppStorage("selected_intention") private var selectedIntention: String = IntentionType.focus.rawValue
+    @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
 
     private let descriptors: [IntentionType: String] = [
         .calm:        "Move without noise",

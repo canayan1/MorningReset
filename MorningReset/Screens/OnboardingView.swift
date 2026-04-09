@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @AppStorage("onboarding_complete") private var onboardingComplete = false
+    @AppStorage(UDKey.onboardingComplete) private var onboardingComplete = false
     @State private var page = 0
 
     private struct Slide {
-        let title: String
-        let subtitle: String
-        let cta: String
+        let title: LocalizedStringKey
+        let subtitle: LocalizedStringKey
+        let cta: LocalizedStringKey
     }
 
     private let slides: [Slide] = [
@@ -17,8 +17,13 @@ struct OnboardingView: View {
             cta: "Continue"
         ),
         Slide(
-            title: "Instead of scrolling,\ndo one small thing.",
-            subtitle: "That's your first win.",
+            title: "Tomorrow morning,\nyour phone will ring.",
+            subtitle: "Not Instagram.\nNot the news.\nA single notification from here.",
+            cta: "Continue"
+        ),
+        Slide(
+            title: "Tap it instead\nof opening anything else.",
+            subtitle: "Two minutes.\nOne small action.\nA different day begins.",
             cta: "Continue"
         ),
         Slide(
@@ -30,21 +35,21 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
 
                 VStack(spacing: 20) {
                     Text(slides[page].title)
-                        .font(.title2.bold())
-                        .foregroundStyle(.white)
+                        .font(DS.Typo.title)
+                        .foregroundStyle(DS.textPrimary)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(4)
+                        .lineSpacing(6)
 
                     Text(slides[page].subtitle)
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(DS.textSecondary)
                         .multilineTextAlignment(.center)
                 }
                 .id(page)
@@ -54,31 +59,35 @@ struct OnboardingView: View {
 
                 Spacer()
 
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     ForEach(0..<slides.count, id: \.self) { i in
                         Circle()
-                            .fill(i == page ? Color.white : Color.white.opacity(0.25))
-                            .frame(width: 5, height: 5)
+                            .fill(i == page ? DS.accent : DS.border)
+                            .frame(width: 4, height: 4)
                     }
                 }
                 .animation(.easeOut(duration: 0.2), value: page)
-                .padding(.bottom, 24)
+                .padding(.bottom, DS.Space.lg)
 
                 Button(slides[page].cta) {
                     if page < slides.count - 1 {
                         withAnimation(.easeOut(duration: 0.2)) { page += 1 }
                     } else {
-                        onboardingComplete = true
+                        Task {
+                            _ = await AlarmManager.current.requestAuthorization()
+                            await MainActor.run { onboardingComplete = true }
+                        }
                     }
                 }
-                .font(.headline)
+                .font(.system(.body, design: .serif))
+                .tracking(0.5)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(.white)
-                .foregroundStyle(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
+                .background(DS.accent)
+                .foregroundStyle(DS.background)
+                .clipShape(Capsule())
+                .padding(.horizontal, DS.Space.lg)
+                .padding(.bottom, DS.Space.xl)
             }
         }
     }

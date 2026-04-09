@@ -7,46 +7,46 @@ struct AboutView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Spacer()
                     Button("Done") { dismiss() }
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.6))
+                        .foregroundStyle(DS.textSecondary)
                 }
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
+                .padding(.top, DS.Space.lg)
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 28) {
+                VStack(alignment: .leading, spacing: DS.Space.lg + 4) {
                     Text("About Morning Reset")
-                        .font(.title3.bold())
-                        .foregroundStyle(.white)
+                        .font(DS.Typo.subtitle)
+                        .foregroundStyle(DS.textPrimary)
 
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: DS.Space.md + 4) {
                         Text("Most mornings don't really start.")
-                            .font(.body.bold())
-                            .foregroundStyle(.white)
+                            .font(.body)
+                            .foregroundStyle(DS.textPrimary)
 
                         Text("You wake up,\nreach for your phone,\nand begin reacting to everything around you.")
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(DS.textSecondary)
 
                         Text("It feels harmless.\n\nBut it sets the tone of your day.")
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(DS.textSecondary)
 
                         Text("Morning Reset interrupts that pattern.")
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(DS.textSecondary)
 
-                        Text("Instead of scrolling,\nyou take one small action.\n\nThat action becomes your first win.\n\nFrom there,\nyou start your day on your own terms.")
-                            .foregroundStyle(.white.opacity(0.8))
+                        Text("When the morning notification arrives,\ntap it instead of opening Instagram.\n\nThat one small action becomes your first win,\nand the day begins on your own terms.")
+                            .foregroundStyle(DS.textSecondary)
                     }
                     .font(.body)
-                    .lineSpacing(4)
+                    .lineSpacing(5)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
@@ -56,19 +56,19 @@ struct AboutView: View {
                         showPaywall = true
                     }
                     .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(DS.accent)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 16)
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, DS.Space.md)
                 }
 
                 Text("Start with a win.")
                     .font(.caption)
                     .italic()
-                    .foregroundStyle(.white.opacity(0.2))
+                    .foregroundStyle(DS.textDim)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 48)
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, DS.Space.xl)
             }
         }
         .sheet(isPresented: $showPaywall) {

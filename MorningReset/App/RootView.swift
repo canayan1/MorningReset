@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AppState.self) private var appState
-    @AppStorage("onboarding_complete") private var onboardingComplete = false
+    @AppStorage(UDKey.onboardingComplete) private var onboardingComplete = false
 
     var body: some View {
         ZStack {

@@ -8,7 +8,7 @@ struct DailyEntry: Codable {
 
 enum DailyEntryStore {
 
-    private static let key = "daily_entries"
+    private static let key = UDKey.dailyEntries
     private static let cap = 90
 
     static func load() -> [DailyEntry] {

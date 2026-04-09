@@ -52,21 +52,21 @@ struct MoveView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
 
                 Text(action)
-                    .font(.title2.bold())
-                    .foregroundStyle(.white)
-                    .lineSpacing(8)
+                    .font(DS.Typo.title)
+                    .foregroundStyle(DS.textPrimary)
+                    .lineSpacing(10)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, DS.Space.xl)
 
                 Spacer()
 
-                VStack(spacing: 16) {
+                VStack(spacing: DS.Space.md) {
                     Button("Start") {
                         guard !tapped else { return }
                         tapped = true
@@ -74,21 +74,22 @@ struct MoveView: View {
                             appState.showWin()
                         }
                     }
-                    .font(.headline)
+                    .font(.system(.body, design: .serif))
+                    .tracking(0.5)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
-                    .background(Color.white)
-                    .foregroundStyle(.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .background(DS.accent)
+                    .foregroundStyle(DS.background)
+                    .clipShape(Capsule())
                     .disabled(tapped)
                     .sensoryFeedback(.success, trigger: tapped)
 
                     Text("Stay here.")
                         .font(.caption)
-                        .foregroundStyle(.white.opacity(0.3))
+                        .foregroundStyle(DS.textDim)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
+                .padding(.horizontal, DS.Space.lg)
+                .padding(.bottom, DS.Space.xl)
             }
         }
     }

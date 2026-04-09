@@ -1,0 +1,293 @@
+{
+  "sourceLanguage" : "en",
+  "version" : "1.0",
+  "strings" : {
+    "About" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hakkında" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Acerca de" } }
+      }
+    },
+    "About Morning Reset" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About Morning Reset" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Morning Reset Hakkında" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Acerca de Morning Reset" } }
+      }
+    },
+    "Avoid" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Avoid" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Kaçın" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Evita" } }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Back" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Geri" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Atrás" } }
+      }
+    },
+    "Choose a new direction" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose a new direction" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Yeni bir yön seç" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Elige una nueva dirección" } }
+      }
+    },
+    "Choose your morning sound." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose your morning sound." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sabah sesini seç." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Elige tu sonido matinal." } }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Continue" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Devam" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Continuar" } }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bitti" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hecho" } }
+      }
+    },
+    "First win ✓" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "First win ✓" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İlk kazanım ✓" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Primera victoria ✓" } }
+      }
+    },
+    "Get started" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Get started" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Başla" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Empezar" } }
+      }
+    },
+    "Good afternoon." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Good afternoon." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İyi öğleden sonralar." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buenas tardes." } }
+      }
+    },
+    "Good evening." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Good evening." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İyi akşamlar." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buenas noches." } }
+      }
+    },
+    "Good morning." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Good morning." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Günaydın." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buenos días." } }
+      }
+    },
+    "It happens automatically." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "It happens automatically." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Otomatik olarak oluyor." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pasa automáticamente." } }
+      }
+    },
+    "LAST 14 DAYS" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "LAST 14 DAYS" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "SON 14 GÜN" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "ÚLTIMOS 14 DÍAS" } }
+      }
+    },
+    "MORNING NOTIFICATION" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "MORNING NOTIFICATION" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "SABAH BİLDİRİMİ" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "NOTIFICACIÓN MATINAL" } }
+      }
+    },
+    "Move with intention" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Move with intention" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Niyetle hareket et" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Muévete con intención" } }
+      }
+    },
+    "Not now" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not now" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Şimdi değil" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ahora no" } }
+      }
+    },
+    "Open in Spotify" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open in Spotify" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Spotify'da aç" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Abrir en Spotify" } }
+      }
+    },
+    "Optional" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Optional" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İsteğe bağlı" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Opcional" } }
+      }
+    },
+    "Save notification" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save notification" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bildirimi kaydet" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar notificación" } }
+      }
+    },
+    "Set morning notification" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Set morning notification" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sabah bildirimini ayarla" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Configurar notificación matinal" } }
+      }
+    },
+    "Sign in" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sign in" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Giriş yap" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar sesión" } }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Skip" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Atla" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Saltar" } }
+      }
+    },
+    "SOUND" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SOUND" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "SES" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "SONIDO" } }
+      }
+    },
+    "Start" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Başla" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Empezar" } }
+      }
+    },
+    "Start fresh" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start fresh" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Yeniden başla" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Empezar de nuevo" } }
+      }
+    },
+    "Start free trial" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start free trial" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ücretsiz denemeyi başlat" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar prueba gratuita" } }
+      }
+    },
+    "Start Morning Reset" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Morning Reset" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Morning Reset'i başlat" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar Morning Reset" } }
+      }
+    },
+    "Start with a win." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start with a win." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bir kazanımla başla." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Empieza con una victoria." } }
+      }
+    },
+    "Stay here." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stay here." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Burada kal." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Quédate aquí." } }
+      }
+    },
+    "Tap it instead\nof opening anything else." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap it instead\nof opening anything else." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Başka bir şey açmak yerine\nona dokun." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tócalo en vez\nde abrir otra cosa." } }
+      }
+    },
+    "TODAY'S PICK" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "TODAY'S PICK" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "BUGÜNÜN SEÇİMİ" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "LA ELECCIÓN DE HOY" } }
+      }
+    },
+    "Tomorrow morning,\nyour phone will ring." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tomorrow morning,\nyour phone will ring." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Yarın sabah\ntelefonun çalacak." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mañana por la mañana,\ntu teléfono sonará." } }
+      }
+    },
+    "Two minutes.\nOne small action.\nA different day begins." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Two minutes.\nOne small action.\nA different day begins." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İki dakika.\nKüçük bir hareket.\nFarklı bir gün başlar." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Dos minutos.\nUna acción pequeña.\nUn día distinto comienza." } }
+      }
+    },
+    "Upgrade to Premium" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Upgrade to Premium" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Premium'a geç" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pasar a Premium" } }
+      }
+    },
+    "When should\nwe ping you?" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When should\nwe ping you?" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sana ne zaman\nseslenelim?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Cuándo debemos\navisarte?" } }
+      }
+    },
+    "When the morning notification arrives,\ntap it instead of Instagram." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When the morning notification arrives,\ntap it instead of Instagram." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sabah bildirimi geldiğinde\nInstagram yerine ona dokun." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cuando llegue la notificación matinal,\ntócala en vez de abrir Instagram." } }
+      }
+    },
+    "You started." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "You started." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Başladın." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Empezaste." } }
+      }
+    },
+    "You wake up.\nYou reach for your phone.\nYou start scrolling." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "You wake up.\nYou reach for your phone.\nYou start scrolling." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Uyanıyorsun.\nTelefonuna uzanıyorsun.\nKaydırmaya başlıyorsun." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Te despiertas.\nAlcanzas el teléfono.\nEmpiezas a hacer scroll." } }
+      }
+    },
+    "We'll guide you.\nOne step at a time." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "We'll guide you.\nOne step at a time." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sana eşlik ederiz.\nAdım adım." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Te guiamos.\nPaso a paso." } }
+      }
+    }
+  }
+}

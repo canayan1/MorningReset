@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CycleCompleteView: View {
     @Environment(AppState.self) private var appState
-    @AppStorage("selected_intention") private var selectedIntention: String = IntentionType.focus.rawValue
+    @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
 
     private let descriptors: [IntentionType: String] = [
         .calm:        "Move without noise",
@@ -15,64 +15,67 @@ struct CycleCompleteView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: DS.Space.lg) {
                     Text(IntentionType(rawValue: selectedIntention)?.label ?? "")
-                        .font(.caption.bold())
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 14)
+                        .font(DS.Typo.label)
+                        .tracking(1.4)
+                        .foregroundStyle(DS.background)
+                        .padding(.horizontal, DS.Space.md)
                         .padding(.vertical, 7)
-                        .background(.white)
+                        .background(DS.accent)
                         .clipShape(Capsule())
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: DS.Space.sm) {
                         Text("7 wins")
-                            .font(.system(size: 48, weight: .bold))
-                            .foregroundStyle(.white)
+                            .font(.system(size: 52, design: .serif).weight(.regular))
+                            .foregroundStyle(DS.textPrimary)
                         Text("You kept showing up.")
                             .font(.body)
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(DS.textSecondary)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: DS.Space.md) {
                     Text("Choose a new direction")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.4))
-                        .padding(.horizontal, 24)
+                        .font(DS.Typo.label)
+                        .tracking(1.2)
+                        .foregroundStyle(DS.textDim)
+                        .padding(.horizontal, DS.Space.lg)
 
                     LazyVGrid(
                         columns: [GridItem(.flexible()), GridItem(.flexible())],
-                        spacing: 10
+                        spacing: DS.Space.sm + 2
                     ) {
                         ForEach(IntentionType.allCases, id: \.self) { intention in
                             intentionCard(intention)
                         }
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, DS.Space.lg)
                 }
 
-                Spacer().frame(height: 32)
+                Spacer().frame(height: DS.Space.xl - 8)
 
                 Button("Start fresh") {
                     appState.endFlow()
                 }
-                .font(.headline)
+                .font(.system(.body, design: .serif))
+                .tracking(0.5)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(.white)
-                .foregroundStyle(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
+                .background(DS.accent)
+                .foregroundStyle(DS.background)
+                .clipShape(Capsule())
+                .padding(.horizontal, DS.Space.lg)
+                .padding(.bottom, DS.Space.xl)
             }
         }
     }
@@ -84,20 +87,20 @@ struct CycleCompleteView: View {
         } label: {
             VStack(alignment: .leading, spacing: 6) {
                 Text(intention.label)
-                    .font(.subheadline.bold())
-                    .foregroundStyle(selected ? .black : .white)
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(selected ? DS.background : DS.textPrimary)
                 Text(descriptors[intention] ?? "")
                     .font(.caption)
-                    .foregroundStyle(selected ? .black.opacity(0.6) : .white.opacity(0.25))
+                    .foregroundStyle(selected ? DS.background.opacity(0.8) : DS.textDim)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
-            .padding(16)
-            .background(selected ? Color.white : Color.white.opacity(0.07))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .padding(DS.Space.md)
+            .background(selected ? DS.accent : DS.surface)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .strokeBorder(Color.white.opacity(selected ? 0 : 0.08), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(selected ? Color.clear : DS.border, lineWidth: DS.hairline)
             )
         }
         .animation(.easeOut(duration: 0.15), value: selected)

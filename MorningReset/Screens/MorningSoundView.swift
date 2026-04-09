@@ -4,6 +4,10 @@ struct MorningSoundView: View {
     @Environment(AppState.self) private var appState
     @Environment(\.openURL) private var openURL
 
+    private var pick: SoundPick {
+        appState.selectedSoundDirection.todayPick
+    }
+
     var body: some View {
         ZStack {
             DS.background.ignoresSafeArea()
@@ -13,16 +17,16 @@ struct MorningSoundView: View {
 
                 VStack(alignment: .leading, spacing: DS.Space.xs) {
                     Text("SOUND")
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(DS.Typo.label)
                         .foregroundStyle(DS.textDim)
-                        .kerning(1.2)
+                        .kerning(1.4)
 
                     Text("Choose your morning sound.")
-                        .font(.title2.bold())
+                        .font(DS.Typo.title)
                         .foregroundStyle(DS.textPrimary)
                 }
 
-                Spacer().frame(height: 28)
+                Spacer().frame(height: DS.Space.lg + 4)
 
                 HStack(spacing: DS.Space.sm) {
                     ForEach(SoundDirection.allCases) { direction in
@@ -30,19 +34,42 @@ struct MorningSoundView: View {
                     }
                 }
 
-                Spacer().frame(height: DS.Space.md)
+                Spacer().frame(height: DS.Space.md + 4)
 
-                if let url = appState.selectedSoundDirection.playlistURL {
+                // Today's curated pick
+                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    Text("TODAY'S PICK")
+                        .font(DS.Typo.micro)
+                        .foregroundStyle(DS.textDim)
+                        .kerning(1.4)
+
+                    Text(pick.title)
+                        .font(.system(.body, design: .serif))
+                        .foregroundStyle(DS.textPrimary)
+
+                    Text(pick.curator)
+                        .font(.caption)
+                        .italic()
+                        .foregroundStyle(DS.textSecondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(DS.Space.md)
+                .background(DS.surface)
+                .hairlineBorder()
+
+                Spacer().frame(height: DS.Space.sm + 4)
+
+                if let url = pick.url {
                     Button {
                         openURL(url)
                     } label: {
                         HStack(spacing: 6) {
-                            Text("Open playlist")
+                            Text("Open in Spotify")
                                 .font(.subheadline)
-                                .foregroundStyle(DS.textSecondary)
+                                .foregroundStyle(DS.accent)
                             Image(systemName: "arrow.up.right")
                                 .font(.system(size: 11))
-                                .foregroundStyle(DS.textDim)
+                                .foregroundStyle(DS.accent)
                         }
                     }
                 }
@@ -52,13 +79,14 @@ struct MorningSoundView: View {
                 Button("Continue") {
                     appState.showResults()
                 }
-                .font(.headline)
+                .font(.system(.body, design: .serif))
+                .tracking(0.5)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(DS.textPrimary)
+                .background(DS.accent)
                 .foregroundStyle(DS.background)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.bottom, 48)
+                .clipShape(Capsule())
+                .padding(.bottom, DS.Space.xl)
             }
             .padding(.horizontal, DS.Space.lg)
         }
@@ -74,8 +102,9 @@ struct MorningSoundView: View {
                 .foregroundStyle(selected ? DS.background : DS.textSecondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
-                .background(selected ? DS.textPrimary : DS.surface)
-                .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+                .background(selected ? DS.accent : DS.surface)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(DS.border, lineWidth: DS.hairline))
         }
     }
 }
