@@ -62,7 +62,7 @@ struct AlarmView: View {
                         .font(.system(size: 40, design: .serif).weight(.regular))
                         .foregroundStyle(DS.textPrimary)
 
-                    Text("When the morning notification arrives,\ntap it instead of Instagram.")
+                    Text("When the morning notification arrives,\ntap it instead of doom scrolling.")
                         .font(.callout)
                         .foregroundStyle(DS.textSecondary)
                         .lineSpacing(2)
@@ -143,7 +143,7 @@ struct AlarmView: View {
             Text("Set your morning notification")
                 .font(.callout.weight(.semibold))
                 .foregroundStyle(DS.background)
-            Text("Each morning, this app will send you a quiet ping.\nTap it instead of opening Instagram —\nthat single tap is the start of a different day.")
+            Text("Each morning, this app will send you a quiet ping.\nTap it instead of doom scrolling —\nthat single tap is the start of a different day.")
                 .font(.caption)
                 .foregroundStyle(DS.background.opacity(0.75))
                 .lineSpacing(3)

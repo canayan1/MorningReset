@@ -59,18 +59,16 @@ struct MorningSoundView: View {
 
                 Spacer().frame(height: DS.Space.sm + 4)
 
-                if let url = pick.url {
-                    Button {
-                        openURL(url)
-                    } label: {
-                        HStack(spacing: 6) {
-                            Text("Open in Spotify")
-                                .font(.subheadline)
-                                .foregroundStyle(DS.accent)
-                            Image(systemName: "arrow.up.right")
-                                .font(.system(size: 11))
-                                .foregroundStyle(DS.accent)
-                        }
+                Button {
+                    openSpotify()
+                } label: {
+                    HStack(spacing: 6) {
+                        Text("Open in Spotify")
+                            .font(.subheadline)
+                            .foregroundStyle(DS.accent)
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 11))
+                            .foregroundStyle(DS.accent)
                     }
                 }
 
@@ -89,6 +87,18 @@ struct MorningSoundView: View {
                 .padding(.bottom, DS.Space.xl)
             }
             .padding(.horizontal, DS.Space.lg)
+        }
+    }
+
+    private func openSpotify() {
+        if let appURL = pick.spotifyURL {
+            openURL(appURL) { accepted in
+                if !accepted, let webURL = pick.webURL {
+                    openURL(webURL)
+                }
+            }
+        } else if let webURL = pick.webURL {
+            openURL(webURL)
         }
     }
 

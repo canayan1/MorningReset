@@ -36,7 +36,7 @@ final class LocalNotificationAlarmManager: AlarmManaging {
         let center  = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title    = "Good morning."
-        content.body     = "Tap here instead of Instagram. Two minutes — one small action."
+        content.body     = "Tap here instead of doom scrolling. Two minutes — one small action."
         content.sound    = .default
         content.userInfo = ["action": "startWakeFlow"]
 

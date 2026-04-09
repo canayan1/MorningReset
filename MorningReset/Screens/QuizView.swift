@@ -2,79 +2,97 @@ import SwiftUI
 
 struct QuizView: View {
     @Environment(AppState.self) private var appState
-    @State private var index: Int = 0
-    @State private var answered: Bool = false
+    @State private var selections: [Int: String] = [:]
 
-    private var question: Question {
-        MorningData.questions[index]
-    }
+    private var questions: [Question] { MorningData.questions }
+
+    private var allAnswered: Bool { selections.count == questions.count }
 
     var body: some View {
         ZStack {
             DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                HStack(spacing: 6) {
-                    ForEach(0..<MorningData.questions.count, id: \.self) { i in
-                        Capsule()
-                            .fill(i <= index ? DS.textPrimary : DS.border)
-                            .frame(width: 20, height: 3)
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: DS.Space.lg) {
+
+                        Text("How are you\nthis morning?")
+                            .font(DS.Typo.title)
+                            .foregroundStyle(DS.textPrimary)
+                            .lineSpacing(4)
+                            .padding(.top, DS.Space.xl)
+
+                        ForEach(Array(questions.enumerated()), id: \.offset) { i, q in
+                            questionCard(index: i, question: q)
+                        }
+                    }
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, 100)
+                }
+
+                VStack(spacing: 0) {
+                    Divider().foregroundStyle(DS.divider)
+                    Button("Done") {
+                        submitAll()
+                    }
+                    .font(.system(.body, design: .serif))
+                    .tracking(0.5)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 18)
+                    .background(allAnswered ? DS.accent : DS.border)
+                    .foregroundStyle(allAnswered ? DS.background : DS.textDim)
+                    .clipShape(Capsule())
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.vertical, DS.Space.md)
+                    .animation(.easeOut(duration: 0.2), value: allAnswered)
+                }
+                .background(DS.background)
+                .disabled(!allAnswered)
+            }
+        }
+        .onAppear {
+            appState.resetInactivityTimer()
+        }
+    }
+
+    private func questionCard(index: Int, question: Question) -> some View {
+        VStack(alignment: .leading, spacing: DS.Space.sm + 4) {
+            Text(question.text)
+                .font(.system(.body, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+
+            HStack(spacing: DS.Space.sm) {
+                ForEach(question.options, id: \.self) { option in
+                    let selected = selections[index] == option
+                    Button {
+                        withAnimation(.easeOut(duration: 0.15)) {
+                            selections[index] = option
+                        }
+                        appState.resetInactivityTimer()
+                    } label: {
+                        Text(option)
+                            .font(.subheadline.weight(selected ? .semibold : .regular))
+                            .foregroundStyle(selected ? DS.background : DS.textSecondary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(selected ? DS.accent : DS.surface)
+                            .clipShape(Capsule())
+                            .overlay(Capsule().stroke(selected ? DS.accent : DS.border, lineWidth: DS.hairline))
                     }
                 }
-                .padding(.top, 24)
-
-                Spacer()
-
-                Text(question.text)
-                    .font(.title.bold())
-                    .foregroundStyle(DS.textPrimary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
-                    .id(index)
-                    .transition(.opacity)
-
-                Spacer()
-
-                HStack(spacing: 12) {
-                    answerButton(label: "No", answer: "No", isYes: false)
-                    answerButton(label: "Yes", answer: "Yes", isYes: true)
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 48)
             }
         }
+        .padding(DS.Space.md)
+        .background(DS.surface.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
-    private func answerButton(label: String, answer: String, isYes: Bool) -> some View {
-        Button {
-            guard !answered else { return }
-            answered = true
-            appState.recordAnswer(answer)
-            appState.resetInactivityTimer()
-            advance()
-        } label: {
-            Text(label)
-                .font(.headline)
-                .foregroundStyle(isYes ? DS.background : DS.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(isYes ? DS.textPrimary : DS.surface)
-                .clipShape(Capsule())
-        }
-        .disabled(answered)
-    }
-
-    private func advance() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-            let next = index + 1
-            if next < MorningData.questions.count {
-                withAnimation(.linear(duration: 0.15)) {
-                    index = next
-                    answered = false
-                }
-            } else {
-                appState.showWeeklyAffirmation()
+    private func submitAll() {
+        for i in 0..<questions.count {
+            if let answer = selections[i] {
+                appState.recordAnswer(answer)
             }
         }
+        appState.showWeeklyAffirmation()
     }
 }

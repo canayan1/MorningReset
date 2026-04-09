@@ -50,7 +50,7 @@ struct ScheduleSetupView: View {
 
                 Spacer().frame(height: DS.Space.sm)
 
-                Text("Tap the notification instead of opening Instagram.\nThat single tap starts a different day.")
+                Text("Tap the notification instead of doom scrolling.\nThat single tap starts a different day.")
                     .font(.caption)
                     .foregroundStyle(DS.textDim)
                     .lineSpacing(3)

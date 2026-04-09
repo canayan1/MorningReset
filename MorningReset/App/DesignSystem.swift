@@ -1,37 +1,37 @@
 import SwiftUI
 
-// MARK: - Design tokens (sakura · japanese minimal)
+// MARK: - Design tokens (mimoza · warm morning minimal)
 //
-// Palette inspired by washi paper, sumi ink, and the muted pinks
-// of the sakura season — desaturated, never sweet, never loud.
+// Palette inspired by mimoza blossoms, warm peach light,
+// soft apricot tones — inviting, gentle, never cold.
 
 enum DS {
     // Surfaces
-    static let background    = Color(red: 0.984, green: 0.965, blue: 0.957) // washi
-    static let surface       = Color(red: 0.976, green: 0.929, blue: 0.929) // pale sakura
-    static let surfaceAlt    = Color(red: 0.957, green: 0.898, blue: 0.902) // soft mochi pink
-    static let border        = Color(red: 0.886, green: 0.804, blue: 0.812) // muted hairline
-    static let divider       = Color(red: 0.929, green: 0.875, blue: 0.882) // even softer
+    static let background    = Color(red: 1.000, green: 0.976, blue: 0.949) // warm cream
+    static let surface       = Color(red: 0.996, green: 0.953, blue: 0.906) // pale mimoza
+    static let surfaceAlt    = Color(red: 0.988, green: 0.933, blue: 0.871) // soft apricot
+    static let border        = Color(red: 0.933, green: 0.871, blue: 0.784) // warm sand
+    static let divider       = Color(red: 0.961, green: 0.914, blue: 0.847) // light sand
 
     // Accents
-    static let accent        = Color(red: 0.776, green: 0.443, blue: 0.510) // muted rose
-    static let accentSoft    = Color(red: 0.910, green: 0.643, blue: 0.682) // tea-rose
-    static let accentInk     = Color(red: 0.557, green: 0.231, blue: 0.314) // deep sakura
+    static let accent        = Color(red: 0.878, green: 0.557, blue: 0.200) // mimoza gold
+    static let accentSoft    = Color(red: 0.949, green: 0.729, blue: 0.412) // soft amber
+    static let accentInk     = Color(red: 0.612, green: 0.337, blue: 0.082) // deep honey
 
     // Text
-    static let textPrimary   = Color(red: 0.106, green: 0.094, blue: 0.094) // sumi ink
-    static let textSecondary = Color(red: 0.420, green: 0.376, blue: 0.376) // stone
-    static let textDim       = Color(red: 0.647, green: 0.580, blue: 0.580) // mist
+    static let textPrimary   = Color(red: 0.157, green: 0.118, blue: 0.082) // espresso
+    static let textSecondary = Color(red: 0.424, green: 0.369, blue: 0.318) // warm stone
+    static let textDim       = Color(red: 0.620, green: 0.565, blue: 0.510) // driftwood
 
     // Mode colors (used by 14-day strip and accents)
     static let modeProtect   = Color(red: 0.682, green: 0.745, blue: 0.792) // soft sky-grey
-    static let modeSteady    = Color(red: 0.910, green: 0.643, blue: 0.682) // tea-rose
-    static let modePush      = Color(red: 0.776, green: 0.443, blue: 0.510) // muted rose
+    static let modeSteady    = Color(red: 0.949, green: 0.729, blue: 0.412) // soft amber
+    static let modePush      = Color(red: 0.878, green: 0.557, blue: 0.200) // mimoza gold
 
-    // Hairline width — Japanese minimal favors 0.5pt over 1pt
+    // Hairline width
     static let hairline: CGFloat = 0.5
 
-    // Spacing scale — ma (間), generous negative space
+    // Spacing scale — generous negative space
     enum Space {
         static let xxs: CGFloat =  2
         static let xs:  CGFloat =  4
@@ -57,7 +57,7 @@ enum DS {
 
 extension View {
     func hairlineBorder(_ color: Color = DS.border) -> some View {
-        overlay(Rectangle().stroke(color, lineWidth: DS.hairline))
+        overlay(RoundedRectangle(cornerRadius: 12).stroke(color, lineWidth: DS.hairline))
     }
 
     func hairlineBottom(_ color: Color = DS.divider) -> some View {
@@ -90,6 +90,7 @@ struct InfoCard: View {
         .padding(.vertical, DS.Space.md)
         .padding(.horizontal, DS.Space.md)
         .background(DS.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .hairlineBorder()
     }
 }

@@ -12,7 +12,12 @@ struct SoundPick {
     let curator: String    // shown in UI as small caption
     let query: String      // sent to Spotify search
 
-    var url: URL? {
+    var spotifyURL: URL? {
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
+        return URL(string: "spotify://search/\(encoded)")
+    }
+
+    var webURL: URL? {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         return URL(string: "https://open.spotify.com/search/\(encoded)")
     }

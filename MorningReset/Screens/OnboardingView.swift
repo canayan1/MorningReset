@@ -18,7 +18,7 @@ struct OnboardingView: View {
         ),
         Slide(
             title: "Tomorrow morning,\nyour phone will ring.",
-            subtitle: "Not Instagram.\nNot the news.\nA single notification from here.",
+            subtitle: "Not doom scrolling.\nNot the news.\nA single notification from here.",
             cta: "Continue"
         ),
         Slide(

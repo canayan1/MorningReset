@@ -40,7 +40,7 @@ struct AboutView: View {
                         Text("Morning Reset interrupts that pattern.")
                             .foregroundStyle(DS.textSecondary)
 
-                        Text("When the morning notification arrives,\ntap it instead of opening Instagram.\n\nThat one small action becomes your first win,\nand the day begins on your own terms.")
+                        Text("When the morning notification arrives,\ntap it instead of doom scrolling.\n\nThat one small action becomes your first win,\nand the day begins on your own terms.")
                             .foregroundStyle(DS.textSecondary)
                     }
                     .font(.body)
