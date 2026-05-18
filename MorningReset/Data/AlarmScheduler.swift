@@ -1,7 +1,7 @@
 import Foundation
 import UserNotifications
 
-// MARK: - LocalNotificationAlarmManager (iOS 17.6+)
+// MARK: - LocalNotificationWakeScheduler (iOS 17.6+)
 //
 // Schedules one repeating UNCalendarNotificationTrigger per day-of-week.
 // Fires at the correct weekday/weekend time from WakeSchedule.
@@ -11,13 +11,14 @@ import UserNotifications
 //   AlarmEntryRouter.routeToWakeFlow() → appState.startFlow()
 //
 // Known limitation:
-//   sound = .default respects the device mute switch.
+//   Local notification sound respects mute / Silent mode.
 //   To bypass: use .defaultCritical — requires critical-alerts entitlement
 //   (Apple review required, not yet applied for).
 
-final class LocalNotificationAlarmManager: AlarmManaging {
+final class LocalNotificationWakeScheduler: WakeScheduling {
 
-    private let idPrefix = "mr_wake_"
+    private let idPrefix = "mr_ping_"
+    private let legacyIDPrefix = "mr_wake_"
 
     func requestAuthorization() async -> Bool {
         let center   = UNUserNotificationCenter.current()
@@ -35,8 +36,8 @@ final class LocalNotificationAlarmManager: AlarmManaging {
 
         let center  = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
-        content.title    = "Good morning."
-        content.body     = "Tap here instead of doom scrolling. Two minutes — one small action."
+        content.title    = "Morning Reset"
+        content.body     = "Tap to start your reset before the scroll starts."
         content.sound    = .default
         content.userInfo = ["action": "startWakeFlow"]
 
@@ -62,7 +63,7 @@ final class LocalNotificationAlarmManager: AlarmManaging {
     }
 
     func cancel() {
-        let ids = (1...7).map { idPrefix + "\($0)" }
+        let ids = (1...7).flatMap { [idPrefix + "\($0)", legacyIDPrefix + "\($0)"] }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
     }
 
@@ -84,7 +85,7 @@ final class LocalNotificationAlarmManager: AlarmManaging {
     }
 }
 
-// MARK: - AlarmKitManager (iOS 26+)
+// MARK: - AlarmKitWakeScheduler (iOS 26+)
 //
 // ─────────────────────────────────────────────────────────────────────────
 // STATUS: Structure ready. AlarmKit calls not yet written.
@@ -93,7 +94,7 @@ final class LocalNotificationAlarmManager: AlarmManaging {
 //   1. Add `import AlarmKit` here
 //   2. Link AlarmKit.framework in Xcode → Build Phases → Link Binary With Libraries
 //   3. Verify entitlement requirements at developer.apple.com
-//   4. Replace the LocalNotificationAlarmManager delegation below with AlarmKit calls
+//   4. Replace the LocalNotificationWakeScheduler delegation below with AlarmKit calls
 //   5. In AlarmEntryRouter, add any AlarmKit-specific delegate conformance
 //      and call routeToWakeFlow() from the AlarmKit wake callback
 //
@@ -101,14 +102,14 @@ final class LocalNotificationAlarmManager: AlarmManaging {
 // no critical-alerts entitlement needed. All routing still goes through
 // AlarmEntryRouter — this manager only handles scheduling, not navigation.
 //
-// Until implementation is complete: delegates to LocalNotificationAlarmManager
-// so AlarmManager.current works end-to-end on iOS 26+ devices.
+// Until implementation is complete: delegates to LocalNotificationWakeScheduler
+// so WakeNotificationManager.current works end-to-end on iOS 26+ devices.
 // ─────────────────────────────────────────────────────────────────────────
 
 @available(iOS 26, *)
-final class AlarmKitManager: AlarmManaging {
+final class AlarmKitWakeScheduler: WakeScheduling {
 
-    private let base = LocalNotificationAlarmManager()
+    private let base = LocalNotificationWakeScheduler()
 
     func requestAuthorization() async -> Bool {
         // TODO: Replace with AlarmKit authorization request.

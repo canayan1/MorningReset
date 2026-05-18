@@ -8,11 +8,16 @@ struct DailyEntry: Codable {
 
 enum DailyEntryStore {
 
-    private static let key = UDKey.dailyEntries
-    private static let cap = 90
+    private static let key       = UDKey.dailyEntries
+    private static let cap       = 90
+    private static let suiteName = "group.com.canayan.MorningReset"
+
+    private static var defaults: UserDefaults {
+        UserDefaults(suiteName: suiteName) ?? UserDefaults.standard
+    }
 
     static func load() -> [DailyEntry] {
-        guard let data = UserDefaults.standard.data(forKey: key),
+        guard let data    = defaults.data(forKey: key),
               let entries = try? JSONDecoder().decode([DailyEntry].self, from: data)
         else { return [] }
         return entries
@@ -25,6 +30,6 @@ enum DailyEntryStore {
         entries.append(DailyEntry(date: Date(), mode: mode, intention: intention))
         if entries.count > cap { entries = Array(entries.suffix(cap)) }
         guard let data = try? JSONEncoder().encode(entries) else { return }
-        UserDefaults.standard.set(data, forKey: key)
+        defaults.set(data, forKey: key)
     }
 }

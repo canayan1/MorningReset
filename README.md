@@ -1,65 +1,87 @@
-# MorningReset
+# Morning Reset
 
-A minimal SwiftUI iPhone app that interrupts autopilot before passive scrolling takes over.
+Morning Reset is an iPhone-only SwiftUI app that interrupts the scroll impulse after waking with a short, honest ritual. The app does not replace the system Clock alarm. It asks the user to keep their normal wake-up routine, then tap a Morning Reset local notification before opening feeds, news, or messages.
 
-When you wake up, MorningReset gets you out of bed and moving before the feed opens.
+## Shipping flow
 
----
+1. Onboarding frames the app as a notification-led ritual, not an alarm clock.
+2. Schedule setup lets the user choose weekday and weekend ping times.
+3. Wake home shows the next morning ping and offers either schedule editing or an immediate start.
+4. Quiz asks 5 one-tap yes/no questions and auto-advances; inactivity for 60 seconds resets the flow.
+5. Weekly affirmation and sound cue keep the ritual moving without sending the user to another app.
+6. Results names the user's morning mode and asks them to choose one concrete first win.
+7. Insight preview shows a reflection or pattern teaser; Premium only appears for stronger follow-up reads or Rise & Flow.
+8. Action, Win, and Flow Check-out close the ritual around one immediate next step.
 
-## Flow
+## Free vs Premium
 
-1. **Alarm screen** — title + single start button. No choices yet.
-2. **Quiz** — 5 binary yes/no questions that detect your morning state.
-3. **Intention** — pick one quality to return to today (calm / focus / energy / confidence / connection / discipline).
-4. **Results** — structured output based on your mode:
-   - **Mode** — Protect / Steady / Push
-   - **Meaning** — short calibration of the morning
-   - **Start with** — physical-first directive
-   - **Avoid** — one specific risk for the morning
-   - **First win** — immediate, achievable target
-   - **Music** — tone suggestion for the day
-   - **Mantra** — generated from your mode + intention
-5. **Move** — one physical action matched to your mode. Varies daily.
-6. **Win** — short reinforcing message after completion.
-7. **Continue (optional)** — three soft paths:
-   - Learn something — one short behavioral insight
-   - See what's happening — 2–3 brief neutral headlines
-   - Do one more thing — one additional small action
+Free:
+- Notification setup, onboarding, wake home, 5-question ritual, weekly affirmation, sound cue, results, insight preview, first-win action flow, win, and check-out.
+- Local streaks and recent history stored on device.
 
----
+Premium:
+- Full pattern insight when stronger repeats show up.
+- Guided pause after those stronger patterns.
+- Rise & Flow, a guided 5-minute movement reset.
 
-## Modes
+Premium does not unlock the core 2-minute reset. The free ritual is complete without a subscription.
 
-| Mode | Signal | Tone |
-|---|---|---|
-| Protect | Low capacity morning | Gentle, grounding |
-| Steady | Functional but not explosive | Rhythmic, clean |
-| Push | Available momentum | Active, directed |
+## Product truths
 
----
+- iPhone only.
+- SwiftUI, no external packages.
+- No backend, analytics, ads, or tracking.
+- No account, login, or cloud sync in the launch build.
+- Notification-based wake entry, not an alarm guarantee.
+- Localized core flow for English, Turkish, and Spanish.
 
-## What it does not do
+## Hosted metadata surfaces
 
-- No backend
-- No login
-- No notifications (alarm is triggered externally, e.g. iOS Clock)
-- No persistence between sessions
-- No analytics
-- No subscriptions
-- No third-party libraries
-- No external links
+- Privacy policy draft source: [PrivacyPolicy.md](PrivacyPolicy.md)
+- Production privacy URL target: [privacy-policy.html](https://canayan1.github.io/MorningReset/privacy-policy.html)
+- Production support URL target: [support.html](https://canayan1.github.io/MorningReset/support.html)
 
----
+The `docs/` folder contains the static pages intended for GitHub Pages hosting before App Store submission.
 
-## Tech
+Manual release steps live in [APP_STORE_HANDOFF.md](APP_STORE_HANDOFF.md).
 
-- SwiftUI
-- iOS 17+
-- `@Observable` state — in-memory only
-- Deterministic content variation: `Calendar.day % pool.count`
+## App Store listing draft
 
----
+App name:
+`Morning Reset`
+
+Subtitle:
+`Interrupt the scroll impulse`
+
+Promotional text:
+`Use your normal alarm, then start with five quick questions and one first win before you open anything else.`
+
+Short description:
+`A short notification-led ritual that helps you start the day with one clear first win.`
+
+Long description:
+`Morning Reset helps you interrupt the urge to scroll the moment your day starts.
+
+Keep the wake-up routine you already trust. Then tap the Morning Reset notification first.
+
+In about two minutes, the app guides you through:
+- five quick yes/no questions
+- one clear morning mode
+- one short reflection or pattern read
+- one concrete first win to do right away
+
+Morning Reset is not an alarm clock, not a content feed, and not a giant productivity system. It is a small interruption before reactive phone use takes over.
+
+The core ritual is fully usable for free. Premium only unlocks deeper follow-up tools already present in the app: fuller pattern insight, a guided pause, and Rise & Flow.`
+
+## App Review notes draft
+
+`Morning Reset uses a local notification to invite the user into a short morning ritual. It does not replace the system alarm and does not guarantee alarm-like behaviour when the device is muted, in Silent mode, or filtered by Focus.
+
+The core reset flow is free and complete without a subscription. Premium only unlocks deeper follow-up tools already visible in the app.
+
+No account, analytics, ad SDKs, or third-party tracking are included in the launch build.`
 
 ## Build
 
-See [BUILD_CHECKLIST.md](BUILD_CHECKLIST.md)
+Build, test, and manual submission checks live in [BUILD_CHECKLIST.md](BUILD_CHECKLIST.md).

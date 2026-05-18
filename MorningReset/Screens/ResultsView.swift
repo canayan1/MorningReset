@@ -9,116 +9,97 @@ struct ResultsView: View {
         MorningData.result(from: appState.answers)
     }
 
+    private var mode: MorningMode {
+        MorningMode(from: result.mode) ?? .steady
+    }
+
     private var mantra: String {
         let intention = IntentionType(rawValue: selectedIntention) ?? .focus
-        let mode = MorningMode(from: result.mode) ?? .steady
         return MantraEngine.generate(mode: mode, intention: intention)
     }
 
-    @State private var revealed: Int = 0
+    private var recommendedFirstWin: FirstWinAction {
+        ActionContent.recommendedFirstWin(for: mode)
+    }
+
+    private var selectedFirstWin: FirstWinAction {
+        appState.selectedFirstWin ?? recommendedFirstWin
+    }
 
     var body: some View {
         ZStack {
             DS.background.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: DS.Space.sm) {
+            VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                modeBlock
-                    .opacity(revealed >= 1 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
+                // Mode — the diagnosis, clean and large
+                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    Text(result.mode.uppercased())
+                        .font(.system(size: 42, weight: .light, design: .serif))
+                        .foregroundStyle(DS.textPrimary)
 
-                InfoCard(label: Strings.Results.startWithLabel, value: result.startWith)
-                    .opacity(revealed >= 2 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
+                    Text(result.meaning)
+                        .font(.callout)
+                        .foregroundStyle(DS.textSecondary)
+                        .lineSpacing(3)
+                }
 
-                InfoCard(label: Strings.Results.avoidLabel, value: result.avoid)
-                    .opacity(revealed >= 3 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
+                Spacer().frame(height: DS.Space.lg)
 
-                InfoCard(label: Strings.Results.winTodayLabel, value: result.win)
-                    .opacity(revealed >= 4 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
-
-                InfoCard(label: Strings.Results.musicLabel, value: result.music)
-                    .opacity(revealed >= 5 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
-
-                Text(result.bonus)
-                    .font(.caption)
-                    .foregroundStyle(DS.textDim)
-                    .padding(.top, DS.Space.sm)
-                    .opacity(revealed >= 6 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
-
+                // Mantra — the emotional note
                 Text(mantra)
-                    .font(.caption)
+                    .font(.system(.body, design: .serif))
                     .italic()
                     .foregroundStyle(DS.textDim)
-                    .opacity(revealed >= 7 ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3), value: revealed)
+
+                Spacer().frame(height: DS.Space.xl)
+
+                // First win options — title only, no noise
+                VStack(spacing: DS.Space.sm) {
+                    ForEach(ActionContent.orderedFirstWins(for: mode)) { firstWin in
+                        firstWinButton(firstWin)
+                    }
+                }
 
                 Spacer()
 
-                Button(Strings.Results.continueButton) {
+                Button(L10n.text(en: "Begin", tr: "Başla", es: "Comenzar")) {
                     appState.advanceFromResults()
                 }
-                .font(.headline)
+                .font(.system(.body, design: .serif))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(DS.textPrimary)
+                .background(DS.accent)
                 .foregroundStyle(DS.background)
-                .clipShape(Rectangle())
-                .padding(.bottom, 48)
-                .opacity(revealed >= 7 ? 1 : 0)
-                .animation(.easeOut(duration: 0.3), value: revealed)
+                .clipShape(Capsule())
+                .padding(.bottom, DS.Space.xl)
+                .accessibilityIdentifier("results.continueButton")
             }
             .padding(.horizontal, DS.Space.lg)
         }
-        .task {
-            try? await Task.sleep(nanoseconds:  80_000_000)
-            revealed = 1
-            try? await Task.sleep(nanoseconds: 120_000_000)
-            revealed = 2
-            try? await Task.sleep(nanoseconds: 220_000_000)
-            revealed = 3
-            try? await Task.sleep(nanoseconds: 240_000_000)
-            revealed = 4
-            try? await Task.sleep(nanoseconds: 260_000_000)
-            revealed = 5
-            try? await Task.sleep(nanoseconds: 300_000_000)
-            revealed = 6
-            try? await Task.sleep(nanoseconds: 350_000_000)
-            revealed = 7
+        .accessibilityIdentifier("results.screen")
+        .onAppear {
+            appState.selectFirstWin(selectedFirstWin)
         }
     }
 
-    // MARK: - Mode block
+    private func firstWinButton(_ firstWin: FirstWinAction) -> some View {
+        let selected = firstWin == selectedFirstWin
 
-    private var modeBlock: some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .fill(DS.accent)
-                .frame(width: 2)
-
-            VStack(alignment: .leading, spacing: DS.Space.xs) {
-                Text("MODE")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(DS.textSecondary)
-                    .kerning(1.2)
-                Text(result.mode.uppercased())
-                    .font(.system(size: 34, weight: .bold))
-                    .foregroundStyle(DS.textPrimary)
-                Text(result.meaning)
-                    .font(.callout)
-                    .foregroundStyle(DS.textSecondary)
-                    .lineSpacing(3)
-            }
-            .padding(.vertical, DS.Space.md)
-            .padding(.horizontal, DS.Space.md)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(DS.surface)
+        return Button {
+            appState.selectFirstWin(firstWin)
+        } label: {
+            Text(firstWin.title)
+                .font(selected ? .body.weight(.medium) : .body)
+                .foregroundStyle(selected ? DS.background : DS.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(selected ? DS.accent : DS.surface)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(selected ? DS.accent : DS.border, lineWidth: DS.hairline))
         }
-        .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        .animation(.easeOut(duration: 0.15), value: selected)
+        .accessibilityIdentifier("results.firstWin.\(firstWin.rawValue)")
     }
 }

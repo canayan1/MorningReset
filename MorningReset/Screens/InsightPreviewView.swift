@@ -2,32 +2,8 @@ import SwiftUI
 
 struct InsightPreviewView: View {
     @Environment(AppState.self) private var appState
-
-    private var eyebrow: String {
-        switch appState.insightStrength {
-        case .none:   return "TODAY"
-        case .weak:   return "THIS WEEK"
-        case .strong: return "PATTERN"
-        }
-    }
-
-    private var title: String {
-        switch appState.insightStrength {
-        case .none:   return "One thing to carry forward."
-        case .weak:   return "Something worth noticing."
-        case .strong: return appState.isPremium
-            ? "What's been showing up."
-            : "Something has been showing up."
-        }
-    }
-
-    private var cardLabel: String {
-        switch appState.insightStrength {
-        case .none:   return "REFLECTION"
-        case .weak:   return "OBSERVATION"
-        case .strong: return "PATTERN"
-        }
-    }
+    @State private var progress = 0.0
+    @State private var hasAdvanced = false
 
     var body: some View {
         ZStack {
@@ -36,85 +12,71 @@ struct InsightPreviewView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text(eyebrow)
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(DS.textDim)
-                        .kerning(1.2)
+                VStack(alignment: .leading, spacing: DS.Space.lg) {
+                    insightContent
 
-                    Text(title)
-                        .font(.title2.bold())
-                        .foregroundStyle(DS.textPrimary)
+                    if appState.insightStrength != .none {
+                        Text(MantraEngine.weeklyMantra())
+                            .font(.system(.callout, design: .serif))
+                            .italic()
+                            .foregroundStyle(DS.textDim)
+                            .lineSpacing(3)
+                    }
                 }
-
-                Spacer().frame(height: DS.Space.lg)
-
-                contentCard
-
-                Spacer().frame(height: DS.Space.md)
-
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text("THIS WEEK")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(DS.textDim)
-                        .kerning(1.2)
-                    Text(MantraEngine.weeklyMantra())
-                        .font(.caption)
-                        .foregroundStyle(DS.textSecondary)
-                        .lineSpacing(3)
-                }
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                Button("Continue") {
-                    appState.advanceFromInsightPreview()
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.textPrimary)
-                .foregroundStyle(DS.background)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.bottom, 48)
+                ProgressView(value: progress, total: 1)
+                    .tint(DS.accent)
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, DS.Space.xl)
             }
-            .padding(.horizontal, DS.Space.lg)
+        }
+        .accessibilityIdentifier("insight.screen")
+        .contentShape(Rectangle())
+        .onTapGesture { advance() }
+        .task {
+            withAnimation(.linear(duration: 2.8)) { progress = 1 }
+            try? await Task.sleep(nanoseconds: 2_800_000_000)
+            guard !Task.isCancelled else { return }
+            advance()
         }
     }
 
     @ViewBuilder
-    private var contentCard: some View {
+    private var insightContent: some View {
         if appState.insightStrength == .strong && !appState.isPremium {
-            lockedTeaser
+            // Teaser — keep it simple
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text(L10n.text(
+                    en: "Your mornings this week have a shape to them.",
+                    tr: "Bu haftaki sabahlarının bir şekli var.",
+                    es: "Tus mañanas de esta semana tienen una forma."
+                ))
+                .font(.system(size: 22, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .lineSpacing(4)
+
+                Text(L10n.text(
+                    en: "Premium reveals the pattern.",
+                    tr: "Premium örüntüyü açığa çıkarır.",
+                    es: "Premium revela el patrón."
+                ))
+                .font(.callout)
+                .foregroundStyle(DS.textDim)
+            }
         } else {
-            InfoCard(label: cardLabel, value: appState.insightText)
+            Text(appState.insightText)
+                .font(.system(size: 22, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .lineSpacing(5)
         }
     }
 
-    private var lockedTeaser: some View {
-        VStack(alignment: .leading, spacing: DS.Space.xs) {
-            HStack {
-                Text("PATTERN")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(DS.textSecondary)
-                    .kerning(1.2)
-                Spacer()
-                Image(systemName: "lock.fill")
-                    .font(.system(size: 10))
-                    .foregroundStyle(DS.textDim)
-            }
-            Text("Your mornings this week have a shape to them.")
-                .font(.callout)
-                .foregroundStyle(DS.textPrimary)
-                .lineSpacing(3)
-            Text("Premium shows you what it is.")
-                .font(.caption)
-                .foregroundStyle(DS.textDim)
-                .padding(.top, DS.Space.xs)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, DS.Space.md)
-        .padding(.horizontal, DS.Space.md)
-        .background(DS.surface)
-        .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+    private func advance() {
+        guard !hasAdvanced else { return }
+        hasAdvanced = true
+        appState.advanceFromInsightPreview()
     }
 }

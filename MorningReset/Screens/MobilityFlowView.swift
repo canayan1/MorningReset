@@ -25,7 +25,7 @@ struct MobilityFlowView: View {
 
                     // MARK: Header
                     VStack(alignment: .leading, spacing: DS.Space.xs) {
-                        Text("MOBILITY")
+                        Text(L10n.text(en: "MOBILITY", tr: "HAREKETLİLİK", es: "MOVILIDAD"))
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(DS.textDim)
                             .kerning(1.2)
@@ -56,7 +56,11 @@ struct MobilityFlowView: View {
 
                     // MARK: Move label + name
                     VStack(alignment: .leading, spacing: DS.Space.xs) {
-                        Text("MOVE \(moveIndex + 1) OF \(totalMoves)")
+                        Text(L10n.text(
+                            en: "MOVE \(moveIndex + 1) OF \(totalMoves)",
+                            tr: "HAREKET \(moveIndex + 1) / \(totalMoves)",
+                            es: "MOVIMIENTO \(moveIndex + 1) DE \(totalMoves)"
+                        ))
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(DS.textDim)
                             .kerning(1.2)
@@ -123,7 +127,7 @@ struct MobilityFlowView: View {
                             appState.pauseMobility()
                             appState.advanceMobilityMove()
                         } label: {
-                            Text("Skip →")
+                            Text(L10n.text(en: "Skip →", tr: "Atla →", es: "Saltar →"))
                                 .font(.subheadline)
                                 .foregroundStyle(DS.textDim)
                                 .frame(maxWidth: .infinity)
@@ -138,7 +142,7 @@ struct MobilityFlowView: View {
                         appState.pauseMobility()
                         appState.completeMobilityFlow()
                     } label: {
-                        Text("Exit")
+                        Text(L10n.text(en: "Exit", tr: "Çıkış", es: "Salir"))
                             .font(.subheadline)
                             .foregroundStyle(DS.textSecondary)
                             .frame(maxWidth: .infinity)
@@ -167,8 +171,10 @@ struct MobilityFlowView: View {
     }
 
     private var primaryLabel: String {
-        if !hasStarted { return "Begin" }
-        return appState.isMobilityRunning ? "Pause" : "Resume"
+        if !hasStarted { return L10n.text(en: "Begin", tr: "Başla", es: "Comenzar") }
+        return appState.isMobilityRunning
+            ? L10n.text(en: "Pause",  tr: "Duraklat", es: "Pausar")
+            : L10n.text(en: "Resume", tr: "Devam et", es: "Reanudar")
     }
 
     private func primaryAction() {

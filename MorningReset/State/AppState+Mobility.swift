@@ -56,7 +56,7 @@ extension AppState {
         if s == 3 || s == 7 || s == 14 || s == 30 {
             screen = .feedback
         } else {
-            screen = .action
+            screen = .premiumHub
         }
     }
 

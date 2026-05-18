@@ -11,7 +11,15 @@ enum MantraLibrary {
         var week = Calendar.current.component(.weekOfYear, from: date)
         if week > 52 { week = 52 }
         let index = week - 1
-        return all[index]
+        let mantra = all[index]
+        switch AppLanguage.current {
+        case .en:
+            return mantra
+        case .tr:
+            return WeeklyMantra(weekNumber: mantra.weekNumber, text: trTranslations[mantra.weekNumber] ?? mantra.text)
+        case .es:
+            return WeeklyMantra(weekNumber: mantra.weekNumber, text: esTranslations[mantra.weekNumber] ?? mantra.text)
+        }
     }
 
     static let all: [WeeklyMantra] = [
@@ -67,5 +75,115 @@ enum MantraLibrary {
         WeeklyMantra(weekNumber: 50, text: "I protect my first attention like a ritual."),
         WeeklyMantra(weekNumber: 51, text: "I start the day with one clear choice."),
         WeeklyMantra(weekNumber: 52, text: "I close the week by beginning again, gently."),
+    ]
+
+    private static let trTranslations: [Int: String] = [
+        1: "Dürüst ve küçük bir adımla başlarım.",
+        2: "Tepki vermeden önce neyin önemli olduğunu fark ederim.",
+        3: "Bugün acelemden daha yavaş hareket ederim.",
+        4: "Bu sabah fazladan girdiler yerine berraklığı seçerim.",
+        5: "Yumuşak başlayıp yine de dengede kalabilirim.",
+        6: "Her seferinde tek bir şeye geri dönerim.",
+        7: "Sabahı kazanmak zorunda değilim.",
+        8: "Karar vermeden önce kendime alan açarım.",
+        9: "Ayaklarımın zaten durduğu yerden başlarım.",
+        10: "Dikkatimi değerli bir şey gibi korurum.",
+        11: "Günün kendi zamanında gelmesine izin veririm.",
+        12: "Şu anda yeniden başlamama izin var.",
+        13: "Sabahımı bilerek sade tutarım.",
+        14: "Bedenimin ilk sinyallerini dinlerim.",
+        15: "On niyet değil, tek bir öncelik seçerim.",
+        16: "Sakin olup yine de ciddi kalabilirim.",
+        17: "Bugüne hızla değil, dengeyle yaklaşırım.",
+        18: "Kendime temiz bir ilk dakika veririm.",
+        19: "Bugün yerleştiremeyeceğim şeyi bırakırım.",
+        20: "Yorumla değil, özenle başlarım.",
+        21: "Daha fazlasına uzanmadan önce bir kez nefes alırım.",
+        22: "Daha berrak hissetmek için daha az girdi seçerim.",
+        23: "Zamanımı alıp yine de ilerleyebilirim.",
+        24: "Su, nefes ya da hareketle başlarım.",
+        25: "Önce dikkatimin yerleşmesine izin verir, sonra karar veririm.",
+        26: "İlk enerjimi dünyaya borçlu değilim.",
+        27: "Zihnime tek bir sessiz cümle veririm.",
+        28: "Hızlı bir başlangıç yerine dengeli bir başlangıç seçerim.",
+        29: "Daha az şey tutup daha fazla mevcut hissedebilirim.",
+        30: "Durumumu onu bir hikâyeye çevirmeden fark ederim.",
+        31: "İdeal olandan değil, gerçek olandan başlarım.",
+        32: "Gelecekteki bana yardımcı olacak tek bir şey yaparım.",
+        33: "Kenarlarımı yumuşak, odağımı berrak tutarım.",
+        34: "Güne içeriden dışarıya başlarım.",
+        35: "Daha iyi bir sonraki adım için yer açarım.",
+        36: "Gürültülü ivme yerine sakin yönü seçerim.",
+        37: "Beynimin nazikçe ısınmasına izin veririm.",
+        38: "Sert olmadan da odaklı olabilirim.",
+        39: "Başlamadan önce cevaplara ihtiyacım yok.",
+        40: "Hissedebildiğim bir duraklamayla başlarım.",
+        41: "Sabahım için küçük bir sınır seçerim.",
+        42: "İlk dakikaların telaşsız olmasına izin veririm.",
+        43: "Kısa olsa bile sabahımı dengede tutarım.",
+        44: "Dağıldığımda nefese geri dönerim.",
+        45: "Daha az girdi ve daha çok mevcudiyetle başlayabilirim.",
+        46: "Beni destekleyeni seçer, sonra ilerlerim.",
+        47: "Günün ilk hikâyesini sade tutarım.",
+        48: "Kendime mükemmellik değil, sakin bir başlangıç sunarım.",
+        49: "Düşünerek değil, dengeli hareketle başlarım.",
+        50: "İlk dikkatimi bir ritüel gibi korurum.",
+        51: "Güne tek bir net seçimle başlarım.",
+        52: "Haftayı yeniden, nazikçe başlayarak kapatırım."
+    ]
+
+    private static let esTranslations: [Int: String] = [
+        1: "Empiezo con una acción honesta y pequeña.",
+        2: "Noto lo que importa antes de reaccionar.",
+        3: "Hoy me muevo más despacio que mi urgencia.",
+        4: "Esta mañana elijo claridad antes que más estímulos.",
+        5: "Puedo empezar suave y aun así mantenerme firme.",
+        6: "Vuelvo a una sola cosa cada vez.",
+        7: "No necesito ganar la mañana.",
+        8: "Hago espacio antes de tomar decisiones.",
+        9: "Empiezo donde mis pies ya están.",
+        10: "Protejo mi atención como algo valioso.",
+        11: "Dejo que el día llegue a su propio ritmo.",
+        12: "Tengo permiso para empezar de nuevo ahora mismo.",
+        13: "Mantengo mi mañana simple a propósito.",
+        14: "Escucho las primeras señales de mi cuerpo.",
+        15: "Elijo una prioridad, no diez intenciones.",
+        16: "Puedo estar en calma y seguir siendo serio.",
+        17: "Me encuentro con hoy desde la constancia, no desde la velocidad.",
+        18: "Me doy un primer minuto limpio.",
+        19: "Suelto lo que hoy no puedo acomodar.",
+        20: "Empiezo con cuidado, no con comentario.",
+        21: "Respiro una vez antes de ir por más.",
+        22: "Elijo menos estímulos para sentir más claridad.",
+        23: "Puedo tomarme mi tiempo y aun así moverme.",
+        24: "Empiezo con agua, respiración o movimiento.",
+        25: "Dejo que mi atención se asiente y luego decido.",
+        26: "No le debo al mundo mi primera energía.",
+        27: "Le doy a mi mente una sola frase silenciosa.",
+        28: "Elijo un comienzo constante antes que uno rápido.",
+        29: "Puedo sostener menos y sentirme más presente.",
+        30: "Observo mi estado sin convertirlo en una historia.",
+        31: "Empiezo con lo real, no con lo ideal.",
+        32: "Hago una sola cosa que ayude a mi yo futuro.",
+        33: "Mantengo mis bordes suaves y mi foco claro.",
+        34: "Empiezo el día de adentro hacia afuera.",
+        35: "Hago sitio para un mejor siguiente paso.",
+        36: "Elijo una dirección tranquila antes que un impulso ruidoso.",
+        37: "Dejo que mi cerebro se caliente con suavidad.",
+        38: "Puedo estar enfocado sin ser duro.",
+        39: "No necesito respuestas antes de empezar.",
+        40: "Empiezo con una pausa que puedo sentir.",
+        41: "Elijo un límite pequeño para mi mañana.",
+        42: "Dejo que los primeros minutos no tengan prisa.",
+        43: "Mantengo mi mañana constante, aunque sea breve.",
+        44: "Vuelvo a la respiración cuando me disperso.",
+        45: "Puedo empezar con menos estímulos y más presencia.",
+        46: "Elijo lo que me sostiene y luego sigo.",
+        47: "Mantengo simple la primera historia del día.",
+        48: "Me ofrezco un comienzo tranquilo, no perfección.",
+        49: "Empiezo con movimiento constante, no pensando.",
+        50: "Protejo mi primera atención como un ritual.",
+        51: "Empiezo el día con una sola elección clara.",
+        52: "Cierro la semana empezando de nuevo, con suavidad."
     ]
 }

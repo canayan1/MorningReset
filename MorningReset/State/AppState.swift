@@ -1,9 +1,8 @@
 import Foundation
 import Observation
 import StoreKit
-import AuthenticationServices
 
-enum Screen {
+enum Screen: Equatable {
     case alarm
     case scheduleSetup
     case quiz
@@ -20,6 +19,10 @@ enum Screen {
     case mobilityFlow
     case feedback
     case flowCheckout
+    case premiumHub
+    case breathReset
+    case morningPages
+    case monthlyStory
 }
 
 @Observable
@@ -32,10 +35,6 @@ final class AppState {
     var onboardingSeen: Bool
     var paywallLastShownDate: Double
 
-    // Apple Sign In (persisted via UserDefaults)
-    var userAppleID: String?
-    var userName: String?
-
     // Session-scoped (reset each flow)
     var paywallShownThisFlow: Bool = false
     var paywallContext: PaywallContext = .contextual
@@ -43,6 +42,8 @@ final class AppState {
     var insightText: String = ""
     var sessionMode: MorningMode = .steady
     var selectedSoundDirection: SoundDirection = .focus
+    var selectedFirstWin: FirstWinAction? = nil
+    var didCompleteFirstWin: Bool = false
 
     private var inactivityTimer: Timer?
 
@@ -56,13 +57,16 @@ final class AppState {
     // MARK: - Streak cache
     private var _cachedStreak: Int? = nil
 
-    init() {
+    private let skipEntitlementCheck: Bool
+
+    init(skipEntitlementCheck: Bool = false) {
+        self.skipEntitlementCheck = skipEntitlementCheck
         isPremium            = UserDefaults.standard.bool(forKey: UDKey.premiumUnlocked)
         onboardingSeen       = UserDefaults.standard.bool(forKey: UDKey.onboardingComplete)
         paywallLastShownDate = UserDefaults.standard.double(forKey: UDKey.paywallLastShown)
-        userAppleID          = UserDefaults.standard.string(forKey: UDKey.appleUserID)
-        userName             = UserDefaults.standard.string(forKey: UDKey.appleUserName)
-        Task { await self.checkEntitlement() }
+        if !skipEntitlementCheck {
+            Task { await self.checkEntitlement() }
+        }
     }
 
     // MARK: - Streak
@@ -101,34 +105,50 @@ final class AppState {
     // MARK: - Navigation
 
     func showScheduleSetup() {
+        stopInactivityTimer()
         screen = .scheduleSetup
     }
 
+    func showWakeHome() {
+        stopInactivityTimer()
+        resetFlowSession()
+        screen = .alarm
+    }
+
+    func completeOnboardingAndShowScheduleSetup() {
+        dismissOnboarding()
+        showScheduleSetup()
+    }
+
+    func finishScheduleSetup() {
+        showWakeHome()
+    }
+
     func startFlow() {
-        answers = []
-        paywallShownThisFlow = false
-        paywallContext = .contextual
-        insightStrength = .none
-        insightText = ""
-        sessionMode = .steady
-        selectedSoundDirection = .focus
+        resetFlowSession()
         screen = .quiz
         resetInactivityTimer()
     }
 
     func recordAnswer(_ answer: String) {
+        guard answers.count < MorningData.questions.count else { return }
         answers.append(answer)
+        resetInactivityTimer()
     }
 
     func showWeeklyAffirmation() {
+        stopInactivityTimer()
         let result = MorningData.result(from: answers)
         let mode = MorningMode(from: result.mode) ?? .steady
         sessionMode = mode
         selectedSoundDirection = SoundDirection.recommended(for: mode)
+        selectedFirstWin = ActionContent.recommendedFirstWin(for: mode)
+        didCompleteFirstWin = false
         screen = .weeklyAffirmation
     }
 
     func showMorningSound() {
+        stopInactivityTimer()
         screen = .morningSound
     }
 
@@ -157,32 +177,65 @@ final class AppState {
         screen = .action
     }
 
+    var currentFirstWin: FirstWinAction {
+        selectedFirstWin ?? ActionContent.recommendedFirstWin(for: sessionMode)
+    }
+
+    func selectFirstWin(_ firstWin: FirstWinAction) {
+        selectedFirstWin = firstWin
+        didCompleteFirstWin = false
+    }
+
+    func completeFirstWin() {
+        didCompleteFirstWin = true
+        showWin()
+    }
+
     func endFlow() {
         stopInactivityTimer()
         if answers.count == MorningData.questions.count {
             let result = MorningData.result(from: answers)
             let mode = MorningMode(from: result.mode) ?? .steady
             let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention) ?? IntentionType.focus.rawValue
-            let intention = IntentionType(rawValue: intentionStr) ?? .focus
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
             invalidateStreakCache()
-            WidgetSnapshot.write(
-                mode:     mode.rawValue,
-                mantra:   MantraEngine.generate(mode: mode, intention: intention),
-                modeLine: result.meaning,
-                streak:   streakCount
-            )
         }
         let s = streakCount
         if s == 3 || s == 7 || s == 14 || s == 30 {
             screen = .feedback
         } else {
-            screen = .alarm
+            screen = .premiumHub
         }
     }
 
     func dismissFeedback() {
-        screen = .alarm
+        screen = .premiumHub
+    }
+
+    func showPremiumHub() {
+        screen = .premiumHub
+    }
+
+    func showMonthlyStory() {
+        screen = .monthlyStory
+    }
+
+    func openBreathReset() {
+        guard isPremium else {
+            paywallContext = .riseAndFlow
+            screen = .paywall
+            return
+        }
+        screen = .breathReset
+    }
+
+    func openMorningPages() {
+        guard isPremium else {
+            paywallContext = .riseAndFlow
+            screen = .paywall
+            return
+        }
+        screen = .morningPages
     }
 
     func showFlowCheckout() {
@@ -193,11 +246,17 @@ final class AppState {
 
     func advanceFromResults() {
         let history = DailyEntryStore.load()
-        let strength = PatternReader.strength(for: history)
-        insightStrength = strength
-
         let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention) ?? IntentionType.focus.rawValue
         let intention = IntentionType(rawValue: intentionStr) ?? .focus
+        advanceFromResults(history: history, intention: intention)
+    }
+
+    func advanceFromResults(history: [DailyEntry], intention: IntentionType) {
+        if selectedFirstWin == nil {
+            selectedFirstWin = ActionContent.recommendedFirstWin(for: sessionMode)
+        }
+        let strength = PatternReader.strength(for: history)
+        insightStrength = strength
         let result = MorningData.result(from: answers)
         let mode = MorningMode(from: result.mode) ?? .steady
 
@@ -216,28 +275,15 @@ final class AppState {
     }
 
     func advanceFromInsightPreview() {
-        if isPremium {
-            screen = .guidedPause
-            return
-        }
-        if paywallShownThisFlow {
-            screen = .action
-            return
-        }
-        if insightStrength == .strong {
-            paywallContext = .contextual
-            screen = .paywall
-            return
-        }
-        let daysSince = paywallLastShownDate == 0
-            ? Double.infinity
-            : (Date().timeIntervalSince1970 - paywallLastShownDate) / 86400
-        if daysSince >= 21 {
-            paywallContext = .periodic
-            screen = .paywall
-            return
-        }
-        screen = .action
+        advanceFromInsightPreview(now: Date())
+    }
+
+    func advanceFromInsightPreview(now: Date) {
+        screen = nextScreenAfterInsightPreview(now: now)
+    }
+
+    func nextScreenAfterInsightPreview(now: Date) -> Screen {
+        return .guidedPause
     }
 
     func dismissOnboarding() {
@@ -250,12 +296,24 @@ final class AppState {
     func resetInactivityTimer() {
         stopInactivityTimer()
         inactivityTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
-            DispatchQueue.main.async { self?.endFlow() }
+            DispatchQueue.main.async { self?.showWakeHome() }
         }
     }
 
     func stopInactivityTimer() {
         inactivityTimer?.invalidate()
         inactivityTimer = nil
+    }
+
+    private func resetFlowSession() {
+        answers = []
+        paywallShownThisFlow = false
+        paywallContext = .contextual
+        insightStrength = .none
+        insightText = ""
+        sessionMode = .steady
+        selectedSoundDirection = .focus
+        selectedFirstWin = nil
+        didCompleteFirstWin = false
     }
 }

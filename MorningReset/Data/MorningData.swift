@@ -17,8 +17,12 @@ struct MorningResult {
 
 enum MorningData {
     static var questions: [Question] {
-        switch lang {
-        case "tr":
+        questions(for: .current)
+    }
+
+    static func questions(for language: AppLanguage) -> [Question] {
+        switch language {
+        case .tr:
             return [
                 Question(text: "Hâlâ yatakta mısın?",            options: ["Evet", "Hayır"]),
                 Question(text: "Enerjin düşük mü?",              options: ["Evet", "Hayır"]),
@@ -26,7 +30,7 @@ enum MorningData {
                 Question(text: "Yavaş bir başlangıç ister misin?", options: ["Evet", "Hayır"]),
                 Question(text: "Kısa bir reset'e hazır mısın?",  options: ["Evet", "Hayır"]),
             ]
-        case "es":
+        case .es:
             return [
                 Question(text: "¿Sigues en la cama?",              options: ["Sí", "No"]),
                 Question(text: "¿Poca energía?",                   options: ["Sí", "No"]),
@@ -34,7 +38,7 @@ enum MorningData {
                 Question(text: "¿Quieres un inicio lento?",        options: ["Sí", "No"]),
                 Question(text: "¿Listo para un reset rápido?",     options: ["Sí", "No"]),
             ]
-        default:
+        case .en:
             return [
                 Question(text: "Still in bed?",             options: ["Yes", "No"]),
                 Question(text: "Low on energy?",            options: ["Yes", "No"]),
@@ -52,58 +56,58 @@ enum MorningData {
         return day % variantPoolSize
     }
 
-    static var lang: String {
-        Locale.current.language.languageCode?.identifier ?? "en"
-    }
-
-    private static var positiveAnswer: String {
-        switch lang {
-        case "tr": return "Hayır"
-        case "es": return "No"
-        default:   return "No"
+    private static func positiveAnswer(for language: AppLanguage) -> String {
+        switch language {
+        case .tr: return "Hayır"
+        case .es: return "No"
+        case .en: return "No"
         }
     }
 
-    private static var positiveQ5: String {
-        switch lang {
-        case "tr": return "Evet"
-        case "es": return "Sí"
-        default:   return "Yes"
+    private static func positiveQ5(for language: AppLanguage) -> String {
+        switch language {
+        case .tr: return "Evet"
+        case .es: return "Sí"
+        case .en: return "Yes"
         }
     }
 
     static func result(from answers: [String]) -> MorningResult {
+        result(from: answers, language: .current)
+    }
+
+    static func result(from answers: [String], language: AppLanguage) -> MorningResult {
         var positive = 0
         for (i, answer) in answers.enumerated() {
-            if i < 4,  answer == positiveAnswer { positive += 1 }
-            if i == 4, answer == positiveQ5     { positive += 1 }
+            if i < 4,  answer == positiveAnswer(for: language) { positive += 1 }
+            if i == 4, answer == positiveQ5(for: language)     { positive += 1 }
         }
-        if positive >= 4 { return pushResult }
-        if positive >= 2 { return steadyResult }
-        return protectResult
+        if positive >= 4 { return pushResult(for: language) }
+        if positive >= 2 { return steadyResult(for: language) }
+        return protectResult(for: language)
     }
 
-    private static var protectResult: MorningResult {
-        switch lang {
-        case "tr": return protectTR
-        case "es": return protectES
-        default:   return protect
-        }
-    }
-
-    private static var steadyResult: MorningResult {
-        switch lang {
-        case "tr": return steadyTR
-        case "es": return steadyES
-        default:   return steady
+    private static func protectResult(for language: AppLanguage) -> MorningResult {
+        switch language {
+        case .tr: return protectTR
+        case .es: return protectES
+        case .en: return protect
         }
     }
 
-    private static var pushResult: MorningResult {
-        switch lang {
-        case "tr": return pushTR
-        case "es": return pushES
-        default:   return push
+    private static func steadyResult(for language: AppLanguage) -> MorningResult {
+        switch language {
+        case .tr: return steadyTR
+        case .es: return steadyES
+        case .en: return steady
+        }
+    }
+
+    private static func pushResult(for language: AppLanguage) -> MorningResult {
+        switch language {
+        case .tr: return pushTR
+        case .es: return pushES
+        case .en: return push
         }
     }
 

@@ -45,10 +45,17 @@ final class LocalAIInsightService: AIInsightService {
             default:        return "Steady starts tend to carry further."
             }
         }
+        let completedCount = checkouts.filter { $0.firstWinStatus == .done }.count
         let helpfulCount = checkouts.filter { $0.helpfulness == .yes }.count
         let easyCount    = checkouts.filter { $0.difficulty  == .easy }.count
         let dominantTag  = checkouts.flatMap { $0.tags }.mostFrequent()
 
+        if completedCount == checkouts.count {
+            return "You've been closing the loop on your first win consistently. That follow-through matters."
+        }
+        if completedCount <= max(1, checkouts.count / 3) {
+            return "The first win still looks like the friction point. Smaller and more physical may land better."
+        }
         if helpfulCount >= Int(ceil(Double(checkouts.count) * 0.7)) {
             return "Your recent flows are landing well. Keep the rhythm going."
         }
@@ -74,10 +81,14 @@ final class LocalAIInsightService: AIInsightService {
         let recent = Array(checkouts.suffix(5))
         if recent.isEmpty { return "Try a shorter flow tomorrow if today felt like a stretch." }
 
+        let missedWins  = recent.filter { $0.firstWinStatus == .notYet }.count
         let hardCount   = recent.filter { $0.difficulty == .hard }.count
         let notHelpful  = recent.filter { $0.helpfulness == .no }.count
         let easyHelpful = recent.filter { $0.difficulty == .easy && $0.helpfulness == .yes }
 
+        if missedWins >= 2 {
+            return "Make tomorrow's first win smaller and easier to complete before you reach for input."
+        }
         if hardCount >= 3 {
             return "Flows have felt heavy lately. A lighter format might be a better fit for now."
         }
@@ -93,6 +104,9 @@ final class LocalAIInsightService: AIInsightService {
     private func buildNextFlowSuggestion(checkouts: [FlowCheckout], mode: String) -> String {
         guard let last = checkouts.last else { return "Same pace tomorrow." }
 
+        if last.firstWinStatus == .notYet {
+            return "Pick a simpler first win tomorrow and close it before you open the day."
+        }
         if last.difficulty == .hard || last.helpfulness == .no {
             return "A calmer, shorter reset tomorrow."
         }
@@ -128,10 +142,17 @@ final class LocalAIInsightService: AIInsightService {
             return "Even one flow is worth more than none. Start there next week."
         }
 
+        let completedWins = checkouts.filter { $0.firstWinStatus == .done }.count
         let helpful = checkouts.filter { $0.helpfulness != .no }.count
         let easy    = checkouts.filter { $0.difficulty == .easy }.count
         let hard    = checkouts.filter { $0.difficulty == .hard }.count
 
+        if completedWins == checkouts.count {
+            return "You followed through on your first win every time this week. That kind of clean start compounds."
+        }
+        if completedWins <= checkouts.count / 2 {
+            return "The first win is still where mornings slip. Make that step smaller and easier next week."
+        }
         if helpful == checkouts.count {
             return "Every flow this week felt useful. That kind of consistency is rare — protect it."
         }

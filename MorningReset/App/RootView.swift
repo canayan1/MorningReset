@@ -2,11 +2,10 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AppState.self) private var appState
-    @AppStorage(UDKey.onboardingComplete) private var onboardingComplete = false
 
     var body: some View {
         ZStack {
-            if !onboardingComplete {
+            if !appState.onboardingSeen {
                 OnboardingView()
                     .transition(.opacity)
             } else {
@@ -14,7 +13,7 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
-        .animation(.easeOut(duration: 0.3), value: onboardingComplete)
+        .animation(.easeOut(duration: 0.3), value: appState.onboardingSeen)
     }
 
     @ViewBuilder
@@ -37,6 +36,10 @@ struct RootView: View {
             case .mobilityFlow:       MobilityFlowView().transition(.opacity)
             case .feedback:           FeedbackView().transition(.opacity)
             case .flowCheckout:       FlowCheckoutView().transition(.opacity)
+            case .premiumHub:         PremiumHubView().transition(.opacity)
+            case .breathReset:        BreathResetView().transition(.opacity)
+            case .morningPages:       MorningPagesView().transition(.opacity)
+            case .monthlyStory:       MonthlyStoryView().transition(.opacity)
             }
         }
         .animation(.easeOut(duration: 0.2), value: appState.screen)

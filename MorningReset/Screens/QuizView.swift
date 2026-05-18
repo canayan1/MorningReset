@@ -2,97 +2,102 @@ import SwiftUI
 
 struct QuizView: View {
     @Environment(AppState.self) private var appState
-    @State private var selections: [Int: String] = [:]
+    @State private var currentIndex = 0
+    @State private var selectedOption: String?
+    @State private var isAdvancing = false
+    @State private var advanceTask: Task<Void, Never>?
 
     private var questions: [Question] { MorningData.questions }
-
-    private var allAnswered: Bool { selections.count == questions.count }
+    private var currentQuestion: Question { questions[currentIndex] }
+    private var isLastQuestion: Bool { currentIndex == questions.count - 1 }
 
     var body: some View {
         ZStack {
             DS.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: DS.Space.lg) {
 
-                        Text("How are you\nthis morning?")
-                            .font(DS.Typo.title)
-                            .foregroundStyle(DS.textPrimary)
-                            .lineSpacing(4)
-                            .padding(.top, DS.Space.xl)
+                // Dot progress — top, centered
+                HStack(spacing: 6) {
+                    ForEach(0..<questions.count, id: \.self) { i in
+                        Circle()
+                            .fill(i <= currentIndex ? DS.accent : DS.border)
+                            .frame(width: 5, height: 5)
+                            .animation(.easeOut(duration: 0.2), value: currentIndex)
+                    }
+                }
+                .padding(.top, DS.Space.xl)
 
-                        ForEach(Array(questions.enumerated()), id: \.offset) { i, q in
-                            questionCard(index: i, question: q)
+                Spacer()
+
+                // Question — the only thing on screen
+                VStack(spacing: DS.Space.lg) {
+                    Text(currentQuestion.text)
+                        .font(.system(size: 28, weight: .regular, design: .serif))
+                        .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(5)
+                        .id(currentIndex)
+                        .transition(.opacity)
+                        .animation(.easeInOut(duration: 0.22), value: currentIndex)
+
+                    VStack(spacing: DS.Space.sm) {
+                        ForEach(currentQuestion.options, id: \.self) { option in
+                            optionButton(option)
                         }
                     }
-                    .padding(.horizontal, DS.Space.lg)
-                    .padding(.bottom, 100)
                 }
+                .padding(.horizontal, DS.Space.lg)
 
-                VStack(spacing: 0) {
-                    Divider().foregroundStyle(DS.divider)
-                    Button("Done") {
-                        submitAll()
-                    }
-                    .font(.system(.body, design: .serif))
-                    .tracking(0.5)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(allAnswered ? DS.accent : DS.border)
-                    .foregroundStyle(allAnswered ? DS.background : DS.textDim)
-                    .clipShape(Capsule())
-                    .padding(.horizontal, DS.Space.lg)
-                    .padding(.vertical, DS.Space.md)
-                    .animation(.easeOut(duration: 0.2), value: allAnswered)
-                }
-                .background(DS.background)
-                .disabled(!allAnswered)
+                Spacer()
             }
         }
-        .onAppear {
-            appState.resetInactivityTimer()
-        }
+        .accessibilityIdentifier("quiz.screen")
+        .contentShape(Rectangle())
+        .simultaneousGesture(TapGesture().onEnded { appState.resetInactivityTimer() })
+        .onAppear { appState.resetInactivityTimer() }
+        .onDisappear { advanceTask?.cancel() }
     }
 
-    private func questionCard(index: Int, question: Question) -> some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm + 4) {
-            Text(question.text)
+    private func optionButton(_ option: String) -> some View {
+        let isSelected = selectedOption == option
+
+        return Button {
+            submit(option)
+        } label: {
+            Text(option)
                 .font(.system(.body, design: .serif))
-                .foregroundStyle(DS.textPrimary)
-
-            HStack(spacing: DS.Space.sm) {
-                ForEach(question.options, id: \.self) { option in
-                    let selected = selections[index] == option
-                    Button {
-                        withAnimation(.easeOut(duration: 0.15)) {
-                            selections[index] = option
-                        }
-                        appState.resetInactivityTimer()
-                    } label: {
-                        Text(option)
-                            .font(.subheadline.weight(selected ? .semibold : .regular))
-                            .foregroundStyle(selected ? DS.background : DS.textSecondary)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(selected ? DS.accent : DS.surface)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(selected ? DS.accent : DS.border, lineWidth: DS.hairline))
-                    }
-                }
-            }
+                .foregroundStyle(isSelected ? DS.background : DS.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(isSelected ? DS.accent : DS.surface)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(isSelected ? DS.accent : DS.border, lineWidth: DS.hairline))
         }
-        .padding(DS.Space.md)
-        .background(DS.surface.opacity(0.5))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .disabled(isAdvancing)
+        .animation(.easeOut(duration: 0.18), value: isSelected)
+        .accessibilityIdentifier("quiz.option.\(currentIndex).\(currentQuestion.options.firstIndex(of: option) ?? 0)")
     }
 
-    private func submitAll() {
-        for i in 0..<questions.count {
-            if let answer = selections[i] {
-                appState.recordAnswer(answer)
+    private func submit(_ option: String) {
+        guard !isAdvancing else { return }
+        isAdvancing = true
+        selectedOption = option
+        appState.recordAnswer(option)
+
+        advanceTask?.cancel()
+        advanceTask = Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            guard !Task.isCancelled else { return }
+            if isLastQuestion {
+                appState.showWeeklyAffirmation()
+                return
+            }
+            withAnimation(.easeInOut(duration: 0.22)) {
+                currentIndex += 1
+                selectedOption = nil
+                isAdvancing = false
             }
         }
-        appState.showWeeklyAffirmation()
     }
 }

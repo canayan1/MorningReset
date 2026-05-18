@@ -1,92 +1,196 @@
-//
-//  MorningResetTests.swift
-//  MorningResetTests
-//
-//  Created by Begum Yoldas on 29/03/2026.
-//
-
-import Testing
-import Foundation
+import XCTest
 @testable import MorningReset
 
-struct MorningResetTests {
+final class MorningResetTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        resetPersistentState()
+    }
 
-    // MARK: - MorningData.result
+    override func tearDown() {
+        resetPersistentState()
+        super.tearDown()
+    }
 
-    @Test func resultPushOnAllPositive() {
+    func testEnglishAnswerMappingReturnsPush() {
         let answers = ["No", "No", "No", "No", "Yes"]
-        let r = MorningData.result(from: answers)
-        #expect(r.mode == "Push")
+        XCTAssertEqual(MorningData.result(from: answers, language: .en).mode, "Push")
     }
 
-    @Test func resultProtectOnAllNegative() {
-        let answers = ["Yes", "Yes", "Yes", "Yes", "No"]
-        let r = MorningData.result(from: answers)
-        #expect(r.mode == "Protect")
+    func testTurkishAnswerMappingReturnsProtect() {
+        let answers = ["Evet", "Evet", "Evet", "Evet", "Hayır"]
+        XCTAssertEqual(MorningData.result(from: answers, language: .tr).mode, "Protect")
     }
 
-    @Test func resultSteadyOnMixed() {
-        let answers = ["No", "No", "Yes", "Yes", "No"]
-        let r = MorningData.result(from: answers)
-        #expect(r.mode == "Steady")
+    func testSpanishMixedAnswersReturnSteady() {
+        let answers = ["No", "Sí", "No", "Sí", "No"]
+        XCTAssertEqual(MorningData.result(from: answers, language: .es).mode, "Steady")
     }
 
-    // MARK: - Streak computation
-
-    @Test func streakZeroOnEmpty() {
-        #expect(AppState.computeStreak(from: []) == 0)
+    func testLocalizedQuestionsUseExpectedAnswerOrder() {
+        XCTAssertEqual(MorningData.questions(for: .en).first?.options, ["Yes", "No"])
+        XCTAssertEqual(MorningData.questions(for: .tr).first?.options, ["Evet", "Hayır"])
+        XCTAssertEqual(MorningData.questions(for: .es).first?.options, ["Sí", "No"])
     }
 
-    @Test func streakOneForTodayOnly() {
-        let entries = [DailyEntry(date: Date(), mode: "steady", intention: "focus")]
-        #expect(AppState.computeStreak(from: entries) == 1)
+    func testNavigationPathReachesActionForFreeSteadyFlow() {
+        let state = AppState(skipEntitlementCheck: true)
+        let answers = steadyAnswers(for: .current)
+
+        state.startFlow()
+        XCTAssertEqual(state.screen, .quiz)
+
+        answers.forEach(state.recordAnswer)
+        state.showWeeklyAffirmation()
+        XCTAssertEqual(state.screen, .weeklyAffirmation)
+        XCTAssertEqual(state.sessionMode, .steady)
+        XCTAssertEqual(state.currentFirstWin, .firstTask)
+
+        state.showMorningSound()
+        XCTAssertEqual(state.screen, .morningSound)
+
+        state.showResults()
+        XCTAssertEqual(state.screen, .results)
+
+        state.advanceFromResults(history: [], intention: .focus)
+        XCTAssertEqual(state.screen, .insightPreview)
+        XCTAssertEqual(state.insightStrength, .none)
+
+        state.paywallLastShownDate = referenceDate.timeIntervalSince1970
+        state.advanceFromInsightPreview(now: referenceDate)
+        XCTAssertEqual(state.screen, .action)
     }
 
-    @Test func streakBreaksOnGap() {
-        let cal = Calendar.current
-        let today = cal.startOfDay(for: Date())
-        let entries: [DailyEntry] = [
+    func testAdvanceFromResultsBuildsStrongPatternInsightFromHistory() {
+        let state = configuredSteadyState()
+        let history = repeatedHistory(mode: .steady, intention: .focus, count: 5)
+
+        state.advanceFromResults(history: history, intention: .focus)
+
+        XCTAssertEqual(state.screen, .insightPreview)
+        XCTAssertEqual(state.insightStrength, .strong)
+        XCTAssertFalse(state.insightText.isEmpty)
+    }
+
+    func testAdvanceFromInsightPreviewRoutesPremiumUserToGuidedPause() {
+        let state = AppState(skipEntitlementCheck: true)
+        state.isPremium = true
+        state.insightStrength = .strong
+
+        state.advanceFromInsightPreview(now: referenceDate)
+
+        XCTAssertEqual(state.screen, .guidedPause)
+    }
+
+    func testAdvanceFromInsightPreviewRoutesStrongPatternToContextualPaywall() {
+        let state = AppState(skipEntitlementCheck: true)
+        state.isPremium = false
+        state.insightStrength = .strong
+
+        state.advanceFromInsightPreview(now: referenceDate)
+
+        XCTAssertEqual(state.screen, .paywall)
+        XCTAssertEqual(state.paywallContext, .contextual)
+    }
+
+    func testAdvanceFromInsightPreviewRoutesPeriodicPaywallAfterTwentyOneDays() {
+        let state = AppState(skipEntitlementCheck: true)
+        state.isPremium = false
+        state.insightStrength = .weak
+        state.paywallLastShownDate = referenceDate.addingTimeInterval(-22 * 86_400).timeIntervalSince1970
+
+        state.advanceFromInsightPreview(now: referenceDate)
+
+        XCTAssertEqual(state.screen, .paywall)
+        XCTAssertEqual(state.paywallContext, .periodic)
+    }
+
+    func testAdvanceFromInsightPreviewSkipsPaywallAfterShowingItThisFlow() {
+        let state = AppState(skipEntitlementCheck: true)
+        state.isPremium = false
+        state.insightStrength = .strong
+        state.paywallShownThisFlow = true
+
+        state.advanceFromInsightPreview(now: referenceDate)
+
+        XCTAssertEqual(state.screen, .action)
+    }
+
+    func testStreakZeroOnEmptyHistory() {
+        XCTAssertEqual(AppState.computeStreak(from: []), 0)
+    }
+
+    func testStreakCountsConsecutiveDaysUntilGap() {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: referenceDate)
+        let entries = [
             DailyEntry(date: today, mode: "steady", intention: "focus"),
-            DailyEntry(date: cal.date(byAdding: .day, value: -1, to: today)!, mode: "steady", intention: "focus"),
-            DailyEntry(date: cal.date(byAdding: .day, value: -3, to: today)!, mode: "steady", intention: "focus"),
+            DailyEntry(date: calendar.date(byAdding: .day, value: -1, to: today)!, mode: "steady", intention: "focus"),
+            DailyEntry(date: calendar.date(byAdding: .day, value: -3, to: today)!, mode: "steady", intention: "focus")
         ]
-        #expect(AppState.computeStreak(from: entries) == 2)
+
+        XCTAssertEqual(AppState.computeStreak(from: entries), 2)
     }
 
-    @Test func streakZeroIfLatestOlderThanYesterday() {
-        let cal = Calendar.current
-        let today = cal.startOfDay(for: Date())
-        let entries: [DailyEntry] = [
-            DailyEntry(date: cal.date(byAdding: .day, value: -2, to: today)!, mode: "steady", intention: "focus"),
-            DailyEntry(date: cal.date(byAdding: .day, value: -3, to: today)!, mode: "steady", intention: "focus"),
+    func testPatternStrengthStrongOnFiveOfSevenMatches() {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: referenceDate)
+        var entries = (0..<5).map {
+            DailyEntry(date: calendar.date(byAdding: .day, value: -$0, to: today)!, mode: "push", intention: "focus")
+        }
+        entries.append(DailyEntry(date: calendar.date(byAdding: .day, value: -5, to: today)!, mode: "steady", intention: "calm"))
+        entries.append(DailyEntry(date: calendar.date(byAdding: .day, value: -6, to: today)!, mode: "protect", intention: "energy"))
+
+        XCTAssertEqual(PatternReader.strength(for: entries), .strong)
+    }
+
+    private func configuredSteadyState() -> AppState {
+        let state = AppState(skipEntitlementCheck: true)
+        steadyAnswers(for: .current).forEach(state.recordAnswer)
+        state.showWeeklyAffirmation()
+        state.showMorningSound()
+        state.showResults()
+        return state
+    }
+
+    private func steadyAnswers(for language: AppLanguage) -> [String] {
+        let questions = MorningData.questions(for: language)
+        return [
+            questions[0].options[1],
+            questions[1].options[1],
+            questions[2].options[0],
+            questions[3].options[0],
+            questions[4].options[1]
         ]
-        #expect(AppState.computeStreak(from: entries) == 0)
     }
 
-    // MARK: - PatternReader.strength
-
-    @Test func patternStrengthNoneIfFewEntries() {
-        let entries = [DailyEntry(date: Date(), mode: "steady", intention: "focus")]
-        #expect(PatternReader.strength(for: entries) == .none)
-    }
-
-    @Test func patternStrengthWeakOnThreeSameModes() {
-        let cal = Calendar.current
-        let today = cal.startOfDay(for: Date())
-        let entries: [DailyEntry] = (0..<3).map {
-            DailyEntry(date: cal.date(byAdding: .day, value: -$0, to: today)!, mode: "steady", intention: "focus")
+    private func repeatedHistory(mode: MorningMode, intention: IntentionType, count: Int) -> [DailyEntry] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: referenceDate)
+        return (0..<count).map { offset in
+            DailyEntry(
+                date: calendar.date(byAdding: .day, value: -offset, to: today)!,
+                mode: mode.rawValue,
+                intention: intention.rawValue
+            )
         }
-        #expect(PatternReader.strength(for: entries) == .weak)
     }
 
-    @Test func patternStrengthStrongOnFiveOfSeven() {
-        let cal = Calendar.current
-        let today = cal.startOfDay(for: Date())
-        var entries: [DailyEntry] = (0..<5).map {
-            DailyEntry(date: cal.date(byAdding: .day, value: -$0, to: today)!, mode: "push", intention: "focus")
-        }
-        entries.append(DailyEntry(date: cal.date(byAdding: .day, value: -5, to: today)!, mode: "steady", intention: "calm"))
-        entries.append(DailyEntry(date: cal.date(byAdding: .day, value: -6, to: today)!, mode: "protect", intention: "energy"))
-        #expect(PatternReader.strength(for: entries) == .strong)
+    private func resetPersistentState() {
+        let defaults = UserDefaults.standard
+        [
+            UDKey.premiumUnlocked,
+            UDKey.onboardingComplete,
+            UDKey.paywallLastShown,
+            UDKey.selectedIntention,
+            UDKey.dailyEntries,
+            UDKey.insightDailyCache,
+            UDKey.insightWeeklyCache,
+            "wake_schedule_v1",
+            "flow_checkouts",
+            "mantra_start_date"
+        ].forEach(defaults.removeObject(forKey:))
     }
 }
+
+private let referenceDate = Date(timeIntervalSince1970: 1_776_211_200)

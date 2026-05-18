@@ -34,6 +34,9 @@ Good examples:
             let diffs = checkouts.map { $0.difficulty.rawValue }.joined(separator: ", ")
             let helps = checkouts.map { $0.helpfulness.rawValue }.joined(separator: ", ")
             let tags  = checkouts.flatMap { $0.tags.map(\.rawValue) }
+            let wins = checkouts.map { "\($0.firstWin.rawValue):\($0.firstWinStatus.rawValue)" }
+                .joined(separator: ", ")
+            lines.append("Recent first wins (oldest first): \(wins)")
             lines.append("Recent difficulties (oldest first): \(diffs)")
             lines.append("Whether each felt useful: \(helps)")
             if !tags.isEmpty {
@@ -54,6 +57,9 @@ Good examples:
             let diffs = checkouts.map { $0.difficulty.rawValue }.joined(separator: ", ")
             let helps = checkouts.map { $0.helpfulness.rawValue }.joined(separator: ", ")
             let tags  = checkouts.flatMap { $0.tags.map(\.rawValue) }
+            let wins = checkouts.map { "\($0.firstWin.rawValue):\($0.firstWinStatus.rawValue)" }
+                .joined(separator: ", ")
+            lines.append("First wins chosen this week: \(wins)")
             lines.append("Session difficulties: \(diffs)")
             lines.append("Session helpfulness: \(helps)")
             if !tags.isEmpty {

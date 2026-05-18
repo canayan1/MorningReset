@@ -32,7 +32,7 @@ struct AIInsightCardView: View {
                     ProgressView()
                         .tint(DS.textDim)
                         .scaleEffect(0.75)
-                    Text("Reading your patterns…")
+                    Text(L10n.text(en: "Reading your patterns…", tr: "Kalıpların okunuyor…", es: "Leyendo tus patrones…"))
                         .font(.caption)
                         .foregroundStyle(DS.textDim)
                 }
@@ -61,7 +61,7 @@ struct AIInsightCardLockedView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: DS.Space.xs) {
             HStack {
-                Text("YOUR INSIGHT")
+                Text(L10n.text(en: "YOUR INSIGHT", tr: "SENIN İÇGÖRÜN", es: "TU INSIGHT"))
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(DS.textSecondary)
                     .kerning(1.2)
@@ -70,11 +70,19 @@ struct AIInsightCardLockedView: View {
                     .font(.system(size: 10))
                     .foregroundStyle(DS.textDim)
             }
-            Text("Your morning patterns, reflected back.")
+            Text(L10n.text(
+                en: "Your morning patterns, reflected back.",
+                tr: "Sabah kalıpların, sana yansıtılıyor.",
+                es: "Tus patrones matinales, reflejados de vuelta."
+            ))
                 .font(.callout)
                 .foregroundStyle(DS.textPrimary)
                 .lineSpacing(3)
-            Text("Unlock with Premium.")
+            Text(L10n.text(
+                en: "Premium unlocks the full pattern and guided pause.",
+                tr: "Premium tam kalıbı ve rehberli duraklamayı açar.",
+                es: "Premium desbloquea el patrón completo y la pausa guiada."
+            ))
                 .font(.caption)
                 .foregroundStyle(DS.textDim)
                 .padding(.top, DS.Space.xs)
@@ -96,7 +104,7 @@ struct WeeklyInsightCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: DS.Space.xs) {
-            Text("THIS WEEK")
+            Text(L10n.text(en: "THIS WEEK", tr: "BU HAFTA", es: "ESTA SEMANA"))
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundStyle(DS.textSecondary)
                 .kerning(1.2)

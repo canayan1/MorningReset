@@ -2,6 +2,8 @@ import SwiftUI
 
 struct WeeklyAffirmationView: View {
     @Environment(AppState.self) private var appState
+    @State private var progress = 0.0
+    @State private var hasAdvanced = false
 
     var body: some View {
         ZStack {
@@ -10,38 +12,33 @@ struct WeeklyAffirmationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text("THIS WEEK")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(DS.textDim)
-                        .kerning(1.2)
-
-                    Text(MantraEngine.weeklyMantra())
-                        .font(.title2.bold())
-                        .foregroundStyle(DS.textPrimary)
-                        .lineSpacing(4)
-                }
-
-                Spacer().frame(height: DS.Space.lg)
-
-                Text("Read it once. Say it three times if you want.")
-                    .font(.callout)
-                    .foregroundStyle(DS.textSecondary)
+                Text(MantraEngine.weeklyMantra())
+                    .font(.system(size: 26, weight: .regular, design: .serif))
+                    .foregroundStyle(DS.textPrimary)
+                    .lineSpacing(6)
+                    .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                Button("Continue") {
-                    appState.showMorningSound()
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.textPrimary)
-                .foregroundStyle(DS.background)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.bottom, 48)
+                ProgressView(value: progress, total: 1)
+                    .tint(DS.accent)
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, DS.Space.xl)
             }
-            .padding(.horizontal, DS.Space.lg)
         }
+        .contentShape(Rectangle())
+        .onTapGesture { advance() }
+        .task {
+            withAnimation(.linear(duration: 2.4)) { progress = 1 }
+            try? await Task.sleep(nanoseconds: 2_400_000_000)
+            guard !Task.isCancelled else { return }
+            advance()
+        }
+    }
+
+    private func advance() {
+        guard !hasAdvanced else { return }
+        hasAdvanced = true
+        appState.showMorningSound()
     }
 }

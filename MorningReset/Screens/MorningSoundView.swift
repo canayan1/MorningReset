@@ -2,7 +2,8 @@ import SwiftUI
 
 struct MorningSoundView: View {
     @Environment(AppState.self) private var appState
-    @Environment(\.openURL) private var openURL
+    @State private var progress = 0.0
+    @State private var hasAdvanced = false
 
     private var pick: SoundPick {
         appState.selectedSoundDirection.todayPick
@@ -16,29 +17,20 @@ struct MorningSoundView: View {
                 Spacer()
 
                 VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text("SOUND")
+                    Text(L10n.text(en: "SOUND CUE", tr: "SES İPUCU", es: "PISTA DE SONIDO"))
                         .font(DS.Typo.label)
                         .foregroundStyle(DS.textDim)
                         .kerning(1.4)
 
-                    Text("Choose your morning sound.")
+                    Text(L10n.text(en: "Keep the soundtrack for after the reset.", tr: "Müziği reset'ten sonrasına sakla.", es: "Deja la banda sonora para después del reset."))
                         .font(DS.Typo.title)
                         .foregroundStyle(DS.textPrimary)
                 }
 
                 Spacer().frame(height: DS.Space.lg + 4)
 
-                HStack(spacing: DS.Space.sm) {
-                    ForEach(SoundDirection.allCases) { direction in
-                        soundChip(direction)
-                    }
-                }
-
-                Spacer().frame(height: DS.Space.md + 4)
-
-                // Today's curated pick
                 VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text("TODAY'S PICK")
+                    Text(appState.selectedSoundDirection.label.uppercased())
                         .font(DS.Typo.micro)
                         .foregroundStyle(DS.textDim)
                         .kerning(1.4)
@@ -51,70 +43,42 @@ struct MorningSoundView: View {
                         .font(.caption)
                         .italic()
                         .foregroundStyle(DS.textSecondary)
+
+                    Text(L10n.text(en: "Queue it when the ritual is done.", tr: "Ritüel bitince sıraya al.", es: "Ponlo en cola cuando termine el ritual."))
+                        .font(.caption)
+                        .foregroundStyle(DS.textDim)
+                        .padding(.top, 2)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(DS.Space.md)
                 .background(DS.surface)
                 .hairlineBorder()
 
-                Spacer().frame(height: DS.Space.sm + 4)
-
-                Button {
-                    openSpotify()
-                } label: {
-                    HStack(spacing: 6) {
-                        Text("Open in Spotify")
-                            .font(.subheadline)
-                            .foregroundStyle(DS.accent)
-                        Image(systemName: "arrow.up.right")
-                            .font(.system(size: 11))
-                            .foregroundStyle(DS.accent)
-                    }
-                }
-
                 Spacer()
 
-                Button("Continue") {
-                    appState.showResults()
-                }
-                .font(.system(.body, design: .serif))
-                .tracking(0.5)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                ProgressView(value: progress, total: 1)
+                    .tint(DS.accent)
                 .padding(.bottom, DS.Space.xl)
             }
             .padding(.horizontal, DS.Space.lg)
         }
-    }
-
-    private func openSpotify() {
-        if let appURL = pick.spotifyURL {
-            openURL(appURL) { accepted in
-                if !accepted, let webURL = pick.webURL {
-                    openURL(webURL)
-                }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            advance()
+        }
+        .task {
+            withAnimation(.linear(duration: 2.2)) {
+                progress = 1
             }
-        } else if let webURL = pick.webURL {
-            openURL(webURL)
+            try? await Task.sleep(nanoseconds: 2_200_000_000)
+            guard !Task.isCancelled else { return }
+            advance()
         }
     }
 
-    private func soundChip(_ direction: SoundDirection) -> some View {
-        let selected = appState.selectedSoundDirection == direction
-        return Button {
-            appState.setSoundDirection(direction)
-        } label: {
-            Text(direction.label)
-                .font(.system(size: 13, weight: selected ? .semibold : .regular))
-                .foregroundStyle(selected ? DS.background : DS.textSecondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(selected ? DS.accent : DS.surface)
-                .clipShape(Capsule())
-                .overlay(Capsule().stroke(DS.border, lineWidth: DS.hairline))
-        }
+    private func advance() {
+        guard !hasAdvanced else { return }
+        hasAdvanced = true
+        appState.showResults()
     }
 }

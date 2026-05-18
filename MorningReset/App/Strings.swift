@@ -1,29 +1,42 @@
 import Foundation
 
-enum Strings {
+enum AppLanguage: String {
+    case en
+    case tr
+    case es
 
-    enum Alarm {
-        static let title       = "Morning Reset"
-        static let startButton = "Start"
+    static var current: AppLanguage {
+        if let override = ProcessInfo.processInfo.environment["MR_LANGUAGE_OVERRIDE"] {
+            return AppLanguage(rawValue: override) ?? .en
+        }
+
+        let identifier = Locale.current.language.languageCode?.identifier ?? Locale.current.identifier
+        if identifier.hasPrefix("tr") { return .tr }
+        if identifier.hasPrefix("es") { return .es }
+        return .en
     }
+}
+
+enum L10n {
+    static func text(
+        language: AppLanguage = .current,
+        en: String,
+        tr: String,
+        es: String
+    ) -> String {
+        switch language {
+        case .en: return en
+        case .tr: return tr
+        case .es: return es
+        }
+    }
+}
+
+enum Strings {
 
     enum Quiz {
         static func progress(current: Int, total: Int) -> String {
             "\(current)/\(total)"
         }
-    }
-
-    enum Results {
-        static let startWithLabel = "Start with"
-        static let avoidLabel     = "Avoid"
-        static let winTodayLabel  = "First win"
-        static let musicLabel     = "Music"
-        static let continueButton = "Continue"
-    }
-
-    enum Action {
-        static let heading    = "Keep moving."
-        static let skipButton = "Skip"
-        static let backButton = "Back"
     }
 }

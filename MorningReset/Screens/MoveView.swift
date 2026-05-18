@@ -2,52 +2,46 @@ import SwiftUI
 
 struct MoveView: View {
     @Environment(AppState.self) private var appState
-    @State private var tapped = false
 
-    private var result: MorningResult {
-        MorningData.result(from: appState.answers)
+    @State private var isRunning = false
+    @State private var secondsRemaining = 60
+
+    private var mode: MorningMode {
+        appState.sessionMode
     }
 
-    // Deterministic: same action for the entire calendar day, cycles through pool.
-    private static var dayIndex: Int {
-        Calendar.current.component(.day, from: Date())
-    }
+    private var cue: String {
+        let elapsed = 60 - secondsRemaining
 
-    private var action: String {
-        let pool: [String]
-        switch MorningMode(from: result.mode) ?? .steady {
+        switch mode {
         case .protect:
-            pool = [
-                "Sit up.\nFeet down.\nThree slow breaths.",
-                "Sit up.\nLook around the room.\nStay for 10 seconds.",
-                "Feet on the floor.\nHands on your knees.\nBreathe slowly.",
-                "Sit up.\nStretch your neck slowly.\nLeft and right.",
-                "Sit at the edge of the bed.\nStay there.\nBreathe.",
-                "Feet down.\nBack straight.\nThree slow inhales.",
-                "Sit up.\nPlace one hand on your chest.\nBreathe slowly.",
-            ]
+            switch elapsed {
+            case 0..<20:
+                return L10n.text(en: "Roll your shoulders slowly.", tr: "Omuzlarını yavaşça çevir.", es: "Rota los hombros lentamente.")
+            case 20..<40:
+                return L10n.text(en: "Reach up, then lower your arms.", tr: "Yukarı uzan, sonra kollarını indir.", es: "Estírate hacia arriba y luego baja los brazos.")
+            default:
+                return L10n.text(en: "March softly in place.", tr: "Olduğun yerde yumuşakça adımla.", es: "Marcha suavemente en tu sitio.")
+            }
         case .steady:
-            pool = [
-                "Stand up.\nGet water.\nDrink slowly.",
-                "Stand up.\nWalk to the kitchen.\nPause there.",
-                "Stand up.\nOpen a window.\nTake one breath.",
-                "Stand up.\nTurn on the light.\nStep forward.",
-                "Stand up.\nTake 5 steps.\nStop.",
-                "Stand up.\nStretch your arms up.\nHold for 5 seconds.",
-                "Stand up.\nWalk across the room.\nTurn back.",
-            ]
+            switch elapsed {
+            case 0..<20:
+                return L10n.text(en: "March in place.", tr: "Olduğun yerde adımla.", es: "Marcha en tu sitio.")
+            case 20..<40:
+                return L10n.text(en: "Circle your arms and open your chest.", tr: "Kollarını çevir ve göğsünü aç.", es: "Haz círculos con los brazos y abre el pecho.")
+            default:
+                return L10n.text(en: "Twist gently left and right.", tr: "Nazikçe sağa sola dön.", es: "Gira suavemente a izquierda y derecha.")
+            }
         case .push:
-            pool = [
-                "Ten squats.\nNow.",
-                "Jump in place.\n10 seconds.",
-                "Five push-ups.\nRight now.",
-                "Fast walk across the room.\nTwice.",
-                "Arms up.\nShake out your body.\n10 seconds.",
-                "Step forward fast.\nTurn.\nRepeat.",
-                "Quick stretch.\nReach high.\nThen move.",
-            ]
+            switch elapsed {
+            case 0..<20:
+                return L10n.text(en: "Fast march or high knees.", tr: "Hızlı adımla ya da dizlerini yükselt.", es: "Marcha rápido o sube las rodillas.")
+            case 20..<40:
+                return L10n.text(en: "Do light squats or quick reaches.", tr: "Hafif squat yap ya da hızlı uzanışlar dene.", es: "Haz sentadillas suaves o alcances rápidos.")
+            default:
+                return L10n.text(en: "Shake out the body and stay tall.", tr: "Bedeni silk ve dik kal.", es: "Sacude el cuerpo y mantente erguido.")
+            }
         }
-        return pool[Self.dayIndex % pool.count]
     }
 
     var body: some View {
@@ -57,40 +51,91 @@ struct MoveView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                Text(action)
-                    .font(DS.Typo.title)
-                    .foregroundStyle(DS.textPrimary)
-                    .lineSpacing(10)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, DS.Space.xl)
+                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    Text(L10n.text(en: "60-SECOND MOVE", tr: "60 SANİYELİK HAREKET", es: "MOVIMIENTO DE 60 SEGUNDOS"))
+                        .font(DS.Typo.label)
+                        .foregroundStyle(DS.textDim)
+                        .kerning(1.4)
+
+                    Text(timeLabel)
+                        .font(.system(size: 56, weight: .regular, design: .serif))
+                        .foregroundStyle(DS.textPrimary)
+
+                    Text(cue)
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(DS.textPrimary)
+
+                    Text(L10n.text(en: "Any simple movement counts. Keep it clean and continuous.", tr: "Her basit hareket sayılır. Temiz ve kesintisiz tut.", es: "Cualquier movimiento sencillo cuenta. Manténlo limpio y continuo."))
+                        .font(.subheadline)
+                        .foregroundStyle(DS.textSecondary)
+                        .lineSpacing(3)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                VStack(spacing: DS.Space.md) {
-                    Button("Start") {
-                        guard !tapped else { return }
-                        tapped = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            appState.showWin()
-                        }
-                    }
-                    .font(.system(.body, design: .serif))
-                    .tracking(0.5)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(DS.accent)
-                    .foregroundStyle(DS.background)
-                    .clipShape(Capsule())
-                    .disabled(tapped)
-                    .sensoryFeedback(.success, trigger: tapped)
+                ProgressView(value: Double(60 - secondsRemaining), total: 60)
+                    .tint(DS.accent)
+                    .padding(.horizontal, DS.Space.lg)
+                    .padding(.bottom, DS.Space.md)
 
-                    Text("Stay here.")
-                        .font(.caption)
-                        .foregroundStyle(DS.textDim)
+                Button(primaryButtonTitle) {
+                    handlePrimaryAction()
                 }
+                .font(.system(.body, design: .serif))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(DS.accent)
+                .foregroundStyle(DS.background)
+                .clipShape(Capsule())
                 .padding(.horizontal, DS.Space.lg)
-                .padding(.bottom, DS.Space.xl)
+                .disabled(isRunning)
+                .accessibilityIdentifier("move.primaryButton")
+
+                Text(
+                    isRunning
+                    ? L10n.text(en: "Stay with the minute.", tr: "Dakikada kal.", es: "Quédate con el minuto.")
+                    : L10n.text(en: "Movement first. Scrolling later.", tr: "Önce hareket. Kaydırma sonra.", es: "Primero movimiento. El scroll después.")
+                )
+                    .font(.caption)
+                    .foregroundStyle(DS.textDim)
+                    .padding(.top, DS.Space.md)
+                    .padding(.bottom, DS.Space.xl)
             }
         }
+        .accessibilityIdentifier("move.screen")
+        .task(id: isRunning) {
+            guard isRunning else { return }
+            while isRunning && secondsRemaining > 0 {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                guard isRunning else { return }
+                secondsRemaining -= 1
+            }
+            if secondsRemaining == 0 {
+                isRunning = false
+            }
+        }
+        .onDisappear {
+            isRunning = false
+        }
+    }
+
+    private var timeLabel: String {
+        String(format: "0:%02d", secondsRemaining)
+    }
+
+    private var primaryButtonTitle: String {
+        secondsRemaining == 0
+            ? L10n.text(en: "Lock in this win", tr: "Bu kazanımı kilitle", es: "Fija esta victoria")
+            : L10n.text(en: "Start moving", tr: "Harekete başla", es: "Empieza a moverte")
+    }
+
+    private func handlePrimaryAction() {
+        if secondsRemaining == 0 {
+            appState.completeFirstWin()
+            return
+        }
+        isRunning = true
     }
 }

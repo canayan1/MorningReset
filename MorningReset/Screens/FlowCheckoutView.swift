@@ -1,18 +1,15 @@
 import SwiftUI
 
-// MARK: - FlowCheckoutView
-//
-// Lightweight post-flow check-out screen. Designed to be completable in < 10 seconds.
-// Tapping "Done" saves a FlowCheckout, triggers InsightEngine.refresh(), then calls endFlow().
-// Tapping "Skip" calls endFlow() directly without saving.
-
 struct FlowCheckoutView: View {
-    @Environment(AppState.self)    private var appState
+    @Environment(AppState.self) private var appState
     @Environment(InsightEngine.self) private var insightEngine
 
-    @State private var difficulty:   FlowDifficulty  = .neutral
-    @State private var helpfulness:  FlowHelpfulness = .somewhat
-    @State private var selectedTags: Set<FlowTag>    = []
+    @State private var firstWinStatus: FirstWinStatus = .done
+    @State private var difficulty: FlowDifficulty = .neutral
+    @State private var sealed = false
+
+    private var firstWin: FirstWinAction { appState.currentFirstWin }
+    private var currentStreak: Int { appState.streakCount }
 
     var body: some View {
         ZStack {
@@ -21,162 +18,182 @@ struct FlowCheckoutView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
-                    Text("CHECK-IN")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(DS.textDim)
-                        .kerning(1.2)
-
-                    Text("How did that feel?")
-                        .font(.title2.bold())
-                        .foregroundStyle(DS.textPrimary)
+                // ── Day sealed animation ──────────────────────────────
+                if sealed {
+                    sealedState
+                        .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                } else {
+                    checkoutForm
+                        .transition(.opacity)
                 }
-
-                Spacer().frame(height: DS.Space.lg)
-
-                difficultyRow
-
-                Spacer().frame(height: DS.Space.md)
-
-                helpfulnessRow
-
-                Spacer().frame(height: DS.Space.md)
-
-                tagSection
 
                 Spacer()
-
-                Button("Done") { saveAndContinue() }
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(DS.textPrimary)
-                    .foregroundStyle(DS.background)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                Button("Skip") { appState.endFlow() }
-                    .font(.subheadline)
-                    .foregroundStyle(DS.textDim)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .padding(.bottom, 32)
             }
             .padding(.horizontal, DS.Space.lg)
+            .animation(.easeOut(duration: 0.35), value: sealed)
+        }
+        .accessibilityIdentifier("checkout.screen")
+        .onAppear {
+            firstWinStatus = appState.didCompleteFirstWin ? .done : .notYet
         }
     }
 
-    // MARK: - Difficulty
+    // MARK: - Checkout form
 
-    private var difficultyRow: some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text("DIFFICULTY")
-                .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(DS.textDim)
-                .kerning(1.2)
+    private var checkoutForm: some View {
+        VStack(alignment: .leading, spacing: DS.Space.xl) {
 
-            HStack(spacing: DS.Space.sm) {
-                ForEach(FlowDifficulty.allCases, id: \.self) { option in
-                    segmentButton(option.label, selected: difficulty == option) {
-                        difficulty = option
+            // Header
+            VStack(alignment: .leading, spacing: DS.Space.xs) {
+                Text(firstWin.checkoutTitle)
+                    .font(.system(size: 28, weight: .regular, design: .serif))
+                    .foregroundStyle(DS.textPrimary)
+                    .lineSpacing(3)
+            }
+
+            // Question 1 — Did you do it?
+            VStack(alignment: .leading, spacing: DS.Space.sm) {
+                Text(L10n.text(en: "Did you complete it?", tr: "Tamamladın mı?", es: "¿Lo completaste?"))
+                    .font(.callout)
+                    .foregroundStyle(DS.textSecondary)
+
+                HStack(spacing: DS.Space.sm) {
+                    ForEach(FirstWinStatus.allCases, id: \.self) { option in
+                        pillButton(option.label, selected: firstWinStatus == option) {
+                            firstWinStatus = option
+                        }
                     }
                 }
             }
-        }
-    }
 
-    // MARK: - Helpfulness
+            // Question 2 — How did it feel?
+            VStack(alignment: .leading, spacing: DS.Space.sm) {
+                Text(L10n.text(en: "How did it feel?", tr: "Nasıl hissettirdi?", es: "¿Cómo se sintió?"))
+                    .font(.callout)
+                    .foregroundStyle(DS.textSecondary)
 
-    private var helpfulnessRow: some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text("DID THIS HELP?")
-                .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(DS.textDim)
-                .kerning(1.2)
-
-            HStack(spacing: DS.Space.sm) {
-                ForEach(FlowHelpfulness.allCases, id: \.self) { option in
-                    segmentButton(option.label, selected: helpfulness == option) {
-                        helpfulness = option
+                HStack(spacing: DS.Space.sm) {
+                    ForEach(FlowDifficulty.allCases, id: \.self) { option in
+                        pillButton(option.label, selected: difficulty == option) {
+                            difficulty = option
+                        }
                     }
                 }
             }
-        }
-    }
 
-    // MARK: - Tag section
-
-    private var tagSection: some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text("HOW YOU FELT  (optional)")
-                .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(DS.textDim)
-                .kerning(1.2)
-
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: DS.Space.sm), count: 4),
-                spacing: DS.Space.sm
-            ) {
-                ForEach(FlowTag.allCases, id: \.self) { tag in
-                    tagPill(tag)
+            // Current streak — quiet reminder of what's at stake
+            if currentStreak > 0 {
+                HStack(spacing: DS.Space.xs) {
+                    Circle()
+                        .fill(DS.accent)
+                        .frame(width: 6, height: 6)
+                    Text(L10n.text(
+                        en: "\(currentStreak)-day streak",
+                        tr: "\(currentStreak) günlük seri",
+                        es: "racha de \(currentStreak) días"
+                    ))
+                    .font(.caption)
+                    .foregroundStyle(DS.textDim)
                 }
             }
+
+            // CTA
+            Button(L10n.text(en: "Seal the day", tr: "Günü mühürle", es: "Sellar el día")) {
+                sealAndContinue()
+            }
+            .font(.system(.body, design: .serif))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 18)
+            .background(DS.accent)
+            .foregroundStyle(DS.background)
+            .clipShape(Capsule())
+            .accessibilityIdentifier("checkout.finishButton")
+
+            Button(L10n.text(en: "Skip", tr: "Atla", es: "Saltar")) {
+                appState.endFlow()
+            }
+            .font(.subheadline)
+            .foregroundStyle(DS.textDim)
+            .frame(maxWidth: .infinity)
+            .accessibilityIdentifier("checkout.skipButton")
         }
     }
 
-    // MARK: - Reusable components
+    // MARK: - Sealed state (brief moment before transition)
 
-    private func segmentButton(_ label: String, selected: Bool, action: @escaping () -> Void) -> some View {
+    private var sealedState: some View {
+        VStack(alignment: .leading, spacing: DS.Space.sm) {
+            Text("\(currentStreak + 1)")
+                .font(.system(size: 72, weight: .thin, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .monospacedDigit()
+
+            Text(L10n.text(
+                en: (currentStreak + 1) == 1 ? "first morning." : "mornings in a row.",
+                tr: (currentStreak + 1) == 1 ? "ilk sabah." : "gün üst üste.",
+                es: (currentStreak + 1) == 1 ? "primera mañana." : "mañanas seguidas."
+            ))
+            .font(.system(.title3, design: .serif))
+            .foregroundStyle(DS.textSecondary)
+        }
+    }
+
+    // MARK: - Pill button
+
+    private func pillButton(_ label: String, selected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(label)
                 .font(.callout)
                 .foregroundStyle(selected ? DS.background : DS.textSecondary)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-                .background(selected ? DS.textPrimary : DS.surface)
-                .overlay(Rectangle().stroke(selected ? DS.textPrimary : DS.border, lineWidth: 1))
+                .padding(.vertical, 13)
+                .background(selected ? DS.accent : DS.surface)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(selected ? DS.accent : DS.border, lineWidth: DS.hairline))
         }
+        .animation(.easeOut(duration: 0.15), value: selected)
     }
 
-    private func tagPill(_ tag: FlowTag) -> some View {
-        let active = selectedTags.contains(tag)
-        return Button {
-            if active { selectedTags.remove(tag) } else { selectedTags.insert(tag) }
-        } label: {
-            Text(tag.label)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(active ? DS.background : DS.textSecondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(active ? DS.accent : DS.surface)
-                .overlay(Rectangle().stroke(active ? DS.accent : DS.border, lineWidth: 1))
-        }
-    }
+    // MARK: - Save logic
 
-    // MARK: - Actions
-
-    private func saveAndContinue() {
+    private func sealAndContinue() {
         let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention)
             ?? IntentionType.focus.rawValue
 
         let checkout = FlowCheckout(
-            date:        Date(),
-            mode:        appState.sessionMode.rawValue,
-            intention:   intentionStr,
+            date: Date(),
+            mode: appState.sessionMode.rawValue,
+            intention: intentionStr,
             streakCount: appState.streakCount,
-            difficulty:  difficulty,
+            firstWin: firstWin,
+            firstWinStatus: firstWinStatus,
+            difficulty: difficulty,
             helpfulness: helpfulness,
-            tags:        Array(selectedTags)
+            tags: []
         )
         FlowCheckoutStore.append(checkout)
 
         Task {
             await insightEngine.refresh(
-                mode:      appState.sessionMode.rawValue,
+                mode: appState.sessionMode.rawValue,
                 intention: intentionStr,
-                streak:    appState.streakCount
+                streak: appState.streakCount
             )
         }
 
-        appState.endFlow()
+        // Flash sealed state briefly then transition
+        withAnimation { sealed = true }
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 900_000_000)
+            appState.endFlow()
+        }
+    }
+
+    private var helpfulness: FlowHelpfulness {
+        switch (firstWinStatus, difficulty) {
+        case (.done, .easy):    return .yes
+        case (.notYet, _):      return .no
+        default:                return .somewhat
+        }
     }
 }

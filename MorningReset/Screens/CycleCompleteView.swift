@@ -4,14 +4,14 @@ struct CycleCompleteView: View {
     @Environment(AppState.self) private var appState
     @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
 
-    private let descriptors: [IntentionType: String] = [
-        .calm:        "Move without noise",
-        .focus:       "Stay with what matters",
-        .energy:      "Protect and use your fuel well",
-        .confidence:  "Trust your next move",
-        .connection:  "Show up with presence",
-        .discipline:  "Return to clean action",
-    ]
+    private var descriptors: [IntentionType: String] { [
+        .calm:        L10n.text(en: "Move without noise",          tr: "Gürültüsüz hareket et",         es: "Muévete sin ruido"),
+        .focus:       L10n.text(en: "Stay with what matters",      tr: "Önemli olanla kal",              es: "Quédate con lo que importa"),
+        .energy:      L10n.text(en: "Protect and use your fuel",   tr: "Enerjini koru ve kullan",        es: "Protege y usa tu energía"),
+        .confidence:  L10n.text(en: "Trust your next move",        tr: "Bir sonraki adımına güven",      es: "Confía en tu próximo movimiento"),
+        .connection:  L10n.text(en: "Show up with presence",       tr: "Tam anlamıyla var ol",           es: "Preséntate con presencia"),
+        .discipline:  L10n.text(en: "Return to clean action",      tr: "Temiz eyleme dön",               es: "Vuelve a la acción limpia"),
+    ]}
 
     var body: some View {
         ZStack {
@@ -31,10 +31,10 @@ struct CycleCompleteView: View {
                         .clipShape(Capsule())
 
                     VStack(alignment: .leading, spacing: DS.Space.sm) {
-                        Text("7 wins")
+                        Text(L10n.text(en: "7 wins", tr: "7 kazanım", es: "7 logros"))
                             .font(.system(size: 52, design: .serif).weight(.regular))
                             .foregroundStyle(DS.textPrimary)
-                        Text("You kept showing up.")
+                        Text(L10n.text(en: "You kept showing up.", tr: "Devam ettin.", es: "Seguiste apareciendo."))
                             .font(.body)
                             .foregroundStyle(DS.textSecondary)
                     }
@@ -45,7 +45,7 @@ struct CycleCompleteView: View {
                 Spacer()
 
                 VStack(alignment: .leading, spacing: DS.Space.md) {
-                    Text("Choose a new direction")
+                    Text(L10n.text(en: "Choose a new direction", tr: "Yeni bir yön seç", es: "Elige una nueva dirección"))
                         .font(DS.Typo.label)
                         .tracking(1.2)
                         .foregroundStyle(DS.textDim)
@@ -64,7 +64,7 @@ struct CycleCompleteView: View {
 
                 Spacer().frame(height: DS.Space.xl - 8)
 
-                Button("Start fresh") {
+                Button(L10n.text(en: "Start fresh", tr: "Yeniden başla", es: "Comenzar de nuevo")) {
                     appState.endFlow()
                 }
                 .font(.system(.body, design: .serif))

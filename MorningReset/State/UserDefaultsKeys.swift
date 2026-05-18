@@ -4,8 +4,6 @@ enum UDKey {
     static let premiumUnlocked     = "premium_unlocked"
     static let onboardingComplete  = "onboarding_complete"
     static let paywallLastShown    = "paywall_last_shown_date"
-    static let appleUserID         = "apple_user_id"
-    static let appleUserName       = "apple_user_name"
     static let selectedIntention   = "selected_intention"
     static let dailyEntries        = "daily_entries"
     static let insightDailyCache   = "insight_daily_cache"

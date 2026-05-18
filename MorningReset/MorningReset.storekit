@@ -22,7 +22,7 @@
       "localizations" : [
 
       ],
-      "name" : "Premium",
+      "name" : "Morning Reset Premium",
       "performanceData" : {
 
       },
@@ -46,14 +46,14 @@
           },
           "localizations" : [
             {
-              "description" : "Full access to Morning Reset Premium features including pattern insights, guided pauses, and mobility flows.",
-              "displayName" : "Morning Reset Premium",
+              "description" : "Unlock weekly pattern insight, a short guided pause, and Rise & Flow, a guided 5-minute movement reset.",
+              "displayName" : "Morning Reset Premium Annual",
               "locale" : "en_US"
             }
           ],
           "productID" : "com.canayan.MorningReset.premium.annual",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Annual Premium",
+          "referenceName" : "Morning Reset Premium Annual",
           "subscriptionGroupID" : "21497758",
           "type" : "RecurringSubscription"
         }

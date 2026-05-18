@@ -1,26 +1,15 @@
 import SwiftUI
 
 struct AlarmView: View {
-    @Environment(AppState.self)      private var appState
-    @Environment(InsightEngine.self) private var insightEngine
-    @State private var showAbout   = false
-    @State private var showSignIn  = false
-    @State private var schedule    = WakeScheduleStore.load()
+    @Environment(AppState.self) private var appState
+    @State private var showAbout  = false
+    @State private var schedule   = WakeScheduleStore.load()
+    @State private var entries: [DailyEntry] = []
+    @State private var numberScale: CGFloat = 0.85
 
-    private var advisorMessage: String? {
-        IntentionAdvisor.advise(
-            entries:      DailyEntryStore.load(),
-            checkouts:    FlowCheckoutStore.last(7),
-            streakCount:  appState.streakCount
-        )
-    }
-
-    private var greeting: String {
-        let h = Calendar.current.component(.hour, from: Date())
-        if h < 12 { return "Good morning." }
-        if h < 17 { return "Good afternoon." }
-        return "Good evening."
-    }
+    private let language = AppLanguage.current
+    private var streak: Int { appState.streakCount }
+    private var notificationIsSet: Bool { schedule.isEnabled }
 
     var body: some View {
         ZStack {
@@ -28,76 +17,43 @@ struct AlarmView: View {
 
             VStack(spacing: 0) {
 
-                // Top nav
+                // ── Nav bar ───────────────────────────────────────────
                 HStack {
-                    if appState.streakCount > 0 {
-                        HStack(spacing: 4) {
-                            Rectangle()
-                                .fill(DS.accent)
-                                .frame(width: 2, height: 11)
-                            Text("\(appState.streakCount)d")
-                                .font(.system(size: 11, weight: .semibold))
-                                .foregroundStyle(DS.textDim)
-                        }
-                    }
                     Spacer()
-                    if appState.userAppleID == nil {
-                        Button("Sign in") { showSignIn = true }
-                            .font(.caption)
-                            .foregroundStyle(DS.textDim)
-                            .padding(.trailing, DS.Space.sm)
+                    Button(L10n.text(language: language, en: "About", tr: "Hakkında", es: "Acerca de")) {
+                        showAbout = true
                     }
-                    Button("About") { showAbout = true }
-                        .font(.caption)
-                        .foregroundStyle(DS.textDim)
+                    .font(.caption)
+                    .foregroundStyle(DS.textDim)
+                    .accessibilityIdentifier("alarm.aboutButton")
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
-                // Greeting + next alarm
-                VStack(alignment: .leading, spacing: DS.Space.sm) {
-                    Text(greeting)
-                        .font(.system(size: 40, design: .serif).weight(.regular))
-                        .foregroundStyle(DS.textPrimary)
-
-                    Text("When the morning notification arrives,\ntap it instead of doom scrolling.")
-                        .font(.callout)
-                        .foregroundStyle(DS.textSecondary)
-                        .lineSpacing(2)
-
-                    nextAlarmLine
+                // ── Hero ─────────────────────────────────────────────
+                if streak > 0 {
+                    streakHero
+                } else {
+                    emptyStateHero
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, DS.Space.lg)
+
+                Spacer().frame(height: DS.Space.xl)
+
+                // ── 7-day strip ───────────────────────────────────────
+                VStack(spacing: 8) {
+                    StreakStripLegend(days: 7)
+                    StreakStripView(entries: entries, days: 7)
+                }
 
                 Spacer()
 
-                // Weekly AI insight (premium only, shown when available)
-                if appState.isPremium, let summary = insightEngine.weeklySummary {
-                    WeeklyInsightCardView(summary: summary)
-                        .padding(.horizontal, DS.Space.lg)
-                    Spacer().frame(height: DS.Space.sm)
-                }
-
-                // Soft premium intro (first launch only)
-                if !appState.onboardingSeen {
-                    onboardingCard
-                    Spacer().frame(height: DS.Space.sm)
-                }
-
-                // Intention advisor (all users, rule-based)
-                if let advice = advisorMessage {
-                    InfoCard(label: "TODAY", value: advice)
-                        .padding(.horizontal, DS.Space.lg)
-                    Spacer().frame(height: DS.Space.sm)
-                }
-
-                // Actions
+                // ── CTAs ─────────────────────────────────────────────
                 VStack(spacing: DS.Space.sm) {
-                    Button("Start Morning Reset") {
-                        appState.startFlow()
+                    Button(primaryLabel) {
+                        if notificationIsSet { appState.startFlow() }
+                        else { appState.showScheduleSetup() }
                     }
                     .font(.system(.body, design: .serif))
                     .tracking(0.5)
@@ -106,9 +62,11 @@ struct AlarmView: View {
                     .background(DS.accent)
                     .foregroundStyle(DS.background)
                     .clipShape(Capsule())
+                    .accessibilityIdentifier("alarm.primaryButton")
 
-                    Button("Set morning notification") {
-                        appState.showScheduleSetup()
+                    Button(secondaryLabel) {
+                        if notificationIsSet { appState.showScheduleSetup() }
+                        else { appState.startFlow() }
                     }
                     .font(.subheadline)
                     .foregroundStyle(DS.textSecondary)
@@ -117,6 +75,7 @@ struct AlarmView: View {
                     .background(DS.surface)
                     .clipShape(Capsule())
                     .overlay(Capsule().stroke(DS.border, lineWidth: DS.hairline))
+                    .accessibilityIdentifier("alarm.secondaryButton")
                 }
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, 48)
@@ -124,60 +83,108 @@ struct AlarmView: View {
         }
         .onAppear {
             schedule = WakeScheduleStore.load()
-            Task {
-                await AlarmManager.current.requestAuthorization()
+            entries  = DailyEntryStore.load()
+            withAnimation(.spring(response: 0.55, dampingFraction: 0.7)) {
+                numberScale = 1.0
             }
         }
-        .sheet(isPresented: $showAbout) {
-            AboutView()
-        }
-        .sheet(isPresented: $showSignIn) {
-            SignInView()
+        .sheet(isPresented: $showAbout) { AboutView() }
+    }
+
+    // MARK: - Hero states
+
+    private var streakHero: some View {
+        VStack(spacing: DS.Space.xs) {
+            // Big number
+            Text("\(streak)")
+                .font(.system(size: 88, weight: .thin, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .monospacedDigit()
+                .scaleEffect(numberScale)
+
+            Text(L10n.text(language: language,
+                           en: streak == 1 ? "day" : "days in a row",
+                           tr: streak == 1 ? "gün" : "gün üst üste",
+                           es: streak == 1 ? "día" : "días seguidos"))
+                .font(.system(.callout, design: .serif))
+                .foregroundStyle(DS.textSecondary)
+
+            if streak >= 3 {
+                Text(streakMotivation)
+                    .font(.caption)
+                    .italic()
+                    .foregroundStyle(DS.textDim)
+                    .padding(.top, DS.Space.xs)
+            }
         }
     }
 
-    // MARK: - Onboarding card
-
-    private var onboardingCard: some View {
+    private var emptyStateHero: some View {
         VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text("Set your morning notification")
-                .font(.callout.weight(.semibold))
-                .foregroundStyle(DS.background)
-            Text("Each morning, this app will send you a quiet ping.\nTap it instead of doom scrolling —\nthat single tap is the start of a different day.")
-                .font(.caption)
-                .foregroundStyle(DS.background.opacity(0.75))
-                .lineSpacing(3)
-                .fixedSize(horizontal: false, vertical: true)
-            Button("Start your first reset") {
-                appState.dismissOnboarding()
-                appState.startFlow()
-            }
-            .font(.caption.weight(.semibold))
-            .foregroundStyle(DS.background)
-        }
-        .padding(DS.Space.md)
-        .background(DS.accent)
-        .padding(.horizontal, DS.Space.lg)
-    }
+            Text(greeting)
+                .font(.system(size: 36, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
 
-    // MARK: - Next alarm display
-
-    @ViewBuilder
-    private var nextAlarmLine: some View {
-        if schedule.isEnabled, let next = AlarmManager.current.nextFireDate(for: schedule) {
-            Text(formatNextAlarm(next))
+            Text(L10n.text(language: language,
+                           en: "One morning ritual.\nBefore the scroll begins.",
+                           tr: "Tek bir sabah ritüeli.\nKaydırma başlamadan önce.",
+                           es: "Un ritual matinal.\nAntes de que empiece el scroll."))
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
-        } else {
-            Text("No alarm set.")
-                .font(.callout)
-                .foregroundStyle(DS.textDim)
+                .lineSpacing(4)
+        }
+        .padding(.horizontal, DS.Space.lg)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: - Computed strings
+
+    private var streakMotivation: String {
+        switch streak {
+        case 3...6:
+            return L10n.text(language: language,
+                             en: "Don't break it.",
+                             tr: "Bozma.",
+                             es: "No lo rompas.")
+        case 7...13:
+            return L10n.text(language: language,
+                             en: "One week in. Keep going.",
+                             tr: "Bir hafta oldu. Devam et.",
+                             es: "Una semana dentro. Sigue.")
+        case 14...29:
+            return L10n.text(language: language,
+                             en: "Two weeks. This is a practice now.",
+                             tr: "İki hafta. Bu artık bir pratik.",
+                             es: "Dos semanas. Esto es una práctica.")
+        case 30...:
+            return L10n.text(language: language,
+                             en: "A month of mornings.",
+                             tr: "Bir aylık sabahlar.",
+                             es: "Un mes de mañanas.")
+        default:
+            return L10n.text(language: language,
+                             en: "Don't break it.",
+                             tr: "Bozma.",
+                             es: "No lo rompas.")
         }
     }
 
-    private func formatNextAlarm(_ date: Date) -> String {
-        let f = DateFormatter()
-        f.dateFormat = "EEEE 'at' h:mm a"
-        return "Next ping: \(f.string(from: date))"
+    private var greeting: String {
+        let h = Calendar.current.component(.hour, from: Date())
+        if h < 12 { return L10n.text(language: language, en: "Good morning.", tr: "Günaydın.", es: "Buenos días.") }
+        if h < 17 { return L10n.text(language: language, en: "Good afternoon.", tr: "İyi öğleden sonralar.", es: "Buenas tardes.") }
+        return L10n.text(language: language, en: "Good evening.", tr: "İyi akşamlar.", es: "Buenas noches.")
+    }
+
+    private var primaryLabel: String {
+        notificationIsSet
+        ? L10n.text(language: language, en: "Start Morning Reset", tr: "Morning Reset'i Başlat", es: "Iniciar Morning Reset")
+        : L10n.text(language: language, en: "Set morning notification", tr: "Sabah bildirimini ayarla", es: "Configurar notificación")
+    }
+
+    private var secondaryLabel: String {
+        notificationIsSet
+        ? L10n.text(language: language, en: "Edit notification", tr: "Bildirimi düzenle", es: "Editar notificación")
+        : L10n.text(language: language, en: "Start without notification", tr: "Bildirimsiz başla", es: "Iniciar sin notificación")
     }
 }

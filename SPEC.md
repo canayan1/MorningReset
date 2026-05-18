@@ -1,105 +1,94 @@
-# Morning Reset — Product Spec
+# Morning Reset — Shipping Spec
 
-## Problem
+## Product promise
 
-Most people pick up their phone within minutes of waking and immediately open social media or news. This sets a reactive, anxious tone for the day. The goal of Morning Reset is to insert a 2-minute intentional flow before the user can reach their feed.
+Morning Reset helps users interrupt the urge to scroll right after waking and start with one intentional first win instead.
 
----
+The app does not replace the system alarm clock. It relies on a local notification that the user taps after waking with their normal routine.
 
-## Core flow
+## Shipping flow
 
-```
-[Alarm Screen]
-      ↓ tap Start
+```text
+[Onboarding]
+      ↓
+[Schedule Setup]
+      ↓
+[Wake Home]
+      ↓ tap Morning Reset
 [Question 1 of 5]
-      ↓ tap answer (auto-advance)
-[Question 2 of 5]
-      ↓ ...
+      ↓ auto-advance
 [Question 5 of 5]
-      ↓ auto-advance after last answer
-[Results Screen]
-      ↓ tap Continue
-[Action Screen]
-      ↓ tap Learn / Choose Mode / Skip
-[Done — app returns to idle or closes flow]
+      ↓
+[Weekly Affirmation]
+      ↓
+[Sound Cue]
+      ↓
+[Results + First Win Selection]
+      ↓
+[Insight Preview]
+      ↓
+[Action]
+      ↓
+[Win]
+      ↓
+[Flow Check-out]
+      ↓
+[Wake Home]
 ```
 
-If the user is **inactive for 60 seconds** at any point during the quiz, the app returns to the Alarm Screen and the flow restarts.
+Premium-only follow-up surfaces may appear after Insight Preview or from the Action screen:
+- Paywall
+- Guided Pause
+- Rise & Flow
 
----
+## Core behavior
 
-## Screens
+### Wake home
+- Must describe the wake entry as a local notification, not an alarm guarantee
+- Shows next scheduled ping
+- Lets the user either start immediately or edit the schedule
 
-### 1. Alarm Screen
-- Full-screen
-- App name + short prompt ("Good morning. Take 2 minutes.")
-- Single large **Start** button
-- No back navigation once flow begins
-
-### 2. Quiz Screen (5 questions)
+### Quiz
+- 5 binary questions
 - One question at a time
-- 3–4 answer options per question
-- Tapping an answer highlights it briefly, then auto-advances after ~0.6s
-- Progress indicator (e.g. "2 of 5")
-- 60-second inactivity timer — resets on any tap; triggers return to Alarm Screen if expired
-- Questions cover: sleep quality, energy level, mood, focus readiness, intention for the day
+- Auto-advances after each answer
+- 60-second inactivity timer resets the flow back to wake home
 
-### 3. Results Screen
-Three outputs derived from answers:
+### Ritual continuity
+- Weekly affirmation and sound cue keep the user inside the ritual
+- No external app jump before the ritual reaches Results and Action
 
-| Output | Description |
-|--------|-------------|
-| **Current Mode** | A label summarising the user's state (e.g. "Recovery Mode", "Focus Mode", "Survival Mode") |
-| **Action Suggestion** | One short, specific action to do right now (e.g. "Drink a full glass of water before opening any app") |
-| **Warning** | One short risk to watch out for today (e.g. "Low energy — avoid scheduling complex decisions before 11am") |
+### Results and action
+- Results names the morning mode and asks the user to pick one concrete first win
+- Action screen is built around that one selected first win
+- Win confirms completion
+- Flow check-out records completion locally
 
-Mode is determined by a simple scoring function over the 5 answers. No ML, no backend.
+## Persistence
 
-### 4. Action Screen
-Three choices presented as large tappable cards:
+- App state is driven by a single `@Observable` `AppState`
+- Local persistence is limited to:
+  - onboarding completion
+  - wake schedule
+  - streak/history needed for the shipped experience
+  - premium entitlement state
+- No account, login, or cloud sync in the launch build
 
-| Choice | Behaviour |
-|--------|-----------|
-| **Learn one thing** | Opens a placeholder URL (future: curated article or tip) |
-| **Choose your mode** | Opens a sub-panel with three music mode options (Focus, Chill, Energy); each taps open a placeholder URL |
-| **Skip** | Dismisses and ends the flow |
+## Premium boundaries
 
----
+Premium can unlock:
+- fuller pattern insight
+- guided pause
+- Rise & Flow
 
-## Inactivity timer
+Premium must not:
+- block the core 2-minute ritual
+- be described as required for the app to work
 
-- Starts when the first question appears
-- Resets on every tap anywhere in the quiz
-- If 60 seconds pass with no tap: return to Alarm Screen, reset all state
-- Timer does not run on the Results or Action screens
+## Out of launch scope
 
----
-
-## State & persistence
-
-- All flow state is in-memory (`@Observable` class)
-- No persistence is implemented in the current MVP
-- No user account, no cloud sync
-
----
-
-## Mode scoring (MVP logic)
-
-Each answer maps to one of three modes: **Focus**, **Recovery**, **Survival**
-
-- Most answers → Focus: user gets "Focus Mode"
-- Most answers → Recovery: user gets "Recovery Mode"
-- Mixed or low energy: user gets "Survival Mode"
-
-Exact mapping defined in `MorningData.swift`.
-
----
-
-## Out of scope for MVP
-
-- Push notifications / alarm scheduling
-- Streaks or history beyond last session
-- Onboarding
-- Dark/light mode theming beyond system default
+- Alarm clock replacement
+- Widget
+- Sign in with Apple or any account feature
 - iPad support
-- Accessibility audit
+- Analytics, ads, or tracking

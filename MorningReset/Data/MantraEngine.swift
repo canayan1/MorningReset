@@ -1,6 +1,6 @@
 import Foundation
 
-enum MorningMode: String {
+enum MorningMode: String, Equatable {
     case protect, steady, push
 
     init?(from string: String) {
@@ -8,22 +8,40 @@ enum MorningMode: String {
     }
 }
 
-enum IntentionType: String, CaseIterable {
+enum IntentionType: String, CaseIterable, Equatable {
     case calm, focus, energy, confidence, connection, discipline
 
-    var label: String { rawValue.capitalized }
+    var label: String {
+        switch self {
+        case .calm:
+            return L10n.text(en: "Calm", tr: "Sakinlik", es: "Calma")
+        case .focus:
+            return L10n.text(en: "Focus", tr: "Odak", es: "Foco")
+        case .energy:
+            return L10n.text(en: "Energy", tr: "Enerji", es: "Energía")
+        case .confidence:
+            return L10n.text(en: "Confidence", tr: "Güven", es: "Confianza")
+        case .connection:
+            return L10n.text(en: "Connection", tr: "Bağ", es: "Conexión")
+        case .discipline:
+            return L10n.text(en: "Discipline", tr: "Disiplin", es: "Disciplina")
+        }
+    }
 }
 
-enum SoundDirection: CaseIterable, Identifiable {
+enum SoundDirection: CaseIterable, Identifiable, Equatable {
     case calm, focus, energy
 
     var id: Self { self }
 
     var label: String {
         switch self {
-        case .calm:   return "Calm"
-        case .focus:  return "Focus"
-        case .energy: return "Energy"
+        case .calm:
+            return L10n.text(en: "Calm", tr: "Sakin", es: "Calma")
+        case .focus:
+            return L10n.text(en: "Focus", tr: "Odak", es: "Foco")
+        case .energy:
+            return L10n.text(en: "Energy", tr: "Enerji", es: "Energía")
         }
     }
 
@@ -32,7 +50,7 @@ enum SoundDirection: CaseIterable, Identifiable {
     }
 
     var playlistURL: URL? {
-        todayPick.url
+        todayPick.spotifyURL ?? todayPick.webURL
     }
 
     static func recommended(for mode: MorningMode) -> SoundDirection {
@@ -63,9 +81,27 @@ enum MantraEngine {
     }
 
     static func generate(mode: MorningMode, intention: IntentionType) -> String {
-        if mode == .protect && intention == .calm       { return "Today, you move gently and protect your attention." }
-        if mode == .steady  && intention == .focus      { return "Today, you stay clear and follow what matters." }
-        if mode == .push    && intention == .discipline { return "Today, you take action and build momentum." }
+        if mode == .protect && intention == .calm {
+            return L10n.text(
+                en: "Today, you move gently and protect your attention.",
+                tr: "Bugün nazikçe hareket eder ve dikkatini korursun.",
+                es: "Hoy te mueves con suavidad y proteges tu atención."
+            )
+        }
+        if mode == .steady && intention == .focus {
+            return L10n.text(
+                en: "Today, you stay clear and follow what matters.",
+                tr: "Bugün berrak kalır ve önemli olanı takip edersin.",
+                es: "Hoy te mantienes claro y sigues lo que importa."
+            )
+        }
+        if mode == .push && intention == .discipline {
+            return L10n.text(
+                en: "Today, you take action and build momentum.",
+                tr: "Bugün harekete geçer ve ivme kurarsın.",
+                es: "Hoy actúas y construyes impulso."
+            )
+        }
 
         let base: String
         switch mode {
@@ -76,12 +112,18 @@ enum MantraEngine {
 
         let modifier: String
         switch intention {
-        case .calm:        modifier = "Calm is the method."
-        case .focus:       modifier = "One thing at a time."
-        case .energy:      modifier = "Direct what you have."
-        case .confidence:  modifier = "Act on what you know."
-        case .connection:  modifier = "Presence over performance."
-        case .discipline:  modifier = "Do the first thing."
+        case .calm:
+            modifier = L10n.text(en: "Calm is the method.", tr: "Yöntem sakinlik.", es: "La calma es el método.")
+        case .focus:
+            modifier = L10n.text(en: "One thing at a time.", tr: "Aynı anda tek şey.", es: "Una cosa a la vez.")
+        case .energy:
+            modifier = L10n.text(en: "Direct what you have.", tr: "Elindekini yönlendir.", es: "Dirige lo que tienes.")
+        case .confidence:
+            modifier = L10n.text(en: "Act on what you know.", tr: "Bildiğin şeye göre hareket et.", es: "Actúa sobre lo que sabes.")
+        case .connection:
+            modifier = L10n.text(en: "Presence over performance.", tr: "Performans değil, mevcudiyet.", es: "Presencia antes que rendimiento.")
+        case .discipline:
+            modifier = L10n.text(en: "Do the first thing.", tr: "İlk şeyi yap.", es: "Haz lo primero.")
         }
 
         return "\(base) \(modifier)"
@@ -94,20 +136,20 @@ enum MantraEngine {
     }
 
     private static let protectBases = [
-        "Today doesn't need to be big. Just a little lighter than yesterday.",
-        "You don't have to fight the morning. Meet it where it is.",
-        "Less noise, less pressure. That's enough to work with."
+        L10n.text(en: "Today doesn't need to be big. Just a little lighter than yesterday.", tr: "Bugünün büyük olması gerekmiyor. Sadece dünden biraz daha hafif olsun.", es: "Hoy no tiene que ser grande. Solo un poco más ligero que ayer."),
+        L10n.text(en: "You don't have to fight the morning. Meet it where it is.", tr: "Sabahla savaşmak zorunda değilsin. Onu olduğu yerde karşıla.", es: "No tienes que pelear con la mañana. Encuéntrala donde está."),
+        L10n.text(en: "Less noise, less pressure. That's enough to work with.", tr: "Daha az gürültü, daha az baskı. Bununla çalışmak yeter.", es: "Menos ruido, menos presión. Eso basta para trabajar.")
     ]
 
     private static let steadyBases = [
-        "You know what to do. Stay with it and don't overcomplicate today.",
-        "No sudden moves. Keep the rhythm you already have.",
-        "Today is a continuation, not a restart. Pick up where you left off."
+        L10n.text(en: "You know what to do. Stay with it and don't overcomplicate today.", tr: "Ne yapacağını biliyorsun. Onunla kal ve bugünü gereksiz yere karmaşıklaştırma.", es: "Sabes qué hacer. Mantente con ello y no compliques hoy."),
+        L10n.text(en: "No sudden moves. Keep the rhythm you already have.", tr: "Ani hamle yok. Zaten sahip olduğun ritmi koru.", es: "Sin movimientos bruscos. Mantén el ritmo que ya tienes."),
+        L10n.text(en: "Today is a continuation, not a restart. Pick up where you left off.", tr: "Bugün yeniden başlama değil, devam günü. Kaldığın yerden al.", es: "Hoy es una continuación, no un reinicio. Retoma donde lo dejaste.")
     ]
 
     private static let pushBases = [
-        "You have something going. Use it cleanly and don't overload the day.",
-        "Move forward. Not faster — just forward.",
-        "One good decision builds the next. Start there."
+        L10n.text(en: "You have something going. Use it cleanly and don't overload the day.", tr: "Sende çalışan bir şey var. Temiz kullan ve günü aşırı yükleme.", es: "Hay algo en marcha. Úsalo con claridad y no sobrecargues el día."),
+        L10n.text(en: "Move forward. Not faster — just forward.", tr: "İleri git. Daha hızlı değil, sadece ileri.", es: "Avanza. No más rápido, solo hacia adelante."),
+        L10n.text(en: "One good decision builds the next. Start there.", tr: "Bir iyi karar bir sonrakini kurar. Oradan başla.", es: "Una buena decisión construye la siguiente. Empieza ahí.")
     ]
 }
