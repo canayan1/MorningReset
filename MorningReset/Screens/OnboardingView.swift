@@ -80,9 +80,17 @@ struct OnboardingView: View {
 
                 HStack(spacing: 8) {
                     ForEach(0..<slides.count, id: \.self) { i in
-                        Circle()
-                            .fill(i == page ? DS.accent : DS.border)
-                            .frame(width: 4, height: 4)
+                        Button {
+                            withAnimation(.easeOut(duration: 0.2)) { page = i }
+                        } label: {
+                            Circle()
+                                .fill(i == page ? DS.accent : DS.border)
+                                .frame(width: 4, height: 4)
+                                .frame(width: 22, height: 22)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(L10n.text(en: "Slide \(i + 1)", tr: "Slayt \(i + 1)", es: "Diapositiva \(i + 1)"))
                     }
                 }
                 .animation(.easeOut(duration: 0.2), value: page)

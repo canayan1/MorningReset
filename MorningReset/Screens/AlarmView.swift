@@ -21,11 +21,45 @@ struct AlarmView: View {
                 // ── Nav bar ───────────────────────────────────────────
                 HStack {
                     Spacer()
-                    Button(L10n.text(language: language, en: "About", tr: "Hakkında", es: "Acerca de")) {
-                        showAbout = true
+                    Menu {
+                        Button {
+                            appState.showScheduleSetup()
+                        } label: {
+                            Label(L10n.text(language: language, en: "Notification time", tr: "Bildirim zamanı", es: "Hora de notificación"), systemImage: "bell")
+                        }
+                        Button {
+                            showAbout = true
+                        } label: {
+                            Label(L10n.text(language: language, en: "About", tr: "Hakkında", es: "Acerca de"), systemImage: "info.circle")
+                        }
+                        Divider()
+                        if appState.isPremium {
+                            Link(destination: AppState.manageSubscriptionsURL) {
+                                Label(L10n.text(language: language, en: "Manage subscription", tr: "Aboneliği yönet", es: "Gestionar suscripción"), systemImage: "creditcard")
+                            }
+                        } else {
+                            Button {
+                                appState.paywallContext = .contextual
+                                appState.screen = .paywall
+                            } label: {
+                                Label(L10n.text(language: language, en: "Upgrade to Premium", tr: "Premium'a yükselt", es: "Mejorar a Premium"), systemImage: "sparkles")
+                            }
+                        }
+                        Divider()
+                        Link(destination: AppState.privacyPolicyURL) {
+                            Label(L10n.text(language: language, en: "Privacy Policy", tr: "Gizlilik Politikası", es: "Política de privacidad"), systemImage: "hand.raised")
+                        }
+                        Link(destination: AppState.supportURL) {
+                            Label(L10n.text(language: language, en: "Support", tr: "Destek", es: "Soporte"), systemImage: "questionmark.circle")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundStyle(DS.textDim)
+                            .frame(width: 32, height: 32)
+                            .contentShape(Rectangle())
                     }
-                    .font(.caption)
-                    .foregroundStyle(DS.textDim)
+                    .accessibilityLabel(L10n.text(language: language, en: "More options", tr: "Daha fazla seçenek", es: "Más opciones"))
                     .accessibilityIdentifier("alarm.aboutButton")
                 }
                 .padding(.top, 20)
@@ -91,6 +125,7 @@ struct AlarmView: View {
                 numberScale = 1.0
             }
         }
+        .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
     }
 
@@ -98,10 +133,23 @@ struct AlarmView: View {
 
     private var streakHero: some View {
         VStack(spacing: DS.Space.xs) {
+            if isMilestone {
+                Text(milestoneBadge)
+                    .font(.system(size: 10, weight: .semibold, design: .serif))
+                    .tracking(1.4)
+                    .foregroundStyle(DS.background)
+                    .padding(.horizontal, DS.Space.md)
+                    .padding(.vertical, 6)
+                    .background(DS.accent)
+                    .clipShape(Capsule())
+                    .padding(.bottom, DS.Space.xs)
+                    .transition(.scale.combined(with: .opacity))
+            }
+
             // Big number
             Text("\(streak)")
                 .font(.system(size: 88, weight: .thin, design: .serif))
-                .foregroundStyle(DS.textPrimary)
+                .foregroundStyle(isMilestone ? DS.accent : DS.textPrimary)
                 .monospacedDigit()
                 .scaleEffect(numberScale)
 
@@ -119,6 +167,20 @@ struct AlarmView: View {
                     .foregroundStyle(DS.textDim)
                     .padding(.top, DS.Space.xs)
             }
+        }
+    }
+
+    private var isMilestone: Bool {
+        streak == 7 || streak == 14 || streak == 30 || streak == 100
+    }
+
+    private var milestoneBadge: String {
+        switch streak {
+        case 7:   return L10n.text(language: language, en: "ONE WEEK",   tr: "BİR HAFTA",  es: "UNA SEMANA")
+        case 14:  return L10n.text(language: language, en: "TWO WEEKS",  tr: "İKİ HAFTA",  es: "DOS SEMANAS")
+        case 30:  return L10n.text(language: language, en: "ONE MONTH",  tr: "BİR AY",     es: "UN MES")
+        case 100: return L10n.text(language: language, en: "100 DAYS",   tr: "100 GÜN",    es: "100 DÍAS")
+        default:  return ""
         }
     }
 
