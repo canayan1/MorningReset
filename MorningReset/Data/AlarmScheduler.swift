@@ -37,7 +37,11 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
         let center  = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title    = "Morning Reset"
-        content.body     = "Tap to start your reset before the scroll starts."
+        content.body     = L10n.text(
+            en: "Tap to start your reset before the scroll begins.",
+            tr: "Scroll başlamadan önce reset'i başlatmak için dokun.",
+            es: "Toca para empezar tu reset antes de que comience el scroll."
+        )
         content.sound    = .default
         content.userInfo = ["action": "startWakeFlow"]
 

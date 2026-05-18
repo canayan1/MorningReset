@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct ScheduleSetupView: View {
     @Environment(AppState.self) private var appState
@@ -31,6 +32,7 @@ struct ScheduleSetupView: View {
                             .font(.system(size: 14, weight: .medium))
                             .foregroundStyle(DS.textSecondary)
                     }
+                    .accessibilityLabel(L10n.text(en: "Close", tr: "Kapat", es: "Cerrar"))
                     Spacer()
                 }
                 .padding(.top, 20)
@@ -89,10 +91,20 @@ struct ScheduleSetupView: View {
                 )
 
                 if authDenied {
-                    Text(L10n.text(en: "Notifications are off. Enable them in Settings → MorningReset to receive the morning ping.", tr: "Bildirimler kapalı. Sabah ping'ini almak için Ayarlar → MorningReset içinde etkinleştir.", es: "Las notificaciones están desactivadas. Actívalas en Ajustes → MorningReset para recibir el aviso matinal."))
-                        .font(.caption)
+                    VStack(alignment: .leading, spacing: DS.Space.sm) {
+                        Text(L10n.text(en: "Notifications are off. Enable them in Settings → MorningReset to receive the morning ping.", tr: "Bildirimler kapalı. Sabah ping'ini almak için Ayarlar → MorningReset içinde etkinleştir.", es: "Las notificaciones están desactivadas. Actívalas en Ajustes → MorningReset para recibir el aviso matinal."))
+                            .font(.caption)
+                            .foregroundStyle(DS.accent)
+
+                        Button(L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        }
+                        .font(.caption.weight(.semibold))
                         .foregroundStyle(DS.accent)
-                        .padding(.top, DS.Space.md)
+                    }
+                    .padding(.top, DS.Space.md)
                 }
 
                 Spacer()

@@ -193,6 +193,7 @@ struct PaywallView: View {
     @State private var isWorking = false
     @State private var statusMessage: String? = nil
     @State private var statusIsError = false
+    @State private var purchaseSucceeded = false
 
     private var copy: PaywallCopy {
         switch context {
@@ -231,6 +232,7 @@ struct PaywallView: View {
             }
         }
         .accessibilityIdentifier("paywall.screen")
+        .sensoryFeedback(.success, trigger: purchaseSucceeded)
         .task { await loadProduct() }
         .onAppear {
             if context != .riseAndFlow {
@@ -426,7 +428,10 @@ struct PaywallView: View {
             do {
                 switch try await appState.purchase() {
                 case .purchased:
-                    await MainActor.run { advance() }
+                    await MainActor.run {
+                        purchaseSucceeded = true
+                        advance()
+                    }
                 case .cancelled:
                     await MainActor.run {
                         setStatus(L10n.text(en: "Purchase cancelled. You can keep using the free reset.", tr: "Satın alma iptal edildi. Ücretsiz reset'i kullanmaya devam edebilirsin.", es: "La compra se canceló. Puedes seguir usando el reset gratuito."), isError: false)

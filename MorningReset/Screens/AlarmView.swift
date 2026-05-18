@@ -6,6 +6,7 @@ struct AlarmView: View {
     @State private var schedule   = WakeScheduleStore.load()
     @State private var entries: [DailyEntry] = []
     @State private var numberScale: CGFloat = 0.85
+    @State private var primaryTapped = 0
 
     private let language = AppLanguage.current
     private var streak: Int { appState.streakCount }
@@ -52,6 +53,7 @@ struct AlarmView: View {
                 // ── CTAs ─────────────────────────────────────────────
                 VStack(spacing: DS.Space.sm) {
                     Button(primaryLabel) {
+                        primaryTapped &+= 1
                         if notificationIsSet { appState.startFlow() }
                         else { appState.showScheduleSetup() }
                     }
@@ -62,6 +64,7 @@ struct AlarmView: View {
                     .background(DS.accent)
                     .foregroundStyle(DS.background)
                     .clipShape(Capsule())
+                    .sensoryFeedback(.impact(weight: .medium), trigger: primaryTapped)
                     .accessibilityIdentifier("alarm.primaryButton")
 
                     Button(secondaryLabel) {
@@ -178,7 +181,7 @@ struct AlarmView: View {
 
     private var primaryLabel: String {
         notificationIsSet
-        ? L10n.text(language: language, en: "Start Morning Reset", tr: "Morning Reset'i Başlat", es: "Iniciar Morning Reset")
+        ? L10n.text(language: language, en: "Start Morning Reset", tr: "Morning Reset'i başlat", es: "Iniciar Morning Reset")
         : L10n.text(language: language, en: "Set morning notification", tr: "Sabah bildirimini ayarla", es: "Configurar notificación")
     }
 

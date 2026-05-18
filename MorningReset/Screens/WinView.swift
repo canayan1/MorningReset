@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WinView: View {
     @Environment(AppState.self) private var appState
+    @State private var appeared = false
 
     private var firstWin: FirstWinAction { appState.currentFirstWin }
 
@@ -26,7 +27,7 @@ struct WinView: View {
 
                 Spacer()
 
-                Button(L10n.text(en: "Close", tr: "Kapat", es: "Cerrar")) {
+                Button(L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")) {
                     appState.showFlowCheckout()
                 }
                 .font(.system(.body, design: .serif))
@@ -41,5 +42,7 @@ struct WinView: View {
             }
         }
         .accessibilityIdentifier("win.screen")
+        .sensoryFeedback(.success, trigger: appeared)
+        .onAppear { appeared = true }
     }
 }

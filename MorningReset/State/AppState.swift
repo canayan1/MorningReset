@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import StoreKit
+import WidgetKit
 
 enum Screen: Equatable {
     case alarm
@@ -199,6 +200,7 @@ final class AppState {
             let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention) ?? IntentionType.focus.rawValue
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
             invalidateStreakCache()
+            WidgetCenter.shared.reloadAllTimelines()
         }
         let s = streakCount
         if s == 3 || s == 7 || s == 14 || s == 30 {

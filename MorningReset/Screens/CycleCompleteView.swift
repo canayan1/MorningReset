@@ -3,6 +3,7 @@ import SwiftUI
 struct CycleCompleteView: View {
     @Environment(AppState.self) private var appState
     @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
+    @State private var appeared = false
 
     private var descriptors: [IntentionType: String] { [
         .calm:        L10n.text(en: "Move without noise",          tr: "Gürültüsüz hareket et",         es: "Muévete sin ruido"),
@@ -78,6 +79,8 @@ struct CycleCompleteView: View {
                 .padding(.bottom, DS.Space.xl)
             }
         }
+        .sensoryFeedback(.success, trigger: appeared)
+        .onAppear { appeared = true }
     }
 
     private func intentionCard(_ intention: IntentionType) -> some View {

@@ -17,6 +17,9 @@ struct QuizView: View {
 
             VStack(spacing: 0) {
 
+                EmptyView()
+                    .sensoryFeedback(.selection, trigger: selectedOption)
+
                 // Dot progress — top, centered
                 HStack(spacing: 6) {
                     ForEach(0..<questions.count, id: \.self) { i in

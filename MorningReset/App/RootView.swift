@@ -14,6 +14,7 @@ struct RootView: View {
             }
         }
         .animation(.easeOut(duration: 0.3), value: appState.onboardingSeen)
+        .preferredColorScheme(.light)
     }
 
     @ViewBuilder
