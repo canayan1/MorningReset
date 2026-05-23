@@ -64,11 +64,28 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
                 // Scheduling failure for a single slot is non-fatal; continue remaining days.
             }
         }
+
+        // Start a Live Activity so the morning ritual is the first thing
+        // the user sees on the lock screen when they pick up their phone.
+        if let fireDate = nextFireDate(for: schedule) {
+            await MainActor.run {
+                WakeActivityController.start(
+                    for: schedule,
+                    fireDate: fireDate,
+                    tagline: L10n.text(
+                        en: "One quiet ritual before the scroll begins.",
+                        tr: "Scroll başlamadan önce sessiz bir ritüel.",
+                        es: "Un ritual tranquilo antes del scroll."
+                    )
+                )
+            }
+        }
     }
 
     func cancel() {
         let ids = (1...7).flatMap { [idPrefix + "\($0)", legacyIDPrefix + "\($0)"] }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
+        Task { @MainActor in WakeActivityController.endAll() }
     }
 
     func nextFireDate(for schedule: WakeSchedule) -> Date? {

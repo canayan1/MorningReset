@@ -1,5 +1,6 @@
 import WidgetKit
 import SwiftUI
+import ActivityKit
 
 // MARK: - Shared data reader
 
@@ -254,9 +255,102 @@ struct WidgetEntryView: View {
     }
 }
 
-// MARK: - Widget
+// MARK: - Live Activity
+
+struct WakeLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: WakeActivityAttributes.self) { context in
+            // Lock screen / banner view
+            WakeLiveActivityLockScreenView(state: context.state)
+                .widgetURL(URL(string: "morningreset://start"))
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Image(systemName: "sun.horizon.fill")
+                        .foregroundStyle(WDS.accent)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    if context.state.phase == .ringing {
+                        Text("Begin →")
+                            .font(.system(size: 13, weight: .semibold, design: .serif))
+                            .foregroundStyle(WDS.accent)
+                    } else {
+                        Text(context.state.fireDate, style: .time)
+                            .font(.system(size: 13, design: .serif))
+                            .foregroundStyle(WDS.text)
+                            .monospacedDigit()
+                    }
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    Text(context.state.tagline)
+                        .font(.system(size: 12, design: .serif))
+                        .foregroundStyle(WDS.textDim)
+                }
+            } compactLeading: {
+                Image(systemName: "sun.horizon.fill")
+                    .foregroundStyle(WDS.accent)
+            } compactTrailing: {
+                Text(context.state.fireDate, style: .time)
+                    .monospacedDigit()
+                    .foregroundStyle(WDS.text)
+            } minimal: {
+                Image(systemName: "sun.horizon.fill")
+                    .foregroundStyle(WDS.accent)
+            }
+            .widgetURL(URL(string: "morningreset://start"))
+        }
+    }
+}
+
+private struct WakeLiveActivityLockScreenView: View {
+    let state: WakeActivityAttributes.ContentState
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 14) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("MORNING RESET")
+                    .font(.system(size: 10, weight: .semibold))
+                    .tracking(1.4)
+                    .foregroundStyle(WDS.textDim)
+
+                Text(state.tagline)
+                    .font(.system(size: 16, design: .serif))
+                    .foregroundStyle(WDS.text)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+            }
+
+            Spacer(minLength: 8)
+
+            VStack(alignment: .trailing, spacing: 2) {
+                if state.phase == .ringing {
+                    Text("Begin →")
+                        .font(.system(size: 15, weight: .semibold, design: .serif))
+                        .foregroundStyle(WDS.accent)
+                } else {
+                    Text(state.fireDate, style: .time)
+                        .font(.system(size: 28, weight: .thin, design: .serif))
+                        .foregroundStyle(WDS.text)
+                        .monospacedDigit()
+                }
+            }
+        }
+        .padding(16)
+        .activityBackgroundTint(WDS.bg)
+        .activitySystemActionForegroundColor(WDS.accent)
+    }
+}
+
+// MARK: - Widget Bundle
 
 @main
+struct MorningResetWidgetBundle: WidgetBundle {
+    var body: some Widget {
+        MorningResetWidget()
+        WakeLiveActivity()
+    }
+}
+
 struct MorningResetWidget: Widget {
     let kind = "MorningResetWidget"
 

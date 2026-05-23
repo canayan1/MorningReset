@@ -129,6 +129,11 @@ final class AppState {
         resetFlowSession()
         screen = .quiz
         resetInactivityTimer()
+        WakeActivityController.markCompleted(tagline: L10n.text(
+            en: "You showed up.",
+            tr: "Devam ettin.",
+            es: "Apareciste."
+        ))
     }
 
     func recordAnswer(_ answer: String) {

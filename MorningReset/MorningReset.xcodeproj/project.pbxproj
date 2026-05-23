@@ -32,6 +32,9 @@
 		B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */; };
 		5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */; };
 		C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */; };
+		AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
+		AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
+		AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */; };
 		B8E56E6DAB477C3A18BB8D32 /* FlowCheckout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994A8859593319D38DDDC630 /* FlowCheckout.swift */; };
 		034CAE7020A957B9DB2D2096 /* InsightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1B2A8189325BE5AB555213 /* InsightEngine.swift */; };
 		59D0B28DB7156ED5107F8749 /* MantraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CBA95398AF7597EEB97CDE /* MantraEngine.swift */; };
@@ -135,6 +138,8 @@
 		E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmBackend.swift"; sourceTree = "<group>"; };
 		0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmScheduler.swift"; sourceTree = "<group>"; };
 		C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyEntry.swift"; sourceTree = "<group>"; };
+		AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityAttributes.swift"; sourceTree = "<group>"; };
+		AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityController.swift"; sourceTree = "<group>"; };
 		994A8859593319D38DDDC630 /* FlowCheckout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlowCheckout.swift"; sourceTree = "<group>"; };
 		8C1B2A8189325BE5AB555213 /* InsightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InsightEngine.swift"; sourceTree = "<group>"; };
 		21CBA95398AF7597EEB97CDE /* MantraEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MantraEngine.swift"; sourceTree = "<group>"; };
@@ -296,6 +301,8 @@
 				E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */,
 				0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */,
 				C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */,
+				AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */,
+				AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */,
 				994A8859593319D38DDDC630 /* FlowCheckout.swift */,
 				8C1B2A8189325BE5AB555213 /* InsightEngine.swift */,
 				21CBA95398AF7597EEB97CDE /* MantraEngine.swift */,
@@ -566,6 +573,8 @@
 				B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */,
 				5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */,
 				C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */,
+				AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */,
+				AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */,
 				B8E56E6DAB477C3A18BB8D32 /* FlowCheckout.swift in Sources */,
 				034CAE7020A957B9DB2D2096 /* InsightEngine.swift in Sources */,
 				59D0B28DB7156ED5107F8749 /* MantraEngine.swift in Sources */,
@@ -619,6 +628,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC100005CC100005CC100005 /* MorningResetWidget.swift in Sources */,
+				AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
