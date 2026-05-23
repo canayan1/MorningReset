@@ -38,14 +38,14 @@ struct ScheduleSetupView: View {
                 .padding(.top, 20)
                 .padding(.bottom, DS.Space.lg)
 
-                Text(L10n.text(en: "MORNING NOTIFICATION", tr: "SABAH BİLDİRİMİ", es: "NOTIFICACIÓN MATINAL"))
+                Text(L10n.text(en: "WAKE TIME", tr: "UYANMA SAATİ", es: "HORA DE DESPERTAR"))
                     .font(DS.Typo.label)
                     .foregroundStyle(DS.textSecondary)
                     .kerning(1.4)
 
                 Spacer().frame(height: DS.Space.sm)
 
-                Text(L10n.text(en: "Set your\nmorning notification", tr: "Sabah\nbildirimini ayarla", es: "Configura tu\nnotificación matinal"))
+                Text(L10n.text(en: "When do you\nwant to begin?", tr: "Ne zaman\nbaşlamak istersin?", es: "¿Cuándo\nquieres empezar?"))
                     .font(DS.Typo.title)
                     .foregroundStyle(DS.textPrimary)
                     .lineSpacing(6)
@@ -54,26 +54,30 @@ struct ScheduleSetupView: View {
 
                 Text(
                     L10n.text(
-                        en: "Morning Reset sends a local notification at the time you choose.\nUse your normal alarm or wake-up routine, then tap this ping first.",
-                        tr: "Morning Reset seçtiğin saatte yerel bir bildirim gönderir.\nNormal alarmını ya da uyanma rutinini kullan, sonra önce bu ping'e dokun.",
-                        es: "Morning Reset envía una notificación local a la hora que elijas.\nUsa tu alarma o rutina habitual y luego toca primero este aviso."
-                    )
-                )
-                    .font(.caption)
-                    .foregroundStyle(DS.textDim)
-                    .lineSpacing(3)
-
-                Spacer().frame(height: DS.Space.sm)
-
-                Text(
-                    L10n.text(
-                        en: "It follows your iPhone notification, mute, and Focus settings, so it stays honest about what it can do.",
-                        tr: "iPhone bildirim, sessiz ve Focus ayarlarını takip eder; yani ne yapabildiği konusunda dürüst kalır.",
-                        es: "Sigue los ajustes de notificaciones, silencio y Focus de tu iPhone, así que es honesto sobre lo que puede hacer."
+                        en: "Keep using your trusted alarm. From the night you save this, Morning Reset waits on your lock screen — the first thing you see when you open your eyes.",
+                        tr: "Güvendiğin alarmını kullanmaya devam et. Kaydettiğin geceden itibaren Morning Reset kilit ekranında bekler — gözlerini açtığında gördüğün ilk şey.",
+                        es: "Sigue usando tu alarma de confianza. Desde la noche que lo guardas, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al abrir los ojos."
                     )
                 )
                     .font(.caption)
                     .foregroundStyle(DS.textSecondary)
+                    .lineSpacing(3)
+
+                Spacer().frame(height: DS.Space.md)
+
+                lockScreenPreview
+
+                Spacer().frame(height: DS.Space.md)
+
+                Text(
+                    L10n.text(
+                        en: "A notification at the same time also fires, as a backup.",
+                        tr: "Yedek olarak aynı saatte bir bildirim de gelir.",
+                        es: "Como respaldo, también llega una notificación a la misma hora."
+                    )
+                )
+                    .font(.caption2)
+                    .foregroundStyle(DS.textDim)
                     .lineSpacing(3)
 
                 Spacer().frame(height: 40)
@@ -109,7 +113,7 @@ struct ScheduleSetupView: View {
 
                 Spacer()
 
-                Button(L10n.text(en: "Save morning notification", tr: "Sabah bildirimini kaydet", es: "Guardar notificación matinal")) {
+                Button(L10n.text(en: "Save wake time", tr: "Uyanma saatini kaydet", es: "Guardar hora de despertar")) {
                     Task { await saveAndSchedule() }
                 }
                 .font(.system(.body, design: .serif))
@@ -128,6 +132,50 @@ struct ScheduleSetupView: View {
     }
 
     // MARK: - Time block
+
+    private var lockScreenPreview: some View {
+        HStack(alignment: .center, spacing: 14) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("MORNING RESET")
+                    .font(.system(size: 9, weight: .semibold))
+                    .tracking(1.4)
+                    .foregroundStyle(DS.textDim)
+                Text(L10n.text(
+                    en: "One quiet ritual before the scroll begins.",
+                    tr: "Scroll başlamadan önce sessiz bir ritüel.",
+                    es: "Un ritual tranquilo antes del scroll."
+                ))
+                .font(.system(size: 13, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .lineLimit(2)
+            }
+            Spacer(minLength: 8)
+            Text(weekdayDate, style: .time)
+                .font(.system(size: 22, weight: .thin, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .monospacedDigit()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(DS.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .strokeBorder(DS.border, lineWidth: DS.hairline)
+        )
+        .overlay(
+            Text(L10n.text(en: "ON LOCK SCREEN", tr: "KİLİT EKRANINDA", es: "EN PANTALLA BLOQUEADA"))
+                .font(.system(size: 8, weight: .semibold))
+                .tracking(1.2)
+                .foregroundStyle(DS.background)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .background(DS.accent)
+                .clipShape(Capsule())
+                .offset(y: -10),
+            alignment: .topLeading
+        )
+    }
 
     private func timeBlock(label: String, date: Binding<Date>) -> some View {
         HStack {

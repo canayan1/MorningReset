@@ -26,29 +26,29 @@ struct OnboardingView: View {
         ),
         Slide(
             title: L10n.text(
-                en: "Set one\nmorning notification.",
-                tr: "Bir\nsabah bildirimi ayarla.",
-                es: "Configura una\nnotificación matinal."
+                en: "Set your\nwake time.",
+                tr: "Uyanma\nsaatini ayarla.",
+                es: "Define tu\nhora de despertar."
             ),
             subtitle: L10n.text(
-                en: "It is not an alarm.\nUse your normal wake-up routine,\nthen open the ping from here.",
-                tr: "Bu bir alarm değil.\nNormal uyanma rutinini kullan,\nsonra buradaki ping'i aç.",
-                es: "No es una alarma.\nUsa tu rutina habitual para despertar\ny luego abre este aviso."
+                en: "Keep your usual alarm.\nWe meet you on the lock screen\nthe moment you open your eyes.",
+                tr: "Normal alarmını kullanmaya devam et.\nGözlerini açtığın anda\nkilit ekranında seni karşılarız.",
+                es: "Mantén tu alarma habitual.\nNos vemos en la pantalla bloqueada\nen cuanto abres los ojos."
             ),
             cta: L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")
         ),
         Slide(
             title: L10n.text(
-                en: "Tap the ping.\nAnswer 5 quick questions.\nTake your first win.",
-                tr: "Ping'e dokun.\n5 hızlı soruyu yanıtla.\nİlk kazanımını al.",
-                es: "Toca el aviso.\nResponde 5 preguntas rápidas.\nToma tu primera victoria."
+                en: "Tap the card.\nAnswer 5 quick questions.\nTake your first win.",
+                tr: "Karta dokun.\n5 hızlı soruyu yanıtla.\nİlk kazanımını al.",
+                es: "Toca la tarjeta.\nResponde 5 preguntas rápidas.\nToma tu primera victoria."
             ),
             subtitle: L10n.text(
                 en: "We guide you through a short result and one immediate action before the scroll begins.",
                 tr: "Kaydırma başlamadan önce seni kısa bir sonuç ve tek bir anlık eylem üzerinden yönlendiriyoruz.",
                 es: "Te guiamos por un resultado breve y una acción inmediata antes de que empiece el scroll."
             ),
-            cta: L10n.text(en: "Set morning notification", tr: "Sabah bildirimini ayarla", es: "Configurar notificación matinal")
+            cta: L10n.text(en: "Set wake time", tr: "Uyanma saatini ayarla", es: "Definir hora de despertar")
         ),
     ]
 

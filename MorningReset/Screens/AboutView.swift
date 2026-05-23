@@ -30,38 +30,38 @@ struct AboutView: View {
 
                     VStack(alignment: .leading, spacing: DS.Space.md + 4) {
                         Text(L10n.text(
-                            en: "Morning Reset is a short interruption before the scroll begins.",
-                            tr: "Morning Reset, kaydırma başlamadan önceki kısa bir müdahaledir.",
-                            es: "Morning Reset es una breve interrupción antes de que empiece el scroll."
+                            en: "Morning Reset partners with the moment you open your eyes.",
+                            tr: "Morning Reset, gözlerini açtığın ana ortaktır.",
+                            es: "Morning Reset te acompaña en el momento en que abres los ojos."
                         ))
                         .font(.body)
                         .foregroundStyle(DS.textPrimary)
 
                         Text(L10n.text(
-                            en: "Set one morning notification inside the app.",
-                            tr: "Uygulama içinde bir sabah bildirimi ayarla.",
-                            es: "Configura una notificación matinal dentro de la app."
+                            en: "Set your wake time inside the app. Keep using your trusted alarm.",
+                            tr: "Uygulama içinde uyanma saatini ayarla. Güvendiğin alarmını kullanmaya devam et.",
+                            es: "Define tu hora de despertar en la app. Sigue usando tu alarma de siempre."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "When the ping arrives, tap it before you open anything else.",
-                            tr: "Bildirim geldiğinde, başka bir şey açmadan önce ona dokun.",
-                            es: "Cuando llegue el aviso, ábrelo antes de abrir cualquier otra cosa."
+                            en: "From the night you set it, Morning Reset waits on your lock screen — the first thing you see when you reach for your phone.",
+                            tr: "Ayarladığın geceden itibaren Morning Reset kilit ekranında seni bekler — telefonu eline aldığında gördüğün ilk şey.",
+                            es: "Desde la noche en que lo configuras, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al tomar el teléfono."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "We guide you through five quick questions, a result, and one immediate first win.",
-                            tr: "Seni beş hızlı soru, bir sonuç ve anlık bir ilk kazanım üzerinden yönlendiriyoruz.",
-                            es: "Te guiamos a través de cinco preguntas rápidas, un resultado y un primer logro inmediato."
+                            en: "Tap it before anything else. We guide you through five quick questions, a result, and one concrete first win.",
+                            tr: "Başka bir şeyden önce ona dokun. Seni beş hızlı soru, bir sonuç ve somut bir ilk kazanım üzerinden yönlendiriyoruz.",
+                            es: "Tócalo antes que nada. Te guiamos por cinco preguntas rápidas, un resultado y una primera victoria concreta."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "It is not an alarm clock, a widget, or a giant life system. It helps you do one intentional thing first.",
-                            tr: "Bu bir çalar saat, widget veya büyük bir yaşam sistemi değil. Önce kasıtlı bir şey yapmanı sağlar.",
-                            es: "No es un despertador, un widget ni un gran sistema de vida. Te ayuda a hacer primero una cosa intencionada."
+                            en: "Not a feed. Not a productivity system. A small ritual that wins the first three minutes of your day.",
+                            tr: "Bir akış değil. Bir üretkenlik sistemi değil. Günün ilk üç dakikasını kazanan küçük bir ritüel.",
+                            es: "No es un feed. No es un sistema de productividad. Un pequeño ritual que gana los primeros tres minutos del día."
                         ))
                         .foregroundStyle(DS.textSecondary)
 

@@ -43,22 +43,22 @@ Everything else around those steps can be prepared in code or docs here.
 ### English
 
 - Name: `Morning Reset`
-- Subtitle: `Interrupt the scroll impulse`
-- Promotional text: `Use your normal alarm, then start with five quick questions and one first win before you open anything else.`
+- Subtitle: `Own the first three minutes`
+- Promotional text: `Keep your usual alarm. Morning Reset waits on your lock screen — the first thing you see when you open your eyes.`
 - Keywords: `morning routine,focus,habit,wellbeing,productivity,intention,wake up,scrolling`
 - Description:
 
-`Morning Reset helps you interrupt the urge to scroll the moment your day starts.
+`Morning Reset partners with the moment you open your eyes.
 
-Keep the wake-up routine you already trust. Then tap the Morning Reset notification first.
+Keep using your trusted alarm. From the night you set it, Morning Reset waits on your lock screen — so it is the first thing you see when you reach for your phone in the morning.
 
-In about two minutes, the app guides you through:
+Tap it before anything else. In about two minutes, the app guides you through:
 - five quick yes/no questions
 - one clear morning mode
 - one short reflection or pattern read
 - one concrete first win to do right away
 
-Morning Reset is not an alarm clock, not a content feed, and not a giant productivity system. It is a small interruption before reactive phone use takes over.
+Not a feed. Not a productivity system. A small ritual that wins the first three minutes of your day before reactive phone use takes over.
 
 The core ritual is fully usable for free. Premium only unlocks deeper follow-up tools already present in the app: fuller pattern insight, a guided pause, Rise & Flow (guided movement reset), Breath Reset (guided breathing), and Morning Pages (freewriting prompt).
 
@@ -67,22 +67,22 @@ Morning Reset includes optional breathing and mobility exercises. These are not 
 ### Turkish
 
 - Name: `Morning Reset`
-- Subtitle: `Scroll dürtüsünü kes`
-- Promotional text: `Normal alarmını kullan, sonra başka hiçbir şeyi açmadan önce beş kısa soru ve tek bir ilk kazanımla güne başla.`
+- Subtitle: `Günün ilk üç dakikasını kazan`
+- Promotional text: `Normal alarmını kullan. Morning Reset kilit ekranında bekler — gözlerini açtığında gördüğün ilk şey.`
 - Keywords: `sabah rutini,odak,alışkanlık,iyi oluş,üretkenlik,niyet,uyanma,scroll`
 - Description:
 
-`Morning Reset, gün başlarken telefona refleks olarak uzanıp scroll'a gitme dürtüsünü kesmeye yardımcı olur.
+`Morning Reset, gözlerini açtığın ana ortaktır.
 
-Güvendiğin normal uyanma rutinini kullan. Sonra önce Morning Reset bildirimine dokun.
+Güvendiğin alarmını kullanmaya devam et. Ayarladığın geceden itibaren Morning Reset kilit ekranında bekler — sabah telefonu eline aldığında gördüğün ilk şey olur.
 
-Uygulama yaklaşık iki dakika içinde sana şunlarda eşlik eder:
+Başka bir şeyden önce ona dokun. Uygulama yaklaşık iki dakika içinde sana şunlarda eşlik eder:
 - beş hızlı evet/hayır sorusu
 - net bir sabah modu
 - kısa bir yansıma ya da örüntü okuması
-- hemen yapabileceğin tek bir ilk kazanım
+- hemen yapabileceğin tek bir somut ilk kazanım
 
-Morning Reset bir alarm saati değildir, bir içerik akışı değildir ve dev bir üretkenlik sistemi değildir. Tepkisel telefon kullanımından önce gelen küçük bir kesintidir.
+Bir akış değil. Bir üretkenlik sistemi değil. Tepkisel telefon kullanımı başlamadan önce günün ilk üç dakikasını kazanan küçük bir ritüel.
 
 Çekirdek ritüel ücretsiz ve tamdır. Premium yalnızca uygulamada zaten bulunan daha derin takip araçlarını açar: daha dolu örüntü içgörüsü, rehberli duraklama, Rise & Flow (rehberli hareket), Breath Reset (rehberli nefes) ve Morning Pages (serbest yazma).
 
@@ -91,22 +91,22 @@ Morning Reset, isteğe bağlı nefes ve hareketlilik egzersizleri içerir. Bunla
 ### Spanish
 
 - Name: `Morning Reset`
-- Subtitle: `Corta el impulso del scroll`
-- Promotional text: `Usa tu alarma habitual y luego empieza con cinco preguntas rápidas y una primera victoria antes de abrir cualquier otra cosa.`
+- Subtitle: `Gana los primeros 3 minutos`
+- Promotional text: `Mantén tu alarma. Morning Reset espera en tu pantalla bloqueada — lo primero que ves al abrir los ojos.`
 - Keywords: `rutina matinal,enfoque,hábito,bienestar,productividad,intención,despertar,scroll`
 - Description:
 
-`Morning Reset te ayuda a interrumpir el impulso de empezar el día haciendo scroll en cuanto te despiertas.
+`Morning Reset te acompaña en el momento en que abres los ojos.
 
-Mantén la rutina de despertar en la que ya confías. Después, toca primero la notificación de Morning Reset.
+Sigue usando tu alarma de siempre. Desde la noche que la configuras, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al tomar el teléfono por la mañana.
 
-En unos dos minutos, la app te guía por:
+Tócalo antes que nada. En unos dos minutos, la app te guía por:
 - cinco preguntas rápidas de sí o no
 - un modo matinal claro
 - una breve reflexión o lectura de patrón
 - una primera victoria concreta para hacer de inmediato
 
-Morning Reset no es un despertador, no es un feed de contenido y no es un gran sistema de productividad. Es una pequeña interrupción antes de que empiece el uso reactivo del teléfono.
+No es un feed. No es un sistema de productividad. Un pequeño ritual que gana los primeros tres minutos del día antes de que empiece el uso reactivo del teléfono.
 
 El ritual principal se puede usar completo gratis. Premium solo desbloquea herramientas de seguimiento más profundas que ya existen en la app: una lectura de patrón más completa, una pausa guiada, Rise & Flow (movimiento guiado), Breath Reset (respiración guiada) y Morning Pages (escritura libre).
 
@@ -164,9 +164,9 @@ When you create version `1.0`:
 1. Paste the long description from the README.
 2. Paste the review notes from `/Users/can/Projects/MorningReset/BUILD_CHECKLIST.md`.
 3. Keep the positioning honest:
-   - call it a local-notification-led ritual
-   - do not call it an alarm clock
-   - do not mention login, widget, sync, analytics, or non-shipping features
+   - call it a Live Activity + notification-led morning ritual
+   - it does NOT replace the system alarm — it meets the user on the lock screen the moment they wake up
+   - do not mention login, sync, analytics, or non-shipping features
 
 ## Manual step 3 — Complete App Privacy
 
