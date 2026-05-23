@@ -36,6 +36,22 @@ reconciled on app foreground: started only when the user is within
 morning), and ended when the user begins the flow. No remote push,
 no frequent background updates — purely local state.
 
+## Reviewer notes — Background audio mode
+
+Morning Reset declares `UIBackgroundModes: audio` for one specific use:
+during the morning ritual flow (from the moment the user taps the Live
+Activity / notification until they reach the first-win screen), the app
+plays a soft ambient pad and subtle chime. The audio session starts
+ONLY after explicit user entry into the flow, not in the background or
+overnight. The session is deactivated immediately when:
+- the user completes the flow (after the win crescendo fade-out), or
+- the user returns to the home screen, or
+- the user dismisses the flow at any point.
+
+There is no silent background playback to keep the app alive, no remote
+audio, no media downloads, no music. This matches the standard
+meditation / morning-ritual audio pattern.
+
 ## What I still cannot do from inside the repo
 
 These steps need your Apple or GitHub account session, so you must do them manually:

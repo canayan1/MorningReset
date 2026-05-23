@@ -114,6 +114,7 @@ final class AppState {
         stopInactivityTimer()
         resetFlowSession()
         screen = .alarm
+        WakeAudioPlayer.shared.stop()
     }
 
     func completeOnboardingAndShowScheduleSetup() {
@@ -134,12 +135,14 @@ final class AppState {
             tr: "Devam ettin.",
             es: "Apareciste."
         ))
+        WakeAudioPlayer.shared.startRitual()
     }
 
     func recordAnswer(_ answer: String) {
         guard answers.count < MorningData.questions.count else { return }
         answers.append(answer)
         resetInactivityTimer()
+        WakeAudioPlayer.shared.playChime()
     }
 
     func showWeeklyAffirmation() {
@@ -173,6 +176,7 @@ final class AppState {
 
     func showWin() {
         screen = .win
+        WakeAudioPlayer.shared.playWinCrescendoThenStop()
     }
 
     func showCycleComplete() {

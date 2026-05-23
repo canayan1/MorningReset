@@ -35,6 +35,7 @@
 		AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
 		AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
 		AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */; };
+		AA0300A1AA0300A1AA0300A1 /* WakeAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */; };
 		B8E56E6DAB477C3A18BB8D32 /* FlowCheckout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994A8859593319D38DDDC630 /* FlowCheckout.swift */; };
 		034CAE7020A957B9DB2D2096 /* InsightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1B2A8189325BE5AB555213 /* InsightEngine.swift */; };
 		59D0B28DB7156ED5107F8749 /* MantraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CBA95398AF7597EEB97CDE /* MantraEngine.swift */; };
@@ -140,6 +141,7 @@
 		C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyEntry.swift"; sourceTree = "<group>"; };
 		AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityAttributes.swift"; sourceTree = "<group>"; };
 		AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityController.swift"; sourceTree = "<group>"; };
+		AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeAudioPlayer.swift"; sourceTree = "<group>"; };
 		994A8859593319D38DDDC630 /* FlowCheckout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlowCheckout.swift"; sourceTree = "<group>"; };
 		8C1B2A8189325BE5AB555213 /* InsightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InsightEngine.swift"; sourceTree = "<group>"; };
 		21CBA95398AF7597EEB97CDE /* MantraEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MantraEngine.swift"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */,
 				AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */,
 				AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */,
+				AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */,
 				994A8859593319D38DDDC630 /* FlowCheckout.swift */,
 				8C1B2A8189325BE5AB555213 /* InsightEngine.swift */,
 				21CBA95398AF7597EEB97CDE /* MantraEngine.swift */,
@@ -575,6 +578,7 @@
 				C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */,
 				AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */,
 				AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */,
+				AA0300A1AA0300A1AA0300A1 /* WakeAudioPlayer.swift in Sources */,
 				B8E56E6DAB477C3A18BB8D32 /* FlowCheckout.swift in Sources */,
 				034CAE7020A957B9DB2D2096 /* InsightEngine.swift in Sources */,
 				59D0B28DB7156ED5107F8749 /* MantraEngine.swift in Sources */,
