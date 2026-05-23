@@ -65,20 +65,20 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
             }
         }
 
-        // Start a Live Activity so the morning ritual is the first thing
-        // the user sees on the lock screen when they pick up their phone.
-        if let fireDate = nextFireDate(for: schedule) {
-            await MainActor.run {
-                WakeActivityController.start(
-                    for: schedule,
-                    fireDate: fireDate,
-                    tagline: L10n.text(
-                        en: "One quiet ritual before the scroll begins.",
-                        tr: "Scroll başlamadan önce sessiz bir ritüel.",
-                        es: "Un ritual tranquilo antes del scroll."
-                    )
+        // Reconcile the Live Activity so the morning ritual is the first
+        // thing the user sees on the lock screen when they pick up their
+        // phone. Reconcile (rather than start) avoids burning an Activity
+        // hours before fireDate when it would expire before morning.
+        let fireDate = nextFireDate(for: schedule)
+        await MainActor.run {
+            WakeActivityController.reconcile(
+                fireDate: fireDate,
+                tagline: L10n.text(
+                    en: "One quiet ritual before the scroll begins.",
+                    tr: "Scroll başlamadan önce sessiz bir ritüel.",
+                    es: "Un ritual tranquilo antes del scroll."
                 )
-            }
+            )
         }
     }
 

@@ -20,9 +20,21 @@ This file is the manual checklist for shipping `Morning Reset` to the App Store.
 - App icon asset set exists in the Xcode project.
 - Privacy policy and support pages exist under `docs/`.
 - The app links to the same privacy and support URLs shown above.
-- Dormant account and widget code is removed from the launch build.
+- Home-screen + lock-screen widget (StreakWidget) wired with App Groups.
+- Live Activity (`WakeLiveActivity`) wired: lock-screen + Dynamic Island UI,
+  reconciled on every app foreground so it appears at bedtime for next morning.
 - The project declares `ITSAppUsesNonExemptEncryption = NO`.
+- `NSSupportsLiveActivities` + frequent updates flag enabled in Info.plist.
 - Build, unit tests, UI tests, and the full test pass all succeed locally.
+
+## Reviewer notes — Live Activity behavior
+
+Morning Reset uses ActivityKit to put a single Live Activity on the lock
+screen each night the user has a wake time saved. The Activity is
+reconciled on app foreground: started only when the user is within
+~11 hours of their next wake fire date (so it does not expire before
+morning), and ended when the user begins the flow. No remote push,
+no frequent background updates — purely local state.
 
 ## What I still cannot do from inside the repo
 

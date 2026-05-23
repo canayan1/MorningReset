@@ -19,6 +19,11 @@ enum WakeActivityController {
 
     private static let label = "Morning Reset"
 
+    // Live Activities have a hard system limit (~12 hours with frequent
+    // updates entitlement). Only start the Activity inside this window
+    // before fireDate, otherwise it expires before the user wakes up.
+    private static let activationWindowHours: TimeInterval = 11 * 60 * 60
+
     private static var current: Activity<WakeActivityAttributes>? {
         Activity<WakeActivityAttributes>.activities.first
     }
@@ -30,10 +35,41 @@ enum WakeActivityController {
         return false
     }
 
-    static func start(for schedule: WakeSchedule, fireDate: Date, tagline: String) {
+    /// Idempotent: starts the morning Activity if the user is within the
+    /// activation window before fireDate, ends any stale ones otherwise.
+    /// Safe to call on every app foreground.
+    static func reconcile(fireDate: Date?, tagline: String) {
+        guard #available(iOS 16.2, *), isSupported else { return }
+        guard let fireDate else { endAll(); return }
+
+        let secondsUntilFire = fireDate.timeIntervalSinceNow
+
+        // Past the fire time and not in the grace window → clean up.
+        if secondsUntilFire < -2 * 60 * 60 {
+            endAll()
+            return
+        }
+
+        // Too far in the future → don't start yet. The activity would
+        // expire before the user wakes up. We will start it on the next
+        // app foreground that falls inside the activation window.
+        if secondsUntilFire > activationWindowHours {
+            endAll()
+            return
+        }
+
+        // If an activity already exists and points at the same fire time,
+        // leave it alone — no-op.
+        if let existing = current, abs(existing.content.state.fireDate.timeIntervalSince(fireDate)) < 60 {
+            return
+        }
+
+        start(fireDate: fireDate, tagline: tagline)
+    }
+
+    static func start(fireDate: Date, tagline: String) {
         guard #available(iOS 16.2, *), isSupported else { return }
 
-        // End any stale activity before starting a fresh one.
         endAll()
 
         let attributes = WakeActivityAttributes(label: label)
@@ -44,7 +80,7 @@ enum WakeActivityController {
         )
         let content = ActivityContent(
             state: state,
-            staleDate: fireDate.addingTimeInterval(2 * 60 * 60) // expire 2h after fire
+            staleDate: fireDate.addingTimeInterval(2 * 60 * 60)
         )
 
         do {

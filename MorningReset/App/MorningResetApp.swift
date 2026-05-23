@@ -5,6 +5,7 @@ import UserNotifications
 struct MorningResetApp: App {
     @State private var appState: AppState
     @State private var insightEngine: InsightEngine
+    @Environment(\.scenePhase) private var scenePhase
 
     // Both objects are created before the scene is ready.
     // The delegate is registered in init() so cold-launch notification
@@ -30,12 +31,38 @@ struct MorningResetApp: App {
                     // because @State is not accessible before the scene renders.
                     router.appState               = appState
                     notificationDelegate.router   = router
+                    reconcileWakeActivity()
                 }
                 .onOpenURL { url in
                     guard url.scheme == "morningreset", url.host == "start" else { return }
                     appState.startFlow()
                 }
+                .onChange(of: scenePhase) { _, phase in
+                    if phase == .active { reconcileWakeActivity() }
+                }
         }
+    }
+
+    /// On every foreground, ensure the morning Live Activity is in the
+    /// correct state. Critical for users who set their wake time during
+    /// the day — the Activity should appear later, when they open the
+    /// app close to bedtime.
+    @MainActor
+    private func reconcileWakeActivity() {
+        let schedule = WakeScheduleStore.load()
+        guard schedule.isEnabled else {
+            WakeActivityController.endAll()
+            return
+        }
+        let fireDate = LocalNotificationWakeScheduler().nextFireDate(for: schedule)
+        WakeActivityController.reconcile(
+            fireDate: fireDate,
+            tagline: L10n.text(
+                en: "One quiet ritual before the scroll begins.",
+                tr: "Scroll başlamadan önce sessiz bir ritüel.",
+                es: "Un ritual tranquilo antes del scroll."
+            )
+        )
     }
 }
 
