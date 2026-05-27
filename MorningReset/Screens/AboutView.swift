@@ -30,9 +30,9 @@ struct AboutView: View {
 
                     VStack(alignment: .leading, spacing: DS.Space.md + 4) {
                         Text(L10n.text(
-                            en: "Morning Reset partners with the moment you open your eyes.",
-                            tr: "Morning Reset, gözlerini açtığın ana ortaktır.",
-                            es: "Morning Reset te acompaña en el momento en que abres los ojos."
+                            en: "Morning Reset is designed for the morning you reach for your phone.",
+                            tr: "Morning Reset, telefonu eline uzandığın sabah için tasarlandı.",
+                            es: "Morning Reset está diseñado para la mañana en que tomas el teléfono."
                         ))
                         .font(.body)
                         .foregroundStyle(DS.textPrimary)
@@ -45,9 +45,9 @@ struct AboutView: View {
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "From the night you set it, Morning Reset waits on your lock screen — the first thing you see when you reach for your phone.",
-                            tr: "Ayarladığın geceden itibaren Morning Reset kilit ekranında seni bekler — telefonu eline aldığında gördüğün ilk şey.",
-                            es: "Desde la noche en que lo configuras, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al tomar el teléfono."
+                            en: "From the night you set it, Morning Reset waits on your lock screen — ready to greet you when you turn the phone on.",
+                            tr: "Ayarladığın geceden itibaren Morning Reset kilit ekranında bekler — telefonu açtığında seni karşılamaya hazır.",
+                            es: "Desde la noche que lo configuras, Morning Reset espera en tu pantalla bloqueada — listo para recibirte cuando enciendes el teléfono."
                         ))
                         .foregroundStyle(DS.textSecondary)
 

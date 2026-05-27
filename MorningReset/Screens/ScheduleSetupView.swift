@@ -54,9 +54,9 @@ struct ScheduleSetupView: View {
 
                 Text(
                     L10n.text(
-                        en: "Keep using your trusted alarm. From the night you save this, Morning Reset waits on your lock screen — the first thing you see when you open your eyes.",
-                        tr: "Güvendiğin alarmını kullanmaya devam et. Kaydettiğin geceden itibaren Morning Reset kilit ekranında bekler — gözlerini açtığında gördüğün ilk şey.",
-                        es: "Sigue usando tu alarma de confianza. Desde la noche que lo guardas, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al abrir los ojos."
+                        en: "Keep using your trusted alarm. From the night you save this, Morning Reset waits on your lock screen — ready to greet you when you reach for your phone.",
+                        tr: "Güvendiğin alarmını kullanmaya devam et. Kaydettiğin geceden itibaren Morning Reset kilit ekranında bekler — telefonu eline aldığında seni karşılamaya hazır.",
+                        es: "Sigue usando tu alarma de confianza. Desde la noche que lo guardas, Morning Reset espera en tu pantalla bloqueada — listo para recibirte cuando tomas el teléfono."
                     )
                 )
                     .font(.caption)

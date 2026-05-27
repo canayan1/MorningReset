@@ -72,13 +72,13 @@ Everything else around those steps can be prepared in code or docs here.
 
 - Name: `Morning Reset`
 - Subtitle: `Own the first three minutes`
-- Promotional text: `Keep your usual alarm. Morning Reset waits on your lock screen — the first thing you see when you open your eyes.`
+- Promotional text: `Keep your usual alarm. Morning Reset waits on your lock screen, ready to greet you when you reach for your phone.`
 - Keywords: `morning routine,focus,habit,wellbeing,productivity,intention,wake up,scrolling`
 - Description:
 
-`Morning Reset partners with the moment you open your eyes.
+`Morning Reset is designed for the morning you reach for your phone.
 
-Keep using your trusted alarm. From the night you set it, Morning Reset waits on your lock screen — so it is the first thing you see when you reach for your phone in the morning.
+Keep using your trusted alarm. From the night you set it, Morning Reset waits on your lock screen, ready to greet you when you turn on the screen.
 
 Tap it before anything else. In about two minutes, the app guides you through:
 - five quick yes/no questions
@@ -96,13 +96,13 @@ Morning Reset includes optional breathing and mobility exercises. These are not 
 
 - Name: `Morning Reset`
 - Subtitle: `Günün ilk üç dakikasını kazan`
-- Promotional text: `Normal alarmını kullan. Morning Reset kilit ekranında bekler — gözlerini açtığında gördüğün ilk şey.`
+- Promotional text: `Normal alarmını kullan. Morning Reset kilit ekranında bekler, telefonu eline aldığında seni karşılamaya hazır.`
 - Keywords: `sabah rutini,odak,alışkanlık,iyi oluş,üretkenlik,niyet,uyanma,scroll`
 - Description:
 
-`Morning Reset, gözlerini açtığın ana ortaktır.
+`Morning Reset, telefonu eline uzandığın sabah için tasarlandı.
 
-Güvendiğin alarmını kullanmaya devam et. Ayarladığın geceden itibaren Morning Reset kilit ekranında bekler — sabah telefonu eline aldığında gördüğün ilk şey olur.
+Güvendiğin alarmını kullanmaya devam et. Ayarladığın geceden itibaren Morning Reset kilit ekranında bekler — sabah ekranı açtığında seni karşılamaya hazır.
 
 Başka bir şeyden önce ona dokun. Uygulama yaklaşık iki dakika içinde sana şunlarda eşlik eder:
 - beş hızlı evet/hayır sorusu
@@ -120,13 +120,13 @@ Morning Reset, isteğe bağlı nefes ve hareketlilik egzersizleri içerir. Bunla
 
 - Name: `Morning Reset`
 - Subtitle: `Gana los primeros 3 minutos`
-- Promotional text: `Mantén tu alarma. Morning Reset espera en tu pantalla bloqueada — lo primero que ves al abrir los ojos.`
+- Promotional text: `Mantén tu alarma. Morning Reset espera en tu pantalla bloqueada, listo para recibirte cuando tomas el teléfono.`
 - Keywords: `rutina matinal,enfoque,hábito,bienestar,productividad,intención,despertar,scroll`
 - Description:
 
-`Morning Reset te acompaña en el momento en que abres los ojos.
+`Morning Reset está diseñado para la mañana en que tomas el teléfono.
 
-Sigue usando tu alarma de siempre. Desde la noche que la configuras, Morning Reset espera en tu pantalla bloqueada — lo primero que ves al tomar el teléfono por la mañana.
+Sigue usando tu alarma de siempre. Desde la noche que la configuras, Morning Reset espera en tu pantalla bloqueada — listo para recibirte cuando enciendes la pantalla por la mañana.
 
 Tócalo antes que nada. En unos dos minutos, la app te guía por:
 - cinco preguntas rápidas de sí o no

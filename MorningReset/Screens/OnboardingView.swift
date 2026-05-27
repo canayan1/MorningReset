@@ -31,9 +31,9 @@ struct OnboardingView: View {
                 es: "Define tu\nhora de despertar."
             ),
             subtitle: L10n.text(
-                en: "Keep your usual alarm.\nWe meet you on the lock screen\nthe moment you open your eyes.",
-                tr: "Normal alarmını kullanmaya devam et.\nGözlerini açtığın anda\nkilit ekranında seni karşılarız.",
-                es: "Mantén tu alarma habitual.\nNos vemos en la pantalla bloqueada\nen cuanto abres los ojos."
+                en: "Keep your usual alarm.\nWe wait on your lock screen\nso the morning starts with intention.",
+                tr: "Normal alarmını kullanmaya devam et.\nKilit ekranında bekleriz\nki sabah niyetle başlasın.",
+                es: "Mantén tu alarma habitual.\nEsperamos en tu pantalla bloqueada\npara que la mañana empiece con intención."
             ),
             cta: L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")
         ),
