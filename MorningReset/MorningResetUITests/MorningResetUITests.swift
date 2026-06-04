@@ -41,6 +41,51 @@ final class MorningResetUITests: XCTestCase {
         waitForElement(actionPrimaryButton(in: app, language: "es"))
     }
 
+    @MainActor
+    func testCaptureAppStoreScreenshots() throws {
+        let app = launchApp(
+            language: "en",
+            region: "en_US",
+            extraArguments: ["-premiumLocked"]
+        )
+
+        snapshot(app, "01_WakeHome")
+
+        tapStartFlow(in: app, language: "en")
+        waitForElement(app.buttons["No"])
+        snapshot(app, "02_Quiz")
+
+        answerSteadyQuiz(in: app, language: "en")
+        let beginButton = app.buttons["Begin"]
+        waitForElement(beginButton, timeout: 8)
+        snapshot(app, "03_Results")
+
+        app.buttons["5 minutes phone down"].tap()
+        snapshot(app, "04_FirstWin")
+
+        beginButton.tap()
+        sleep(2)
+        snapshot(app, "05_Action")
+
+        let started = app.buttons["I started the task"]
+        if started.waitForExistence(timeout: 4) {
+            started.tap()
+            sleep(2)
+            snapshot(app, "06_Win")
+        }
+
+        app.terminate()
+    }
+
+    private func snapshot(_ app: XCUIApplication, _ name: String) {
+        usleep(1_400_000)
+        let shot = XCUIScreen.main.screenshot()
+        let attachment = XCTAttachment(screenshot: shot)
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
     private func runHappyPath(on app: XCUIApplication, language: String) {
         tapStartFlow(in: app, language: language)
         answerSteadyQuiz(in: app, language: language)

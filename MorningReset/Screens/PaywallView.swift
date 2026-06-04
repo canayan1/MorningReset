@@ -86,17 +86,20 @@ private struct PaywallCopy {
 }
 
 private struct SubscriptionDetails {
+    let priceLine: String
     let trialLine: String
     let billingLine: String
     let renewalLine: String
     let cta: String
 
     init(
+        priceLine: String,
         trialLine: String,
         billingLine: String,
         renewalLine: String,
         cta: String
     ) {
+        self.priceLine = priceLine
         self.trialLine = trialLine
         self.billingLine = billingLine
         self.renewalLine = renewalLine
@@ -104,10 +107,11 @@ private struct SubscriptionDetails {
     }
 
     static let fallback = SubscriptionDetails(
-        trialLine: L10n.text(en: "7-day free trial", tr: "7 günlük ücretsiz deneme", es: "Prueba gratis de 7 días"),
-        billingLine: L10n.text(en: "Then $19.99/year, billed to your Apple Account.", tr: "Ardından yıllık $19.99, Apple Hesabına yansıtılır.", es: "Después $19.99/año, cobrado a tu cuenta de Apple."),
+        priceLine: L10n.text(en: "$19.99/year", tr: "$19.99/yıl", es: "$19.99/año"),
+        trialLine: L10n.text(en: "Includes a 7-day free trial", tr: "7 günlük ücretsiz deneme dahil", es: "Incluye una prueba gratis de 7 días"),
+        billingLine: L10n.text(en: "After the trial, billed to your Apple Account.", tr: "Deneme sonrası Apple Hesabına yansıtılır.", es: "Tras la prueba, cobrado a tu cuenta de Apple."),
         renewalLine: L10n.text(en: "Auto-renews yearly unless cancelled at least 24 hours before the current period ends.", tr: "Geçerli dönem bitmeden en az 24 saat önce iptal edilmezse her yıl otomatik yenilenir.", es: "Se renueva automáticamente cada año salvo que canceles al menos 24 horas antes de que termine el periodo actual."),
-        cta: L10n.text(en: "Start 7-day free trial", tr: "7 günlük ücretsiz denemeyi başlat", es: "Iniciar prueba gratis de 7 días")
+        cta: L10n.text(en: "Subscribe", tr: "Abone ol", es: "Suscribirse")
     )
 
     init(product: Product?) {
@@ -126,31 +130,29 @@ private struct SubscriptionDetails {
             es: "Se renueva automáticamente cada \(period) salvo que canceles al menos 24 horas antes de que termine el periodo actual."
         )
 
+        priceLine = "\(product.displayPrice)/\(period)"
+
         if let intro = subscription.introductoryOffer, intro.paymentMode == .freeTrial {
             let trial = intro.period.displayLabel
             trialLine = L10n.text(
-                en: "\(trial.capitalized) free trial",
-                tr: "\(trial.capitalized) ücretsiz deneme",
-                es: "Prueba gratis de \(trial)"
+                en: "Includes a \(trial) free trial",
+                tr: "\(trial) ücretsiz deneme dahil",
+                es: "Incluye una prueba gratis de \(trial)"
             )
             billingLine = L10n.text(
-                en: "Then \(product.displayPrice)/\(period), billed to your Apple Account.",
-                tr: "Ardından \(product.displayPrice)/\(period), Apple Hesabına yansıtılır.",
-                es: "Después \(product.displayPrice)/\(period), cobrado a tu cuenta de Apple."
+                en: "After the trial, billed to your Apple Account.",
+                tr: "Deneme sonrası Apple Hesabına yansıtılır.",
+                es: "Tras la prueba, cobrado a tu cuenta de Apple."
             )
             renewalLine = renewal
-            cta = L10n.text(
-                en: "Start \(trial) free trial",
-                tr: "\(trial) ücretsiz denemeyi başlat",
-                es: "Iniciar prueba gratis de \(trial)"
-            )
+            cta = L10n.text(en: "Subscribe", tr: "Abone ol", es: "Suscribirse")
             return
         }
 
-        trialLine = "\(product.displayPrice)/\(period)"
+        trialLine = ""
         billingLine = L10n.text(en: "Billed to your Apple Account.", tr: "Apple Hesabına yansıtılır.", es: "Cobrado a tu cuenta de Apple.")
         renewalLine = renewal
-        cta = L10n.text(en: "Start annual plan", tr: "Yıllık planı başlat", es: "Iniciar plan anual")
+        cta = L10n.text(en: "Subscribe", tr: "Abone ol", es: "Suscribirse")
     }
 }
 
@@ -283,12 +285,18 @@ struct PaywallView: View {
                 .foregroundStyle(DS.textDim)
                 .kerning(1.2)
 
-            Text(details.trialLine)
-                .font(.headline)
+            Text(details.priceLine)
+                .font(.title2.bold())
                 .foregroundStyle(DS.textPrimary)
 
+            if !details.trialLine.isEmpty {
+                Text(details.trialLine)
+                    .font(.subheadline)
+                    .foregroundStyle(DS.textSecondary)
+            }
+
             Text(details.billingLine)
-                .font(.subheadline)
+                .font(.caption)
                 .foregroundStyle(DS.textSecondary)
 
             Text(details.renewalLine)
