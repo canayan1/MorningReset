@@ -16,42 +16,42 @@ struct OnboardingView: View {
     private let slides: [Slide] = [
         Slide(
             title: L10n.text(
-                en: "Wake up.\nReach for your phone.\nCatch yourself first.",
-                tr: "Uyan.\nTelefonuna uzan.\nÖnce kendini yakala.",
-                es: "Despierta.\nAlcanza el teléfono.\nFrena antes."
+                en: "How you wake\nsets your energy\nfor the whole day.",
+                tr: "Nasıl uyandığın\ntüm günün enerjisini\nbelirler.",
+                es: "Cómo despiertas\ndefine tu energía\ntodo el día."
             ),
             subtitle: L10n.text(
-                en: "Morning Reset gives you one intentional tap before the scroll begins.",
-                tr: "Morning Reset, kaydırma başlamadan önce sana bilinçli bir ilk dokunuş verir.",
-                es: "Morning Reset te da un toque intencional antes de que empiece el scroll."
+                en: "Morning Reset is a short ritual to raise it — on purpose, before the scroll begins.",
+                tr: "Morning Reset, bunu bilinçli olarak yükselten kısa bir ritüel — kaydırma başlamadan önce.",
+                es: "Morning Reset es un ritual breve para elevarla — a propósito, antes de que empiece el scroll."
             ),
             cta: L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")
         ),
         Slide(
             title: L10n.text(
-                en: "Set your\nwake time.",
-                tr: "Uyanma\nsaatini ayarla.",
-                es: "Define tu\nhora de despertar."
+                en: "Choose an\nancient path.",
+                tr: "Kadim bir\nyol seç.",
+                es: "Elige un\ncamino ancestral."
             ),
             subtitle: L10n.text(
-                en: "Keep your usual alarm.\nWe wait on your lock screen\nso the morning starts with intention.",
-                tr: "Normal alarmını kullanmaya devam et.\nKilit ekranında bekleriz\nki sabah niyetle başlasın.",
-                es: "Mantén tu alarma habitual.\nEsperamos en tu pantalla bloqueada\npara que la mañana empiece con intención."
+                en: "Reiki, breathwork, or qigong — each wakes your energy a different way. Keep your usual alarm; we meet you on your lock screen.",
+                tr: "Reiki, nefes ya da qigong — her biri enerjini farklı uyandırır. Normal alarmını kullan; biz kilit ekranında seni karşılarız.",
+                es: "Reiki, respiración o qigong — cada uno despierta tu energía de otra forma. Mantén tu alarma; te esperamos en tu pantalla bloqueada."
             ),
             cta: L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")
         ),
         Slide(
             title: L10n.text(
-                en: "Tap the card.\nAnswer 5 quick questions.\nTake your first win.",
-                tr: "Karta dokun.\n5 hızlı soruyu yanıtla.\nİlk kazanımını al.",
-                es: "Toca la tarjeta.\nResponde 5 preguntas rápidas.\nToma tu primera victoria."
+                en: "One practice.\nSeven mornings.\nIt becomes yours.",
+                tr: "Tek pratik.\nYedi sabah.\nSenin olur.",
+                es: "Una práctica.\nSiete mañanas.\nSe vuelve tuya."
             ),
             subtitle: L10n.text(
-                en: "We guide you through a short result and one immediate action before the scroll begins.",
-                tr: "Kaydırma başlamadan önce seni kısa bir sonuç ve tek bir anlık eylem üzerinden yönlendiriyoruz.",
-                es: "Te guiamos por un resultado breve y una acción inmediata antes de que empiece el scroll."
+                en: "Pick one small practice, do it each morning, and lock it in. We guide you step by step.",
+                tr: "Küçük tek bir pratik seç, her sabah yap ve kilitle. Adım adım sana eşlik ederiz.",
+                es: "Elige una práctica pequeña, hazla cada mañana y fíjala. Te guiamos paso a paso."
             ),
-            cta: L10n.text(en: "Set wake time", tr: "Uyanma saatini ayarla", es: "Definir hora de despertar")
+            cta: L10n.text(en: "Choose your path", tr: "Yolunu seç", es: "Elige tu camino")
         ),
     ]
 

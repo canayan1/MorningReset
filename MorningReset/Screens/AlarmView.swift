@@ -204,9 +204,9 @@ struct AlarmView: View {
                 .foregroundStyle(DS.textPrimary)
 
             Text(L10n.text(language: language,
-                           en: "One morning ritual.\nBefore the scroll begins.",
-                           tr: "Tek bir sabah ritüeli.\nKaydırma başlamadan önce.",
-                           es: "Un ritual matinal.\nAntes de que empiece el scroll."))
+                           en: "One small practice.\nTo raise your morning energy.",
+                           tr: "Küçük tek bir pratik.\nSabah enerjini yükseltmek için.",
+                           es: "Una práctica pequeña.\nPara elevar tu energía matinal."))
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
                 .lineSpacing(4)
@@ -227,7 +227,7 @@ struct AlarmView: View {
                         .foregroundStyle(DS.accent)
                         .frame(width: 28)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(L10n.text(language: language, en: "FIRST WIN", tr: "FIRST WIN", es: "FIRST WIN"))
+                        Text(L10n.text(language: language, en: "TODAY'S PRACTICE", tr: "BUGÜNÜN PRATİĞİ", es: "PRÁCTICA DE HOY"))
                             .font(.system(size: 9, weight: .semibold))
                             .kerning(1.2)
                             .foregroundStyle(DS.textDim)
@@ -258,7 +258,7 @@ struct AlarmView: View {
                         .font(.system(size: 18))
                         .foregroundStyle(DS.accent)
                         .frame(width: 28)
-                    Text(L10n.text(language: language, en: "Pick your First Win", tr: "First Win'ini seç", es: "Elige tu First Win"))
+                    Text(L10n.text(language: language, en: "Choose a practice", tr: "Bir pratik seç", es: "Elige una práctica"))
                         .font(.subheadline.weight(.medium))
                         .foregroundStyle(DS.textPrimary)
                     Spacer()
