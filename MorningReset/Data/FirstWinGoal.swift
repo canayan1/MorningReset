@@ -9,6 +9,7 @@ struct FirstWinPresentation: Equatable {
     let checkPrompt: String
     let winTitle: String
     let winBody: String
+    var steps: [String] = []
 }
 
 // MARK: - Health & Fitness preset set

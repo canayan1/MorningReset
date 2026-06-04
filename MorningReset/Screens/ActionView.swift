@@ -30,6 +30,25 @@ struct ActionView: View {
                     }
                 }
 
+                if !win.steps.isEmpty {
+                    Spacer().frame(height: DS.Space.xl)
+                    VStack(alignment: .leading, spacing: DS.Space.md) {
+                        ForEach(Array(win.steps.enumerated()), id: \.offset) { index, step in
+                            HStack(alignment: .top, spacing: DS.Space.md) {
+                                Text("\(index + 1)")
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(DS.accent)
+                                    .frame(width: 16)
+                                Text(step)
+                                    .font(.callout)
+                                    .foregroundStyle(DS.textPrimary)
+                                    .lineSpacing(3)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
+                }
+
                 Spacer()
 
                 Button(L10n.text(en: "I did it", tr: "Yaptım", es: "Lo hice")) {
