@@ -4,7 +4,7 @@ struct WinView: View {
     @Environment(AppState.self) private var appState
     @State private var appeared = false
 
-    private var firstWin: FirstWinAction { appState.currentFirstWin }
+    private var win: FirstWinPresentation { appState.ritualPresentation }
 
     var body: some View {
         ZStack {
@@ -13,12 +13,16 @@ struct WinView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.sm) {
-                    Text(firstWin.winTitle)
+                VStack(alignment: .leading, spacing: DS.Space.md) {
+                    Image(systemName: win.symbol)
+                        .font(.system(size: 40))
+                        .foregroundStyle(DS.accent)
+
+                    Text(win.winTitle)
                         .font(DS.Typo.display)
                         .foregroundStyle(DS.textPrimary)
 
-                    Text(firstWin.winBody)
+                    Text(win.winBody)
                         .font(.callout)
                         .foregroundStyle(DS.textSecondary)
                         .lineSpacing(4)

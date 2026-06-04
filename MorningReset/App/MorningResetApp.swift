@@ -81,12 +81,34 @@ private struct LaunchConfiguration {
         applyPremiumState()
         applyRecentPaywallIfNeeded()
         seedHistoryIfNeeded()
+        seedGoalIfNeeded()
+        seedFirstWinIfNeeded()
     }
 
     private func resetPersistentStateIfNeeded() {
         guard arguments.contains("-resetState"), let bundleID = Bundle.main.bundleIdentifier else { return }
         UserDefaults.standard.removePersistentDomain(forName: bundleID)
         UserDefaults.standard.synchronize()
+        FirstWinStore.saveActive(nil)
+        FirstWinStore.saveCompleted([])
+    }
+
+    private func seedGoalIfNeeded() {
+        guard arguments.contains("-seedGoal") else { return }
+        UserDefaults.standard.set(EnergyPath.reiki.rawValue, forKey: UDKey.energyPath)
+    }
+
+    private func seedFirstWinIfNeeded() {
+        guard arguments.contains("-seedFirstWin") else { return }
+        let cal = Calendar.current
+        let yesterday = cal.date(byAdding: .day, value: -1, to: cal.startOfDay(for: Date()))
+        UserDefaults.standard.set(EnergyPath.qigong.rawValue, forKey: UDKey.energyPath)
+        FirstWinStore.saveActive(ActiveFirstWin(kind: .practice(path: .qigong, id: "qi.sky"), streak: 2, lastCheckDay: yesterday, startedAt: Date()))
+        let done = [
+            EnergyPath.qigong.practice(id: "qi.shake"),
+            EnergyPath.breathwork.practice(id: "breath.nadi")
+        ].compactMap { $0 }
+        FirstWinStore.saveCompleted(done.map { CompletedFirstWin(symbol: $0.symbol, title: $0.title, completedAt: Date()) })
     }
 
     private func applyOnboardingState() {

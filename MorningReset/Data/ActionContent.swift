@@ -8,6 +8,15 @@ enum FirstWinAction: String, Codable, CaseIterable, Identifiable, Equatable {
 
     var id: Self { self }
 
+    var symbol: String {
+        switch self {
+        case .water:     return "drop.fill"
+        case .movement:  return "figure.walk"
+        case .firstTask: return "bolt.fill"
+        case .phoneDown: return "iphone.slash"
+        }
+    }
+
     var title: String {
         switch self {
         case .water:

@@ -3,6 +3,9 @@ import SwiftUI
 struct OnboardingView: View {
     @Environment(AppState.self) private var appState
     @State private var page = 0
+    @State private var pathPicking = ProcessInfo.processInfo.arguments.contains("-startPathPick")
+    @State private var basicsShowing = false
+    @State private var practicePicking = false
 
     private struct Slide {
         let title: String
@@ -53,6 +56,50 @@ struct OnboardingView: View {
     ]
 
     var body: some View {
+        if pathPicking {
+            EnergyPathPickView { path in
+                appState.selectMorningPath(path)
+                withAnimation(.easeOut(duration: 0.25)) {
+                    pathPicking = false
+                    basicsShowing = true
+                }
+            }
+            .transition(.opacity)
+        } else if basicsShowing {
+            PathBasicsView(
+                path: appState.activePath ?? .reiki,
+                ctaTitle: L10n.text(en: "Begin your practice", tr: "Pratiğine başla", es: "Comienza tu práctica"),
+                onContinue: {
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        basicsShowing = false
+                        practicePicking = true
+                    }
+                }
+            )
+            .transition(.opacity)
+        } else if practicePicking {
+            FirstWinPickView(
+                title: L10n.text(en: "Choose your first practice", tr: "İlk pratiğini seç", es: "Elige tu primera práctica"),
+                subtitle: L10n.text(
+                    en: "One practice, seven mornings. That's how your energy builds.",
+                    tr: "Tek pratik, yedi sabah. Enerjin böyle birikir.",
+                    es: "Una práctica, siete mañanas. Así se acumula tu energía."
+                ),
+                ctaTitle: L10n.text(en: "Start this practice", tr: "Bu pratiği başlat", es: "Empezar esta práctica"),
+                path: appState.activePath ?? .reiki,
+                recommended: (appState.activePath ?? .reiki).practices.first,
+                reason: (appState.activePath ?? .reiki).essence
+            ) { kind in
+                appState.selectActiveFirstWin(kind)
+                appState.completeOnboardingAndShowScheduleSetup()
+            }
+            .transition(.opacity)
+        } else {
+            slides_body
+        }
+    }
+
+    private var slides_body: some View {
         ZStack {
             DS.background.ignoresSafeArea()
 
@@ -100,7 +147,7 @@ struct OnboardingView: View {
                     if page < slides.count - 1 {
                         withAnimation(.easeOut(duration: 0.2)) { page += 1 }
                     } else {
-                        appState.completeOnboardingAndShowScheduleSetup()
+                        withAnimation(.easeOut(duration: 0.25)) { pathPicking = true }
                     }
                 }
                 .font(.system(.body, design: .serif))

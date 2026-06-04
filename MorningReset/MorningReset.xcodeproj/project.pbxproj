@@ -32,6 +32,10 @@
 		B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */; };
 		5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */; };
 		C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */; };
+		AAAA0004AAAA0004AAAA0004 /* EnergyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */; };
+		AAAA0001AAAA0001AAAA0001 /* FirstWinGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */; };
+		AAAA0002AAAA0002AAAA0002 /* FirstWinPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */; };
+		AAAA0003AAAA0003AAAA0003 /* MyWinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0003BBBB0003BBBB0003 /* MyWinsView.swift */; };
 		AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
 		AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
 		AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */; };
@@ -139,6 +143,10 @@
 		E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmBackend.swift"; sourceTree = "<group>"; };
 		0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmScheduler.swift"; sourceTree = "<group>"; };
 		C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyEntry.swift"; sourceTree = "<group>"; };
+		BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnergyPath.swift"; sourceTree = "<group>"; };
+		BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstWinGoal.swift"; sourceTree = "<group>"; };
+		BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstWinPickView.swift"; sourceTree = "<group>"; };
+		BBBB0003BBBB0003BBBB0003 /* MyWinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyWinsView.swift"; sourceTree = "<group>"; };
 		AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityAttributes.swift"; sourceTree = "<group>"; };
 		AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeActivityController.swift"; sourceTree = "<group>"; };
 		AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeAudioPlayer.swift"; sourceTree = "<group>"; };
@@ -303,6 +311,8 @@
 				E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */,
 				0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */,
 				C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */,
+				BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */,
+				BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */,
 				AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */,
 				AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */,
 				AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */,
@@ -329,6 +339,8 @@
 			children = (
 				2C588E2D1855DFA975EA1393 /* AboutView.swift */,
 				F3CDF15C2F79C565005E6880 /* ActionView.swift */,
+				BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */,
+				BBBB0003BBBB0003BBBB0003 /* MyWinsView.swift */,
 				618F5EB51397741FCC8E9619 /* AIInsightCardView.swift */,
 				F3CDF15D2F79C565005E6880 /* AlarmView.swift */,
 				185284A57784993148A1E485 /* CycleCompleteView.swift */,
@@ -576,6 +588,10 @@
 				B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */,
 				5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */,
 				C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */,
+				AAAA0004AAAA0004AAAA0004 /* EnergyPath.swift in Sources */,
+				AAAA0001AAAA0001AAAA0001 /* FirstWinGoal.swift in Sources */,
+				AAAA0002AAAA0002AAAA0002 /* FirstWinPickView.swift in Sources */,
+				AAAA0003AAAA0003AAAA0003 /* MyWinsView.swift in Sources */,
 				AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */,
 				AA0200A1AA0200A1AA0200A1 /* WakeActivityController.swift in Sources */,
 				AA0300A1AA0300A1AA0300A1 /* WakeAudioPlayer.swift in Sources */,

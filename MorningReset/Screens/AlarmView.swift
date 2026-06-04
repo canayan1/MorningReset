@@ -32,6 +32,13 @@ struct AlarmView: View {
                         } label: {
                             Label(L10n.text(language: language, en: "About", tr: "Hakkında", es: "Acerca de"), systemImage: "info.circle")
                         }
+                        if appState.activePath != nil {
+                            Button {
+                                appState.showPathLearn()
+                            } label: {
+                                Label(L10n.text(language: language, en: "Learn your path", tr: "Yolunu öğren", es: "Conoce tu camino"), systemImage: "book")
+                            }
+                        }
                         Divider()
                         if appState.isPremium {
                             Link(destination: AppState.manageSubscriptionsURL) {
@@ -81,6 +88,12 @@ struct AlarmView: View {
                     StreakStripLegend(days: 7)
                     StreakStripView(entries: entries, days: 7)
                 }
+
+                Spacer().frame(height: DS.Space.lg)
+
+                // ── First Win entry ───────────────────────────────────
+                firstWinEntry
+                    .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
 
@@ -200,6 +213,66 @@ struct AlarmView: View {
         }
         .padding(.horizontal, DS.Space.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: - First Win entry
+
+    @ViewBuilder
+    private var firstWinEntry: some View {
+        if let active = appState.activeFirstWin {
+            Button { appState.showMyWins() } label: {
+                HStack(spacing: DS.Space.md) {
+                    Image(systemName: active.kind.symbol)
+                        .font(.system(size: 18))
+                        .foregroundStyle(DS.accent)
+                        .frame(width: 28)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L10n.text(language: language, en: "FIRST WIN", tr: "FIRST WIN", es: "FIRST WIN"))
+                            .font(.system(size: 9, weight: .semibold))
+                            .kerning(1.2)
+                            .foregroundStyle(DS.textDim)
+                        Text(active.kind.title)
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(DS.textPrimary)
+                    }
+                    Spacer()
+                    HStack(spacing: 4) {
+                        ForEach(0..<FirstWinStore.target, id: \.self) { i in
+                            Circle()
+                                .fill(i < active.displayStreak() ? DS.accent : Color.clear)
+                                .frame(width: 7, height: 7)
+                                .overlay(Circle().stroke(i < active.displayStreak() ? DS.accent : DS.border, lineWidth: 1))
+                        }
+                    }
+                }
+                .padding(DS.Space.md)
+                .background(DS.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(DS.border, lineWidth: DS.hairline))
+            }
+            .accessibilityIdentifier("alarm.firstWinEntry")
+        } else {
+            Button { appState.showFirstWinPick() } label: {
+                HStack(spacing: DS.Space.md) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 18))
+                        .foregroundStyle(DS.accent)
+                        .frame(width: 28)
+                    Text(L10n.text(language: language, en: "Pick your First Win", tr: "First Win'ini seç", es: "Elige tu First Win"))
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(DS.textPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(DS.textDim)
+                }
+                .padding(DS.Space.md)
+                .background(DS.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(DS.border, lineWidth: DS.hairline))
+            }
+            .accessibilityIdentifier("alarm.firstWinPickEntry")
+        }
     }
 
     // MARK: - Computed strings

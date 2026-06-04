@@ -45,7 +45,7 @@ struct FlowCheckoutView: View {
 
             // Header
             VStack(alignment: .leading, spacing: DS.Space.xs) {
-                Text(firstWin.checkoutTitle)
+                Text(appState.ritualPresentation.checkPrompt)
                     .font(.system(size: 28, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
                     .lineSpacing(3)
@@ -179,6 +179,10 @@ struct FlowCheckoutView: View {
                 intention: intentionStr,
                 streak: appState.streakCount
             )
+        }
+
+        if firstWinStatus == .done {
+            appState.registerFirstWinCheck()
         }
 
         // Flash sealed state briefly then transition

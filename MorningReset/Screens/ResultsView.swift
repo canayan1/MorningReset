@@ -55,12 +55,8 @@ struct ResultsView: View {
 
                 Spacer().frame(height: DS.Space.xl)
 
-                // First win options — title only, no noise
-                VStack(spacing: DS.Space.sm) {
-                    ForEach(ActionContent.orderedFirstWins(for: mode)) { firstWin in
-                        firstWinButton(firstWin)
-                    }
-                }
+                // Committed First Win — the morning's action
+                committedWinCard
 
                 Spacer()
 
@@ -84,22 +80,34 @@ struct ResultsView: View {
         }
     }
 
-    private func firstWinButton(_ firstWin: FirstWinAction) -> some View {
-        let selected = firstWin == selectedFirstWin
+    private var committedWinCard: some View {
+        let win = appState.ritualPresentation
+        return HStack(spacing: DS.Space.md) {
+            Image(systemName: win.symbol)
+                .font(.system(size: 22))
+                .foregroundStyle(DS.accent)
+                .frame(width: 32)
 
-        return Button {
-            appState.selectFirstWin(firstWin)
-        } label: {
-            Text(firstWin.title)
-                .font(selected ? .body.weight(.medium) : .body)
-                .foregroundStyle(selected ? DS.background : DS.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(selected ? DS.accent : DS.surface)
-                .clipShape(Capsule())
-                .overlay(Capsule().stroke(selected ? DS.accent : DS.border, lineWidth: DS.hairline))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(L10n.text(en: "YOUR FIRST WIN", tr: "FIRST WIN'İN", es: "TU FIRST WIN"))
+                    .font(.system(size: 9, weight: .semibold))
+                    .kerning(1.2)
+                    .foregroundStyle(DS.textDim)
+                Text(win.title)
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(DS.textPrimary)
+                if !win.how.isEmpty {
+                    Text(win.how)
+                        .font(.caption)
+                        .foregroundStyle(DS.textSecondary)
+                }
+            }
+            Spacer()
         }
-        .animation(.easeOut(duration: 0.15), value: selected)
-        .accessibilityIdentifier("results.firstWin.\(firstWin.rawValue)")
+        .padding(DS.Space.md)
+        .background(DS.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(DS.border, lineWidth: DS.hairline))
+        .accessibilityIdentifier("results.committedWin")
     }
 }

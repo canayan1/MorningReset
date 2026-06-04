@@ -24,6 +24,9 @@ enum Screen: Equatable {
     case breathReset
     case morningPages
     case monthlyStory
+    case firstWinPick
+    case myWins
+    case pathLearn
 }
 
 @Observable
@@ -46,6 +49,13 @@ final class AppState {
     var selectedFirstWin: FirstWinAction? = nil
     var didCompleteFirstWin: Bool = false
 
+    // First Win habit (persisted)
+    var activeFirstWin: ActiveFirstWin?
+    var completedFirstWins: [CompletedFirstWin] = []
+    var firstWinJustGraduated: CompletedFirstWin? = nil
+    var morningGoal: MorningGoal? = nil
+    var activePath: EnergyPath? = nil
+
     private var inactivityTimer: Timer?
 
     // MARK: - Mobility state
@@ -65,9 +75,104 @@ final class AppState {
         isPremium            = UserDefaults.standard.bool(forKey: UDKey.premiumUnlocked)
         onboardingSeen       = UserDefaults.standard.bool(forKey: UDKey.onboardingComplete)
         paywallLastShownDate = UserDefaults.standard.double(forKey: UDKey.paywallLastShown)
+        activeFirstWin       = FirstWinStore.loadActive()
+        completedFirstWins   = FirstWinStore.loadCompleted()
+        morningGoal          = UserDefaults.standard.string(forKey: UDKey.morningGoal).flatMap(MorningGoal.init(rawValue:))
+        activePath           = UserDefaults.standard.string(forKey: UDKey.energyPath).flatMap(EnergyPath.init(rawValue:))
         if !skipEntitlementCheck {
             Task { await self.checkEntitlement() }
         }
+    }
+
+    // MARK: - First Win habit
+
+    var ritualPresentation: FirstWinPresentation {
+        if let kind = activeFirstWin?.kind { return kind.presentation }
+        let fw = currentFirstWin
+        return FirstWinPresentation(
+            symbol: fw.symbol,
+            title: fw.title,
+            how: fw.actionBody,
+            checkPrompt: fw.checkoutTitle,
+            winTitle: fw.winTitle,
+            winBody: fw.winBody
+        )
+    }
+
+    func selectMorningGoal(_ goal: MorningGoal) {
+        morningGoal = goal
+        UserDefaults.standard.set(goal.rawValue, forKey: UDKey.morningGoal)
+    }
+
+    func selectMorningPath(_ path: EnergyPath) {
+        activePath = path
+        UserDefaults.standard.set(path.rawValue, forKey: UDKey.energyPath)
+    }
+
+    var pathPractices: [PathPractice] {
+        activePath?.practices ?? []
+    }
+
+    var recommendedNextPractice: PathPractice? {
+        guard let path = activePath else { return nil }
+        let done = Set(completedFirstWins.map { $0.title })
+        return path.practices.first { !done.contains($0.title) } ?? path.practices.first
+    }
+
+    func showPathLearn() {
+        stopInactivityTimer()
+        screen = .pathLearn
+    }
+
+    var recommendedNextFirstWin: FirstWinPreset {
+        let titles = Set(completedFirstWins.map { $0.title })
+        return FirstWinRecommender.nextRecommended(goal: morningGoal, completedTitles: titles, excluding: activeFirstWin?.kind.title)
+    }
+
+    func selectActiveFirstWin(_ kind: FirstWinKind) {
+        let win = ActiveFirstWin(kind: kind, streak: 0, lastCheckDay: nil, startedAt: Date())
+        activeFirstWin = win
+        firstWinJustGraduated = nil
+        FirstWinStore.saveActive(win)
+    }
+
+    @discardableResult
+    func registerFirstWinCheck(now: Date = Date()) -> Bool {
+        guard var win = activeFirstWin else { return false }
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: now)
+        if let last = win.lastCheckDay, cal.isDate(last, inSameDayAs: now) { return false }
+        if let last = win.lastCheckDay,
+           let yesterday = cal.date(byAdding: .day, value: -1, to: today),
+           cal.startOfDay(for: last) == yesterday {
+            win.streak += 1
+        } else {
+            win.streak = 1
+        }
+        win.lastCheckDay = today
+        if win.streak >= FirstWinStore.target {
+            let completed = CompletedFirstWin(symbol: win.kind.symbol, title: win.kind.title, completedAt: now)
+            completedFirstWins.insert(completed, at: 0)
+            FirstWinStore.saveCompleted(completedFirstWins)
+            activeFirstWin = nil
+            FirstWinStore.saveActive(nil)
+            firstWinJustGraduated = completed
+            return true
+        }
+        activeFirstWin = win
+        FirstWinStore.saveActive(win)
+        return false
+    }
+
+    func showFirstWinPick() {
+        stopInactivityTimer()
+        firstWinJustGraduated = nil
+        screen = .firstWinPick
+    }
+
+    func showMyWins() {
+        stopInactivityTimer()
+        screen = .myWins
     }
 
     // MARK: - Streak

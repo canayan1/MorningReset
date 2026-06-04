@@ -77,6 +77,43 @@ final class MorningResetUITests: XCTestCase {
         app.terminate()
     }
 
+    @MainActor
+    func testCaptureFirstWin() throws {
+        let app = launchApp(language: "en", region: "en_US", extraArguments: ["-seedFirstWin"])
+        snapshot(app, "FW01_Home")
+
+        app.buttons["alarm.firstWinEntry"].tap()
+        sleep(2)
+        snapshot(app, "FW02_MyWins")
+
+        if app.buttons["myWins.checkButton"].waitForExistence(timeout: 4) {
+            app.buttons["myWins.checkButton"].tap()
+            sleep(1)
+            snapshot(app, "FW03_Checked")
+        }
+    }
+
+    @MainActor
+    func testCapturePaths() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-uiTesting", "-resetState", "-startPathPick", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["MR_LANGUAGE_OVERRIDE"] = "en"
+        app.launch()
+
+        let reiki = app.buttons["pathPick.reiki"]
+        waitForElement(reiki, timeout: 8)
+        snapshot(app, "PA01_PathPick")
+
+        reiki.tap()
+        let begin = app.buttons["pathBasics.continueButton"]
+        waitForElement(begin, timeout: 6)
+        snapshot(app, "PA02_Basics")
+
+        begin.tap()
+        waitForElement(app.buttons["firstWinPick.continueButton"], timeout: 6)
+        snapshot(app, "PA03_PracticePick")
+    }
+
     private func snapshot(_ app: XCUIApplication, _ name: String) {
         usleep(1_400_000)
         let shot = XCUIScreen.main.screenshot()
