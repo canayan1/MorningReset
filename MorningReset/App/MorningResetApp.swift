@@ -16,7 +16,19 @@ struct MorningResetApp: App {
     init() {
         let launchConfig = LaunchConfiguration(arguments: ProcessInfo.processInfo.arguments)
         launchConfig.apply()
-        _appState = State(initialValue: AppState(skipEntitlementCheck: launchConfig.skipEntitlementCheck))
+        let initialState = AppState(skipEntitlementCheck: launchConfig.skipEntitlementCheck)
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-showPathLearn") {
+            initialState.onboardingSeen = true
+            initialState.screen = .pathLearn
+        } else if args.contains("-showQuiz") {
+            initialState.onboardingSeen = true
+            initialState.screen = .quiz
+        } else if args.contains("-showLibrary") {
+            initialState.onboardingSeen = true
+            initialState.activeTab = .library
+        }
+        _appState = State(initialValue: initialState)
         _insightEngine = State(initialValue: InsightEngine())
         UNUserNotificationCenter.current().delegate = notificationDelegate
     }

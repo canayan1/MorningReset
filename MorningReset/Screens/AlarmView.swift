@@ -14,7 +14,7 @@ struct AlarmView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: appState.activePath, intensity: 0.3)
 
             VStack(spacing: 0) {
 

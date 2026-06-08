@@ -1,5 +1,23 @@
 import Foundation
 
+// MARK: - Decision-tree quiz types
+
+struct QuizNode {
+    let text: String
+    let branches: [QuizBranch]
+}
+
+struct QuizBranch {
+    let icon: String
+    let label: String
+    let next: QuizDest
+}
+
+enum QuizDest {
+    case node(QuizNode)
+    case result(MorningMode)
+}
+
 struct Question {
     let text: String
     let options: [String]
@@ -16,6 +34,92 @@ struct MorningResult {
 }
 
 enum MorningData {
+
+    // MARK: - Decision-tree quiz
+
+    static var quizRoot: QuizNode { quizRoot(for: .current) }
+
+    static func quizRoot(for language: AppLanguage) -> QuizNode {
+        switch language {
+        case .tr:
+            let q2A = QuizNode(text: "Önce neye ihtiyacın var?", branches: [
+                QuizBranch(icon: "lungs.fill",         label: "Nefes al, dur",        next: .result(.protect)),
+                QuizBranch(icon: "figure.walk",        label: "Hafifçe hareket et",   next: .result(.protect)),
+                QuizBranch(icon: "arrow.right.circle", label: "Kalk ve devam et",     next: .result(.steady))
+            ])
+            let q2B = QuizNode(text: "En çok ne yardımcı olur?", branches: [
+                QuizBranch(icon: "leaf.fill",          label: "Her şeyi yavaşlat",    next: .result(.protect)),
+                QuizBranch(icon: "scope",              label: "Tek bir odak bul",     next: .result(.steady)),
+                QuizBranch(icon: "figure.run",         label: "Hareketle boşalt",     next: .result(.steady))
+            ])
+            let q2C = QuizNode(text: "Bu sabahı ne harika yapar?", branches: [
+                QuizBranch(icon: "brain.head.profile", label: "Sakin, net bir kafa",  next: .result(.steady)),
+                QuizBranch(icon: "flame.fill",         label: "Daha fazla enerji",    next: .result(.push)),
+                QuizBranch(icon: "waveform",           label: "Sadece akmak",         next: .result(.push))
+            ])
+            return QuizNode(text: "Bugün nasıl uyanıyorsun?", branches: [
+                QuizBranch(icon: "moon.zzz.fill",      label: "Ağır, yarı uykuda",          next: .node(q2A)),
+                QuizBranch(icon: "wind",               label: "Dağınık, kafam karışık",     next: .node(q2B)),
+                QuizBranch(icon: "sun.horizon.fill",   label: "İdare eder, hazırlanıyorum", next: .node(q2C)),
+                QuizBranch(icon: "bolt.fill",          label: "Uyanık ve hazırım",          next: .result(.push))
+            ])
+        case .es:
+            let q2A = QuizNode(text: "¿Qué necesita tu cuerpo primero?", branches: [
+                QuizBranch(icon: "lungs.fill",         label: "Respirar y estar quieto",  next: .result(.protect)),
+                QuizBranch(icon: "figure.walk",        label: "Moverse suavemente",       next: .result(.protect)),
+                QuizBranch(icon: "arrow.right.circle", label: "Solo seguir adelante",     next: .result(.steady))
+            ])
+            let q2B = QuizNode(text: "¿Qué te ayudaría más ahora?", branches: [
+                QuizBranch(icon: "leaf.fill",          label: "Ir más despacio",          next: .result(.protect)),
+                QuizBranch(icon: "scope",              label: "Encontrar un foco",        next: .result(.steady)),
+                QuizBranch(icon: "figure.run",         label: "Mover la energía",         next: .result(.steady))
+            ])
+            let q2C = QuizNode(text: "¿Qué haría esta mañana genial?", branches: [
+                QuizBranch(icon: "brain.head.profile", label: "Mente clara y tranquila",  next: .result(.steady)),
+                QuizBranch(icon: "flame.fill",         label: "Más energía",              next: .result(.push)),
+                QuizBranch(icon: "waveform",           label: "Solo fluir",               next: .result(.push))
+            ])
+            return QuizNode(text: "¿Cómo te estás despertando hoy?", branches: [
+                QuizBranch(icon: "moon.zzz.fill",      label: "Todavía pesado, medio dormido", next: .node(q2A)),
+                QuizBranch(icon: "wind",               label: "Disperso, mente ocupada",       next: .node(q2B)),
+                QuizBranch(icon: "sun.horizon.fill",   label: "Bien, preparándome",            next: .node(q2C)),
+                QuizBranch(icon: "bolt.fill",          label: "Despierto y listo",             next: .result(.push))
+            ])
+        case .en:
+            let q2A = QuizNode(text: "What does your body need first?", branches: [
+                QuizBranch(icon: "lungs.fill",         label: "Breathe and be still",  next: .result(.protect)),
+                QuizBranch(icon: "figure.walk",        label: "Move gently",           next: .result(.protect)),
+                QuizBranch(icon: "arrow.right.circle", label: "Just get going",        next: .result(.steady))
+            ])
+            let q2B = QuizNode(text: "What would help most right now?", branches: [
+                QuizBranch(icon: "leaf.fill",          label: "Slow everything down",  next: .result(.protect)),
+                QuizBranch(icon: "scope",              label: "Find one focus",        next: .result(.steady)),
+                QuizBranch(icon: "figure.run",         label: "Move the energy out",   next: .result(.steady))
+            ])
+            let q2C = QuizNode(text: "What would make this morning great?", branches: [
+                QuizBranch(icon: "brain.head.profile", label: "Calm, clear head",      next: .result(.steady)),
+                QuizBranch(icon: "flame.fill",         label: "More energy",           next: .result(.push)),
+                QuizBranch(icon: "waveform",           label: "Just let it flow",      next: .result(.push))
+            ])
+            return QuizNode(text: "How are you waking up today?", branches: [
+                QuizBranch(icon: "moon.zzz.fill",      label: "Still heavy, half asleep",  next: .node(q2A)),
+                QuizBranch(icon: "wind",               label: "Scattered, busy mind",      next: .node(q2B)),
+                QuizBranch(icon: "sun.horizon.fill",   label: "Okay, getting there",       next: .node(q2C)),
+                QuizBranch(icon: "bolt.fill",          label: "Awake and ready",           next: .result(.push))
+            ])
+        }
+    }
+
+    static func result(for mode: MorningMode, language: AppLanguage = .current) -> MorningResult {
+        switch mode {
+        case .protect: return protectResult(for: language)
+        case .steady:  return steadyResult(for: language)
+        case .push:    return pushResult(for: language)
+        }
+    }
+
+    // MARK: - Legacy flat questions (kept for backward compat)
+
     static var questions: [Question] {
         questions(for: .current)
     }

@@ -3,6 +3,8 @@ import Observation
 import StoreKit
 import WidgetKit
 
+enum AppTab: Equatable { case today, library, wins }
+
 enum Screen: Equatable {
     case alarm
     case scheduleSetup
@@ -32,6 +34,7 @@ enum Screen: Equatable {
 @Observable
 final class AppState {
     var screen: Screen = .alarm
+    var activeTab: AppTab = .today
     var answers: [String] = []
 
     // Premium state (persisted via UserDefaults)
@@ -48,6 +51,7 @@ final class AppState {
     var selectedSoundDirection: SoundDirection = .focus
     var selectedFirstWin: FirstWinAction? = nil
     var didCompleteFirstWin: Bool = false
+    var quizResolved: Bool = false
 
     // First Win habit (persisted)
     var activeFirstWin: ActiveFirstWin?
@@ -172,7 +176,8 @@ final class AppState {
 
     func showMyWins() {
         stopInactivityTimer()
-        screen = .myWins
+        screen = .alarm
+        activeTab = .wins
     }
 
     // MARK: - Streak
@@ -219,7 +224,9 @@ final class AppState {
         stopInactivityTimer()
         resetFlowSession()
         screen = .alarm
+        activeTab = .today
         WakeAudioPlayer.shared.stop()
+        AmbientPlayer.shared.stop()
     }
 
     func completeOnboardingAndShowScheduleSetup() {
@@ -240,14 +247,22 @@ final class AppState {
             tr: "Devam ettin.",
             es: "Apareciste."
         ))
-        WakeAudioPlayer.shared.startRitual()
     }
 
     func recordAnswer(_ answer: String) {
         guard answers.count < MorningData.questions.count else { return }
         answers.append(answer)
         resetInactivityTimer()
-        WakeAudioPlayer.shared.playChime()
+    }
+
+    func resolveQuiz(mode: MorningMode) {
+        stopInactivityTimer()
+        quizResolved = true
+        sessionMode = mode
+        selectedSoundDirection = SoundDirection.recommended(for: mode)
+        selectedFirstWin = ActionContent.recommendedFirstWin(for: mode)
+        didCompleteFirstWin = false
+        screen = .weeklyAffirmation
     }
 
     func showWeeklyAffirmation() {
@@ -308,9 +323,10 @@ final class AppState {
 
     func endFlow() {
         stopInactivityTimer()
-        if answers.count == MorningData.questions.count {
-            let result = MorningData.result(from: answers)
-            let mode = MorningMode(from: result.mode) ?? .steady
+        if quizResolved || answers.count == MorningData.questions.count {
+            let mode: MorningMode = quizResolved
+                ? sessionMode
+                : (MorningMode(from: MorningData.result(from: answers).mode) ?? .steady)
             let intentionStr = UserDefaults.standard.string(forKey: UDKey.selectedIntention) ?? IntentionType.focus.rawValue
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
             invalidateStreakCache()
@@ -423,6 +439,7 @@ final class AppState {
 
     private func resetFlowSession() {
         answers = []
+        quizResolved = false
         paywallShownThisFlow = false
         paywallContext = .contextual
         insightStrength = .none

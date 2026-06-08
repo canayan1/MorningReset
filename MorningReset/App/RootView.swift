@@ -21,7 +21,7 @@ struct RootView: View {
     private var mainFlow: some View {
         ZStack {
             switch appState.screen {
-            case .alarm:              AlarmView().transition(.opacity)
+            case .alarm, .myWins:     MainTabView().transition(.opacity)
             case .scheduleSetup:      ScheduleSetupView().transition(.opacity)
             case .quiz:               QuizView().transition(.opacity)
             case .weeklyAffirmation:  WeeklyAffirmationView().transition(.opacity)
@@ -42,7 +42,6 @@ struct RootView: View {
             case .morningPages:       MorningPagesView().transition(.opacity)
             case .monthlyStory:       MonthlyStoryView().transition(.opacity)
             case .firstWinPick:       FirstWinPickScreen().transition(.opacity)
-            case .myWins:             MyWinsView().transition(.opacity)
             case .pathLearn:          PathLearnView().transition(.opacity)
             }
         }

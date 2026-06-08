@@ -6,12 +6,10 @@ struct ResultsView: View {
     @AppStorage(UDKey.selectedIntention) private var selectedIntention: String = IntentionType.focus.rawValue
 
     private var result: MorningResult {
-        MorningData.result(from: appState.answers)
+        MorningData.result(for: appState.sessionMode)
     }
 
-    private var mode: MorningMode {
-        MorningMode(from: result.mode) ?? .steady
-    }
+    private var mode: MorningMode { appState.sessionMode }
 
     private var mantra: String {
         let intention = IntentionType(rawValue: selectedIntention) ?? .focus
