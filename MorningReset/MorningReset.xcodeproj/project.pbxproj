@@ -32,6 +32,8 @@
 		B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */; };
 		5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */; };
 		C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */; };
+		AAAA0005AAAA0005AAAA0005 /* AuraBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0005BBBB0005BBBB0005 /* AuraBackground.swift */; };
+		AAAA0006AAAA0006AAAA0006 /* AmbientPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0006BBBB0006BBBB0006 /* AmbientPlayer.swift */; };
 		AAAA0004AAAA0004AAAA0004 /* EnergyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */; };
 		AAAA0001AAAA0001AAAA0001 /* FirstWinGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */; };
 		AAAA0002AAAA0002AAAA0002 /* FirstWinPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */; };
@@ -143,6 +145,8 @@
 		E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmBackend.swift"; sourceTree = "<group>"; };
 		0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmScheduler.swift"; sourceTree = "<group>"; };
 		C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyEntry.swift"; sourceTree = "<group>"; };
+		BBBB0005BBBB0005BBBB0005 /* AuraBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuraBackground.swift"; sourceTree = "<group>"; };
+		BBBB0006BBBB0006BBBB0006 /* AmbientPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AmbientPlayer.swift"; sourceTree = "<group>"; };
 		BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnergyPath.swift"; sourceTree = "<group>"; };
 		BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstWinGoal.swift"; sourceTree = "<group>"; };
 		BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstWinPickView.swift"; sourceTree = "<group>"; };
@@ -311,6 +315,7 @@
 				E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */,
 				0D1DA9A656994DA5BEB6730C /* AlarmScheduler.swift */,
 				C1C9AF04DCF6EB18A19DBCC3 /* DailyEntry.swift */,
+				BBBB0006BBBB0006BBBB0006 /* AmbientPlayer.swift */,
 				BBBB0004BBBB0004BBBB0004 /* EnergyPath.swift */,
 				BBBB0001BBBB0001BBBB0001 /* FirstWinGoal.swift */,
 				AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */,
@@ -339,6 +344,7 @@
 			children = (
 				2C588E2D1855DFA975EA1393 /* AboutView.swift */,
 				F3CDF15C2F79C565005E6880 /* ActionView.swift */,
+				BBBB0005BBBB0005BBBB0005 /* AuraBackground.swift */,
 				BBBB0002BBBB0002BBBB0002 /* FirstWinPickView.swift */,
 				BBBB0003BBBB0003BBBB0003 /* MyWinsView.swift */,
 				618F5EB51397741FCC8E9619 /* AIInsightCardView.swift */,
@@ -588,6 +594,8 @@
 				B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */,
 				5648B0B2015E698B8C14D680 /* AlarmScheduler.swift in Sources */,
 				C5B1D3534E8CBF164FAF35A4 /* DailyEntry.swift in Sources */,
+				AAAA0005AAAA0005AAAA0005 /* AuraBackground.swift in Sources */,
+				AAAA0006AAAA0006AAAA0006 /* AmbientPlayer.swift in Sources */,
 				AAAA0004AAAA0004AAAA0004 /* EnergyPath.swift in Sources */,
 				AAAA0001AAAA0001AAAA0001 /* FirstWinGoal.swift in Sources */,
 				AAAA0002AAAA0002AAAA0002 /* FirstWinPickView.swift in Sources */,

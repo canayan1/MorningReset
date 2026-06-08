@@ -12,4 +12,5 @@ enum UDKey {
     static let firstWinCompleted   = "first_win_completed"
     static let morningGoal         = "morning_goal"
     static let energyPath          = "energy_path"
+    static let ambientMuted        = "ambient_muted"
 }

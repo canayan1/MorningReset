@@ -7,7 +7,7 @@ struct EnergyPathPickView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: nil, intensity: 0.9)
 
             VStack(alignment: .leading, spacing: DS.Space.lg) {
                 VStack(alignment: .leading, spacing: DS.Space.xs) {
@@ -83,7 +83,7 @@ struct PathBasicsView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: path, intensity: 1.0)
 
             VStack(spacing: 0) {
                 if showBack {
@@ -156,6 +156,8 @@ struct PathBasicsView: View {
                 .accessibilityIdentifier("pathBasics.continueButton")
             }
         }
+        .onAppear { AmbientPlayer.shared.start(path: path) }
+        .onDisappear { AmbientPlayer.shared.stop() }
     }
 }
 
