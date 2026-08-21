@@ -3,111 +3,202 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Morning Reset Privacy Policy</title>
+  <title>Energy Reset — Privacy Policy</title>
   <style>
     :root {
-      color-scheme: light;
-      --bg: #fff9f2;
-      --surface: #fef3e7;
-      --text: #2f2114;
-      --muted: #6b5d51;
-      --accent: #c68434;
-      --border: #e8d1bb;
+      color-scheme: light dark;
+      --bg: #f4f6fc;
+      --bg2: #edf1fa;
+      --surface: rgba(255, 255, 255, 0.72);
+      --text: #272b42;
+      --muted: #5d657e;
+      --dim: #929aaf;
+      --accent: #6f73c7;
+      --accent-ink: #44478f;
+      --border: #e0e5f1;
+      --shadow: 0 18px 46px rgba(39, 43, 66, 0.07);
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #131624;
+        --bg2: #191d2f;
+        --surface: rgba(31, 36, 56, 0.72);
+        --text: #e8ebf6;
+        --muted: #a8b0c8;
+        --dim: #767e99;
+        --accent: #9ca5e0;
+        --accent-ink: #b8bfec;
+        --border: #2b3149;
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+      }
+    }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, var(--bg), #fff4e6);
+      background: radial-gradient(120% 80% at 50% 0%, var(--bg2), var(--bg));
+      background-attachment: fixed;
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
 
     main {
-      max-width: 760px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 48px 20px 72px;
+      padding: 56px 20px 80px;
     }
 
     .card {
-      background: rgba(254, 243, 231, 0.9);
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 18px 40px rgba(47, 33, 20, 0.06);
+      border-radius: 28px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 10px;
     }
 
     h1, h2 {
       font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      color: var(--text);
       margin-top: 0;
+      line-height: 1.25;
     }
+
+    h1 { font-size: 2rem; letter-spacing: -0.01em; }
 
     h2 {
+      margin-top: 34px;
+      margin-bottom: 10px;
+      font-size: 1.18rem;
+    }
+
+    p, li { line-height: 1.65; color: var(--muted); }
+    p { margin: 0 0 14px; }
+    ul { margin: 14px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    strong { color: var(--text); font-weight: 600; }
+
+    .date { color: var(--dim); font-size: 0.9rem; margin-bottom: 26px; }
+
+    a { color: var(--accent-ink); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .rule { height: 1px; background: var(--border); border: 0; margin: 34px 0; }
+
+    .links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+
+    .note {
+      background: rgba(111, 115, 199, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin: 18px 0;
+    }
+    .note p:last-child { margin-bottom: 0; }
+
+    footer {
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.82rem;
       margin-top: 28px;
-      font-size: 1.2rem;
-    }
-
-    p, li {
-      line-height: 1.6;
-      color: var(--muted);
-    }
-
-    a {
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
   <main>
     <div class="card">
-      <h1>Morning Reset Privacy Policy</h1>
-      <p>Effective date: May 18, 2026</p>
-      <p>Morning Reset is built to use as little personal data as possible. The launch build does not use third-party analytics, ad SDKs, accounts, or cross-app tracking.</p>
+      <p class="eyebrow">Energy Reset</p>
+      <h1>Privacy Policy</h1>
+      <p class="date">Effective 21 August 2026</p>
+
+      <p><strong>Energy Reset collects nothing.</strong> There is no account, no sign-up, no server, no analytics, no advertising, and no cross-app tracking. Everything the app knows about you stays on your iPhone.</p>
+
+      <div class="note">
+        <p>We have no database of users, because there are no users to store. Nothing you do in Energy Reset is transmitted to us, and we could not read it even if we wanted to.</p>
+      </div>
 
       <h2>What stays on your device</h2>
       <ul>
-        <li>Your morning flow progress, streaks, answers, and flow check-out history</li>
-        <li>Your selected intention, morning notification time, and other app preferences</li>
-        <li>Morning Pages freewriting entries (Premium feature)</li>
-        <li>Premium entitlement state and paywall timing</li>
+        <li>Your practice log — which routine you ran, when, how long, and whether you finished it, paused it or skipped it</li>
+        <li>Your streak and the state of your energy orb</li>
+        <li>The schools and routines you have opened or chosen</li>
+        <li>Your optional daily reminder time</li>
+        <li>The result of an optional energy check-in, stored as a reading only — never as an image</li>
+        <li>Preferences such as whether the spoken guide is muted</li>
+        <li>Your subscription entitlement state</li>
       </ul>
-      <p>This data is stored locally in your device's app sandbox and in a shared App Group container so the home-screen widget can display your streak. It never leaves your device through Morning Reset.</p>
+      <p>This lives in the app's own sandbox on your device and in a shared App Group container, so the home-screen widget can read your streak. It never leaves your phone through Energy Reset.</p>
 
-      <h2>What Apple handles</h2>
+      <hr class="rule">
+
+      <h2>The camera, and what happens to the photo</h2>
+      <p>The energy check-in is <strong>entirely optional</strong> — the whole app works without ever granting camera access.</p>
+      <p>If you use it, the front camera captures a single still frame. That frame is analysed on your device using Apple's Core Image framework and is then discarded from memory. It is <strong>never written to disk, never added to your photo library, never uploaded, and never seen by anyone</strong>. Only the resulting reading — a colour and a short label — is saved.</p>
+      <p>There is no face recognition and no facial identity profile. We do not use the camera to identify you, and we do not build a biometric template of any kind.</p>
+
+      <h2>Notifications and the lock screen</h2>
+      <p>If — and only if — you choose to set a daily reminder, Energy Reset schedules a local notification at your chosen time, and may place a single Live Activity on your lock screen shortly beforehand. Both are generated on your device. There is no remote push, no server involvement, and no background upload. If you set no reminder, neither happens.</p>
+
+      <h2>Sound and voice</h2>
+      <p>Routines play an ambient soundscape and a quiet spoken guide. The sound is produced on your device and streamed from no server. The voice uses Apple's built-in speech synthesiser, running locally.</p>
+      <p>The app declares the background audio capability for one reason: so a routine keeps playing when your screen locks mid-practice. The audio session starts only after you begin a routine and stops when the routine ends or you close the player.</p>
+      <p><strong>Energy Reset never requests microphone access and cannot listen to you.</strong></p>
+
+      <hr class="rule">
+
+      <h2>What Apple handles, not us</h2>
       <ul>
-        <li>App Store purchases, free trials, renewals, billing, and restore purchases</li>
-        <li>iCloud backup of the app's local data if you have iCloud backup enabled on your device</li>
+        <li>Subscription purchases, free trials, renewals, billing and Restore Purchases — handled by the App Store. We receive no payment details, no name, and no email address.</li>
+        <li>iCloud backup of the app's local data, if you have iCloud backup switched on for your device. That is governed by Apple's privacy policy, not ours.</li>
       </ul>
 
-      <h2>External requests the app can make</h2>
+      <h2>What Energy Reset does not do</h2>
       <ul>
-        <li>App Store and StoreKit requests needed for subscription purchase and restore</li>
-        <li>Optional on-device insight generation on supported Apple devices (no data leaves the device)</li>
+        <li>No analytics or crash-reporting SDKs</li>
+        <li>No advertising and no ad identifiers</li>
+        <li>No cross-app or cross-site tracking</li>
+        <li>No selling or sharing of personal data — there is none to sell</li>
+        <li>No accounts, logins or email collection</li>
+        <li>No collection of health, fitness, location, contacts or biometric data</li>
       </ul>
 
-      <h2>What Morning Reset does not do</h2>
-      <ul>
-        <li>No third-party advertising</li>
-        <li>No selling personal data</li>
-        <li>No cross-app tracking</li>
-        <li>No account creation in the launch build</li>
-        <li>No collection of health, fitness, location, contacts, or biometric data</li>
-      </ul>
-
-      <h2>Audio during the ritual</h2>
-      <p>Morning Reset plays a soft ambient pad and subtle chimes during the morning ritual flow (from the moment you tap the Live Activity until you reach the first-win screen). The audio is generated locally on your device and is not streamed from any server. The audio session is active only during the ritual itself and stops automatically when you complete or dismiss the flow.</p>
-
-      <h2>Health and exercise content</h2>
-      <p>Morning Reset includes optional breathing and mobility exercises. These are not a substitute for professional medical advice. Consult your doctor before starting any exercise programme, especially if you have a health condition. Stop immediately if you feel pain or discomfort. Use at your own risk.</p>
+      <h2>Deleting your data</h2>
+      <p>Individual practice sessions can be deleted or edited inside the app. Deleting Energy Reset from your iPhone removes everything else — the practice log, the streak, the orb, and every preference. Because none of it was ever sent anywhere, there is nothing left for us to erase on your behalf.</p>
 
       <h2>Children</h2>
-      <p>Morning Reset is not directed at children under 13 and does not knowingly collect personal data from anyone.</p>
+      <p>Energy Reset is not directed at children under 13 and knowingly collects no personal data from anyone, of any age.</p>
+
+      <hr class="rule">
+
+      <h2>A note on the practices</h2>
+      <p>Energy Reset teaches traditional and evidence-based practices. Traditional practices are labelled as traditional. Nothing in the app diagnoses, treats or cures any condition, and none of it replaces care from a qualified health professional. Routines involving cold, heat, breath retention or physical movement carry safety notes — please read them, and stop if anything hurts.</p>
 
       <h2>Changes to this policy</h2>
-      <p>If this policy changes, the updated version will be published at this URL with a new effective date.</p>
+      <p>If this policy changes, the new version is published at this address with a new effective date.</p>
 
       <h2>Contact</h2>
-      <p>If you have a privacy question, visit the <a href="support.html">support page</a> or open an issue at <a href="https://github.com/canayan1/MorningReset/issues">github.com/canayan1/MorningReset/issues</a>.</p>
+      <p>Privacy questions are welcome on the <a href="support.html">support page</a>, or as an issue at <a href="https://github.com/canayan1/MorningReset/issues">github.com/canayan1/MorningReset/issues</a>.</p>
+
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="support.html">Support</a>
+      </div>
     </div>
+    <footer>Energy Reset · Daily Rituals</footer>
   </main>
 </body>
 </html>
