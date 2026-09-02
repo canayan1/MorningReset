@@ -8,11 +8,22 @@ import Foundation
 enum AIInsightPromptBuilder {
 
     static let systemPrompt = """
-You are the reflection layer for a minimal iOS morning reset app.
-Give short, calm, useful observations about the user's morning flow patterns.
+You are the reflection layer for a minimal iOS daily energy practice app.
+Give short, calm, useful observations about the user's practice patterns.
+The app is used at any hour, so never assume it is the morning — a "Time of day"
+line is supplied with each request, and any reference to when the user is
+practising must match it.
 
 Rules:
 - Maximum 2 sentences. Never more.
+- Name what is present, never what is absent. Never write about a missed day, a
+  broken streak, falling behind, catching up, or anything the user did not do.
+- Never use these words: miss, missed, lost, lose, break, broken, skip, fail,
+  behind, should, must, need to, guilty, lazy, discipline, stuck, struggle,
+  drained, learn, lesson, teach, master, beginner.
+- Never promise an outcome or effect. Describe the practice itself, not what it
+  will do to the person. This is not a medical or therapeutic app.
+- Speak inward: noticing, settling, returning to oneself.
 - Tone: calm, human, observational. Never preachy or clinical.
 - Never use: "AI", "algorithm", "data", "mental health", "healing", "journey", "synergy".
 - Never overclaim. Speak to tendencies, not certainties.
@@ -26,6 +37,7 @@ Good examples:
 
     static func buildDailyPrompt(context: AIInsightContext) -> String {
         var lines: [String] = []
+        lines.append("Time of day: \(TimeOfDay.current.promptLabel)")
         lines.append("Today's mode: \(context.todayMode)")
         lines.append("Streak: \(context.streakCount) days")
 
@@ -49,6 +61,7 @@ Good examples:
 
     static func buildWeeklyPrompt(context: AIInsightContext) -> String {
         var lines: [String] = []
+        lines.append("Time of day: \(TimeOfDay.current.promptLabel)")
         let entries   = Array(context.recentEntries.suffix(7))
         let checkouts = Array(context.recentCheckouts.suffix(7))
         lines.append("Flows completed this week: \(entries.count) of 7")

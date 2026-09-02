@@ -15,6 +15,15 @@ struct MainTabView: View {
                 }
                 .tag(AppTab.today)
 
+            SchoolsView()
+                .tabItem {
+                    Label(
+                        L10n.text(en: "Traditions", tr: "Gelenekler", es: "Tradiciones"),
+                        systemImage: "sparkles"
+                    )
+                }
+                .tag(AppTab.schools)
+
             LibraryView()
                 .tabItem {
                     Label(

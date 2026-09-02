@@ -1,9 +1,12 @@
 import SwiftUI
+import StoreKit
 
 /// Milestone celebration screen — shown at day 3, 7, 14, 30 streaks.
 /// Replaces the old text-only FeedbackView with a quiet, earned moment.
 struct FeedbackView: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.requestReview) private var requestReview
+    @AppStorage("mrLastReviewMilestone") private var lastReviewMilestone = 0
 
     @State private var appeared    = false
     @State private var numberShown = false
@@ -81,13 +84,13 @@ struct FeedbackView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
                 // ── Big number ────────────────────────────────────────
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .center, spacing: 4) {
                     Text("\(streak)")
                         .font(.system(size: 96, weight: .thin, design: .serif))
                         .foregroundStyle(DS.textPrimary)
@@ -102,6 +105,7 @@ struct FeedbackView: View {
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeOut(duration: 0.4).delay(0.3), value: appeared)
                 }
+                .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.xl)
 
@@ -109,7 +113,9 @@ struct FeedbackView: View {
                 Text(milestoneMessage)
                     .font(.system(.title3, design: .serif).weight(.regular))
                     .foregroundStyle(DS.textPrimary)
+                    .multilineTextAlignment(.center)
                     .lineSpacing(5)
+                    .frame(maxWidth: .infinity)
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 8)
                     .animation(.easeOut(duration: 0.45).delay(0.45), value: appeared)
@@ -120,6 +126,8 @@ struct FeedbackView: View {
                         .font(.callout)
                         .foregroundStyle(DS.textDim)
                         .italic()
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeOut(duration: 0.4).delay(0.6), value: appeared)
                 }
@@ -138,14 +146,20 @@ struct FeedbackView: View {
 
                 // ── CTA ───────────────────────────────────────────────
                 Button(L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")) {
+                    let earned = streak
                     appState.dismissFeedback()
+                    // Ask for an App Store review at a real pride moment — only on a
+                    // weekly+ milestone, and only once per milestone tier. Apple still
+                    // caps the actual prompt to ~3×/year.
+                    if (earned == 7 || earned == 14 || earned == 30), earned > lastReviewMilestone {
+                        lastReviewMilestone = earned
+                        Task {
+                            try? await Task.sleep(for: .milliseconds(600))
+                            await MainActor.run { requestReview() }
+                        }
+                    }
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .opacity(appeared ? 1 : 0)
                 .animation(.easeOut(duration: 0.4).delay(0.8), value: appeared)
                 .padding(.bottom, DS.Space.xl)

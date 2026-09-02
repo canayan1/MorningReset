@@ -33,7 +33,7 @@ struct BreathResetView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -85,24 +85,14 @@ struct BreathResetView: View {
                         Button(L10n.text(en: "Begin", tr: "Başla", es: "Comenzar")) {
                             startBreathing()
                         }
-                        .font(.system(.body, design: .serif))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(DS.accent)
-                        .foregroundStyle(DS.background)
-                        .clipShape(Capsule())
+                        .primaryCTA()
                         .padding(.horizontal, DS.Space.lg)
 
                     case .done:
                         Button(L10n.text(en: "Done", tr: "Bitti", es: "Listo")) {
                             appState.showPremiumHub()
                         }
-                        .font(.system(.body, design: .serif))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(DS.accent)
-                        .foregroundStyle(DS.background)
-                        .clipShape(Capsule())
+                        .primaryCTA()
                         .padding(.horizontal, DS.Space.lg)
                         .transition(.opacity)
 

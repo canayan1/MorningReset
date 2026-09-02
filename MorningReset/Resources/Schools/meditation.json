@@ -1,0 +1,491 @@
+{
+  "id": "meditation",
+  "name": "Bhavana",
+  "tagline": "Pick something to rest attention on. Notice you have drifted. Come back. That is the whole training.",
+  "overview": "Meditation is attention training. You choose something to rest attention on — the breath, the body, a sound, a phrase — and you notice, over and over, when the mind has gone elsewhere, and return. The practices here come from Buddhist and yogic traditions that refined them over centuries, and from the modern clinical programmes, chiefly MBSR, that stripped them of religion and put them into hospitals and research labs. Nothing in this school requires belief, a cushion, or a silent house. Most of it requires a chair and a timer.",
+  "kind": "evidence",
+  "framing_note": "The evidence here is real but modest, and worth stating plainly. A 2014 JAMA Internal Medicine meta-analysis of 47 randomised trials (3,515 participants) found moderate-strength evidence that eight-week mindfulness programmes produced small improvements in anxiety, depressive symptoms and pain compared with non-specific active controls — effect sizes around 0.3 — and low or insufficient evidence of any effect on sleep, weight, substance use, or for mantra-based programmes. Research also links regular practice with steadier attention and better emotion regulation, though reviewers agree the underlying brain mechanisms are still not well understood, and that meditation has not been shown to beat exercise or therapy at anything. These practices are offered experientially, as skills for working with your own attention — they are not medical treatment, not psychotherapy, and not a substitute for either.",
+  "teachings": [
+    {
+      "id": "meditation.t1",
+      "title": "It was never about emptying the mind",
+      "body": "The most common reason people quit is that they think they are failing. They sit down, thoughts keep coming, and they conclude they cannot do this. But meditation was never about stopping thought. In the framework most of these practices come from — satipaṭṭhāna, the four establishments of mindfulness: body, feeling tone, mind states, and experience itself — you are training to observe what is happening, not to blank it out. Thoughts are part of what you observe. What changes with practice is not the amount of thinking but your relationship to it. You begin to catch thought as thought, a few seconds sooner each time, instead of being carried off inside it. If you noticed your mind wandering, the practice was working."
+    },
+    {
+      "id": "meditation.t2",
+      "title": "Two families: focused attention and open monitoring",
+      "body": "Researchers usually sort meditation into two broad families. In focused attention you pick one object — the breath at the nostrils, the rise and fall of the abdomen, a repeated phrase — and keep coming back to it, noticing distraction and letting it go. In open monitoring you drop the single object and instead stay aware of whatever arises, moment to moment, without following any of it. Lutz and colleagues described these as distinct trainings with distinct effects: focused attention builds stability, open monitoring builds a wide, non-reactive awareness. Most traditions teach them in that order, because open monitoring is very hard without a settled mind first. Nearly every practice in this school is one, the other, or a bridge between them."
+    },
+    {
+      "id": "meditation.t3",
+      "title": "Posture, and why the return is the repetition",
+      "body": "Sit so you can be upright and comfortable at once: chair or cushion, spine tall without stiffening, shoulders released, hands resting, chin a fraction tucked, eyes closed or softly open toward the floor. The classical seven-point posture makes the same points, and a chair with both feet flat is a legitimate version of it. Then expect to drift. Brain-imaging work by Hasenkamp and colleagues mapped a repeating four-part cycle during breath meditation: attention wanders, you become aware that it wandered, you shift back, you rest on the object again. The noticing and the shifting are where the training happens. So the wandering is not the failure and the return is not the recovery. The return is the repetition."
+    },
+    {
+      "id": "meditation.t4",
+      "title": "The body scan, and learning to feel yourself",
+      "body": "The body scan is the entry practice of MBSR, where a 45-minute version is taught in the first week, and it appears in the Burmese vipassana lineage as a systematic sweep of attention from the crown of the head to the feet and back. In both, you are not relaxing on command and not visualising anything. You move attention part by part and register what is actually there — warmth, pressure, tingling, numbness, or nothing at all — and let each be what it is. The capacity you are training is interoception: reading signals from inside your own body. It is the same capacity that tells you your jaw is clenched two hours before you would otherwise notice, and like anything else, it sharpens with repetition."
+    },
+    {
+      "id": "meditation.t5",
+      "title": "Loving-kindness, and what to do when practice is hard",
+      "body": "Metta — Pali for loving-kindness — is trained deliberately rather than waited for. You repeat simple phrases (may you be safe, may you be happy, may you be healthy, may you live with ease), beginning with yourself or someone easy to love, then widening to a friend, a neutral person, someone difficult, and finally everyone. A 2015 meta-analysis of 24 studies found medium effects on positive emotion, with the authors themselves flagging expectancy and self-selection as real caveats. It also will not suit everyone. For some people, often those carrying trauma, closing the eyes and turning inward brings flooding, numbness or a sense of unreality. That is a signal to open the eyes, use an external anchor, shorten the sit — and to work with an experienced teacher or a mental-health professional rather than push through alone."
+    }
+  ],
+  "routines": [
+    {
+      "id": "meditation.r01",
+      "title": "Three-Minute Breath Anchor",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "The entire practice in miniature — one object, and the return to it. Start here.",
+      "steps": [
+        "Sit somewhere you will not be interrupted. Chair or cushion, both fine. Spine tall, shoulders dropped.",
+        "Close your eyes, or let your gaze rest unfocused on the floor a metre ahead.",
+        "Find the breath where you feel it most clearly — cool air at the nostrils, or the rise and fall of the belly. Pick one spot and stay there.",
+        "Do not change the breathing. Just feel this breath, then the next one.",
+        "When you notice you have been thinking, that noticing is the point. Let the thought go and bring attention back to the same spot.",
+        "Do that for three minutes. Then open your eyes and sit for a moment before you stand up."
+      ],
+      "safety": "",
+      "free": true
+    },
+    {
+      "id": "meditation.r02",
+      "title": "Counting the Breath, One to Ten",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "A count gives the mind a handrail, and tells you instantly when you have drifted.",
+      "steps": [
+        "Sit upright and let a few breaths pass without doing anything to them.",
+        "On each out-breath, count silently: one, two, three, up to ten.",
+        "At ten, begin again at one.",
+        "If you lose the count, or find yourself at seventeen, simply start again at one. This will happen often and is not a mistake.",
+        "Keep the counting quiet and in the background — the breath is the object, the number is only a marker.",
+        "After about five minutes, drop the counting and sit with the plain breath for a few rounds before you finish."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r03",
+      "title": "Feet, Seat, Hands",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "A grounding sit for days when eyes-closed and breath-focused feels like too much.",
+      "steps": [
+        "Sit with both feet flat on the floor. Keep your eyes open, gaze soft and low.",
+        "Bring attention to the soles of your feet. Feel the floor pressing up. Stay about a minute.",
+        "Move attention to where your body meets the chair — the contact, the weight, the support underneath you.",
+        "Move to your hands: temperature, texture, the air on the skin, whatever is there.",
+        "Cycle slowly between the three — feet, seat, hands — for the rest of the time.",
+        "Finish by looking around the room and naming three things you can see."
+      ],
+      "safety": "The breath is not the only anchor, and for some people it is not the best one. If turning attention inward brings anxiety, numbness or a sense of unreality, use contact points like these, keep your eyes open, and stop early. Distress that keeps arising in practice is worth raising with an experienced teacher or a mental-health professional.",
+      "free": false
+    },
+    {
+      "id": "meditation.r04",
+      "title": "Settling the Posture",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Learn the seat itself, so posture stops being a distraction in every other practice.",
+      "steps": [
+        "Sit on a chair with both feet flat, or cross-legged on a cushion high enough that your knees rest below your hips.",
+        "Rock gently forward and back, then side to side, in shrinking arcs, until you come to rest in the middle.",
+        "Let the spine be upright without being rigid — the crown of the head lifting, the shoulders falling away from it.",
+        "Rest your hands in your lap or on your thighs. Tuck the chin a fraction so the back of the neck lengthens.",
+        "Let the eyes close, or stay half-open with a soft downward gaze. Let the jaw and the tongue go slack.",
+        "Sit like this for a few minutes, doing nothing but noticing the posture and quietly correcting it when it slumps."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r05",
+      "title": "The One-Minute Micro-Sit",
+      "group": "starter",
+      "minutes": 1,
+      "purpose": "Short enough that you will actually do it on the days you would otherwise skip entirely.",
+      "steps": [
+        "Stop what you are doing. Put the phone face down.",
+        "Sit back, feet on the floor, and let one long exhale out.",
+        "Take ten breaths, counting each one silently on the out-breath.",
+        "If you lose count, start again. You are not trying to reach ten, you are trying to be present for ten.",
+        "After the tenth, pause for one more breath, then carry on with your day."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r06",
+      "title": "Ten Minutes on the Breath",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "The standard focused-attention sit: one object, and enough time for the mind to actually settle.",
+      "steps": [
+        "Set a timer for ten minutes so you are not tracking the clock.",
+        "Settle the posture, then take three slower breaths to arrive. After that, let the breath find its own rhythm.",
+        "Choose one point of contact — nostrils, chest or belly — and keep it for the whole sit.",
+        "Rest attention there. Feel the beginning, the middle and the end of each in-breath and out-breath.",
+        "When you notice thinking, note it lightly as thinking and return. Expect to do this dozens of times.",
+        "If you get very sleepy, open your eyes and sit taller. If you get restless, name it as restlessness and stay one more breath.",
+        "When the timer sounds, do not jump up. Sit for half a minute with the eyes still closed."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r07",
+      "title": "Noting: Thinking, Feeling, Hearing",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Put a quiet word on experience as it arises, so you see it instead of disappearing into it.",
+      "steps": [
+        "Sit and rest on the breath for a minute or two, until you are reasonably steady.",
+        "Now widen slightly. When something pulls attention away, give it one soft mental label — thinking, hearing, feeling, planning, remembering.",
+        "Keep the labels quiet and neutral. One word is enough, and the tone of the label matters more than its accuracy.",
+        "After the label, return to the breath, or simply let the next thing arise.",
+        "If nothing much is happening, note that too — settled, or quiet.",
+        "Do not analyse what you have noted. The naming is the whole job.",
+        "For the last minute, drop the labels and sit plainly."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r08",
+      "title": "Rising and Falling",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "The Burmese noting method: track the movement of the abdomen and note it, moment by moment.",
+      "steps": [
+        "Sit upright, eyes closed, hands resting in your lap.",
+        "Bring attention to the abdomen. Feel it expand as you breathe in and subside as you breathe out. Do not alter the breathing — neither slow it nor deepen it.",
+        "Note the movement silently: rising … falling. Note it mentally, not out loud.",
+        "If the movement is hard to feel at first, rest a palm on the abdomen until it becomes clear.",
+        "When something else becomes stronger than the abdomen — a sound, an itch, a thought — note that instead: hearing, itching, thinking. Then come back to rising and falling.",
+        "If the mind is busy, note faster and keep pace with it. If it is quiet, note slowly.",
+        "Continue for about fifteen minutes."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r09",
+      "title": "Sound as the Object",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Use hearing instead of the breath — often easier on days when the body feels agitated.",
+      "steps": [
+        "Sit comfortably. Eyes closed or softly open, whichever settles you.",
+        "Instead of the breath, let hearing be the object. Do not go looking for sounds; let them arrive.",
+        "Notice sound as raw sound — pitch, volume, texture, where it begins and where it stops.",
+        "Notice how fast the mind converts sound into a story: a car, a neighbour, someone being inconsiderate. When that happens, drop back to the bare sound.",
+        "Include the gaps. Silence between sounds is part of the object, not a pause in the practice.",
+        "Continue for ten minutes, then rest with a few plain breaths before you finish."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r10",
+      "title": "Short Body Scan",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Move attention systematically through the body and register what is actually there.",
+      "steps": [
+        "Lie on your back or sit supported. Let the eyes close.",
+        "Start at the top of the head. Rest attention there for a few breaths and feel whatever is present — pressure, warmth, tingling, or nothing at all.",
+        "Move down in order: face, jaw, neck, shoulders, arms, hands, chest, abdomen, back, hips, legs, feet.",
+        "Give each region a few seconds. Do not try to relax it, and do not skip the numb areas — an absence of sensation is also information.",
+        "When you notice you have drifted, pick up from the last part you remember.",
+        "At the feet, take one breath, then hold the whole body in awareness at once for the final minute."
+      ],
+      "safety": "Lying down and turning attention inward can intensify distress for people with trauma histories or chronic pain. If a region feels overwhelming, move on, or open your eyes and shorten the practice. There is no requirement to stay with anything painful.",
+      "free": false
+    },
+    {
+      "id": "meditation.r11",
+      "title": "Metta for Yourself",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Begin loving-kindness where it is usually hardest — with the person doing the practice.",
+      "steps": [
+        "Sit comfortably and let a few breaths pass to settle.",
+        "Bring yourself to mind: an image, the sound of your own name, or just the felt sense of sitting here.",
+        "Repeat four phrases silently, roughly one per breath: may I be safe, may I be happy, may I be healthy, may I live with ease.",
+        "Say them like an offering, not an order. You are expressing a wish, not manufacturing a feeling.",
+        "If nothing warm arises, that is normal. Keep offering the phrases.",
+        "If self-directed phrases feel hollow, picture someone easy to love, send the phrases to them, then turn them back toward yourself at the end.",
+        "Finish by sitting quietly for a few breaths with no phrases at all."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r12",
+      "title": "Walking Meditation",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "The same training, standing up — useful when sitting still is genuinely unbearable.",
+      "steps": [
+        "Choose a stretch you can walk back and forth along, roughly ten to twenty paces, indoors or in a garden.",
+        "Stand still first. Feel the weight in both feet and the whole body upright.",
+        "Walk slower than usual. Attend to each step in three parts: lifting, moving, placing.",
+        "You can note those words silently as they happen — lifting … moving … placing.",
+        "At the end of the stretch, stand still, notice the intention to turn, turn slowly, and stand again before setting off.",
+        "When the mind wanders, stop where you are, feel both feet on the ground, and start again.",
+        "Keep the gaze a few paces ahead and slightly down. Do not sightsee."
+      ],
+      "safety": "Practise somewhere safe and traffic-free. Slowed, inward walking is not suitable on pavements, stairs, or anywhere you need full situational awareness.",
+      "free": false
+    },
+    {
+      "id": "meditation.r13",
+      "title": "Naming the Feeling Tone",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Work with vedanā — the pleasant, unpleasant or neutral quality that colours experience before you react to it.",
+      "steps": [
+        "Sit and settle on the breath for two or three minutes.",
+        "Now ask a simpler question than usual of whatever arises — a sound, a sensation, a thought: is this pleasant, unpleasant, or neither?",
+        "Note it in one word: pleasant, unpleasant, neutral.",
+        "Do not try to change the tone. You are only naming it.",
+        "Watch what follows the naming. Pleasant tends to pull you toward more of it, unpleasant tends to push you away, neutral tends to send the mind looking elsewhere.",
+        "Each time you catch that pull or push, you have seen the hinge between sensation and reaction. Note it, and return.",
+        "Finish with a minute of plain breath."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r14",
+      "title": "The Twenty-Minute Sit",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "The length most traditions treat as a full sit — long enough to pass through restlessness and settle.",
+      "steps": [
+        "Set aside twenty uninterrupted minutes and a timer. Same seat and same time of day, if you can manage it.",
+        "Settle the posture deliberately: feet or legs, spine, shoulders, hands, chin, eyes.",
+        "First five minutes: let the body arrive. Feel weight, contact, and the whole shape of sitting.",
+        "Next ten: rest on the breath at one chosen point, returning each time you notice you have gone.",
+        "Expect a difficult stretch somewhere in the middle — boredom, aching, an urge to check the time. Name it, keep sitting, and let it pass on its own.",
+        "Last five: loosen the focus. Stay aware of breath, body and sound together without choosing between them.",
+        "Sit for half a minute after the timer sounds before you move."
+      ],
+      "safety": "Aches and pins and needles are ordinary; sharp or radiating pain is not. Shift position rather than enduring it — stillness supports the practice, it is not the practice.",
+      "free": false
+    },
+    {
+      "id": "meditation.r15",
+      "title": "Open Awareness",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Open monitoring: no chosen object and no steering — simply aware of whatever is here.",
+      "steps": [
+        "Begin with five minutes of ordinary breath practice so the mind is reasonably steady. Do not skip this; open awareness is very hard from a scattered start.",
+        "Then let go of the breath as a target, and do not replace it with anything else.",
+        "Sit with the eyes half-open, gaze soft and unfocused, and let experience come and go — sound, sensation, thought, mood.",
+        "Do not follow anything and do not push anything away. If you find you have been riding a train of thought, simply notice, and be open again.",
+        "Notice the awareness itself. It is already wide. It does not need to be built.",
+        "If you get lost repeatedly, return to the breath for a minute and then open out again. Going back is a skill, not a failure.",
+        "Close by resting on the breath for the final minute."
+      ],
+      "safety": "Practices that loosen the usual sense of self can be disorienting, and more so on retreat or after long sessions. If you notice detachment, unreality or distress that outlasts the sit, stop this practice and speak to an experienced teacher or a mental-health professional.",
+      "free": false
+    },
+    {
+      "id": "meditation.r16",
+      "title": "The Full Body Sweep",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "A long systematic pass through the body, met with the same evenness whatever shows up.",
+      "steps": [
+        "Sit upright, or lie down if thirty minutes of sitting is not realistic yet. Eyes closed.",
+        "Spend the first few minutes with attention on the small area below the nostrils and above the upper lip, feeling the natural breath pass in and out.",
+        "Then move attention to the top of the head and begin sweeping downward part by part — scalp, face, throat, shoulders, each arm, torso, back, hips, each leg, to the toes.",
+        "In each part, wait a few seconds and observe what is there: heat, cold, tingling, pulsing, pressure, itching, or blankness.",
+        "Sweep back up from the toes to the head in the same order.",
+        "Meet pleasant and unpleasant sensation the same way. Whatever you find will change on its own if you leave it alone — that is what you are here to observe.",
+        "Keep sweeping down and up for the remaining time, then rest a minute in whole-body awareness."
+      ],
+      "safety": "Thirty minutes of stillness is demanding. Shift position rather than pushing through sharp pain, and shorten or stop the practice if scanning brings up distressing memories or strong anxiety.",
+      "free": false
+    },
+    {
+      "id": "meditation.r17",
+      "title": "Metta: Widening the Circle",
+      "group": "deep",
+      "minutes": 25,
+      "purpose": "The full loving-kindness sequence, from yourself outward to all beings.",
+      "steps": [
+        "Settle, then choose four phrases and keep them identical throughout: may you be safe, may you be happy, may you be healthy, may you live with ease.",
+        "Begin with yourself, saying the phrases in the first person. Stay four or five minutes.",
+        "Move to a benefactor or someone easy to love — a friend, a child, a teacher. Picture them, and offer the phrases.",
+        "Move to a neutral person: someone you see but do not know, the person at the checkout, a neighbour you have never spoken to.",
+        "Move to someone difficult. Start with mildly difficult, not the hardest person in your life. If resistance rises, notice it and return to yourself for a while.",
+        "Finally widen out — this street, this city, everyone alive — without leaving yourself out of it.",
+        "Sit quietly for the last minute with no phrases."
+      ],
+      "safety": "Sending kindness toward yourself, or toward someone who has hurt you, can bring up grief or anger. Keep to the order given, keep the difficult person genuinely mild at first, and drop back to an easier category whenever it becomes too much.",
+      "free": false
+    },
+    {
+      "id": "meditation.r18",
+      "title": "Mantra Repetition",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Give the mind a sound to hold — the japa method, where the repetition itself becomes the object.",
+      "steps": [
+        "Choose a short phrase or syllable and stay with it. Traditional options include so-ham (‘I am that’) or om; a neutral word in your own language works too.",
+        "Sit upright and take a minute to settle before you begin.",
+        "Repeat the mantra silently, letting it fall into rhythm with the breath — so on the in-breath, ham on the out-breath.",
+        "Let the repetition be steady rather than forceful. Over time it should feel more like listening than saying.",
+        "When you notice the mantra has stopped and thinking has taken over, pick it up again without commentary.",
+        "If you use a mala, move one bead per repetition with the thumb, and pause when you reach the larger guru bead rather than crossing over it.",
+        "In the final minutes, let the mantra grow quieter until it fades, and sit in the silence it leaves behind."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r19",
+      "title": "Candle Gazing (Trataka)",
+      "group": "deep",
+      "minutes": 10,
+      "purpose": "An eyes-open concentration practice from the hatha yoga tradition, using a single flame as the object.",
+      "steps": [
+        "Darken the room. Place a candle about an arm's length away, flame at eye level, out of any draught.",
+        "Sit upright and let the eyes rest on the flame — on the steady base of it rather than the flickering tip.",
+        "Gaze softly, without straining, and blink whenever you need to. The classical texts describe the eyes watering; there is no need to force that.",
+        "Hold the gaze a minute or two, then close the eyes and watch the after-image until it fades.",
+        "Open the eyes and repeat — three or four rounds in total.",
+        "Finish with the eyes closed, attention resting where the after-image was.",
+        "Blow the candle out before you stand up."
+      ],
+      "safety": "Skip this practice entirely if you have epilepsy or any photosensitive seizure disorder. Check with an eye specialist first if you have glaucoma, cataracts, dry-eye disease or recent eye surgery. Never strain to keep the eyes open — blink freely, keep sessions short, and stop if your eyes hurt or vision blurs. Use a stable holder, keep the flame clear of anything flammable, and never leave it unattended.",
+      "free": false
+    },
+    {
+      "id": "meditation.r20",
+      "title": "RAIN for a Difficult Emotion",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "A four-step way of staying with a hard feeling instead of arguing with it or running — recognise, allow, investigate, nurture.",
+      "steps": [
+        "Sit with something that is genuinely bothering you, but choose something moderate rather than the heaviest thing you carry.",
+        "Recognise: name what is here in one or two words — fear, shame, anger, grief.",
+        "Allow: let it be there without fixing, justifying or debating it. You are not agreeing with it; you are stopping the fight.",
+        "Investigate: turn toward the body. Where do you feel it? What is its texture, weight, temperature? What does this part of you believe, or most want?",
+        "Nurture: offer it something kind — a hand on the chest, or the sentence you would say to a friend in this state.",
+        "Then stop directing anything and rest for a minute in whatever is left."
+      ],
+      "safety": "This practice deliberately turns toward distress and can open more than you expect. Keep your eyes open if that helps, stop at any point, and do not use it on trauma or acute grief without support. If difficult material keeps surfacing, work with a therapist rather than alone on a cushion.",
+      "free": false
+    },
+    {
+      "id": "meditation.r21",
+      "title": "The Mountain",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Kabat-Zinn's mountain image — borrowing the steadiness of something that does not move.",
+      "steps": [
+        "Sit upright somewhere undisturbed, and settle for a minute on the breath.",
+        "Bring a mountain to mind — one you have seen, or one you invent. See its base, its slopes, its summit.",
+        "Let your own posture become the mountain's: seat as base, spine as slope, head as peak.",
+        "Now let weather move across it. Sun, cloud, storm, night, snow, seasons turning. The surface changes constantly.",
+        "The mountain neither resists any of it nor is diminished by it. It simply sits.",
+        "Sit that way for the remaining minutes. Thoughts, moods and sensations are the weather, not the mountain.",
+        "Let the image dissolve, and finish with a few plain breaths."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r22",
+      "title": "The Still Lake",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "The companion image to the mountain — receptive rather than solid, for days when strength is not what you need.",
+      "steps": [
+        "Lie down or sit back, and let the breath settle without steering it.",
+        "Picture a lake held in a bowl of land: still water, real depth, edges you cannot quite make out.",
+        "Let your body become the lake — held, supported, open to the sky.",
+        "Notice the surface. Wind ruffles it, rain pocks it, ice covers it, and none of that reaches the depth beneath.",
+        "Rest attention in that lower stillness while the surface does whatever it does.",
+        "If you catch yourself trying to flatten the surface, stop trying. A lake does not smooth itself.",
+        "Come back to the body and the room slowly."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r23",
+      "title": "A Moment of Compassion",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "Turn kindness toward difficulty — your own or someone else's — at the end of a hard day.",
+      "steps": [
+        "Sit or lie down and bring to mind something that is hurting right now, in you or in someone you care about.",
+        "Put a hand on your chest or your belly, and let it stay there.",
+        "Acknowledge the difficulty plainly: this is hard, and it hurts.",
+        "Add the wider truth: this kind of struggle is not a personal defect, and everyone alive meets some version of it.",
+        "Offer compassion phrases silently — may you be free from this pain, may you be held, may you find some ease.",
+        "If the phrases feel forced, drop them and simply keep your attention and your hand where the difficulty is felt.",
+        "Finish with three unhurried breaths before you move."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r24",
+      "title": "Gratitude Reflection",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "A short reflective sit, deliberately noticing what went right — which the mind does not do on its own.",
+      "steps": [
+        "Sit somewhere quiet, ideally near the end of the day, and take a minute to settle.",
+        "Bring to mind three specific things from today that were good. Specific matters: a particular conversation, not ‘my friends’.",
+        "Take each in turn and stay with it a minute — what happened, who was there, what it felt like in the body.",
+        "Include the ordinary and the unearned: hot water, a knee that works, someone who let you merge.",
+        "If the mind reaches for the day's problems instead, note that and come back. It will do this.",
+        "Finish by sitting for a few breaths without looking for anything at all."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "meditation.r25",
+      "title": "Body Scan for Sleep",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "A long slow scan done lying in bed, with no requirement to stay awake for the end of it.",
+      "steps": [
+        "Lie on your back in bed with the lights off. Arms by your sides, palms up or down.",
+        "Take three unhurried breaths, letting each out-breath run a little longer than the in-breath.",
+        "Start at the toes of the left foot and move upward in small steps — foot, ankle, calf, knee, thigh — pausing a few breaths at each.",
+        "Repeat on the right leg, then move through hips, abdomen, chest, back, each arm, and finally neck, face and scalp.",
+        "Let each part soften as you leave it. Do not force anything to relax.",
+        "If you lose track, pick up wherever you last remember. If you fall asleep, the practice has done its job."
+      ],
+      "safety": "If lying still with your eyes closed reliably brings on anxiety or intrusive memories, leave a light on, keep your eyes open, or use a shorter contact-point practice instead.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Goyal, Singh, Sibinga, Gould, Rowland-Seymour, Sharma, Berger, Sleicher, Maron, Shihab, Ranasinghe, Linn, Saha, Bass & Haythornthwaite, Meditation Programs for Psychological Stress and Well-being: A Systematic Review and Meta-analysis, JAMA Internal Medicine, 2014 — 47 randomised trials, 3,515 participants; moderate-strength evidence for small improvements in anxiety (SMD 0.38), depressive symptoms (0.30) and pain (0.33) at eight weeks against non-specific active controls, and low or insufficient evidence for sleep, weight, substance use and mantra programmes. The basis for this school's framing note and the deliberately modest scale of its claims",
+    "Lutz, Slagter, Dunne & Davidson, Attention regulation and monitoring in meditation, Trends in Cognitive Sciences, 2008 — the focused-attention versus open-monitoring distinction, and the observation that stability is trained before openness; the organising frame for teaching 2 and for the ordering of the core and deep routines",
+    "Tang, Hölzel & Posner, The neuroscience of mindfulness meditation, Nature Reviews Neuroscience, 2015 — review of attention control, emotion regulation and self-awareness as the proposed mechanisms, together with the authors' own caution that the neural mechanisms remain unclear and more rigorous studies are needed; read alongside Hasenkamp, Wilson-Mendenhall, Duncan & Barsalou, NeuroImage, 2012, whose four-phase cycle (wandering, awareness, shifting, focus) is the basis for 'the return is the repetition'",
+    "Kabat-Zinn, Full Catastrophe Living, 1990 (revised 2013) — the MBSR curriculum: the 45-minute body scan taught in week one, sitting practice, mindful walking, and the mountain and lake meditations that the restorative routines here follow",
+    "Anālayo, Satipaṭṭhāna: The Direct Path to Realization, 2003 — scholarly treatment of the four establishments of mindfulness (kāya, vedanā, citta, dhammā); source for the Pali terminology in teaching 1 and for the feeling-tone practice in 'Naming the Feeling Tone'",
+    "Mahasi Sayadaw, Practical Insight Meditation, 1971, with the course guidelines published by the S. N. Goenka tradition (dhamma.org) — the rising-and-falling abdominal noting method, the lifting–moving–placing walking instruction, and the anapana-then-systematic-sweep structure of the full body sweep",
+    "Salzberg, Lovingkindness: The Revolutionary Art of Happiness, 1995 (Insight Meditation Society) — the metta sequence from self to benefactor, friend, neutral person, difficult person and all beings, and the use of a small set of repeated phrases held constant throughout",
+    "Zeng, Chiu, Wang, Oei & Leung, The effect of loving-kindness meditation on positive emotions: a meta-analytic review, Frontiers in Psychology, 2015 — 24 studies and 1,759 participants, medium effect sizes on daily positive emotions (Hedges' g ≈ 0.39), building on Fredrickson, Cohn, Coffey, Pek & Finkel, 2008; also the source of the expectancy and self-selection caveats stated in teaching 5",
+    "Brach, Radical Compassion, 2019, using the RAIN acronym coined by Michele McDonald — recognise, allow, investigate, nurture; the structure of the difficult-emotion routine",
+    "Lindahl, Fisher, Cooper, Rosen & Britton, The varieties of contemplative experience: a mixed-methods study of meditation-related challenges in Western Buddhists, PLoS ONE, 2017 — the taxonomy of difficult and destabilising meditation experiences, including changes in sense of self; read with Treleaven, Trauma-Sensitive Mindfulness, 2018, for the window-of-tolerance framing and alternative-anchor guidance behind the safety notes in this school"
+  ],
+  "subtitle": "cultivating the mind",
+  "pronunciation": "BHAA-vah-naa",
+  "origin": "Bhāvanā — Pali/Sanskrit for 'cultivation, development'; the canonical word for meditation practice, covering both samatha and vipassanā."
+}

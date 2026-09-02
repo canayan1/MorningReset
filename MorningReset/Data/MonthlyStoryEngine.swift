@@ -117,9 +117,9 @@ enum MonthlyStoryEngine {
             es: "Tu historia de \(name) está lista"
         )
         content.body = L10n.text(
-            en: "Written from your morning entries. Open Morning Reset to read it.",
-            tr: "Sabah girişlerinizden yazıldı. Okumak için Morning Reset'i aç.",
-            es: "Escrita a partir de tus entradas matinales. Abre Morning Reset para leerla."
+            en: "Written from your practice entries. Open Inner Light to read it.",
+            tr: "Pratik kayıtlarından yazıldı. Okumak için Inner Light'ı aç.",
+            es: "Escrita a partir de tus prácticas. Abre Inner Light para leerla."
         )
         content.sound = .default
 

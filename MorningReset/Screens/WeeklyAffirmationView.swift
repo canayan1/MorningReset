@@ -7,15 +7,17 @@ struct WeeklyAffirmationView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
                 Text(MantraEngine.weeklyMantra())
                     .font(.system(size: 26, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
                     .lineSpacing(6)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
                     .padding(.horizontal, DS.Space.lg)
 
                 Spacer()

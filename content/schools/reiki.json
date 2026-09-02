@@ -1,0 +1,477 @@
+{
+  "id": "reiki",
+  "name": "Reiki",
+  "tagline": "Quiet hands, steady breath, and five precepts for the day.",
+  "overview": "Reiki is a Japanese practice developed in the early 1920s by Usui Mikao, who opened a training hall in Tokyo and founded the Usui Reiki Ryoho Gakkai to carry the teachings on. It brings together five precepts to live by, seated meditation and breathing methods, and a hands-on practice done mostly on yourself. Practitioners rest their hands lightly on or just above the body and stay there, unhurried, for a few minutes at a time. Many people find it calming and use it as a daily settling routine.",
+  "kind": "traditional",
+  "framing_note": "Reiki is a traditional Japanese practice, offered here experientially — for relaxation and daily self-practice. It is not medical treatment, does not treat or cure any condition, and is not a substitute for professional care. Research is limited and mixed; the US National Center for Complementary and Integrative Health notes Reiki has not been clearly shown to be effective for any health purpose.",
+  "teachings": [
+    {
+      "id": "reiki.t1",
+      "title": "What the system of Reiki is",
+      "body": "Reiki was shaped by Usui Mikao (1865-1926), who opened a training hall in Aoyama, Tokyo, in April 1922 and founded the Usui Reiki Ryoho Gakkai to pass the teachings on. The memorial stone raised by his students at Saihoji temple in Suginami says he taught around two thousand people. Usui drew on the Japanese culture around him — esoteric Buddhism, Shugendo mountain practice, Shinto purification, martial breath work — and shaped it into something a layperson could do. Teachers today describe five consistent elements: the precepts, meditation and breathing methods, hands-on practice (tenohira), symbols and mantras, and reiju, a blessing given by a teacher. Most of it is done alone, on yourself, a little every day."
+    },
+    {
+      "id": "reiki.t2",
+      "title": "The five precepts (gokai)",
+      "body": "The five precepts, gokai, are the root of the whole practice. A widely used translation runs: the secret of inviting happiness through many blessings, the spiritual medicine for all illness. For today only: do not anger, do not worry, be humble, be honest in your work, be compassionate to yourself and others. Usui closed with an instruction rather than a promise — do gassho every morning and evening, hold these in your mind and recite them. Researchers trace the wording to older Buddhist precepts that Usui reworked into plain, non-religious language. The phrase carrying the weight is for today only. It shrinks an impossible standard down to something a person can actually attempt between waking and sleeping."
+    },
+    {
+      "id": "reiki.t3",
+      "title": "Gassho and the meditative foundations",
+      "body": "Gassho means placing the palms together in front of the chest — no force from the arms or shoulders, fingers lightly joined, eyes closed. It is the posture Usui asked students to take morning and evening, and it opens most Japanese Reiki practice. Three techniques sit underneath it. Kenyoku ho, dry bathing, is a Shinto-derived sweeping of the hands across the body, used to mark a clean start and finish. Joshin kokyu ho is a breathing meditation that settles attention in the lower abdomen, the seika tanden. Seishin toitsu unifies the mind. Practised together these are known as hatsurei ho — hatsu, to generate; rei, spirit; ho, method — a sequence recorded by Usui's student Tomita Kaiji in 1933."
+    },
+    {
+      "id": "reiki.t4",
+      "title": "Byosen and the hand positions",
+      "body": "Byosen reikan ho is taught at the second level, Okuden. Frans Stiene translates its five kanji as a method for sensing sacred impressions of an illness. The impressions are called hibiki — echo, reverberation. Practitioners describe warmth, tingling, pulsing, heaviness, or nothing at all under the hands, and traditional teaching is clear that every practitioner reads them through their own filters. Tomita Kaiji wrote in 1933 that even when the sensation is not clearly perceived, the practice is unchanged. That is a useful corrective: this is noticing, not diagnosis. The hand positions themselves are simple. Hands rest lightly on or just above the eyes, temples, back of the head, throat, chest, solar plexus and lower abdomen, a few minutes each."
+    },
+    {
+      "id": "reiki.t5",
+      "title": "The levels, symbols and mantras",
+      "body": "The system has three levels. Shoden, the first teachings, covers the precepts, breathing methods and hands-on self-practice. Okuden, the inner teachings, adds three symbols (shirushi) and their mantras (jumon), along with byosen and distance practice. Shinpiden, the mystery teachings, adds a fourth and prepares a person to teach others. Each level traditionally includes reiju, a blessing from a teacher, called an attunement or placement in Western schools. The symbols are not printed here. Not because they are dangerous, but because they are handed over in person, at the right point, with a teacher present. Stiene describes them as training wheels, useful until they are no longer needed. They are focusing tools within a long practice, not powers."
+    }
+  ],
+  "routines": [
+    {
+      "id": "reiki.r01",
+      "title": "First Gassho",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "The simplest entry: sit, join your palms, and let the day pause.",
+      "steps": [
+        "Sit upright on a chair or a cushion, feet flat or legs folded. Let your shoulders drop.",
+        "Bring your palms together in front of your chest, fingers pointing up, about a hand's width from the breastbone.",
+        "Use no force. The arms and shoulders stay soft and the hands simply rest against each other.",
+        "Close your eyes and put your attention where your middle fingers meet.",
+        "Breathe normally through the nose. Each time the mind wanders, come back to the middle fingers.",
+        "After about five minutes, lower your hands to your lap and sit for a few breaths before standing."
+      ],
+      "safety": "",
+      "free": true
+    },
+    {
+      "id": "reiki.r02",
+      "title": "For Today Only",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Learn the five precepts by saying them, the way Usui instructed.",
+      "steps": [
+        "Sit upright and bring your palms together in gassho.",
+        "Say, silently or aloud: for today only.",
+        "Then take them one at a time, with a breath between each: do not anger, do not worry, be humble, be honest in my work, be compassionate to myself and others.",
+        "Go through the whole set three times, a little slower each round.",
+        "Lower your hands and notice which of the five landed differently today."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r03",
+      "title": "Kenyoku: Dry Bathing",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "A traditional sweeping used to mark the start and end of practice.",
+      "steps": [
+        "Stand or sit upright with your hands resting on your thighs.",
+        "Place your right hand on your left shoulder. On a slow out-breath, sweep down across the chest to the right hip.",
+        "Place your left hand on your right shoulder and sweep down to the left hip on an out-breath.",
+        "Repeat once more with the right hand, left shoulder to right hip.",
+        "Hold your left arm out with the elbow near your side and the palm up. Sweep with your right hand from the left shoulder down the arm and off the fingertips.",
+        "Do the same on the other side, left hand sweeping from the right shoulder off the fingertips.",
+        "Finish with one more sweep down the left arm, then rest your hands and take three quiet breaths."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r04",
+      "title": "Hands on the Heart",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "The first hands-on position: warmth, weight, and your own breath under your palms.",
+      "steps": [
+        "Sit or lie down somewhere you will not be interrupted.",
+        "Place both hands flat on the centre of your chest, one slightly above the other. Let them rest with no pressure.",
+        "Breathe normally and feel the rise and fall under your palms.",
+        "Stay for about four minutes. Practitioners often describe warmth or a faint pulsing; feeling nothing is equally fine.",
+        "Slide your hands down to your lap, open your eyes, and sit for a few breaths."
+      ],
+      "safety": "This is a relaxation practice, not treatment for a heart or chest condition. Take anything that worries you to a clinician.",
+      "free": false
+    },
+    {
+      "id": "reiki.r05",
+      "title": "Hands on the Tanden",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "Settle attention in the lower abdomen, the centre used throughout Japanese practice.",
+      "steps": [
+        "Lie on your back with knees bent, or sit upright with your feet on the floor.",
+        "Rest both hands over the lower belly, a few finger-widths below the navel — the seika tanden.",
+        "Let the breath drop low so your hands move gently with it. Do not force or hold the breath.",
+        "Count ten unhurried breaths, then stop counting and simply rest your attention there.",
+        "Stay for around five minutes.",
+        "Before getting up, press your feet into the floor and take one fuller breath."
+      ],
+      "safety": "Keep the touch light. Skip this if your abdomen is sore or recently operated on, and go gently if you are pregnant.",
+      "free": false
+    },
+    {
+      "id": "reiki.r06",
+      "title": "Joshin Kokyu Ho: The Breath",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "The central breathing meditation of Japanese Reiki practice.",
+      "steps": [
+        "Sit upright with your hands resting palms up on your thighs and your eyes closed.",
+        "Breathe in slowly through the nose. In your attention, let the breath travel from the crown down to the lower abdomen.",
+        "Pause naturally, without holding, then breathe out and let the sense of it spread through the whole body and past the skin.",
+        "Keep the breath easy and quiet. If you feel light-headed, make it shorter and shallower.",
+        "Continue for about eight minutes, returning attention to the lower abdomen each time it drifts.",
+        "Finish with your hands in gassho for three breaths."
+      ],
+      "safety": "Never strain or hold the breath. If you feel dizzy, go back to normal breathing and stop.",
+      "free": false
+    },
+    {
+      "id": "reiki.r07",
+      "title": "Seishin Toitsu: Unifying the Mind",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Bring attention to one place and let it stay there without effort.",
+      "steps": [
+        "Sit upright with your palms together in gassho, or with both hands on the lower abdomen.",
+        "Breathe in and let your attention gather at the lower abdomen.",
+        "Breathe out and let it stay there rather than scatter.",
+        "Do not chase thoughts away. When you notice you have left, return — the returning is the practice.",
+        "Continue for six or seven minutes.",
+        "Lower your hands and sit quietly for a moment before moving."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r08",
+      "title": "Hatsurei Ho",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "The standard combined sequence: dry bathing, breath, unified mind, precepts.",
+      "steps": [
+        "Sit upright with your hands on your thighs and take a few settling breaths.",
+        "Perform kenyoku: three sweeps across the body, then one down each arm and a final sweep down the left arm.",
+        "Turn your palms up on your thighs and practise joshin kokyu ho for about five minutes.",
+        "Bring your palms together in gassho and continue with seishin toitsu, attention at the lower abdomen, for about four minutes.",
+        "Still in gassho, recite the five precepts once, slowly.",
+        "Repeat kenyoku to close.",
+        "Rest your hands, open your eyes, and sit for a few breaths."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r09",
+      "title": "Morning and Evening Gassho",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "Do exactly what the precepts instruct: gassho twice a day, and recite.",
+      "steps": [
+        "Pick a fixed moment — before your first drink in the morning, and after brushing your teeth at night.",
+        "Sit or stand upright and join your palms in front of your chest.",
+        "Recite the precepts silently: for today only, do not anger, do not worry, be humble, be honest in my work, be compassionate to myself and others.",
+        "In the morning, add one question: which of these will be hardest today?",
+        "In the evening, add one question: which of these did I actually keep?",
+        "Lower your hands without arguing with the answer."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r10",
+      "title": "Head Sequence",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "The traditional head positions for self-practice, taken slowly.",
+      "steps": [
+        "Sit where your elbows can rest on something, or lie down.",
+        "Cup both palms lightly over your closed eyes with the fingertips on the forehead. Rest for two to three minutes.",
+        "Move your hands to the temples, palms flat, fingers pointing back. Rest for two to three minutes.",
+        "Bring both hands to the back of the head, fingers curled around the base of the skull. Rest for two to three minutes.",
+        "Finish with one hand at the crown and one at the base of the skull for two minutes.",
+        "Lower your hands slowly and sit still before opening your eyes."
+      ],
+      "safety": "Let the hands rest — never press on the eyes. Keep pressure off the neck if you have any neck injury.",
+      "free": false
+    },
+    {
+      "id": "reiki.r11",
+      "title": "Front of the Body",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "Move down the front in the traditional order: throat, chest, solar plexus, lower belly.",
+      "steps": [
+        "Lie on your back with knees bent, or sit well supported.",
+        "Rest your hands lightly just above the collarbones, at the base of the throat. Stay three minutes.",
+        "Move both hands to the centre of the chest. Stay three minutes.",
+        "Move to the solar plexus, just below the ribs. Stay three minutes.",
+        "Move to the lower abdomen, below the navel. Stay four minutes.",
+        "Breathe normally throughout and let each change of position be unhurried.",
+        "Finish with both hands on the lower belly for a last minute."
+      ],
+      "safety": "Rest the hands above the throat rather than pressing on it. Go lighter or skip positions if you are pregnant, recovering from surgery, or sore.",
+      "free": false
+    },
+    {
+      "id": "reiki.r12",
+      "title": "One Precept, All Day",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Take a single precept and let it follow you through the day.",
+      "steps": [
+        "Sit in gassho and read the five precepts through once.",
+        "Choose one. The one you would rather avoid is usually the right one.",
+        "Ask where it will be tested today, and name one specific moment: a meeting, a message, a person.",
+        "Sit with that moment for five minutes without solving it.",
+        "Say the precept once more with 'for today only' in front of it.",
+        "When the moment arrives later, say the precept silently before you respond."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r13",
+      "title": "Learning to Notice",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "A first pass at sensing, with no interpretation attached.",
+      "steps": [
+        "Sit or lie down, rub your palms together briefly, then let them still.",
+        "Hold your hands a few centimetres above your chest and wait thirty seconds without deciding anything.",
+        "Name plainly what is there: warmth, coolness, tingling, pressure, or nothing.",
+        "Move to the belly, then one shoulder, then the other, waiting thirty seconds at each.",
+        "Do not label any sensation as a problem. Traditional teaching is explicit that every practitioner reads these impressions differently.",
+        "Finish with both hands resting on the lower belly for a minute."
+      ],
+      "safety": "This is a sensing exercise, not a diagnosis. Nothing you feel here tells you anything about your health — take health questions to a clinician.",
+      "free": false
+    },
+    {
+      "id": "reiki.r14",
+      "title": "Full Self-Session, Seated",
+      "group": "deep",
+      "minutes": 25,
+      "purpose": "A complete pass through the traditional positions, head to lower back.",
+      "steps": [
+        "Begin with kenyoku and a minute of gassho.",
+        "Head: eyes, temples, back of the head — about two minutes each.",
+        "Front: base of the throat, chest, solar plexus, lower abdomen — about two minutes each.",
+        "Back: reach behind to the mid-back, then the lower back and kidney area — about two minutes each, or lean against a cushion if reaching is uncomfortable.",
+        "Return both hands to the lower abdomen for two minutes to close.",
+        "Finish with kenyoku and three quiet breaths."
+      ],
+      "safety": "Skip any reach that strains your shoulders or back. If pregnant or unwell, shorten it and keep the touch very light.",
+      "free": false
+    },
+    {
+      "id": "reiki.r15",
+      "title": "Hatsurei Ho, Long Sit",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "Tomita Kaiji's 1933 instruction, practised at the length he recommended.",
+      "steps": [
+        "Sit in seiza or upright on a cushion in a quiet room, and settle until you are genuinely still.",
+        "Join your hands in gassho, shoulders dropped, fingers lightly touching, eyes closed.",
+        "Rest your attention on the palms of your hands and let it stay there.",
+        "Keep going past the point where it gets boring. That stretch is the practice.",
+        "If sensations arise in the hands, note them and carry on. If none arise, carry on the same.",
+        "Continue for around thirty minutes, then lower your hands slowly.",
+        "Sit for a full minute before standing. Tomita recommended repeating this on five consecutive days."
+      ],
+      "safety": "Do not kneel in seiza with knee or ankle problems — use a chair. Come out of the posture and move if your legs go numb.",
+      "free": false
+    },
+    {
+      "id": "reiki.r16",
+      "title": "Waka Contemplation",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "Sit with a poem, the way joshin ho was traditionally practised.",
+      "steps": [
+        "Sit upright in gassho and take a few settling breaths.",
+        "Read this waka of the Meiji Emperor, used in traditional practice: as a great sky in clear light green, I wish my heart would be as vast.",
+        "Read it a second time, slowly, aloud.",
+        "Then stop reading and hold only the image — an open sky with nothing in it.",
+        "When thoughts crowd in, return to the sky rather than to the words.",
+        "Sit for about ten minutes, then lower your hands to close."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r17",
+      "title": "Seiza and Posture",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "Build the upright, unforced sitting the rest of the practice rests on.",
+      "steps": [
+        "Kneel in seiza on a cushion, or sit on a chair with both feet flat and your back off the backrest.",
+        "Stack the spine: hips a little forward of the knees, ribs over hips, crown lightly lifted.",
+        "Drop the shoulders. Let the arms hang and the hands rest on the thighs.",
+        "Scan for effort — jaw, throat, shoulders, hands — and release each one.",
+        "Hold the posture for eight to ten minutes, breathing normally, adjusting rather than enduring.",
+        "Come out slowly and stretch your legs before standing."
+      ],
+      "safety": "Skip seiza with any knee, ankle or hip problem and use a chair instead. Never sit through numbness or sharp pain.",
+      "free": false
+    },
+    {
+      "id": "reiki.r18",
+      "title": "Writing the Precepts",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "The traditional copying practice: write the precepts out by hand.",
+      "steps": [
+        "Sit at a table with paper and a pen, and put the phone somewhere else.",
+        "Write the opening lines: the secret of inviting happiness through many blessings, the spiritual medicine for all illness.",
+        "Write 'for today only', then each of the five precepts on its own line.",
+        "Write the whole set out three times, slowly enough that the letters stay legible.",
+        "Read the last copy back to yourself once.",
+        "Leave the page somewhere you will see it tomorrow."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r19",
+      "title": "Holding Someone in Mind",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "The traditional distance practice, offered here as sitting with someone in mind.",
+      "steps": [
+        "Sit in gassho and settle with a few slow breaths.",
+        "Bring one person to mind. Picture them plainly: where they are, what their day is like.",
+        "Rest your hands on your own lower abdomen and keep them in your attention.",
+        "Say the precepts once, silently, including that person in the last one.",
+        "Sit with the image for about eight minutes without asking for any outcome.",
+        "Lower your hands and let the image go."
+      ],
+      "safety": "Distance practice is traditionally taught at the second level with a teacher present. Offered here as reflection only — it is not that training, and it is not treatment for anyone.",
+      "free": false
+    },
+    {
+      "id": "reiki.r20",
+      "title": "Byosen, Full Pass",
+      "group": "deep",
+      "minutes": 18,
+      "purpose": "A slow scan of the whole body, noticing without concluding.",
+      "steps": [
+        "Lie down somewhere warm and take a minute in stillness.",
+        "Starting at the head, hold your hands lightly on or just above each area for about a minute: head, throat, chest, solar plexus, belly, hips.",
+        "At each place, name the sensation in one plain word — warm, cool, buzzing, still, nothing.",
+        "Where something draws you, stay an extra minute or two. That is all: stay, do not analyse.",
+        "Return to the lower abdomen and rest both hands there for three minutes.",
+        "Get up slowly."
+      ],
+      "safety": "Sensing is not diagnosis. If you find something physically unusual — a lump, a persistent pain — that is a reason to see a doctor, not to keep scanning.",
+      "free": false
+    },
+    {
+      "id": "reiki.r21",
+      "title": "Lying Session Before Sleep",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "A slow hands-on pass in bed, designed to end in sleep.",
+      "steps": [
+        "Lie on your back in bed with the lights low.",
+        "Rest both hands over your eyes for three minutes.",
+        "Move them to the centre of the chest for four minutes.",
+        "Move them to the solar plexus for four minutes.",
+        "Move them to the lower belly for whatever time is left.",
+        "Do not set a timer or aim to finish. Falling asleep with your hands there is a fine ending."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r22",
+      "title": "Hands Over Tired Eyes",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "A short rest for eyes worn out by screens.",
+      "steps": [
+        "Sit with your elbows propped on a table or on cushions.",
+        "Warm your palms by rubbing them together for a few seconds.",
+        "Cup the palms lightly over closed eyes so no light gets in, without touching the eyeballs.",
+        "Breathe normally and let the darkness be the whole point.",
+        "Stay for six or seven minutes, then lower your hands and open your eyes slowly, looking at something far away."
+      ],
+      "safety": "Rest the hands over the sockets — never press on the eyes. Skip this after eye surgery or with an eye infection.",
+      "free": false
+    },
+    {
+      "id": "reiki.r23",
+      "title": "Evening Reflection",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "Close the day against the precepts, kindly.",
+      "steps": [
+        "Sit in gassho and take three slow breaths.",
+        "Walk through the day from waking until now, without commentary.",
+        "Ask each precept once: was there anger, worry, pride, dishonesty in my work, unkindness — to others or to myself?",
+        "Where the answer is yes, name it in one sentence and move on. No arguing your case either way.",
+        "Say 'for today only' once more, meaning tomorrow.",
+        "Lower your hands and go to bed."
+      ],
+      "safety": "If reviewing the day reliably turns into self-criticism or low mood, leave this one and use a plain hands-on practice instead.",
+      "free": false
+    },
+    {
+      "id": "reiki.r24",
+      "title": "Hands on the Belly at 3am",
+      "group": "restorative",
+      "minutes": 15,
+      "purpose": "Something to do with your hands and attention on a restless night.",
+      "steps": [
+        "Stay lying down. Do not check the time and do not pick up the phone.",
+        "Rest both hands over the lower belly, one on top of the other.",
+        "Let the out-breath become slightly longer than the in-breath, without forcing either.",
+        "Count ten breaths, then start again at one. Lose count as often as you like.",
+        "If the mind races, name what it is doing — planning, replaying — and come back to your hands.",
+        "Keep going as long as it takes. There is nothing here to finish."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "reiki.r25",
+      "title": "Two-Minute Gassho",
+      "group": "restorative",
+      "minutes": 2,
+      "purpose": "The whole practice compressed, for a doorway or a parked car.",
+      "steps": [
+        "Wherever you are, stop and stand or sit upright.",
+        "Bring your palms together in front of your chest.",
+        "Take five slow breaths with your attention where the middle fingers meet.",
+        "Say once, silently: for today only.",
+        "Lower your hands and go on with what you were doing."
+      ],
+      "safety": "",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Stiene, Bronwen & Frans, The Japanese Art of Reiki, 2005 — the five elements of the system, the precept translation, kenyoku ho and hatsurei ho, and the role of symbols and mantras.",
+    "International House of Reiki (ihreiki.com), 'Reiki Precepts' and 'Five Elements of Reiki', accessed 2026 — the English and romanized Japanese precept text, and the Shoden/Okuden/Shinpiden level structure.",
+    "International House of Reiki, 'Reiki Meditations and Techniques', accessed 2026 — kenyoku ho hand sweeps, joshin kokyu ho, seishin toitsu, and the Tomita hatsurei ho translation.",
+    "Tomita Kaiji, Reiki To Jinjutsu (Reiki and the Benevolent Art of Healing), 1933, via IHR translation — the original hatsurei ho instructions, the thirty-minute sit and five-day repetition, and the note that unfelt sensation does not change the practice.",
+    "Stiene, Frans, 'What is Byosen Reikan Ho?', International House of Reiki, 2012 — the kanji breakdown of byosen reikan ho, hibiki as echo, and the caution that impressions are filtered by the practitioner.",
+    "Usui Mikao memorial stone, Saihoji temple, Suginami, Tokyo, 1927 — Usui's dates, background and the figure of roughly two thousand students.",
+    "International House of Reiki, 'Usui Mikao', accessed 2026 — biography: birth in Taniai, Gifu, 1865; Tendai upbringing; martial arts training; the 1922 Aoyama dojo.",
+    "National Center for Complementary and Integrative Health (NCCIH), 'Reiki: What You Need To Know', accessed 2026 — the evidence framing: Reiki has not been clearly shown to be effective for any health purpose, research quality is low and results inconsistent, no documented harms.",
+    "International Center for Reiki Training (reiki.org), 'What is Reiki?', accessed 2026 — the training levels and the teacher-given attunement or placement.",
+    "Yamaguchi, Tadao, Light on the Origins of Reiki, 2007, and Komyo ReikiDo (Hyakuten Inamoto) — the Hayashi Chujiro to Yamaguchi Chiyoko lineage and the emphasis on keeping self-practice simple: place your hands, surrender, smile."
+  ],
+  "subtitle": "the hands-on Japanese practice",
+  "pronunciation": "RAY-kee",
+  "origin": "Reiki (霊気) — the system founded by Usui Mikao in Japan in the 1920s."
+}

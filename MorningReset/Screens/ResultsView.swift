@@ -26,22 +26,32 @@ struct ResultsView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: appState.activePath, intensity: 0.45)
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
+                if let sym = appState.activePath?.symbol {
+                    Image(systemName: sym)
+                        .font(.system(size: 56, weight: .ultraLight))
+                        .foregroundStyle(DS.accent.opacity(0.7))
+                        .padding(.bottom, DS.Space.lg)
+                }
+
                 // Mode — the diagnosis, clean and large
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(result.mode.uppercased())
-                        .font(.system(size: 42, weight: .light, design: .serif))
+                        .font(.system(size: 56, weight: .light, design: .serif))
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
 
                     Text(result.meaning)
                         .font(.callout)
                         .foregroundStyle(DS.textSecondary)
                         .lineSpacing(3)
+                        .multilineTextAlignment(.center)
                 }
+                .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.lg)
 
@@ -50,6 +60,8 @@ struct ResultsView: View {
                     .font(.system(.body, design: .serif))
                     .italic()
                     .foregroundStyle(DS.textDim)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.xl)
 
@@ -61,12 +73,7 @@ struct ResultsView: View {
                 Button(L10n.text(en: "Begin", tr: "Başla", es: "Comenzar")) {
                     appState.advanceFromResults()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.bottom, DS.Space.xl)
                 .accessibilityIdentifier("results.continueButton")
             }
@@ -82,11 +89,11 @@ struct ResultsView: View {
         let win = appState.ritualPresentation
         return HStack(spacing: DS.Space.md) {
             Image(systemName: win.symbol)
-                .font(.system(size: 22))
+                .font(.system(size: 28))
                 .foregroundStyle(DS.accent)
-                .frame(width: 32)
+                .frame(width: 40)
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.text(en: "YOUR FIRST WIN", tr: "FIRST WIN'İN", es: "TU FIRST WIN"))
                     .font(.system(size: 9, weight: .semibold))
                     .kerning(1.2)
@@ -102,9 +109,9 @@ struct ResultsView: View {
             }
             Spacer()
         }
-        .padding(DS.Space.md)
+        .padding(DS.Space.lg)
         .background(DS.surface)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(RoundedRectangle(cornerRadius: 16).stroke(DS.border, lineWidth: DS.hairline))
         .accessibilityIdentifier("results.committedWin")
     }

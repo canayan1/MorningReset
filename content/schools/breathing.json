@@ -1,0 +1,493 @@
+{
+  "id": "breathing",
+  "name": "Pranayama",
+  "tagline": "Change your breathing, change your state — in one minute or twenty.",
+  "overview": "Conscious breathing is the deliberate use of breath rate, depth and rhythm to shift how you feel. It draws on two lineages: pranayama, the detailed breath discipline developed within Indian yogic traditions over centuries, and modern respiratory science, which has measured what slowing the breath actually does to heart rhythm, brain activity and mood. This school teaches both, plainly and without mystique. Almost everything here needs nothing but a chair and a few quiet minutes.",
+  "kind": "evidence",
+  "framing_note": "Research consistently links slow breathing — roughly four to ten breaths a minute, with the exhale longer than the inhale — with higher heart rate variability and reported calm, and a 2023 randomised study found five minutes a day of exhale-focused breathing improved mood more than the same amount of mindfulness meditation. That is a real but modest effect on how you feel. These practices are offered experientially, as skills for working with your own state — not as treatment for any medical or psychological condition.",
+  "teachings": [
+    {
+      "id": "breathing.t1",
+      "title": "Your breath is a dial on your nervous system",
+      "body": "Breathing is the one part of the autonomic nervous system you can take over at will. Heart rate naturally rises a little on the in-breath and falls on the out-breath — a rhythm physiologists call respiratory sinus arrhythmia. When you slow your breathing to roughly four to ten breaths a minute, that rhythm becomes large and regular, and reviews of the research link it with higher heart rate variability, more alpha activity in the brain, and a reported shift toward calm. Nothing mystical is required. You are feeding a slower, steadier signal into a system that reads breathing as information about how safe you are. The dial turns both ways: faster and shallower raises alertness, slower and fuller settles you down."
+    },
+    {
+      "id": "breathing.t2",
+      "title": "The exhale is the calming half",
+      "body": "Inhaling gently speeds the heart; exhaling gently slows it. That is why nearly every calming breath practice lengthens the out-breath rather than the in-breath. A simple ratio — in for four, out for eight — is enough to feel it. In a 2023 randomised study at Stanford, five minutes a day of 'cyclic sighing' (two inhales through the nose, then one long slow exhale) improved mood and lowered breathing rate more than an equal amount of mindfulness meditation. The double inhale is not decorative: sighing is a built-in brainstem reflex that reinflates collapsed air sacs in the lungs. If you remember one thing from this whole school, make it this — when in doubt, make the exhale longer than the inhale."
+    },
+    {
+      "id": "breathing.t3",
+      "title": "Nose first, mouth when you need it",
+      "body": "The nose is built for breathing and the mouth is not. Nasal passages warm, humidify and filter incoming air, and add nitric oxide produced in the paranasal sinuses. Nasal airflow also creates more resistance, which naturally slows and deepens each breath — one reason almost all traditional pranayama is done through the nose. Researchers reviewing slow breathing have proposed that airflow across mechanoreceptors in the nasal vault is part of how the practice reaches the brain at all. Practically: breathe in through the nose whenever you can, in practice and in ordinary life. Exhaling through the mouth is fine and sometimes better — a long sighing exhale can feel like a genuine release. Just do not let the mouth become your default."
+    },
+    {
+      "id": "breathing.t4",
+      "title": "Pranayama: the older map",
+      "body": "Long before laboratories measured heart rate variability, Indian yogic traditions built a detailed system of breath practice called pranayama — from prana, life force, joined with ayama, extension, or yama, restraint. Its three components are puraka (inhalation), rechaka (exhalation) and kumbhaka (retention). The fifteenth-century Hatha Yoga Pradipika sets out eight classical practices, and B.K.S. Iyengar's Light on Pranayama (1981) remains the most careful modern manual. The families you will meet here: balancing practices like nadi shodhana, alternate-nostril breathing said to clear the subtle channels; sound practices like ujjayi, the throat-narrowed 'victorious' breath, and bhramari, named for the humming of the black bee; and forceful cleansing practices like kapalabhati and bhastrika. Treat the tradition's language as a map of experience, not a claim about anatomy."
+    },
+    {
+      "id": "breathing.t5",
+      "title": "Practise safely, and never force",
+      "body": "Breathwork is mostly gentle, but it is not nothing. Ground rules: never strain. If a count feels like a fight, shorten it. Stop and breathe normally if you feel dizzy, tingly, nauseous or oddly emotional — that usually means you are over-breathing, and it passes. Never do breath holds or rapid breathing in or near water, while driving, or standing up. Practise seated or lying down. Leave two to three hours after a large meal. Forceful practices like kapalabhati and bhastrika, and long retentions, are not appropriate during pregnancy, or with epilepsy or a seizure history, uncontrolled high blood pressure, heart or respiratory conditions, glaucoma, a hernia, or recent abdominal or chest surgery. If any of that applies, stay with slow unforced breathing and check with your doctor."
+    }
+  ],
+  "routines": [
+    {
+      "id": "breathing.r01",
+      "title": "Three Physiological Sighs",
+      "group": "starter",
+      "minutes": 1,
+      "purpose": "The fastest way to take the edge off — a reset you can do anywhere in under a minute.",
+      "steps": [
+        "Sit or stand however you are. Let your shoulders drop.",
+        "Inhale through your nose until your lungs feel about three-quarters full.",
+        "On top of that, take a second short sniff through the nose to top them right up.",
+        "Let a long, slow exhale out through your mouth until your lungs are empty. Let it be audible if it wants to be.",
+        "Take one ordinary breath, then repeat the double-inhale and long exhale twice more.",
+        "Notice where you are now, before you go back to what you were doing."
+      ],
+      "safety": "",
+      "free": true
+    },
+    {
+      "id": "breathing.r02",
+      "title": "The Longer Out-Breath",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "Learn the 1:2 ratio — the single most useful pattern in the whole school.",
+      "steps": [
+        "Sit upright with your feet on the floor and your hands resting anywhere comfortable.",
+        "Breathe in through the nose for a count of four.",
+        "Breathe out through the nose for a count of eight, slowly and evenly — no squeezing at the end.",
+        "If eight feels like a strain, use three in and six out. The ratio matters more than the numbers.",
+        "Keep this going for about four minutes, roughly twenty rounds.",
+        "Let the last few breaths find their own length, and notice the difference."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r03",
+      "title": "Belly Breathing",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Retrain the diaphragm so full, low breathing becomes your default.",
+      "steps": [
+        "Lie on your back with knees bent, or sit with your back supported.",
+        "One hand on your chest, one on your belly just below the navel.",
+        "Breathe in slowly through the nose and let the lower hand rise first. The upper hand should barely move.",
+        "Let the exhale go without effort — the belly falls on its own.",
+        "Aim for roughly six seconds in and six out, but do not chase the count.",
+        "Continue for five minutes. If your chest keeps leading, breathe more slowly rather than more deeply."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r04",
+      "title": "Just Watching",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Breath awareness with nothing to change — the base practice underneath everything else.",
+      "steps": [
+        "Sit comfortably and close your eyes, or lower your gaze to the floor.",
+        "Do not alter your breathing in any way. Find where you feel it most clearly — nostrils, throat, chest or belly.",
+        "Rest your attention there and follow one full cycle: in, the turn, out, the pause.",
+        "When your mind wanders — it will — note where it went and come back to the same spot.",
+        "Continue for three minutes.",
+        "Before you finish, notice whether your breathing changed on its own while you watched it."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r05",
+      "title": "Nose Only",
+      "group": "starter",
+      "minutes": 2,
+      "purpose": "A short reset that re-establishes nasal breathing after a stretch of mouth breathing.",
+      "steps": [
+        "Close your mouth and keep it closed for the whole practice.",
+        "Breathe in and out through the nose only, at whatever pace feels easy.",
+        "For the first minute, just let the airflow be smooth and quiet — no whistling, no effort.",
+        "For the second minute, slow it down: in for four, out for six.",
+        "If one side feels blocked, do not force it. Breathe through whichever side is open.",
+        "Finish by letting the breath return to normal, mouth still closed."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r06",
+      "title": "Box Breathing",
+      "group": "core",
+      "minutes": 5,
+      "purpose": "Equal in, hold, out, hold — a steady, focusing pattern often used for composure under pressure.",
+      "steps": [
+        "Sit upright. Exhale fully to empty.",
+        "Inhale through the nose for a count of four.",
+        "Hold with the lungs comfortably full for four. Keep your throat and face soft — do not clamp down.",
+        "Exhale through the nose for four.",
+        "Hold with the lungs empty for four, then begin the next round.",
+        "Continue for about five minutes. If four is too long, drop to three all the way round.",
+        "Finish by letting go of the count for a few natural breaths."
+      ],
+      "safety": "Includes short breath holds. Keep them comfortable, never strained. Shorten or skip the holds if you feel dizzy or lightheaded. Do not practise while driving, standing, or in or near water. Skip the holds if you are pregnant or have a heart, respiratory or seizure condition.",
+      "free": false
+    },
+    {
+      "id": "breathing.r07",
+      "title": "Coherent Breathing",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Breathe at about six a minute — the rate most closely associated in research with large, regular heart-rate rhythms.",
+      "steps": [
+        "Sit upright and comfortable, hands relaxed, eyes soft or closed.",
+        "Breathe in through the nose for five seconds.",
+        "Breathe out through the nose for five seconds. No holds at either end — one breath flows straight into the next.",
+        "Keep it smooth and unforced. This should feel almost too easy; it is not deep breathing.",
+        "That is six breaths a minute. Continue for ten minutes, around sixty breaths.",
+        "If five seconds feels rushed, use six in and six out — five breaths a minute is equally good.",
+        "Sit still for a moment at the end before you move."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r08",
+      "title": "The 4-7-8 Breath",
+      "group": "core",
+      "minutes": 4,
+      "purpose": "Andrew Weil's adaptation of a pranayama pattern, built on a long exhale and often used before sleep.",
+      "steps": [
+        "Sit or lie down. Rest the tip of your tongue just behind your upper front teeth.",
+        "Exhale completely through the mouth.",
+        "Close the mouth and inhale quietly through the nose for a count of four.",
+        "Hold the breath for a count of seven, keeping your shoulders and jaw loose.",
+        "Exhale through the mouth for a count of eight, letting it be audible.",
+        "That is one round. Do four rounds and no more while you are new to it.",
+        "If seven feels long, speed the whole count up — what matters is keeping the 4:7:8 proportion."
+      ],
+      "safety": "Contains a seven-count breath hold. Start with four rounds only. Stop if you feel lightheaded, and never practise standing, driving, or in or near water. Not recommended during pregnancy, or with epilepsy, heart or respiratory conditions, unless your doctor has cleared it.",
+      "free": false
+    },
+    {
+      "id": "breathing.r09",
+      "title": "Nadi Shodhana — Alternate Nostril",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "The classical balancing practice, done here without any retention.",
+      "steps": [
+        "Sit upright. Raise your right hand and fold the index and middle fingers into the palm (Vishnu mudra), leaving thumb, ring and little fingers free.",
+        "Close the right nostril with the thumb and exhale fully through the left.",
+        "Inhale through the left nostril, slowly and smoothly.",
+        "Close the left nostril with the ring finger, release the thumb, and exhale through the right.",
+        "Inhale through the right, then close it and exhale through the left. That is one full round.",
+        "Keep both halves the same length, and let each exhale be at least as long as its inhale.",
+        "Continue for about eight minutes, then release the hand and breathe normally for a minute."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r10",
+      "title": "Ujjayi — Ocean Breath",
+      "group": "core",
+      "minutes": 7,
+      "purpose": "The 'victorious' throat breath — a soft ocean sound that naturally slows and steadies the breath.",
+      "steps": [
+        "Sit upright, spine long, shoulders down.",
+        "Open your mouth and exhale as if fogging a mirror. Feel the slight narrowing at the back of your throat.",
+        "Now close your mouth and make that same narrowing while breathing in and out through the nose.",
+        "You should hear a soft, continuous sound like distant surf — quiet enough that someone across the room would not notice.",
+        "Keep the sound even in volume from the start of the breath to the end. Unevenness means you are pushing.",
+        "Continue for seven minutes, keeping face, jaw and tongue soft throughout.",
+        "Release the throat and sit with normal breathing for a few breaths."
+      ],
+      "safety": "Ease off if your throat feels scratchy or strained. Ujjayi should stay quiet and effortless, never rasping.",
+      "free": false
+    },
+    {
+      "id": "breathing.r11",
+      "title": "Bhramari — Humming Bee Breath",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "A long, vibrating hum on the exhale — a practice many people find unusually settling.",
+      "steps": [
+        "Sit upright somewhere you will not be overheard, so you can hum freely.",
+        "Rest your thumbs very lightly over the small flaps of cartilage at the front of your ears, fingers resting softly on your head. Or simply close your eyes.",
+        "Inhale through the nose, unhurried and full.",
+        "Exhale through the nose while humming a low, steady 'mmm' — mouth closed, jaw loose.",
+        "Let the hum last the whole exhale, and feel the vibration in your face, teeth and skull.",
+        "Do about ten rounds over six minutes, taking an ordinary breath between them whenever you want one.",
+        "Sit in silence for thirty seconds at the end and notice the quiet the humming leaves behind."
+      ],
+      "safety": "Press only very lightly on the ear cartilage, and never push anything into the ear canal. Skip the ear closure entirely if you have ear pain, an infection, or any ear condition.",
+      "free": false
+    },
+    {
+      "id": "breathing.r12",
+      "title": "Walking Breath",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Pair the breath to your steps so an ordinary walk becomes a slow-breathing practice.",
+      "steps": [
+        "Start walking at an easy, even pace on flat ground. Breathe through the nose.",
+        "Count your steps across one inhale and one exhale to find your natural rhythm.",
+        "Now set a pattern: inhale for three steps, exhale for four.",
+        "Once that feels smooth, lengthen the exhale — three steps in, five or six out.",
+        "If you get breathless, slow your walking pace rather than shortening the exhale.",
+        "Keep it going for around ten minutes, then let the breath uncouple from your steps for the last couple of minutes.",
+        "On slopes, adjust the counts rather than forcing the old pattern."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r13",
+      "title": "The Breath Ladder",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Climb the exhale count one rung at a time to gently extend your comfortable breathing range.",
+      "steps": [
+        "Sit upright and take a few ordinary breaths to settle.",
+        "Round one: inhale four, exhale four.",
+        "Round two: inhale four, exhale five. Round three: inhale four, exhale six.",
+        "Keep adding one count to the exhale each round — seven, eight, nine — while the inhale stays at four.",
+        "Stop climbing the moment the exhale takes effort or the next inhale arrives as a gasp. That is your ceiling for today.",
+        "Stay at your ceiling for three or four rounds, then climb back down one count at a time to four.",
+        "Finish with a minute of ordinary breathing."
+      ],
+      "safety": "The ladder is for finding your comfortable edge, not passing it. If the following inhale feels rushed or desperate, you have gone one rung too far — come back down.",
+      "free": false
+    },
+    {
+      "id": "breathing.r14",
+      "title": "Cyclic Sighing",
+      "group": "deep",
+      "minutes": 5,
+      "purpose": "The five-minute exhale-focused protocol tested in the 2023 Stanford breathwork study.",
+      "steps": [
+        "Sit or lie down somewhere you will not be interrupted. Set a timer for five minutes.",
+        "Inhale through the nose until your lungs are comfortably full.",
+        "Take a second, shorter sniff through the nose on top of it, filling the lungs completely.",
+        "Exhale slowly and fully through the mouth until empty. Take your time — the exhale should outlast both inhales together.",
+        "Begin the next cycle straight away. There is no hold and no counting.",
+        "Continue for the full five minutes, letting each exhale get a little slower than the last.",
+        "When the timer goes, breathe normally for a minute before you move."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r15",
+      "title": "Find Your Resonance Rate",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Test a range of slow rates to find the one your body settles into most easily.",
+      "steps": [
+        "Sit upright and comfortable. You will spend two minutes at each of five rates.",
+        "Rate one: six seconds in, six seconds out — five breaths a minute. Note how it feels.",
+        "Rate two: five and a half in, five and a half out.",
+        "Rate three: five in, five out — six breaths a minute.",
+        "Rate four: four and a half in, four and a half out.",
+        "Rate five: seven in, seven out.",
+        "Pick the rate that felt smoothest and least effortful — not the slowest one you could manage. Most people land somewhere between four and a half and seven breaths a minute.",
+        "Spend the remaining time at your chosen rate, and use it as your default for slow-breathing practice."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r16",
+      "title": "Kapalabhati — Skull-Shining Breath",
+      "group": "deep",
+      "minutes": 6,
+      "purpose": "A classical cleansing practice of short, sharp exhales that most people find bright and wakening.",
+      "steps": [
+        "Sit upright on a firm seat, spine tall, on an empty stomach.",
+        "Take two or three easy full breaths, then inhale to about three-quarters full.",
+        "Exhale in a short, sharp burst through the nose by snapping the lower belly inward.",
+        "Let the inhale happen passively — the belly releases and air returns on its own. Do not pull it in.",
+        "Do twenty pumps at roughly one per second, then stop and breathe normally for a full minute.",
+        "That is one round. Do three rounds, resting completely between them.",
+        "Finish by sitting still for two minutes with entirely natural breathing."
+      ],
+      "safety": "A forceful practice. Stop immediately if you feel dizzy, lightheaded, tingling in the hands or face, or any pain. Never practise standing, while driving, or in or near water. Avoid entirely if you are pregnant, or if you have epilepsy or a seizure history, uncontrolled high blood pressure, heart disease or a recent cardiac event, glaucoma, a hernia, ulcers, or recent abdominal or chest surgery. Practise on an empty stomach, and learn it from a qualified teacher if you can.",
+      "free": false
+    },
+    {
+      "id": "breathing.r17",
+      "title": "Bhastrika — Bellows Breath",
+      "group": "deep",
+      "minutes": 6,
+      "purpose": "Forceful in and out through the nose, traditionally used to build heat and alertness.",
+      "steps": [
+        "Sit tall on a firm seat, on an empty stomach. Keep your face, jaw and shoulders relaxed.",
+        "Unlike kapalabhati, both the inhale and the exhale here are active and equal.",
+        "Breathe in forcefully through the nose and out forcefully through the nose, driving the movement from the diaphragm and lower ribs.",
+        "Do ten breaths at roughly one per second, keeping each breath the same size.",
+        "Stop, let the breath settle, and sit quietly for a full minute of normal breathing.",
+        "That is one round. Do three rounds at most, resting completely between them.",
+        "Build up from ten breaths per round over weeks, never within a single session."
+      ],
+      "safety": "A forceful, hyperventilating practice — treat it with more caution than anything else in this school. Stop at once if you feel dizzy, faint, tingly or nauseous. Never practise standing, while driving, or in or near water. Avoid entirely if you are pregnant, or if you have epilepsy or a seizure history, uncontrolled high blood pressure, heart or respiratory conditions, glaucoma, an aneurysm, a hernia, ulcers, or recent surgery. Best learned in person from a qualified teacher.",
+      "free": false
+    },
+    {
+      "id": "breathing.r18",
+      "title": "Wake-Up Breath",
+      "group": "deep",
+      "minutes": 4,
+      "purpose": "A short upright sequence for the first minutes of the day, for alertness without a jolt.",
+      "steps": [
+        "Stand or sit tall, ideally near a window or in daylight.",
+        "Take thirty seconds of ordinary nasal breathing to arrive.",
+        "Now breathe in through the nose for three counts and out for three counts, brisk but unforced, for one minute.",
+        "Shift to a slightly longer inhale: in for four, out for three, for one minute. This is the mirror image of the calming ratio and gently raises alertness.",
+        "For the last thirty seconds, add a slow arm reach overhead on each inhale if you like.",
+        "Finish with three slow even-count breaths to settle, then carry that steadiness with you."
+      ],
+      "safety": "Stop and breathe normally if you feel lightheaded. If you are pregnant or have a heart, respiratory or seizure condition, use only the even-count breathing and skip the inhale-weighted section.",
+      "free": false
+    },
+    {
+      "id": "breathing.r19",
+      "title": "Nadi Shodhana with Retention",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "The classical sahita form — alternate nostrils with a short, comfortable hold after each inhale.",
+      "steps": [
+        "Only take this on once plain nadi shodhana feels completely easy.",
+        "Set the right hand in Vishnu mudra. Establish four rounds of alternate-nostril breathing with no holds, at four in and eight out.",
+        "Now add the hold: inhale left for four, close both nostrils and hold for four, exhale right for eight.",
+        "Inhale right for four, hold for four, exhale left for eight. That is one round.",
+        "Keep face, throat and shoulders completely soft during the hold. If they tighten, the hold is too long.",
+        "Do ten rounds over about eight minutes.",
+        "Release the hand and sit for two minutes of ordinary breathing before you stand."
+      ],
+      "safety": "Includes breath retention. Keep every hold short and easy, and shorten or drop it if the exhale afterwards feels rushed. Do not practise while driving, standing, or in or near water. Retention is not recommended during pregnancy, or with epilepsy, uncontrolled high blood pressure, glaucoma, or heart or respiratory conditions.",
+      "free": false
+    },
+    {
+      "id": "breathing.r20",
+      "title": "Twenty Minutes at Six",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "A long, quiet sit at your resonance rate — the deepest form of the slow-breathing practice.",
+      "steps": [
+        "Sit upright and supported so you can stay still for twenty minutes without fidgeting. Set a quiet timer.",
+        "Use your resonance rate if you have found it, or five seconds in and five seconds out.",
+        "Breathe through the nose with no holds, each breath flowing straight into the next.",
+        "For the first five minutes, count the breaths to lock the rhythm in.",
+        "For the middle ten, stop counting and rest your attention on the feeling of air at the nostrils.",
+        "If the rhythm drifts or you lose track, do not restart or correct sharply — just ease back toward the pace.",
+        "For the last five minutes, let the breath lengthen on its own if it wants to.",
+        "Sit still for a minute after the timer before you stand up."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r21",
+      "title": "Wind-Down for Sleep",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "A lights-out practice built entirely on the long exhale, for the ten minutes before sleep.",
+      "steps": [
+        "Lie on your back or your side in bed, lights off, phone away.",
+        "Take three ordinary breaths and let your body sink further into the mattress on each exhale.",
+        "Now breathe in through the nose for four and out through the nose for eight.",
+        "On each exhale, let one region go slack: jaw, then shoulders, then hands, then hips, then legs.",
+        "After twenty or so rounds, stop counting and simply let the exhale be longer than the inhale, unmeasured.",
+        "If you lose track because you are drifting off, that is the practice working. Let it go."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r22",
+      "title": "Weighted Belly Breath",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "Lie down with a light weight on the belly to give the diaphragm something to feel.",
+      "steps": [
+        "Lie on your back, knees bent or a cushion under them, and place a paperback book or a folded towel on your lower belly.",
+        "Breathe in through the nose and lift the weight with your belly, not your chest.",
+        "Let the exhale lower the weight slowly, all the way down.",
+        "Aim for a slow even rhythm, around five or six seconds each way.",
+        "Keep the weight light. If it makes you strain, take it off — the point is feedback, not resistance training.",
+        "Continue for eight minutes, then remove the weight and take three breaths noticing the difference."
+      ],
+      "safety": "Use something genuinely light — a paperback, not a stack of books. Remove it if breathing feels laboured. Skip this one if you are pregnant or have had recent abdominal surgery.",
+      "free": false
+    },
+    {
+      "id": "breathing.r23",
+      "title": "Humming into Sleep",
+      "group": "restorative",
+      "minutes": 7,
+      "purpose": "A quieter, lower version of bhramari for a dark room and a tired body.",
+      "steps": [
+        "Lie down or sit propped up in a dim room. Leave your ears open — no hand position needed here.",
+        "Breathe in gently through the nose.",
+        "Hum out on a low, soft note, quiet enough that it is more felt than heard.",
+        "Let the hum run the whole length of the exhale, then take an ordinary breath before the next one if you want.",
+        "Continue for about five minutes, letting the pitch drop and the hums lengthen.",
+        "Stop humming and lie still for two minutes, breathing through the nose, listening to the quiet."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r24",
+      "title": "Sighing Off the Day",
+      "group": "restorative",
+      "minutes": 6,
+      "purpose": "Cyclic sighing paired with physical release, for the end of a long day.",
+      "steps": [
+        "Sit on the edge of a chair or bed, feet flat, hands resting on your thighs.",
+        "Double inhale through the nose — one full breath in, then a short top-up sniff.",
+        "Let it all out through the mouth in a long, audible sigh, and let your shoulders drop as it goes.",
+        "Do six of these, and with each one let something else give way: jaw, then hands, then belly, then the small of your back.",
+        "Then sit for two minutes with ordinary nasal breathing and no technique at all.",
+        "Finish by naming one thing from the day that you are setting down."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "breathing.r25",
+      "title": "Breath and Body Scan",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Move a slow breath rhythm through the body, using each exhale to release one region.",
+      "steps": [
+        "Lie on your back with your arms at your sides and your legs uncrossed.",
+        "Establish a slow, even nasal rhythm — around five seconds in and seven out — and hold it for the whole practice.",
+        "Bring your attention to your feet. Spend three breaths there, letting each exhale soften whatever you find.",
+        "Move upward in stages, three breaths each: lower legs, hips, belly, lower back, chest, hands, arms, shoulders, throat, jaw, face.",
+        "If a region will not soften, do not fight it. Give it one more breath and move on.",
+        "When you reach the top of the head, drop the counting and let the breath do as it likes for two minutes.",
+        "Roll onto one side before you get up."
+      ],
+      "safety": "",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Balban, Neri, Kogon, Weed, Nouriani, Jo, Holl, Zeitzer, Spiegel & Huberman, Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine, 2023 — randomised trial in which five minutes daily of cyclic sighing improved mood and lowered respiratory rate more than equivalent mindfulness meditation; basis for the physiological sigh and cyclic sighing routines",
+    "Zaccaro, Piarulli, Laurino, Garbella, Menicucci, Neri & Gemignani, How Breath-Control Can Change Your Life: A Systematic Review on Psycho-Physiological Correlates of Slow Breathing, Frontiers in Human Neuroscience, 2018 — defines slow breathing as under ten breaths a minute and links it with increased heart rate variability, respiratory sinus arrhythmia and alpha activity; source for the interoception and nasal-mechanoreceptor mechanisms",
+    "Russo, Santarelli & O'Rourke, The physiological effects of slow breathing in the healthy human, Breathe (European Respiratory Society), 2017 — defines slow breathing as four to ten breaths a minute and describes the peak in respiratory sinus arrhythmia and baroreflex sensitivity around six breaths a minute, plus the shift toward parasympathetic dominance",
+    "Lehrer & Gevirtz, Heart rate variability biofeedback: how and why does it work?, Frontiers in Psychology, 2014 — resonance frequency breathing and the baroreflex, with individual resonance rates typically between 4.5 and 7 breaths a minute; basis for the coherent breathing and resonance-rate routines",
+    "Li, Janczewski, Yackle, Kam, Pagliardini, Krasnow & Feldman, The peptidergic control circuit for sighing, Nature, 2016 — identifies the brainstem circuit generating spontaneous sighs and their role in reinflating alveoli; supports the double-inhale structure of the physiological sigh",
+    "B.K.S. Iyengar, Light on Pranayama: The Yogic Art of Breathing, 1981 — the standard modern manual of classical pranayama; source for Sanskrit terminology (puraka, rechaka, kumbhaka), the derivation of ujjayi from ud and ji, and traditional cautions around forceful practice and retention",
+    "Svatmarama, Hatha Yoga Pradipika, 15th century — the classical hatha text setting out the eight kumbhakas and describing bhramari (chapter 2, verse 68); classifies kapalabhati among the shatkarma cleansing actions rather than the pranayamas",
+    "Weitzberg & Lundberg, Humming greatly increases nasal nitric oxide, American Journal of Respiratory and Critical Care Medicine, 2002 — measured an approximately fifteen-fold rise in nasal nitric oxide during humming compared with quiet exhalation; the physiological correlate most often cited for bhramari",
+    "Laborde, Allen, Borges, Hosang, Furley, Mosley & Dosseville, Psychophysiological effects of slow-paced breathing at six cycles per minute with or without heart rate variability biofeedback, Psychophysiology, 2022 — controlled evidence that paced breathing at six breaths a minute raises cardiac vagal activity"
+  ],
+  "subtitle": "the breath practices",
+  "pronunciation": "PRAH-nah-YAH-mah",
+  "origin": "Prāṇāyāma — 'extension of the breath'; defined in Patañjali's Yoga Sūtra 2.49. The modern techniques here are evidence-based breathwork, not classical."
+}

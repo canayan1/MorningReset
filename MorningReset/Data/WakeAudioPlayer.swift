@@ -92,7 +92,7 @@ final class WakeAudioPlayer {
         let session = AVAudioSession.sharedInstance()
         // .playback bypasses the silent switch, which is what the
         // morning ritual needs. We do not mix with other audio so the
-        // user's attention is fully on Morning Reset during the ritual.
+        // user's attention is fully on Energy Reset during the ritual.
         try session.setCategory(.playback, mode: .default, options: [])
         try session.setActive(true)
     }

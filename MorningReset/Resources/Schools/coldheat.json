@@ -1,0 +1,488 @@
+{
+  "id": "coldheat",
+  "name": "Löyly",
+  "tagline": "Deliberate cold and deliberate heat — used carefully, in small doses, with the brakes on.",
+  "overview": "Cold and heat are the bluntest state-change tools your body has. Thirty seconds of cold water reliably makes you alert; twenty minutes in a warm room reliably makes you loose and sleepy. This school teaches both from the conservative end: face splashes and cool shower finishes rather than ice baths, sauna sits with a timer rather than heat endurance. Cold and heat also carry the most real risk of anything in this app, so every routine here comes with the cautions attached.",
+  "kind": "evidence",
+  "framing_note": "The evidence here is emerging, not settled. Short cold exposure has decent support for a short-lived lift in alertness and mood, and one large randomised trial found fewer sickness-absence days from a 30-second cold shower finish — though no fewer days of feeling ill. Sauna evidence is largely observational: Finnish cohort studies link frequent sauna use with lower cardiovascular mortality, but frequent sauna users differ from everyone else in many ways, and the trial evidence is small and low-quality. This is not medical treatment and it is not a substitute for medical care. There are serious contraindications — heart conditions, uncontrolled high blood pressure, pregnancy, Raynaud's, cold urticaria, cold-triggered asthma, epilepsy, recent surgery — and cold water immersion is a genuine cause of death. Talk to a doctor before you start, and read the safety note on every routine.",
+  "teachings": [
+    {
+      "id": "coldheat.t1",
+      "title": "What the cold actually does",
+      "body": "Step into cold water and your body reacts before you decide anything. Cold receptors in the skin fire, you gasp, your breathing rate can climb steeply, your heart speeds up and your blood pressure rises. Physiologists call this the cold shock response, and it peaks in the first thirty seconds or so. Alongside it, noradrenaline climbs sharply — in one laboratory study, an hour in fourteen-degree water raised it several-fold. That surge is why cold feels like a switch being flipped: awake, sharp, present. What the research supports is real but modest and short-lived. The largest randomised trial of cold shower finishes found people took fewer sick days but reported no fewer days of actually feeling ill. Treat cold as a strong sensory reset, not as a health intervention."
+    },
+    {
+      "id": "coldheat.t2",
+      "title": "Breathing through the cold — and the one rule that never bends",
+      "body": "The gasp is automatic. What you do next is not. The skill is a long, unhurried exhale. Before you turn the water cold, take one easy breath in and let a slow exhale out; when the cold lands, let the gasp happen, then lengthen every exhale until your breathing belongs to you again. That usually takes thirty to ninety seconds. Now the rule that never bends: never hold your breath in, under or near water, and never hyperventilate or do rapid forced breathing before entering water. Over-breathing flushes out carbon dioxide, removes the urge to breathe, and lets you lose consciousness with no warning — shallow water blackout. It kills strong swimmers in shallow pools. Do all breathwork on dry land, sitting down, well away from water."
+    },
+    {
+      "id": "coldheat.t3",
+      "title": "Heat, and what the sauna evidence really says",
+      "body": "The Finnish sauna is an ancient domestic ritual — hot dry air, a wooden room, a slow cool-down, usually shared. Most modern interest traces back to Finnish cohort studies that have tracked sauna habits and health for decades and report that frequent sauna users have lower cardiovascular and all-cause mortality. That association is consistent, but it is observational: people who sauna four times a week may simply be healthier, wealthier and better able to sit in a hot room to begin with. A 2018 systematic review of forty sauna studies found most were small and only thirteen were randomised. So the tradition is deep, the physiology is plausible, and the causal evidence is thin. Enjoy the heat, and hold the health claims loosely."
+    },
+    {
+      "id": "coldheat.t4",
+      "title": "Who should not do this",
+      "body": "This is the school with genuine contraindications, and they are not fine print. Do not begin cold or heat work without talking to a doctor if you have any heart condition — angina, a past heart attack, an arrhythmia, a valve problem — uncontrolled high blood pressure, or if you are pregnant. Cold is also off-limits without medical advice with Raynaud's phenomenon, cold urticaria (cold-triggered hives, which can progress to anaphylaxis after whole-body cold water), cold-triggered asthma, or epilepsy. Skip heat when you are ill, feverish, recently operated on, dehydrated, or taking medication that affects blood pressure, sweating or alertness. Never combine either with alcohol: half of Finnish sauna deaths involved it. If you are unsure, ask a doctor before you start, not after."
+    },
+    {
+      "id": "coldheat.t5",
+      "title": "Progressing slowly and warming up safely",
+      "body": "Adaptation happens faster than most people expect, which is exactly why you can afford to go slow. The cold shock response is substantially blunted after roughly four repeated exposures, so a fortnight of short, honest cold finishes does more for you than one heroic plunge. Build in order: face and wrists, then ten seconds of cool at the end of a warm shower, then thirty, then sixty. Add time before you add cold. Warming up afterwards matters just as much. Cool blood keeps returning from your limbs after you get out, so your core temperature can keep falling for twenty to thirty minutes — the afterdrop. Do not fix it with a hot shower. Dry off, dress warmly, move gently, and let your own body do the work."
+    }
+  ],
+  "routines": [
+    {
+      "id": "coldheat.r01",
+      "title": "Cold Water Face Splash",
+      "group": "starter",
+      "minutes": 1,
+      "purpose": "The safest possible way to meet cold — thirty seconds at the sink, with nothing submerged.",
+      "steps": [
+        "Run the tap until the water is properly cold. Fill your cupped hands.",
+        "Stand tall. Take one easy breath in through the nose and let a slow, unhurried exhale out.",
+        "Splash the cold water over your face five or six times — forehead, cheeks, around the eyes. Keep breathing normally the whole time.",
+        "Do not lower your face into a bowl and do not hold your breath. This is splashing, not immersion.",
+        "Cup a little cold water at the back of your neck.",
+        "Pat dry and stand still for twenty seconds before you move on. Notice how much sharper the room looks."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Skip this if you have cold-triggered hives or facial nerve pain, and use cool rather than icy water on your first few tries.",
+      "free": true
+    },
+    {
+      "id": "coldheat.r02",
+      "title": "Cool Wrists",
+      "group": "starter",
+      "minutes": 2,
+      "purpose": "A small, private way to take the heat out of your body and your mood, using only a tap.",
+      "steps": [
+        "Roll your sleeves back and run the tap cold.",
+        "Hold the inside of one wrist under the stream for about twenty seconds, breathing slowly out through the mouth.",
+        "Swap to the other wrist for twenty seconds.",
+        "Alternate once more on each side, then turn the tap off.",
+        "Shake your hands dry and let your arms hang. Take three slow breaths before you go back to whatever you were doing."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. If your fingers whiten, sting or lose feeling — the pattern of Raynaud's — stop, warm your hands, and speak to a doctor before trying cold again.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r03",
+      "title": "Ten-Second Cool Finish",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "The first rung of the ladder: ten honest seconds of cool at the end of an ordinary warm shower.",
+      "steps": [
+        "Shower normally and warm, exactly as you usually would.",
+        "When you are done, take one easy breath in and let a long exhale out.",
+        "Turn the dial to cool — not the coldest setting, just clearly cool.",
+        "Let it run over your back and shoulders for ten seconds while you keep exhaling slowly. Count out loud if it helps.",
+        "Turn the water off, step out and towel dry briskly.",
+        "Dress warmly and let your body warm itself. Repeat daily for a week before adding any time."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Ten seconds is the whole exercise — resist the urge to prove something on day one. Hold a grab rail or the wall if the cold makes you unsteady.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r04",
+      "title": "Cool Cloth on the Neck",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "A seated reset for an overheated, overloaded afternoon — no shower, no undressing.",
+      "steps": [
+        "Soak a flannel or small towel under the cold tap and wring it out.",
+        "Sit down somewhere you can lean back.",
+        "Lay the cloth across the back of your neck and let your shoulders drop.",
+        "Breathe in through the nose for a count of four, out through the mouth for a count of eight. Repeat six times.",
+        "Move the cloth to your forehead for a final three breaths.",
+        "Take the cloth off and sit for thirty seconds before standing."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Sit down for this rather than standing, and remove the cloth at once if you feel light-headed or your skin stings or wheals.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r05",
+      "title": "Two Minutes of Cool Air",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Cold without water at all — the gentlest entry point, and the one to use if water is not an option.",
+      "steps": [
+        "Step outside, or open a window wide, in whatever you are already wearing.",
+        "Stand still. Let the cool air land on your face, neck and forearms.",
+        "Breathe in through the nose and out slowly through the mouth, twice as long on the way out.",
+        "Stay for two minutes. Roll your shoulders and shake your hands out if you start to stiffen.",
+        "Come back in, put a layer on, and notice how the room feels warmer than it did."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Come in early if you start shivering, if the cold air tightens your chest, or if you have cold-triggered asthma — carry your inhaler and keep exposure brief.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r06",
+      "title": "The Thirty-Second Cool Finish",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "The dose used in the largest cold shower trial to date — thirty seconds, tacked onto a normal shower.",
+      "steps": [
+        "Shower warm as usual. Do the washing first; the cold comes last.",
+        "Set yourself before you turn the dial: feet planted, one hand near the wall, one slow exhale out.",
+        "Turn the water cool to cold and step into it back-first.",
+        "Let the first gasp happen. Do not fight it — just make each exhale longer than the one before.",
+        "Hold thirty seconds. Move the water across your back, then your chest, then your legs.",
+        "Turn off, towel dry hard, and dress warmly straight away.",
+        "Sit down for a minute afterwards rather than rushing off."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Thirty seconds is plenty; going longer adds risk, not benefit. If your breathing has not settled by the end of the thirty seconds, stop and warm up.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r07",
+      "title": "Progressive Cool-Down Shower",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Walk the temperature down slowly instead of flipping a switch — kinder on the heart and the nerve.",
+      "steps": [
+        "Start your shower comfortably warm and stay there for two or three minutes.",
+        "Turn the dial down one small step, so the water is merely lukewarm. Stay for a minute.",
+        "Down another step to clearly cool. Stay for a minute, exhaling slowly the whole time.",
+        "Down a final step to cold. Stay for thirty to sixty seconds, keeping the water off your head.",
+        "Turn off and dry immediately.",
+        "Dress in warm layers and move around gently for a few minutes."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. A gradual descent still produces a real cardiovascular load — it is gentler, not harmless. Keep the water off your head and face if you feel your breathing racing.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r08",
+      "title": "Cold and the Long Exhale",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "The core skill of this school: staying in charge of your breathing while the cold does its thing.",
+      "steps": [
+        "Before you start, practise the breath dry: in through the nose for four, out through the mouth for eight. Do it three times.",
+        "Shower warm, then set your feet and take one long exhale.",
+        "Turn the water cool. The gasp will come — let it come, and do not try to suppress it.",
+        "From the second breath on, lengthen every exhale. Aim for out-breaths roughly twice the length of your in-breaths.",
+        "Keep going for forty-five seconds, or until your breathing is quiet and even.",
+        "Turn off, dry, dress warmly, and sit for a moment noticing that you did that on purpose.",
+        "Never practise forced or rapid breathing before or during any cold water contact — save all breathwork for dry land, sitting down."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. This routine is about slowing the breath, never about holding it or over-breathing. Rapid forced breathing near water is the mechanism behind shallow water blackout and is banned here in every form.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r09",
+      "title": "Morning Cold Reset",
+      "group": "core",
+      "minutes": 9,
+      "purpose": "A full morning sequence that uses cold as the punctuation mark between sleep and the day.",
+      "steps": [
+        "On waking, drink a glass of water and open a window.",
+        "Splash your face six times with cold water at the sink.",
+        "Shower warm for three or four minutes.",
+        "Finish with thirty to sixty seconds of cold, back-first, exhaling long.",
+        "Dry off briskly and get dressed straight away in warm clothes.",
+        "Spend two minutes moving — shoulder rolls, a walk to the kettle, anything that generates your own heat.",
+        "Do not go back to bed or sit still in a cold room afterwards."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Do not do this within an hour of waking if you have known blood pressure problems without clearing it with your doctor first — blood pressure is already at its daily peak in the early morning.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r10",
+      "title": "Gentle Contrast Shower",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Warm to cool and back again, twice — the mildest version of the contrast idea.",
+      "steps": [
+        "Shower warm for two minutes until you feel genuinely heated through.",
+        "Turn to cool for twenty seconds, breathing out slowly.",
+        "Back to warm for ninety seconds. Let yourself properly rewarm.",
+        "Cool again for twenty seconds.",
+        "Back to warm for ninety seconds.",
+        "Finish on warm, not cold, the first several times you do this.",
+        "Dry off, dress and sit for two minutes."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Contrast puts your circulation through repeated swings; keep the cold portions short and the temperature gap modest. Anyone with heart disease, high blood pressure or who is pregnant should not do contrast work without medical clearance.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r11",
+      "title": "Cool Cloth Reset at the Desk",
+      "group": "core",
+      "minutes": 4,
+      "purpose": "A cold reset for the middle of a working day, when a shower is not on the table.",
+      "steps": [
+        "Fill a mug or bowl at the cold tap and take it back to your desk with a flannel.",
+        "Soak the cloth, wring it out, and press it against the back of your neck for thirty seconds.",
+        "Move it to your inner forearms, one at a time, for twenty seconds each.",
+        "Finish with the cloth across your closed eyes for thirty seconds while you breathe out slowly.",
+        "Sit still for another thirty seconds before you touch the keyboard again."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Sit while you do this. Stop and warm up if your hands go numb or your skin reddens into raised welts, which can signal a cold allergy.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r12",
+      "title": "Cool Air Walk",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "Fifteen minutes outdoors, deliberately one layer under-dressed, generating your own warmth as you go.",
+      "steps": [
+        "Check the weather. Dress one light layer less than you normally would — not dangerously less.",
+        "Walk out at a steady pace and keep moving the whole time.",
+        "For the first five minutes, breathe in through the nose and out slowly through the mouth.",
+        "Notice the point where you stop feeling cold because your own movement has warmed you. That is the point of the exercise.",
+        "Turn back so the total is about fifteen minutes.",
+        "Put your extra layer on the moment you get home."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Do not under-dress in genuinely cold, wet or windy conditions, and never take this near open water, ice or a riverbank. Turn back immediately if you start shivering, lose feeling in fingers or toes, or your chest tightens.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r13",
+      "title": "Post-Training Cool-Down",
+      "group": "core",
+      "minutes": 7,
+      "purpose": "Cooling off sensibly after exercise — and knowing when not to.",
+      "steps": [
+        "Finish training and let your heart rate come down for five minutes first. Do not go straight from effort to cold.",
+        "Shower warm briefly to wash off.",
+        "Turn the water cool for thirty to sixty seconds, over the legs and back rather than the head.",
+        "Keep breathing out slowly; you are already breathing hard, so give it time.",
+        "Turn off, dry and dress warmly.",
+        "Eat and rehydrate within the hour as you normally would."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Skip the cold entirely on strength-training days if muscle growth matters to you — a controlled trial found cold water immersion straight after resistance training reduced long-term gains in size and strength compared with active recovery. Never use cold to push through an injury, and never plunge while your heart rate is still high.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r14",
+      "title": "Two-Minute Cool Shower",
+      "group": "deep",
+      "minutes": 9,
+      "purpose": "A longer cold hold for people who have been doing thirty-second finishes for several weeks.",
+      "steps": [
+        "Only attempt this after at least three weeks of comfortable thirty to sixty second cold finishes.",
+        "Shower warm for three minutes first.",
+        "Set your feet, exhale long, and turn the water cold.",
+        "Ride out the first thirty seconds, lengthening each exhale.",
+        "Once your breathing is quiet, keep the water moving over your back, arms and legs for the remaining time.",
+        "Stop at two minutes even if you feel fine. The clock decides, not your pride.",
+        "Dry hard, dress in warm layers, and move gently for five minutes."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Two minutes is the ceiling for a home cold shower in this school. Get out early — without negotiating — the moment shivering becomes uncontrollable, any part of you goes numb, or you feel dizzy.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r15",
+      "title": "Full Contrast Cycle",
+      "group": "deep",
+      "minutes": 14,
+      "purpose": "Three complete rounds of heat and cold in the shower, finishing warm.",
+      "steps": [
+        "Shower hot but comfortable for three minutes.",
+        "Cool for thirty seconds, exhaling slowly throughout.",
+        "Hot again for two minutes, until you are properly rewarmed.",
+        "Cool for thirty seconds.",
+        "Hot again for two minutes.",
+        "Cool for a final thirty seconds.",
+        "Finish on warm for two minutes, then dry and dress immediately.",
+        "Sit down with a warm drink for five minutes afterwards."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Repeated hot-cold swings load the heart and blood vessels harder than either alone; this is not a beginner routine and is not appropriate in pregnancy, with any cardiac history, or with uncontrolled blood pressure. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do contrast work alone if you have ever fainted in a hot shower or bath.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r16",
+      "title": "First Sauna Sit",
+      "group": "deep",
+      "minutes": 16,
+      "purpose": "One conservative sauna round, done properly, with the timer and the water bottle in charge.",
+      "steps": [
+        "Drink a large glass of water before you go in and take a bottle with you.",
+        "Shower and dry off first — you sweat sooner on dry skin.",
+        "Sit on a lower bench for your first session. Heat rises steeply and the top bench is a different experience entirely.",
+        "Set a timer for eight to ten minutes and stop there, even if you feel you could stay longer.",
+        "Breathe normally and slowly. Do not do breathwork, breath-holds or any forced breathing in the heat.",
+        "Come out, sit in cool air for five minutes, and drink water.",
+        "Do not go back in on your first visit."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Do not use a sauna with unstable angina, a heart attack in the last six months, severe aortic stenosis, an uncontrolled arrhythmia, or while pregnant, unwell or feverish. Half of Finnish sauna deaths involved alcohol — never drink before or during. Tell someone you are in there, and leave the door unlocked.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r17",
+      "title": "Sauna, Two Rounds",
+      "group": "deep",
+      "minutes": 32,
+      "purpose": "The standard Finnish rhythm: heat, cool air, rest, repeat — for people already used to the sauna.",
+      "steps": [
+        "Hydrate well beforehand and bring water in with you.",
+        "Round one: eight to twelve minutes in the heat, sitting rather than lying if you are alone.",
+        "Come out and cool in the open air or under a cool rinse for three to five minutes.",
+        "Rest and drink water for a full five minutes. Sit down for this.",
+        "Round two: another eight to twelve minutes, no longer than the first.",
+        "Cool down again slowly, then dress and rest for ten minutes before driving or exercising.",
+        "Two rounds is the cap for this routine. More rounds means more fluid loss and more strain."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Skip entirely if you are dehydrated, hungover, ill, sleep-deprived, or on medication affecting blood pressure, sweating or alertness. Stand up slowly — fainting on standing after heat is common. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Never sauna alone if you have any cardiac history.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r18",
+      "title": "Sauna Then Cool Rinse",
+      "group": "deep",
+      "minutes": 38,
+      "purpose": "The traditional contrast, done the conservative way — a cool rinse, not a plunge into open water.",
+      "steps": [
+        "Hydrate, shower and dry off before your first round.",
+        "Sit in the heat for eight to twelve minutes.",
+        "Step out and stand in cool air for a minute before touching any water. Do not go from hot bench to cold water in one movement.",
+        "Take a cool — not icy — shower for thirty to sixty seconds, starting at the feet and working up.",
+        "Rest, sit down, and drink water for five full minutes.",
+        "Repeat once more if you feel completely settled, then finish warm and dress.",
+        "Do not lock yourself in, and do not do this if there is nobody else in the building."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. The hot-to-cold transition is the highest-risk moment in the whole school: it can trigger arrhythmias through the simultaneous heat-driven and cold-driven autonomic responses. Never jump into a lake, sea, pool or ice hole after a sauna, never submerge your head, and never hold your breath in water. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Anyone with heart disease, uncontrolled blood pressure or who is pregnant should not do sauna-to-cold contrast at all.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r19",
+      "title": "Short Seated Cold Tub",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "A brief, shallow, seated cold immersion at home — the most cautious version of a cold bath there is.",
+      "steps": [
+        "Fill a bath with cold tap water only. No ice on your first several attempts, and never colder than about 12°C.",
+        "Have a towel, warm clothes and a warm drink ready before you get in. Tell someone in the house what you are doing.",
+        "Sit down and enter feet first, then legs, then to waist. Keep your chest, shoulders and head out of the water.",
+        "Let the gasp pass. Lengthen each exhale until your breathing is steady.",
+        "Stay one to three minutes maximum. Set a timer where you can see it.",
+        "Get out under your own power, dry immediately, and dress in warm layers.",
+        "Move gently for ten minutes. Do not take a hot shower to warm up."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. This is the highest-risk routine here. Never submerge your head or chest, never do it alone in the house, never after alcohol, and never in open water, a lake, river or sea — cold shock drives drowning even in strong swimmers. Get out at once if shivering becomes uncontrollable, any part of you goes numb, you feel dizzy, or you notice chest pain or a fluttering heartbeat. Your core keeps cooling for twenty to thirty minutes after you get out, so rewarm gradually and never with a hot shower.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r20",
+      "title": "The Habituation Ladder",
+      "group": "deep",
+      "minutes": 10,
+      "purpose": "A sit-down planning session that turns cold exposure into a gradual, boring, safe progression.",
+      "steps": [
+        "Sit somewhere warm with a notebook or your phone. This routine involves no cold at all.",
+        "Write out the ladder: week one, face splash and wrists only. Week two, ten-second cool finishes. Week three, thirty seconds. Week four, sixty seconds.",
+        "Add a rule to the page: add time before you add cold, and never add both in the same week.",
+        "Write your three non-negotiable stop signs: uncontrollable shivering, numbness, dizziness.",
+        "Note that the cold shock response substantially calms down after roughly four exposures — so consistency beats intensity, every time.",
+        "Pick your fixed daily slot and put it in the calendar.",
+        "Write down the date you will re-read this page and reassess."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. A written plan does not remove the medical cautions. Re-check them before each new rung, and drop back a rung after any illness, injury or break of more than a week.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r21",
+      "title": "Warm Hands, Warm Feet",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "Warming the extremities to let the rest of you unclench — the opposite pole of this school.",
+      "steps": [
+        "Fill a basin with comfortably warm water — warm to the wrist, never hot.",
+        "Sit down. Soak your hands for three minutes, breathing out slowly.",
+        "Dry them and put on a pair of soft socks or gloves to hold the warmth.",
+        "If your feet are cold, repeat with a foot basin for three minutes.",
+        "Sit still for the last two minutes with your hands in your lap.",
+        "Notice where the warmth has spread beyond where the water actually touched."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Test the water with your elbow first: if you have reduced sensation in your hands or feet from diabetes, neuropathy or Raynaud's, you can scald yourself without feeling it. Keep the water below 40°C and never hot.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r22",
+      "title": "Heat Wind-Down Bath",
+      "group": "restorative",
+      "minutes": 25,
+      "purpose": "A warm bath used deliberately as a wind-down, not as an endurance test.",
+      "steps": [
+        "Run the bath warm rather than hot — comfortable enough that you could stay in indefinitely.",
+        "Have a glass of water within reach and leave the door unlocked.",
+        "Get in slowly and let your shoulders drop below the surface.",
+        "Breathe in through the nose for four and out through the mouth for eight, for the first twenty breaths.",
+        "Stay fifteen to twenty minutes. Set a timer rather than trusting your sense of time in the heat.",
+        "Get out slowly, holding the rail — standing up fast after heat is when people faint.",
+        "Dry off, dress warmly and sit for five minutes before doing anything else."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Do not take a hot bath if you are pregnant, have heart disease or low blood pressure, are unwell, or have been drinking. Never fall asleep in the bath. Get out at once if you feel faint, sick or your heart pounds. Keep the water warm, not hot.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r23",
+      "title": "Warm Foot Soak Before Bed",
+      "group": "restorative",
+      "minutes": 15,
+      "purpose": "Warming the feet in the evening, an old and very low-risk way to help yourself settle.",
+      "steps": [
+        "Fill a basin with warm water, deep enough to cover your ankles.",
+        "Sit somewhere comfortable with the basin on a towel and your phone out of reach.",
+        "Soak for ten minutes, breathing slowly and letting your jaw and shoulders soften.",
+        "Dry your feet thoroughly and put warm socks straight on.",
+        "Go to bed within twenty minutes while the warmth is still with you."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Check the temperature with your elbow, not your feet, and keep it warm rather than hot — reduced foot sensation from diabetes or neuropathy makes scalds easy to miss. Skip this if you have broken skin, an active foot infection or an ulcer.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r24",
+      "title": "Rewarming Done Properly",
+      "group": "restorative",
+      "minutes": 25,
+      "purpose": "The half hour after cold, done the way that keeps you safe — the routine most people skip.",
+      "steps": [
+        "Get out of the cold and dry yourself completely and fast, hair included.",
+        "Dress in warm dry layers immediately, starting with a hat and dry socks.",
+        "Do not get into a hot shower or bath. Rapid outside warming can worsen the drop in your core temperature.",
+        "Move gently for ten minutes — walking around the house, gentle arm swings. Your own muscles are the best heat source you have.",
+        "Drink something warm and sit somewhere warm and draught-free.",
+        "Expect to keep feeling cold for twenty to thirty minutes as cool blood returns from your limbs. That is the afterdrop, and it is normal.",
+        "Seek medical help if shivering becomes violent and will not stop, if you become confused or slur your words, or if you cannot rewarm within the hour."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. This routine exists because afterdrop is the part people get wrong. Never rewarm with a hot shower, hot bath or sauna straight after cold immersion, and never drink alcohol to warm up — it widens skin blood vessels and loses you more heat.",
+      "free": false
+    },
+    {
+      "id": "coldheat.r25",
+      "title": "Low-Heat Sauna Wind-Down",
+      "group": "restorative",
+      "minutes": 22,
+      "purpose": "One gentle, cooler sauna round in the evening, with no contrast and nothing to prove.",
+      "steps": [
+        "Hydrate well first and take water in with you.",
+        "Use the lowest bench and a lower temperature setting than you would earlier in the day.",
+        "Sit for eight to ten minutes only. One round, no second.",
+        "Breathe normally. No breathwork, no breath-holds, no heat challenges.",
+        "Come out and cool in ordinary room air rather than under cold water.",
+        "Sit and drink water for five minutes, then have a warm shower if you want one.",
+        "Give yourself an hour between finishing and going to bed."
+      ],
+      "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Get out immediately if you feel dizzy, nauseous, headachy, unusually weak, or your heart is pounding or irregular. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Skip the sauna entirely with unstable angina, a heart attack in the last six months, severe aortic stenosis, an uncontrolled arrhythmia, in pregnancy, or when ill or dehydrated. Never sauna after drinking, never lock the door, and never go in alone if you have a cardiac history. Stand up slowly on the way out.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Buijze, Sierevelt, van der Heijden, Dijkgraaf & Frings-Dresen, The Effect of Cold Showering on Health and Work: A Randomized Controlled Trial, PLoS ONE, 2016 — 3,018 adults randomised to a 30, 60 or 90 second cold shower finish for 30 days; 29% fewer self-reported sickness-absence days but no reduction in illness days; the basis for the 30-second cool finish routines and for the deliberately modest claims made about them",
+    "Šrámek, Šimečková, Janský, Šavlíková & Vybíral, Human physiological responses to immersion into water of different temperatures, European Journal of Applied Physiology, 2000 — one hour of head-out immersion at 14°C raised plasma noradrenaline by roughly 530% and metabolic rate by roughly 350%; supports the description of cold as a large catecholamine and alertness stimulus, and the caution that this was long immersion, not a short shower",
+    "Tipton, Collier, Massey, Corbett & Harper, Cold water immersion: kill or cure?, Experimental Physiology, 2017 — review of cold shock, swim failure, hypothermia and circum-rescue collapse; underpins the staged progression, the short time caps, the never-alone and never-in-open-water rules and the stop conditions in every cold routine",
+    "Barwood, Eglin, Hills, Johnston, Massey, McMorris, Tipton, Wakabayashi & Webster, Habituation of the cold shock response: a systematic review and meta-analysis, Journal of Thermal Biology, 2024 — the cold shock response habituates after approximately four repeated immersions, with variation between studies; the evidence behind the Habituation Ladder and the consistency-over-intensity advice",
+    "Shattock & Tipton, 'Autonomic conflict': a different way to die during cold water immersion?, The Journal of Physiology, 2012 — simultaneous activation of cold shock (sympathetic) and diving (parasympathetic) responses can provoke arrhythmias; the reason this school forbids breath-holding and head submersion in cold water, and flags the hot-to-cold transition as the highest-risk moment",
+    "Royal Life Saving Society UK, Shallow Water Blackout, Hyperventilation and Breath Holding (guidance note GS005) — hyperventilation before breath-holding removes the urge to breathe and causes loss of consciousness without warning; the source of the absolute prohibition on breath-holds and forced breathing in or near water",
+    "Royal National Lifeboat Institution, Float to Live water safety guidance — cold water shock causes involuntary gasping and loss of breathing control for roughly 60 to 90 seconds; supports the slow-exhale technique and the rule against entering open water for cold exposure",
+    "Laukkanen, Kunutsor, Khan, Willeit, Zaccardi & Laukkanen, Sauna bathing is associated with reduced cardiovascular mortality and improves risk prediction in men and women: a prospective cohort study, BMC Medicine, 2018 — 1,688 Finnish adults, 181 fatal cardiovascular events over a median 15 years, inverse association with sauna frequency; cited here explicitly as observational and not causal",
+    "Hussain & Cohen, Clinical Effects of Regular Dry Sauna Bathing: A Systematic Review, Evidence-Based Complementary and Alternative Medicine, 2018 — 40 studies and 3,855 participants, only 13 randomised and most with fewer than 40 people; the basis for describing sauna evidence as promising but low-quality and for calling for better adverse-event data",
+    "Kenttämies & Karkola, Death in Sauna, Journal of Forensic Sciences, 2008 — Finnish forensic review of sauna deaths in which 50% of cases involved alcohol; the reason every heat routine here carries an explicit no-alcohol rule"
+  ],
+  "subtitle": "heat, cold and the swing between",
+  "pronunciation": "LUH-ew-lu",
+  "origin": "Löyly — Finnish for the steam rising off the sauna stones, from a root meaning 'spirit, breath of life'. Finnish sauna culture is UNESCO-listed."
+}

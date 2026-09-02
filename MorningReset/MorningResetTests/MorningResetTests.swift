@@ -38,7 +38,9 @@ final class MorningResetTests: XCTestCase {
         let answers = steadyAnswers(for: .current)
 
         state.startFlow()
-        XCTAssertEqual(state.screen, .quiz)
+        // Check-in is optional now: startFlow goes straight to the practice (steady default).
+        XCTAssertEqual(state.screen, .weeklyAffirmation)
+        XCTAssertEqual(state.sessionMode, .steady)
 
         answers.forEach(state.recordAnswer)
         state.showWeeklyAffirmation()
@@ -116,6 +118,170 @@ final class MorningResetTests: XCTestCase {
         XCTAssertEqual(state.screen, .action)
     }
 
+    // MARK: - Today's practice pick
+
+    @MainActor
+    private func freshState() -> AppState {
+        UserDefaults.standard.removeObject(forKey: UDKey.todaysRoutinePick)
+        UserDefaults.standard.removeObject(forKey: UDKey.activeSchool)
+        let state = AppState(skipEntitlementCheck: true)
+        state.isPremium = true          // so no routine is filtered out by tier
+        return state
+    }
+
+    @MainActor
+    func testMakeTodaysRoutineChangesTodaysPractice() {
+        let state = freshState()
+        let before = state.todaysRoutine
+        guard let qigong = SchoolContentStore.school("qigong"),
+              let wanted = qigong.routines.first(where: { $0.id != before.id })
+        else { return XCTFail("Expected a qigong routine distinct from the default") }
+
+        state.makeTodaysRoutine(schoolID: "qigong", routineID: wanted.id)
+
+        XCTAssertEqual(state.todaysRoutine.id, wanted.id,
+                       "Accepting the suggestion must change today's practice")
+        XCTAssertEqual(state.activeSchoolID, "qigong",
+                       "The home screen pairs the school with the routine, so both must move")
+        UserDefaults.standard.removeObject(forKey: UDKey.todaysRoutinePick)
+    }
+
+    @MainActor
+    func testTodaysPickLapsesOnALaterDay() {
+        let state = freshState()
+        guard let qigong = SchoolContentStore.school("qigong"),
+              let wanted = qigong.routines.first else { return XCTFail("No qigong content") }
+        state.makeTodaysRoutine(schoolID: "qigong", routineID: wanted.id)
+
+        // Re-stamp the stored pick as yesterday's.
+        var stale = state.todaysPick
+        XCTAssertNotNil(stale)
+        stale?.day -= 1
+        if let stale, let data = try? JSONEncoder().encode(stale) {
+            UserDefaults.standard.set(data, forKey: UDKey.todaysRoutinePick)
+        }
+
+        XCTAssertNil(state.todaysPick, "Yesterday's pick should not survive into today")
+        UserDefaults.standard.removeObject(forKey: UDKey.todaysRoutinePick)
+    }
+
+    @MainActor
+    func testTodaysPickIgnoredWhenTheRoutineIsLocked() {
+        let state = freshState()
+        state.isPremium = false
+        state.ownedTiers = []
+        guard let qigong = SchoolContentStore.school("qigong"),
+              let locked = qigong.routines.first(where: { !$0.free })
+        else { return XCTFail("Expected a locked qigong routine") }
+
+        state.makeTodaysRoutine(schoolID: "qigong", routineID: locked.id)
+
+        XCTAssertNotEqual(state.todaysRoutine.id, locked.id,
+                          "A locked routine must not become today's practice")
+        XCTAssertTrue(state.todaysRoutine.free,
+                      "The fallback must be something the user can actually play")
+        UserDefaults.standard.removeObject(forKey: UDKey.todaysRoutinePick)
+    }
+
+    @MainActor
+    func testSuggestedRoutineResolvesEveryEnergyPath() {
+        let state = freshState()
+        for path in EnergyPath.allCases {
+            let suggestion = state.suggestedRoutine(for: path)
+            XCTAssertNotNil(suggestion, "No school content for path \(path.rawValue)")
+        }
+        XCTAssertEqual(state.suggestedRoutine(for: .breathwork)?.school.id, "breathing")
+        XCTAssertEqual(state.suggestedRoutine(for: .qigong)?.school.id, "qigong")
+        XCTAssertEqual(state.suggestedRoutine(for: .reiki)?.school.id, "reiki")
+    }
+
+    // MARK: - Time of day
+
+    func testTimeOfDayBoundaries() {
+        let cal = Calendar.current
+        func at(_ hour: Int) -> TimeOfDay {
+            let date = cal.date(bySettingHour: hour, minute: 0, second: 0, of: Date())!
+            return TimeOfDay.at(date, calendar: cal)
+        }
+        XCTAssertEqual(at(4),  .night)
+        XCTAssertEqual(at(5),  .morning)
+        XCTAssertEqual(at(11), .morning)
+        XCTAssertEqual(at(12), .afternoon)
+        XCTAssertEqual(at(16), .afternoon)
+        XCTAssertEqual(at(17), .evening)
+        XCTAssertEqual(at(21), .evening)
+        XCTAssertEqual(at(22), .night)
+    }
+
+    func testOnlyTheMorningCaseSaysMorning() {
+        // This is the regression the whole change exists to prevent: copy that
+        // says "morning" while the user is opening the app in the afternoon.
+        for slot in TimeOfDay.allCases {
+            XCTAssertFalse(slot.phrase.isEmpty)
+            XCTAssertFalse(slot.span.isEmpty)
+            if slot != .morning {
+                XCTAssertFalse(slot.phrase.lowercased().contains("morning"),
+                               "\(slot.rawValue) should not mention the morning")
+                XCTAssertFalse(slot.span.lowercased().contains("morning"),
+                               "\(slot.rawValue) should not mention the morning")
+            }
+        }
+    }
+
+    // MARK: - Practice streak (forgiving)
+
+    private func seedLog(_ daysAgo: [Int], outcome: PracticeOutcome = .done) {
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        let sessions = daysAgo.compactMap { offset -> PracticeSession? in
+            guard let day = cal.date(byAdding: .day, value: -offset, to: today) else { return nil }
+            return PracticeSession(schoolID: "reiki", routineID: "reiki.r01",
+                                   routineTitle: "First Gassho", date: day,
+                                   minutes: 5, outcome: outcome)
+        }
+        PracticeLogStore.replaceAll(sessions)
+    }
+
+    func testPracticeStreakCountsConsecutiveDays() {
+        seedLog([0, 1, 2, 3])
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 4)
+        PracticeLogStore.replaceAll([])
+    }
+
+    func testPracticeStreakForgivesOneMissedDay() {
+        // Practised today, skipped yesterday, practised the two days before.
+        seedLog([0, 2, 3])
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 3,
+                       "A single missed day should bridge, not reset")
+        PracticeLogStore.replaceAll([])
+    }
+
+    func testPracticeStreakBreaksAfterTwoMissedDays() {
+        seedLog([0, 3, 4])
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 1,
+                       "Two blank days in a row should end the chain")
+        PracticeLogStore.replaceAll([])
+    }
+
+    func testPracticeStreakSurvivesOneDayAway() {
+        // Last practised yesterday: the chain is still live today.
+        seedLog([1, 2])
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 2)
+        PracticeLogStore.replaceAll([])
+    }
+
+    func testPracticeStreakEndsAfterThreeDaysAway() {
+        seedLog([3, 4, 5])
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 0)
+        PracticeLogStore.replaceAll([])
+    }
+
+    func testSkippedSessionsDoNotFeedTheStreak() {
+        seedLog([0, 1], outcome: .skipped)
+        XCTAssertEqual(PracticeLogStore.currentStreak(), 0)
+        PracticeLogStore.replaceAll([])
+    }
+
     func testStreakZeroOnEmptyHistory() {
         XCTAssertEqual(AppState.computeStreak(from: []), 0)
     }
@@ -129,7 +295,7 @@ final class MorningResetTests: XCTestCase {
             DailyEntry(date: calendar.date(byAdding: .day, value: -3, to: today)!, mode: "steady", intention: "focus")
         ]
 
-        XCTAssertEqual(AppState.computeStreak(from: entries), 2)
+        XCTAssertEqual(AppState.computeStreak(from: entries, now: referenceDate), 2)
     }
 
     func testPatternStrengthStrongOnFiveOfSevenMatches() {
@@ -190,6 +356,28 @@ final class MorningResetTests: XCTestCase {
             "flow_checkouts",
             "mantra_start_date"
         ].forEach(defaults.removeObject(forKey:))
+    }
+
+    // MARK: - School content (Energy Reset 2.0)
+
+    func testSchoolContentLoadsAndIsWellFormed() throws {
+        let schools = SchoolContentStore.all
+        XCTAssertFalse(schools.isEmpty, "No school content loaded from the bundle")
+
+        for s in schools {
+            XCTAssertEqual(s.routines.count, 25, "\(s.id): expected 25 routines")
+            XCTAssertEqual(s.routines.filter(\.free).count, 1, "\(s.id): expected exactly 1 free routine")
+            XCTAssertGreaterThanOrEqual(s.teachings.count, 4, "\(s.id): too few teachings")
+            XCTAssertFalse(s.framingNote.isEmpty, "\(s.id): missing framing note")
+            XCTAssertFalse(s.sources.isEmpty, "\(s.id): missing sources")
+            for g in RoutineGroup.allCases {
+                XCTAssertFalse(s.routines(in: g).isEmpty, "\(s.id): no routines in \(g.rawValue)")
+            }
+            for r in s.routines {
+                XCTAssertFalse(r.steps.isEmpty, "\(r.id): no steps")
+                XCTAssertGreaterThan(r.minutes, 0, "\(r.id): bad minutes")
+            }
+        }
     }
 }
 

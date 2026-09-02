@@ -1,286 +1,175 @@
 import XCTest
 
+// The app is a practice app: pick a school, do one routine a day, watch the
+// energy orb grow. These tests drive that loop and capture store screenshots.
+
 final class MorningResetUITests: XCTestCase {
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
 
+    // MARK: - The daily loop
+
     @MainActor
-    func testHappyPathCompletesResetInEnglishTurkishAndSpanish() throws {
-        let locales: [(language: String, region: String)] = [
-            ("en", "en_US"),
-            ("tr", "tr_TR"),
-            ("es", "es_ES")
-        ]
+    func testDailyPracticeOpensTheGuidedPlayer() throws {
+        let app = launchApp(language: "en", region: "en_US", extraArguments: ["-seedFirstWin"])
+        tapButton(app, label: "Start today's practice", timeout: 8)
+        // The player shows the step counter and a way to finish.
+        let finish = app.buttons.matching(NSPredicate(format: "label == %@ OR label == %@", "Next step", "Finish")).firstMatch
+        XCTAssertTrue(finish.waitForExistence(timeout: 8), "Routine player did not open")
+    }
 
-        for locale in locales {
-            let app = launchApp(
-                language: locale.language,
-                region: locale.region,
-                extraArguments: ["-premiumLocked"]
-            )
-
-            runHappyPath(on: app, language: locale.language)
-            app.terminate()
+    @MainActor
+    func testSchoolsTabListsEverySchoolAndOpensDetail() throws {
+        let app = launchApp(language: "en", region: "en_US", extraArguments: ["-premiumLocked"])
+        app.tabBars.buttons["Traditions"].tap()
+        for id in ["reiki", "breathing", "qigong", "meditation", "yoga",
+                   "sound", "coldheat", "sleep", "nature", "journal"] {
+            let row = app.buttons["school.row.\(id)"]
+            if !row.exists { app.swipeUp() }
+            XCTAssertTrue(row.waitForExistence(timeout: 6), "Missing school row: \(id)")
         }
+        app.buttons["school.row.reiki"].tap()
+        XCTAssertTrue(app.staticTexts["Reiki"].waitForExistence(timeout: 6), "School detail did not open")
     }
 
     @MainActor
-    func testPremiumGateSmokeAppearsForStrongPatternAndCanBeDismissed() throws {
-        let app = launchApp(
-            language: "es",
-            region: "es_ES",
-            extraArguments: ["-premiumLocked", "-seedStrongPattern"]
-        )
-
-        tapStartFlow(in: app, language: "es")
-        answerSteadyQuiz(in: app, language: "es")
-        tapResultsContinue(in: app, language: "es")
-
-        tapPaywallSecondary(in: app, language: "es")
-        waitForElement(actionPrimaryButton(in: app, language: "es"))
+    func testLibraryFiltersRoutines() throws {
+        let app = launchApp(language: "en", region: "en_US", extraArguments: ["-premiumLocked"])
+        app.tabBars.buttons["Library"].tap()
+        XCTAssertTrue(app.buttons["≤5 min"].waitForExistence(timeout: 6), "Length filters missing")
+        app.buttons["≤5 min"].tap()
+        XCTAssertTrue(app.staticTexts["Practice Library"].exists)
     }
 
+    // MARK: - Store screenshots
+
+    /// Captures the six store screenshots. The order tells the product story:
+    /// the orb you grow, the ten schools, what a school teaches, the guided
+    /// practice itself, the library behind it, and the record it leaves.
     @MainActor
     func testCaptureAppStoreScreenshots() throws {
-        let app = launchApp(
-            language: "en",
-            region: "en_US",
-            extraArguments: ["-premiumLocked"]
-        )
+        // Two launches rather than one. The school sheet scrolls a long way and
+        // its close control goes with it, so dismissing it reliably costs more
+        // than simply starting again — and a fresh launch is deterministic.
+        let locked = launchApp(language: "en", region: "en_US",
+                               extraArguments: ["-seedPractice", "-premiumLocked"])
+        snapshot(locked, "01_Today")
 
-        snapshot(app, "01_WakeHome")
+        locked.tabBars.buttons["Traditions"].tap(); usleep(900_000)
+        snapshot(locked, "02_Schools")
 
-        tapStartFlow(in: app, language: "en")
-        waitForElement(app.buttons["No"])
-        snapshot(app, "02_Quiz")
+        locked.buttons["school.row.reiki"].tap(); usleep(900_000)
+        tapWhenReady(locked, label: "Inside")
+        usleep(1_200_000)
+        // No scroll: the photographic header is the point of this panel, and
+        // scrolling past it leaves nothing but a wall of type.
+        snapshot(locked, "03_Teachings")
+        locked.terminate()
 
-        answerSteadyQuiz(in: app, language: "en")
-        let beginButton = app.buttons["Begin"]
-        waitForElement(beginButton, timeout: 8)
-        snapshot(app, "03_Results")
+        // The library and the record are about abundance, so show them to a
+        // subscriber. A column of padlocks sells nothing.
+        let full = launchApp(language: "en", region: "en_US",
+                             extraArguments: ["-seedPractice", "-premiumUnlocked"])
 
-        app.buttons["5 minutes phone down"].tap()
-        snapshot(app, "04_FirstWin")
+        let begin = full.buttons["alarm.primaryButton"]
+        waitForElement(begin, timeout: 8)
+        begin.tap()
+        usleep(9_000_000)   // let the tree grow far enough to read
+        snapshot(full, "04_Practice")
+        full.terminate()
 
-        beginButton.tap()
-        sleep(2)
-        snapshot(app, "05_Action")
+        let last = launchApp(language: "en", region: "en_US",
+                             extraArguments: ["-seedPractice", "-premiumUnlocked"])
+        last.tabBars.buttons["Library"].tap(); usleep(1_000_000)
+        snapshot(last, "05_Library")
 
-        let started = app.buttons["I started the task"]
-        if started.waitForExistence(timeout: 4) {
-            started.tap()
-            sleep(2)
-            snapshot(app, "06_Win")
-        }
-
-        app.terminate()
+        last.tabBars.buttons["Wins"].tap(); usleep(1_000_000)
+        snapshot(last, "06_Progress")
     }
 
-    @MainActor
-    func testCaptureFirstWin() throws {
-        let app = launchApp(language: "en", region: "en_US", extraArguments: ["-seedFirstWin"])
-        snapshot(app, "FW01_Home")
-
-        app.buttons["alarm.firstWinEntry"].tap()
-        sleep(2)
-        snapshot(app, "FW02_MyWins")
-
-        if app.buttons["myWins.checkButton"].waitForExistence(timeout: 4) {
-            app.buttons["myWins.checkButton"].tap()
-            sleep(1)
-            snapshot(app, "FW03_Checked")
-        }
-    }
+    // MARK: - Onboarding
 
     @MainActor
     func testCapturePaths() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-uiTesting", "-resetState", "-startPathPick", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["-uiTesting", "-resetState",
+                               "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["MR_LANGUAGE_OVERRIDE"] = "en"
         app.launch()
 
-        let reiki = app.buttons["pathPick.reiki"]
+        // Hook (single slide now)
+        let start = button(in: app, label: "Get started")
+        waitForElement(start, timeout: 8)
+        snapshot(app, "PA01_Hook")
+        start.tap()
+
+        // The energy orb introduction
+        let orbCTA = button(in: app, label: "Grow my orb")
+        waitForElement(orbCTA, timeout: 8)
+        snapshot(app, "PA02_Orb")
+        orbCTA.tap()
+
+        // Ten schools — pick one
+        let reiki = app.buttons["onboarding.school.reiki"]
         waitForElement(reiki, timeout: 8)
-        snapshot(app, "PA01_PathPick")
-
+        snapshot(app, "PA03_Schools")
         reiki.tap()
-        let begin = app.buttons["pathBasics.continueButton"]
-        waitForElement(begin, timeout: 6)
-        snapshot(app, "PA02_Basics")
 
-        begin.tap()
-        waitForElement(app.buttons["firstWinPick.continueButton"], timeout: 6)
-        snapshot(app, "PA03_PracticePick")
+        // First practice offered BEFORE any paywall
+        let begin = button(in: app, label: "Begin")
+        waitForElement(begin, timeout: 10)
+        snapshot(app, "PA04_FirstPractice")
+        tapWhenReady(app, label: "Later")   // don't run a full routine in the test
+
+        // Payoff, then the paywall
+        let planContinue = button(in: app, label: "Continue")
+        waitForElement(planContinue, timeout: 10)
+        snapshot(app, "PA05_Plan")
+        planContinue.tap()
+
+        if element(in: app, id: "paywall.screen").waitForExistence(timeout: 8) {
+            snapshot(app, "PA06_Paywall")
+        }
+    }
+
+    // MARK: - Helpers
+
+    private func tapWhenReady(_ app: XCUIApplication, label: String) {
+        let b = button(in: app, label: label)
+        waitForElement(b, timeout: 6)
+        b.tap()
     }
 
     private func snapshot(_ app: XCUIApplication, _ name: String) {
         usleep(1_400_000)
-        let shot = XCUIScreen.main.screenshot()
-        let attachment = XCTAttachment(screenshot: shot)
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
     }
 
-    private func runHappyPath(on app: XCUIApplication, language: String) {
-        tapStartFlow(in: app, language: language)
-        answerSteadyQuiz(in: app, language: language)
-        tapResultsContinue(in: app, language: language)
-        waitForElement(actionPrimaryButton(in: app, language: language), timeout: 8)
-        actionPrimaryButton(in: app, language: language).tap()
-        tapWinContinue(in: app, language: language)
-        tapCheckoutFinish(in: app, language: language)
-        waitForElement(startFlowButton(in: app, language: language))
-    }
-
-    private func answerSteadyQuiz(in app: XCUIApplication, language: String) {
-        let answers: [String]
-        switch language {
-        case "tr":
-            answers = ["Hayır", "Hayır", "Evet", "Evet", "Hayır"]
-        case "es":
-            answers = ["No", "No", "Sí", "Sí", "No"]
-        default:
-            answers = ["No", "No", "Yes", "Yes", "No"]
-        }
-
-        waitForElement(app.buttons[answers[0]])
-
-        for answer in answers {
-            waitForElement(app.buttons[answer])
-            app.buttons[answer].tap()
-        }
-    }
-
-    private func tapStartFlow(in app: XCUIApplication, language: String) {
-        waitForElement(startFlowButton(in: app, language: language))
-        startFlowButton(in: app, language: language).tap()
-    }
-
-    private func tapResultsContinue(in app: XCUIApplication, language: String) {
-        let button = resultsContinueButton(in: app, language: language)
-        waitForElement(button, timeout: 8)
-        button.tap()
-    }
-
-    private func tapPaywallSecondary(in app: XCUIApplication, language: String) {
-        let button = paywallSecondaryButton(in: app, language: language)
-        waitForElement(button, timeout: 8)
-        button.tap()
-    }
-
-    private func tapWinContinue(in app: XCUIApplication, language: String) {
-        let button = winContinueButton(in: app, language: language)
-        waitForElement(button)
-        button.tap()
-    }
-
-    private func tapCheckoutFinish(in app: XCUIApplication, language: String) {
-        let button = checkoutFinishButton(in: app, language: language)
-        waitForElement(button)
-        button.tap()
-    }
-
-    private func startFlowButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[startFlowTitle(for: language)]
-    }
-
-    private func resultsContinueButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[resultsContinueTitle(for: language)]
-    }
-
-    private func actionPrimaryButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[actionPrimaryTitle(for: language)]
-    }
-
-    private func winContinueButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[winContinueTitle(for: language)]
-    }
-
-    private func checkoutFinishButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[checkoutFinishTitle(for: language)]
-    }
-
-    private func paywallSecondaryButton(in app: XCUIApplication, language: String) -> XCUIElement {
-        app.buttons[paywallSecondaryTitle(for: language)]
-    }
-
-    private func startFlowTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Morning Reset'i başlat"
-        case "es": return "Iniciar Morning Reset"
-        default: return "Start Morning Reset"
-        }
-    }
-
-    private func resultsContinueTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Bu ilk kazanımla devam et"
-        case "es": return "Continuar con esta primera victoria"
-        default: return "Continue with this first win"
-        }
-    }
-
-    private func actionPrimaryTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Göreve başladım"
-        case "es": return "Empecé la tarea"
-        default: return "I started the task"
-        }
-    }
-
-    private func winContinueTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Devam et"
-        case "es": return "Continuar"
-        default: return "Continue"
-        }
-    }
-
-    private func checkoutFinishTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Reset'i bitir"
-        case "es": return "Terminar reset"
-        default: return "Finish reset"
-        }
-    }
-
-    private func paywallSecondaryTitle(for language: String) -> String {
-        switch language {
-        case "tr": return "Premium olmadan devam et"
-        case "es": return "Continuar sin Premium"
-        default: return "Continue without Premium"
-        }
-    }
-
-    private func launchApp(
-        language: String,
-        region: String,
-        extraArguments: [String]
-    ) -> XCUIApplication {
+    private func launchApp(language: String, region: String, extraArguments: [String]) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = [
-            "-uiTesting",
-            "-resetState",
-            "-skipOnboarding",
-            "-enableSchedule",
+            "-uiTesting", "-resetState", "-skipOnboarding", "-enableSchedule",
             "-suppressPeriodicPaywall",
-            "-AppleLanguages",
-            "(\(language))",
-            "-AppleLocale",
-            region
+            "-AppleLanguages", "(\(language))", "-AppleLocale", region
         ] + extraArguments
         app.launchEnvironment["MR_LANGUAGE_OVERRIDE"] = language
         app.launch()
-        waitForElement(element(in: app, id: "alarm.primaryButton"))
         return app
     }
 
-    private func tap(_ app: XCUIApplication, id: String, timeout: TimeInterval = 5) {
-        let element = element(in: app, id: id)
-        waitForElement(element, timeout: timeout)
-        element.tap()
+    private func button(in app: XCUIApplication, label: String) -> XCUIElement {
+        app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+    }
+
+    private func tapButton(_ app: XCUIApplication, label: String, timeout: TimeInterval = 6) {
+        let b = button(in: app, label: label)
+        waitForElement(b, timeout: timeout)
+        b.tap()
     }
 
     private func element(in app: XCUIApplication, id: String) -> XCUIElement {
@@ -288,6 +177,6 @@ final class MorningResetUITests: XCTestCase {
     }
 
     private func waitForElement(_ element: XCUIElement, timeout: TimeInterval = 5) {
-        XCTAssertTrue(element.waitForExistence(timeout: timeout))
+        XCTAssertTrue(element.waitForExistence(timeout: timeout), "Timed out waiting for element")
     }
 }

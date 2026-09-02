@@ -13,9 +13,9 @@ struct FlowCheckoutView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
                 // ── Day sealed animation ──────────────────────────────
@@ -41,21 +41,23 @@ struct FlowCheckoutView: View {
     // MARK: - Checkout form
 
     private var checkoutForm: some View {
-        VStack(alignment: .leading, spacing: DS.Space.xl) {
+        VStack(alignment: .center, spacing: DS.Space.xl) {
 
             // Header
-            VStack(alignment: .leading, spacing: DS.Space.xs) {
+            VStack(alignment: .center, spacing: DS.Space.xs) {
                 Text(appState.ritualPresentation.checkPrompt)
                     .font(.system(size: 28, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
+                    .multilineTextAlignment(.center)
                     .lineSpacing(3)
             }
 
             // Question 1 — Did you do it?
-            VStack(alignment: .leading, spacing: DS.Space.sm) {
+            VStack(alignment: .center, spacing: DS.Space.sm) {
                 Text(L10n.text(en: "Did you complete it?", tr: "Tamamladın mı?", es: "¿Lo completaste?"))
                     .font(.callout)
                     .foregroundStyle(DS.textSecondary)
+                    .multilineTextAlignment(.center)
 
                 HStack(spacing: DS.Space.sm) {
                     ForEach(FirstWinStatus.allCases, id: \.self) { option in
@@ -67,10 +69,11 @@ struct FlowCheckoutView: View {
             }
 
             // Question 2 — How did it feel?
-            VStack(alignment: .leading, spacing: DS.Space.sm) {
+            VStack(alignment: .center, spacing: DS.Space.sm) {
                 Text(L10n.text(en: "How did it feel?", tr: "Nasıl hissettirdi?", es: "¿Cómo se sintió?"))
                     .font(.callout)
                     .foregroundStyle(DS.textSecondary)
+                    .multilineTextAlignment(.center)
 
                 HStack(spacing: DS.Space.sm) {
                     ForEach(FlowDifficulty.allCases, id: \.self) { option in
@@ -101,12 +104,7 @@ struct FlowCheckoutView: View {
             Button(L10n.text(en: "Seal the day", tr: "Günü mühürle", es: "Sellar el día")) {
                 sealAndContinue()
             }
-            .font(.system(.body, design: .serif))
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 18)
-            .background(DS.accent)
-            .foregroundStyle(DS.background)
-            .clipShape(Capsule())
+            .primaryCTA()
             .accessibilityIdentifier("checkout.finishButton")
 
             Button(L10n.text(en: "Skip", tr: "Atla", es: "Saltar")) {
@@ -122,19 +120,20 @@ struct FlowCheckoutView: View {
     // MARK: - Sealed state (brief moment before transition)
 
     private var sealedState: some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm) {
+        VStack(alignment: .center, spacing: DS.Space.sm) {
             Text("\(currentStreak + 1)")
                 .font(.system(size: 72, weight: .thin, design: .serif))
                 .foregroundStyle(DS.textPrimary)
                 .monospacedDigit()
 
             Text(L10n.text(
-                en: (currentStreak + 1) == 1 ? "first morning." : "mornings in a row.",
-                tr: (currentStreak + 1) == 1 ? "ilk sabah." : "gün üst üste.",
-                es: (currentStreak + 1) == 1 ? "primera mañana." : "mañanas seguidas."
+                en: (currentStreak + 1) == 1 ? "first routine." : "days in a row.",
+                tr: (currentStreak + 1) == 1 ? "ilk rutin." : "gün üst üste.",
+                es: (currentStreak + 1) == 1 ? "primera rutina." : "días seguidos."
             ))
             .font(.system(.title3, design: .serif))
             .foregroundStyle(DS.textSecondary)
+            .multilineTextAlignment(.center)
         }
     }
 

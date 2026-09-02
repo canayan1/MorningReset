@@ -5,7 +5,7 @@ struct AboutView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -21,54 +21,56 @@ struct AboutView: View {
 
                 VStack(alignment: .leading, spacing: DS.Space.lg + 4) {
                     Text(L10n.text(
-                        en: "How Morning Reset works",
-                        tr: "Morning Reset nasıl çalışır",
-                        es: "Cómo funciona Morning Reset"
+                        en: "How Inner Light works",
+                        tr: "Inner Light nasıl çalışır",
+                        es: "Cómo funciona Inner Light"
                     ))
                     .font(DS.Typo.subtitle)
                     .foregroundStyle(DS.textPrimary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
 
                     VStack(alignment: .leading, spacing: DS.Space.md + 4) {
                         Text(L10n.text(
-                            en: "Morning Reset is designed for the morning you reach for your phone.",
-                            tr: "Morning Reset, telefonu eline uzandığın sabah için tasarlandı.",
-                            es: "Morning Reset está diseñado para la mañana en que tomas el teléfono."
+                            en: "Inner Light is a daily practice drawn from ten living traditions — at whichever hour is yours.",
+                            tr: "Inner Light, on yaşayan gelenekten beslenen günlük bir pratik — hangi saat senin ise.",
+                            es: "Inner Light es una práctica diaria de diez tradiciones vivas — a la hora que sea tuya."
                         ))
                         .font(.body)
                         .foregroundStyle(DS.textPrimary)
 
                         Text(L10n.text(
-                            en: "Set your wake time inside the app. Keep using your trusted alarm.",
-                            tr: "Uygulama içinde uyanma saatini ayarla. Güvendiğin alarmını kullanmaya devam et.",
-                            es: "Define tu hora de despertar en la app. Sigue usando tu alarma de siempre."
+                            en: "Choose the tradition that draws you. Sit with what it is. Then run a practice — a calm timer, step by step, and a quiet voice beside you.",
+                            tr: "Seni çeken geleneği seç. Ne olduğuyla otur. Sonra bir pratik çalıştır — sakin bir sayaç, adım adım, ve yanında sessiz bir ses.",
+                            es: "Elige la tradición que te atraiga. Siéntate con lo que es. Luego corre una práctica — un temporizador tranquilo, paso a paso, y una voz serena a tu lado."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "From the night you set it, Morning Reset waits on your lock screen — ready to greet you when you turn the phone on.",
-                            tr: "Ayarladığın geceden itibaren Morning Reset kilit ekranında bekler — telefonu açtığında seni karşılamaya hazır.",
-                            es: "Desde la noche que lo configuras, Morning Reset espera en tu pantalla bloqueada — listo para recibirte cuando enciendes el teléfono."
+                            en: "Every practice you finish feeds your orb of light. It grows brighter and fuller the longer you go, and it remembers all of it.",
+                            tr: "Tamamladığın her pratik ışık topunu besler. Devam ettikçe daha parlak ve dolgun olur, ve hepsini hatırlar.",
+                            es: "Cada práctica que terminas alimenta tu orbe de luz. Crece más brillante y pleno cuanto más sigues, y lo recuerda todo."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "Tap it before anything else. We guide you through five quick questions, a result, and one concrete first win.",
-                            tr: "Başka bir şeyden önce ona dokun. Seni beş hızlı soru, bir sonuç ve somut bir ilk kazanım üzerinden yönlendiriyoruz.",
-                            es: "Tócalo antes que nada. Te guiamos por cinco preguntas rápidas, un resultado y una primera victoria concreta."
+                            en: "A daily reminder is yours to set, or to leave. Inner Light is not an alarm clock — keep using the one you trust.",
+                            tr: "Günlük hatırlatıcıyı kurmak da kurmamak da sana kalmış. Inner Light bir çalar saat değil — güvendiğini kullanmaya devam et.",
+                            es: "El recordatorio diario es tuyo, para ponerlo o dejarlo. Inner Light no es un despertador — sigue usando el que ya usas."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "Not a feed. Not a productivity system. A small ritual that wins the first three minutes of your day.",
-                            tr: "Bir akış değil. Bir üretkenlik sistemi değil. Günün ilk üç dakikasını kazanan küçük bir ritüel.",
-                            es: "No es un feed. No es un sistema de productividad. Un pequeño ritual que gana los primeros tres minutos del día."
+                            en: "Not a feed. Not a productivity system. One small return to yourself, each day.",
+                            tr: "Bir akış değil. Bir üretkenlik sistemi değil. Her gün, kendine küçük bir dönüş.",
+                            es: "No es un feed. No es un sistema de productividad. Un pequeño regreso a ti, cada día."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "Health disclaimer: Morning Reset includes optional breathing and mobility exercises. These are not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider before starting any exercise programme, particularly if you have a pre-existing health condition, injury, or are pregnant. Stop immediately and seek medical attention if you experience pain, dizziness, or discomfort. Use all exercises at your own risk.",
-                            tr: "Sağlık bildirimi: Morning Reset, isteğe bağlı nefes ve hareketlilik egzersizleri içerir. Bu içerikler, profesyonel tıbbi tavsiye, tanı veya tedavinin yerini tutmaz. Mevcut bir sağlık durumunuz, yaralanmanız varsa ya da hamileyseniz, herhangi bir egzersiz programına başlamadan önce mutlaka bir sağlık uzmanına danışın. Ağrı, baş dönmesi veya rahatsızlık hissederseniz hemen durun ve tıbbi yardım alın. Tüm egzersizleri kendi sorumluluğunuzda kullanın.",
-                            es: "Aviso de salud: Morning Reset incluye ejercicios opcionales de respiración y movilidad. Estos no sustituyen el consejo médico profesional, el diagnóstico ni el tratamiento. Consulta siempre a un profesional de la salud antes de comenzar cualquier programa de ejercicio, especialmente si tienes alguna condición de salud preexistente, una lesión o estás embarazada. Detente de inmediato y busca atención médica si experimentas dolor, mareos o malestar. Usa todos los ejercicios bajo tu propia responsabilidad."
+                            en: "Health notice: Inner Light includes optional breathing, movement, cold and heat practices. These are not a substitute for professional medical advice, diagnosis or treatment. Consult a qualified healthcare provider before starting any of them, particularly if you have a pre-existing health condition or injury, or are pregnant. Stop immediately and seek medical attention if you experience pain, dizziness or discomfort. Use all practices at your own risk.",
+                            tr: "Sağlık bildirimi: Inner Light, isteğe bağlı nefes, hareket, soğuk ve sıcak pratikleri içerir. Bunlar profesyonel tıbbi tavsiye, tanı veya tedavinin yerini tutmaz. Mevcut bir sağlık durumunuz ya da yaralanmanız varsa veya hamileyseniz, herhangi birine başlamadan önce bir sağlık uzmanına danışın. Ağrı, baş dönmesi veya rahatsızlık hissederseniz hemen durun ve tıbbi yardım alın. Tüm pratikleri kendi sorumluluğunuzda kullanın.",
+                            es: "Aviso de salud: Inner Light incluye prácticas opcionales de respiración, movimiento, frío y calor. No sustituyen el consejo médico profesional, el diagnóstico ni el tratamiento. Consulta a un profesional de la salud antes de comenzar cualquiera de ellas, especialmente si tienes una condición de salud preexistente, una lesión o estás embarazada. Detente de inmediato y busca atención médica si experimentas dolor, mareos o malestar. Usa todas las prácticas bajo tu propia responsabilidad."
                         ))
                         .font(.caption)
                         .foregroundStyle(DS.textDim)
@@ -98,7 +100,8 @@ struct AboutView: View {
                 .font(.caption)
                 .italic()
                 .foregroundStyle(DS.textDim)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, DS.Space.xl)
             }

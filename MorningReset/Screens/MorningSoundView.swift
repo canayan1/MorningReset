@@ -11,12 +11,12 @@ struct MorningSoundView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(L10n.text(en: "SOUND CUE", tr: "SES İPUCU", es: "PISTA DE SONIDO"))
                         .font(DS.Typo.label)
                         .foregroundStyle(DS.textDim)
@@ -25,11 +25,13 @@ struct MorningSoundView: View {
                     Text(L10n.text(en: "Keep the soundtrack for after the reset.", tr: "Müziği reset'ten sonrasına sakla.", es: "Deja la banda sonora para después del reset."))
                         .font(DS.Typo.title)
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
                 }
+                .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.lg + 4)
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(appState.selectedSoundDirection.label.uppercased())
                         .font(DS.Typo.micro)
                         .foregroundStyle(DS.textDim)
@@ -43,13 +45,9 @@ struct MorningSoundView: View {
                         .font(.caption)
                         .italic()
                         .foregroundStyle(DS.textSecondary)
-
-                    Text(L10n.text(en: "Queue it when the ritual is done.", tr: "Ritüel bitince sıraya al.", es: "Ponlo en cola cuando termine el ritual."))
-                        .font(.caption)
-                        .foregroundStyle(DS.textDim)
-                        .padding(.top, 2)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(DS.Space.md)
                 .background(DS.surface)
                 .hairlineBorder()

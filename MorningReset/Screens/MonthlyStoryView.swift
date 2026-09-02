@@ -33,14 +33,14 @@ struct MonthlyStoryView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
 
                 Spacer()
 
                 // Header
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(monthName.uppercased())
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(DS.textDim)
@@ -58,6 +58,7 @@ struct MonthlyStoryView: View {
                     .opacity(appeared ? 1 : 0)
                     .animation(.easeOut(duration: 0.35).delay(0.2), value: appeared)
                 }
+                .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.xl)
 
@@ -80,12 +81,7 @@ struct MonthlyStoryView: View {
                 Button(L10n.text(en: "Back", tr: "Geri", es: "Volver")) {
                     appState.showPremiumHub()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.bottom, DS.Space.xl)
                 .opacity(appeared ? 1 : 0)
                 .animation(.easeOut(duration: 0.35).delay(0.5), value: appeared)

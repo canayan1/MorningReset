@@ -41,7 +41,7 @@ final class LocalAIInsightService: AIInsightService {
         if checkouts.isEmpty {
             switch mode {
             case "push":    return "You're moving with intention today."
-            case "protect": return "A lighter morning can be exactly the right call."
+            case "protect": return "A lighter session can be exactly the right call."
             default:        return "Steady starts tend to carry further."
             }
         }
@@ -69,9 +69,9 @@ final class LocalAIInsightService: AIInsightService {
             case .focused, .energized:
                 return "Your energy through these flows has been consistent."
             case .sleepy, .restless:
-                return "Your body's still settling into the morning. That's worth knowing."
+                return "Your body's still settling. That's worth knowing."
             case .stressed, .distracted:
-                return "Busy mornings are hard to reset from. Even a short flow counts."
+                return "Busy days are hard to reset from. Even a short flow counts."
             }
         }
         return "You showed up. That's always the first step."
@@ -151,7 +151,7 @@ final class LocalAIInsightService: AIInsightService {
             return "You followed through on your first win every time this week. That kind of clean start compounds."
         }
         if completedWins <= checkouts.count / 2 {
-            return "The first win is still where mornings slip. Make that step smaller and easier next week."
+            return "The first win is still where the day slips. Make that step smaller and easier next week."
         }
         if helpful == checkouts.count {
             return "Every flow this week felt useful. That kind of consistency is rare — protect it."

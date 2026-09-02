@@ -30,9 +30,10 @@ private enum PremiumStoreError: LocalizedError {
 extension AppState {
 
     static let productID = "com.canayan.MorningReset.premium.annual"
+    static let monthlyProductID = "com.canayan.MorningReset.premium.monthly"
     static let privacyPolicyURL = URL(string: "https://canayan1.github.io/MorningReset/privacy-policy.html")!
     static let supportURL = URL(string: "https://canayan1.github.io/MorningReset/support.html")!
-    static let termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let termsOfUseURL = URL(string: "https://canayan1.github.io/MorningReset/terms.html")!
     static let manageSubscriptionsURL = URL(string: "https://apps.apple.com/account/subscriptions")!
 
     func onPaywallPresented() {
@@ -69,6 +70,39 @@ extension AppState {
     @MainActor
     func premiumProduct() async -> Product? {
         try? await Product.products(for: [Self.productID]).first
+    }
+
+    /// Both subscription plans, annual first.
+    @MainActor
+    func subscriptionProducts() async -> [Product] {
+        let products = (try? await Product.products(for: [Self.productID, Self.monthlyProductID])) ?? []
+        return products.sorted { lhs, rhs in
+            let l = (lhs.subscription?.subscriptionPeriod.unit == .year) ? 0 : 1
+            let r = (rhs.subscription?.subscriptionPeriod.unit == .year) ? 0 : 1
+            return l < r
+        }
+    }
+
+    @MainActor
+    func purchase(_ product: Product) async throws -> PremiumPurchaseOutcome {
+        let result = try await product.purchase()
+        switch result {
+        case .success(let verification):
+            switch verification {
+            case .verified(let transaction):
+                await transaction.finish()
+                unlockPremium()
+                return .purchased
+            case .unverified:
+                throw PremiumStoreError.verificationFailed
+            }
+        case .userCancelled:
+            return .cancelled
+        case .pending:
+            return .pending
+        @unknown default:
+            return .cancelled
+        }
     }
 
     @MainActor
@@ -119,6 +153,7 @@ extension AppState {
         } else {
             clearPremium()
         }
+        await refreshTierEntitlements()
     }
 
     @MainActor

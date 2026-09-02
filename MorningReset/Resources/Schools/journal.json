@@ -1,0 +1,465 @@
+{
+  "id": "journal",
+  "name": "Notes to Self",
+  "tagline": "Think on paper. A pen, a page, and ten honest minutes.",
+  "overview": "Mind & Journal is about thinking on paper. It gathers the writing practices that have been tested most carefully — gratitude lists, expressive writing, if-then planning, self-distanced reflection — alongside older craft practices like morning pages that no laboratory ever measured but plenty of people keep doing anyway. Nothing here needs an app, a course, or a beautiful notebook. The aim is not to produce good writing; it is to get what is in your head into a form you can actually look at.",
+  "kind": "evidence",
+  "framing_note": "Some of this has research behind it and some of it is craft. Gratitude writing, expressive writing and if-then planning have all been tested in randomised studies, and they show real but modest average effects on mood and follow-through that vary widely between people — the largest expressive writing meta-analyses put the average benefit as small or absent, while if-then planning holds up best. Morning pages and free writing are a practice, not a finding. All of it is offered experientially, as a way of thinking on paper. None of it is therapy or medical treatment, and none of it is a substitute for professional care if you are struggling.",
+  "teachings": [
+    {
+      "id": "journal.t1",
+      "title": "Writing puts an experience in order",
+      "body": "Writing about something forces it into sentences, and sentences have order: a beginning, a cause, a consequence. That is most of what writing does for you — it turns a swirl into something with edges you can look at. James Pennebaker's classic studies asked people to write for fifteen or twenty minutes on three or four days about their deepest thoughts and feelings around a difficult event. The early results looked dramatic. Larger reviews have been soberer: Frattaroli's 2006 meta-analysis of 146 randomised studies found a real but small average benefit, and a separate 2006 meta-analysis of thirty trials found essentially none for health outcomes. So here is the honest version. Many people find writing leaves them clearer and less tangled. It is cheap, private, and worth trying. It is not a treatment for anything."
+    },
+    {
+      "id": "journal.t2",
+      "title": "Gratitude, done specifically",
+      "body": "Gratitude writing is the most tested journalling practice there is, and the most easily ruined. Emmons and McCullough's 2003 experiments had people list what they were grateful for weekly or daily; the gratitude groups reported better well-being on several measures, with positive mood the sturdiest finding. Seligman's 2005 trial found that writing three good things each night, with a note on why each one happened, lifted mood for months. But a 2021 meta-analysis by Cregg and Cheavens found the effects on low mood and anxiety are modest, and Lyubomirsky's work found counting blessings once a week worked better than three times a week — done too often, it goes stale. So: be specific, name the why, and do it a few times a week rather than religiously."
+    },
+    {
+      "id": "journal.t3",
+      "title": "If-then beats good intentions",
+      "body": "If you take one thing from this school, take this. Peter Gollwitzer's implementation intentions are a sentence with a fixed shape: if it is this situation, then I will do this thing. You decide the cue and the response in advance, so the moment itself does the remembering instead of your willpower. Gollwitzer and Sheeran's 2006 meta-analysis pooled 94 studies and more than eight thousand people, and found a medium-to-large effect on whether goals actually got done. It costs a minute to write. The craft is all in the cue: pick something concrete that reliably happens — after I pour my coffee, when I sit down at my desk — never a vague when I have time. Then write a second if-then for the obstacle you can already see coming."
+    },
+    {
+      "id": "journal.t4",
+      "title": "Step back by changing the pronoun",
+      "body": "When something has you rattled, the word I keeps you inside it. Ethan Kross and his colleagues have studied a small trick with a surprising amount of evidence behind it: describe your situation using your own name and you or they instead. Sam is nervous about tomorrow, because... Across a series of studies, this distanced self-talk lowered emotional reactivity, and it appears to work quickly and without much mental effort — people reasoned about themselves more the way they would reason about a friend. On paper it is easy. Write the situation once in the first person, then rewrite it in the third, and watch the tone change. Advice you would never accept from yourself often becomes obvious in that voice."
+    },
+    {
+      "id": "journal.t5",
+      "title": "Morning pages, free writing, and going gently",
+      "body": "Julia Cameron's morning pages are three pages of longhand, written first thing, stream of consciousness, for nobody's eyes but yours. This is a practice, not a study — Cameron proposed it in The Artist's Way in 1992 as a way past creative blocks, and readers have kept it alive since. The rules are what make it work: no editing, no aim, no rereading straight away. Boredom and complaint are allowed, and nothing is too petty to include. Free writing does the same job in ten minutes. One caution deserves saying plainly: an open page can go straight to the hardest thing you carry, and writing about trauma can be genuinely distressing. Go gently, stop whenever you want, and if difficult feelings persist, talk to a qualified professional. This is writing, not therapy."
+    }
+  ],
+  "routines": [
+    {
+      "id": "journal.r01",
+      "title": "One Line of Gratitude",
+      "group": "starter",
+      "minutes": 2,
+      "purpose": "One specific good thing, written down, before the day takes over.",
+      "steps": [
+        "Open a blank page and set a two-minute timer. This is meant to be short.",
+        "Write one sentence beginning: 'Today I'm glad that...'",
+        "Make it specific. Not 'my family' but 'the way my sister texted back at eleven last night.'",
+        "Add three or four words on why that mattered to you.",
+        "Close the page. Don't reread it, don't improve it."
+      ],
+      "safety": "",
+      "free": true
+    },
+    {
+      "id": "journal.r02",
+      "title": "Three Good Things",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "List three things that went well and name why each happened — the exercise from Seligman's 2005 trial.",
+      "steps": [
+        "Think back over the last twenty-four hours.",
+        "Write three things that went well. They can be small: a good coffee, a message that landed, a task finally finished.",
+        "Under each, answer the why. What part did you play, and what part did someone or something else play?",
+        "Keep each answer to a sentence or two. This is not an essay.",
+        "Do this a few evenings a week rather than every single night — research suggests forcing it daily can dull the effect."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r03",
+      "title": "Brain Dump",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Get every open loop out of your head and onto paper so you stop rehearsing them.",
+      "steps": [
+        "Set a five-minute timer.",
+        "Write every open loop as one short line: tasks, worries, half-thoughts, things you keep meaning to do.",
+        "No order, no priority, no full sentences. Speed matters more than tidiness.",
+        "When the timer ends, circle the one item that is genuinely urgent today.",
+        "Leave the rest on the page. The page is holding them now, not you."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r04",
+      "title": "Tomorrow's One Win",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "Decide the single thing that would make tomorrow count, before tomorrow decides for you.",
+      "steps": [
+        "Ask: if only one thing goes right tomorrow, what should it be?",
+        "Write it as a finished action — 'draft sent', not 'work on the draft'.",
+        "Write the first physical move it needs: open the file, find the number, pick up the phone.",
+        "Write when and where you will do it.",
+        "Stop there. One win, not a list."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r05",
+      "title": "Setting an Intention",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Choose how you want to meet the day, not only what you want to get done.",
+      "steps": [
+        "Write today's date and one word for how you want to show up: steady, curious, patient, direct.",
+        "Write one sentence: 'Today I want to be more ___ and less ___.'",
+        "Name the one moment in the day where that will actually be tested.",
+        "Write what your word would look like in that specific moment, in one line.",
+        "Read it back once, then start the day."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r06",
+      "title": "Morning Pages",
+      "group": "core",
+      "minutes": 20,
+      "purpose": "Julia Cameron's practice: three pages of unedited longhand, first thing, for your eyes only.",
+      "steps": [
+        "Do this before email, before news, ideally before you have spoken to anyone.",
+        "Write longhand if you can. Three pages, or twenty minutes — whichever arrives first.",
+        "Write whatever is there: complaints, lists, boredom, the same sentence twice. Nothing is too petty.",
+        "Do not stop to think or edit. If you are stuck, write 'I don't know what to write' until something else turns up.",
+        "Do not reread them today. They are for clearing the glass, not for keeping.",
+        "If a real idea surfaces, jot it on a separate page so the pages themselves stay unpressured."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r07",
+      "title": "If-Then Plan for One Habit",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Turn a vague intention into a specific if-then cue — the most reliable follow-through tool in the research.",
+      "steps": [
+        "Name one thing you keep meaning to do and haven't. Just one.",
+        "Write the behaviour small enough to be nearly certain: 'ten press-ups', not 'get fit'.",
+        "Find the cue — a time, a place, or something that already happens every day. 'After I put the kettle on...'",
+        "Write the full sentence: 'If it is [situation], then I will [behaviour].'",
+        "Write one obstacle you can already predict, and a second if-then for it: 'If I'm running late, then I'll do it at lunch.'",
+        "Put the sentence somewhere you will physically see it at the cue moment."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r08",
+      "title": "What Went Well, and Why",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "A longer version of three good things that hunts for the causes, so the lesson carries forward.",
+      "steps": [
+        "Take the last week rather than the last day.",
+        "Write three things that went well: one at work, one with people, one just for you.",
+        "For each, write the causes honestly — what you did, what conditions helped, who else was involved.",
+        "Circle anything in those causes that is repeatable next week.",
+        "Finish with one sentence: 'More of this next week: ___.'"
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r09",
+      "title": "Worry Download",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Move circling worries out of rehearsal and onto the page, then sort them into actionable and not.",
+      "steps": [
+        "Set a timer and write every worry currently in your head, one line each.",
+        "Beside each, mark A if you can act on it and N if you cannot.",
+        "For every A, write the single next step and when you will take it.",
+        "For every N, write one honest sentence: 'This is out of my hands, and it still bothers me.'",
+        "Close the page and note when you will next look at it. Many people find a fixed worry slot keeps worry from spreading through the day."
+      ],
+      "safety": "If worry is constant, keeps you from sleeping, or this exercise leaves you more agitated rather than less, stop and speak with a doctor or therapist. This is a self-help writing practice, not therapy.",
+      "free": false
+    },
+    {
+      "id": "journal.r10",
+      "title": "The Reframe",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Take one stuck story and write a second version that fits the same facts more fairly.",
+      "steps": [
+        "Write the situation in plain facts only — what happened, no interpretation.",
+        "Underneath, write the story you are telling yourself about it, unedited.",
+        "Underline the parts of that story that are interpretation rather than fact.",
+        "Write a second version that fits the same facts but is fair to everyone in it, including you.",
+        "Ask: which version would I offer a friend in this exact situation?",
+        "Note one thing you would do differently if the second version turned out to be true."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r11",
+      "title": "Energy Audit",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Find out what actually lifts and drains you instead of guessing.",
+      "steps": [
+        "Draw two columns and head them LIFTS and DRAINS.",
+        "Walk through yesterday hour by hour, putting each activity, person or place into one column.",
+        "Include the small things: the commute, one specific meeting, scrolling before bed.",
+        "Star the top three in each column.",
+        "Write one drain you can reduce this week and one lift you can double.",
+        "Repeat in a month and compare. The pattern across weeks is worth far more than any single day."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r12",
+      "title": "Appreciation Note to Someone",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Write specific appreciation to a person who is not expecting it.",
+      "steps": [
+        "Pick someone whose effect on you they probably do not know about.",
+        "Write what they did — concretely, with the detail only you would remember.",
+        "Write what it changed for you, at the time and since.",
+        "Cut every generality. 'You're amazing' is worth less than one accurate detail.",
+        "Decide whether to send it. Sending is optional; many people find reading it aloud to the person lands hardest.",
+        "If you do send it, expect nothing back. The writing is the part that is yours."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r13",
+      "title": "Closing the Day",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "A short end-of-day review so the day finishes on the page instead of in bed.",
+      "steps": [
+        "Write three lines: what happened, what I did well, what I would do differently.",
+        "Write one thing that is now genuinely finished.",
+        "Write anything unfinished as a single line for tomorrow's list, then let it go.",
+        "Finish with one specific good thing from the day.",
+        "Close the notebook deliberately. The small ritual does more work than the words."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r14",
+      "title": "Expressive Writing: The Four Sessions",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Pennebaker's protocol — twenty minutes a day across four days on one difficult experience, for your eyes only.",
+      "steps": [
+        "Choose something that still carries charge but is not the very hardest thing you hold. Start mid-range.",
+        "Set twenty minutes and write continuously about the event and your deepest thoughts and feelings about it.",
+        "Ignore spelling, grammar and structure entirely. Nobody reads this — not even you, unless you choose to.",
+        "Link the event to other parts of your life if it comes naturally: your past, your relationships, who you are now.",
+        "Repeat on four days. Later sessions often shift from what happened to what it means. Let that happen on its own.",
+        "Afterwards do something ordinary and grounding. Expect to feel stirred up for an hour or two."
+      ],
+      "safety": "Writing about painful events can bring strong feelings to the surface, sometimes for a day or more. Go slowly, pick something mid-range rather than the heaviest thing you carry, and stop whenever you want — stopping is not failure. This is an experiential writing exercise, not therapy and not a treatment for trauma. If distress lasts, if sleep or daily life is affected, or if you feel unsafe, speak with a doctor or a qualified therapist.",
+      "free": false
+    },
+    {
+      "id": "journal.r15",
+      "title": "The Self-Distanced Letter",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Write about a charged situation in the third person to cool it down — the shift Ethan Kross's work studies.",
+      "steps": [
+        "Name the situation in one line, in the usual first person: 'I'm dreading the conversation with...'",
+        "Now rewrite that line using your own name and 'you' or 'they': 'Sam is dreading the conversation because...'",
+        "Keep writing in that voice for ten minutes. Describe what this person feels and why it makes sense that they feel it.",
+        "Still in that voice, ask: what would actually help them? What are they missing?",
+        "Write one line of advice to them, the way a level-headed friend would say it.",
+        "Return to first person for the final sentence: 'So what I'm going to do is...'"
+      ],
+      "safety": "Some situations do not cool down on the page. If this leaves you more distressed rather than steadier, put it down — this is a self-help exercise, not therapy. Distress that persists deserves a conversation with a qualified professional.",
+      "free": false
+    },
+    {
+      "id": "journal.r16",
+      "title": "Values Check-In",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Write about what you genuinely care about — the self-affirmation exercise used in Cohen and Sherman's research.",
+      "steps": [
+        "List five or six things that matter to you: honesty, craft, family, humour, independence, faith, fairness.",
+        "Rank them quickly, without overthinking. First instinct is usually closer to true.",
+        "Take the top one and write for ten minutes on why it matters to you and one time you lived by it.",
+        "Write it as an experience, not an argument. A story beats a definition every time.",
+        "Finish with one line: 'This week, this value shows up when I ___.'",
+        "Keep the page and reread it before something that has you rattled."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r17",
+      "title": "Letter to Your Future Self",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Write to yourself a year out, so today's situation gets some perspective.",
+      "steps": [
+        "Date the page, and write the date you will open it — six months or a year from now.",
+        "Describe where you are right now, honestly: what is hard, what is good, what is uncertain.",
+        "Tell your future self what you are hoping for and what you are afraid of.",
+        "Ask them three real questions you would want answered.",
+        "Write one thing you want them to remember about who you were today.",
+        "Seal it, or set a calendar reminder, then genuinely leave it alone."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r18",
+      "title": "The Decision Journal",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Record a decision as you make it, so later you can judge the thinking and not only the outcome.",
+      "steps": [
+        "Write the decision in one sentence, with the date.",
+        "Write what you expect to happen, and how confident you are as a percentage.",
+        "List the main alternatives you considered and why you set each one aside.",
+        "Separate what you know from what you are assuming, and note what you would need to learn to be sure.",
+        "Note your state as you decide: rushed, tired, excited, pressured. It shapes decisions more than people admit.",
+        "Set a date to reread it. When you do, judge the reasoning first and the result second."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r19",
+      "title": "The Weekly Review",
+      "group": "deep",
+      "minutes": 25,
+      "purpose": "One longer sitting a week to catch the patterns that daily entries miss.",
+      "steps": [
+        "Reread this week's entries quickly. Don't edit them.",
+        "Write three headings: what worked, what didn't, what I learned.",
+        "Under each, write specifics rather than verdicts. 'Tuesday's meeting ran long because I hadn't prepped' beats 'bad week'.",
+        "Note anything that has now appeared three weeks running. That is a pattern, not an incident.",
+        "Choose one change for next week and write it as an if-then sentence.",
+        "Finish with one line of credit to yourself for something you actually did."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r20",
+      "title": "The Unsent Letter",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Say the whole thing to someone, on paper, with no intention of sending it.",
+      "steps": [
+        "Decide before you start that this letter will not be sent. That decision is what makes it honest.",
+        "Address them by name and write what you actually think — unedited, and unfair if it needs to be.",
+        "Write what you wanted from them, and what you did not get.",
+        "Then write what you would want them to understand, if they were able to.",
+        "Finish with what you are choosing to do now, regardless of them.",
+        "Keep it or destroy it, but do not send it tonight. If you still want to say something in a week, write a different, calmer letter then."
+      ],
+      "safety": "Unsent letters can open old wounds, particularly around loss, betrayal or family. Go slowly, and stop if it becomes overwhelming — you can always come back another day. This is an experiential writing exercise, not therapy. If the feelings stay heavy or start to interfere with daily life, please talk to a qualified professional.",
+      "free": false
+    },
+    {
+      "id": "journal.r21",
+      "title": "The Self-Compassion Note",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Write to yourself about a failing the way you would write to a friend — Kristin Neff's exercise.",
+      "steps": [
+        "Name one thing about yourself you are currently hard on. Write it plainly.",
+        "Write how it makes you feel, without arguing yourself out of the feeling.",
+        "Now switch voices and write as an unconditionally kind friend who knows everything and cares anyway. Address yourself by name.",
+        "Have them do three things: acknowledge the pain, note that struggling with this is ordinary and human, and ask what would actually help.",
+        "Keep it warm rather than falsely upbeat. This is not talking yourself into feeling great.",
+        "Put it down for a few minutes, then read it back slowly as if someone else had written it to you."
+      ],
+      "safety": "If self-criticism is relentless, or if this brings up thoughts of harming yourself, stop and reach out to a doctor, a therapist, or a crisis line in your country. This is a self-help writing practice, not therapy or a treatment for any condition.",
+      "free": false
+    },
+    {
+      "id": "journal.r22",
+      "title": "One Page, No Aim",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "Free writing with no goal — the shorter, lighter cousin of morning pages.",
+      "steps": [
+        "One page, or ten minutes. Whichever comes first.",
+        "Start with the first true sentence you can find: 'Right now I notice...'",
+        "Keep the pen moving. Repetition, nonsense and tangents all count as writing.",
+        "If you catch yourself writing for an audience, write 'nobody is reading this' and carry on.",
+        "Stop mid-sentence when the timer goes, and do not tidy it up."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r23",
+      "title": "What I'm Carrying",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "Name the weight you are holding without having to fix any of it tonight.",
+      "steps": [
+        "Write 'Right now I'm carrying...' and list what comes, one line each.",
+        "Include the small and the unreasonable. Nothing is too minor to name.",
+        "Beside each, write one word for how heavy it feels: light, medium, heavy.",
+        "Do not solve anything. Naming is the entire task tonight.",
+        "Finish with: 'Not all of this is mine to carry today.' Then close the book."
+      ],
+      "safety": "If naming what you carry leaves you overwhelmed rather than lighter, stop and do something grounding — a walk, a shower, a call to someone. This is a gentle self-help practice, not therapy; if the weight stays heavy over weeks, a qualified professional is the right next step.",
+      "free": false
+    },
+    {
+      "id": "journal.r24",
+      "title": "Permission Slip",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "Write yourself explicit permission to put one thing down.",
+      "steps": [
+        "Name one thing you are holding onto that is not serving you: a standard, a grudge, an unfinished project, an obligation.",
+        "Write what keeping it costs you, in specific hours or specific feelings.",
+        "Write the slip itself: 'I give myself permission to ___, because ___.'",
+        "Write what you will say if someone asks you about it.",
+        "Sign it and date it. Absurd as that sounds, many people find the signature is the part that makes it stick."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "journal.r25",
+      "title": "The Kind Read-Back",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Reread your own older entries generously, and notice how much has already moved.",
+      "steps": [
+        "Pick entries from one to six months ago. Not the hardest ones.",
+        "Read slowly, as though a friend had written them.",
+        "Write down three things that worried you then which have since resolved or shrunk.",
+        "Write one thing that has genuinely changed in you since.",
+        "Write one sentence of thanks to the person who wrote those pages.",
+        "If you meet an entry you are not ready to reread, close it and move on. That is allowed."
+      ],
+      "safety": "Old entries can catch you off guard. If rereading stirs up more than you expected, stop — there is no obligation to finish. This is a self-help practice, not therapy, and lasting distress is worth taking to a qualified professional.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "James W. Pennebaker & Sandra K. Beall, 'Confronting a Traumatic Event: Toward an Understanding of Inhibition and Disease', Journal of Abnormal Psychology, 1986 — the original expressive writing paradigm: roughly 15-20 minutes a day across four days about a difficult experience.",
+    "Joanne Frattaroli, 'Experimental Disclosure and Its Moderators: A Meta-Analysis', Psychological Bulletin, 2006 — 146 randomised studies; the average benefit of expressive writing is statistically real but small (r = .075). The sterner counterweight is Mogk, Otte, Reinhold-Hurley & Kroener-Herwig, Psychosocial Medicine, 2006, whose 30-trial meta-analysis found no significant effect on physical or psychological health.",
+    "Robert A. Emmons & Michael E. McCullough, 'Counting Blessings Versus Burdens: An Experimental Investigation of Gratitude and Subjective Well-Being in Daily Life', Journal of Personality and Social Psychology, 2003 — gratitude listing raised well-being on several, though not all, outcomes; positive mood was the most robust finding.",
+    "Martin E. P. Seligman, Tracy A. Steen, Nansook Park & Christopher Peterson, 'Positive Psychology Progress: Empirical Validation of Interventions', American Psychologist, 2005 — the 'three good things' exercise, done nightly for a week, raised happiness and lowered depressive symptoms out to six months. Mongrain & Anselmo-Matthews (Journal of Clinical Psychology, 2012) replicated the happiness gains but found no advantage over a positive placebo condition.",
+    "David R. Cregg & Jennifer S. Cheavens, 'Gratitude Interventions: Effective Self-help? A Meta-analysis of the Impact on Symptoms of Depression and Anxiety', Journal of Happiness Studies, 2021 — effects are modest, and larger against waitlist than against active control conditions. On dosage, Lyubomirsky, Sheldon & Schkade (Review of General Psychology, 2005) found counting blessings once a week produced greater well-being gains than three times a week — the basis for not over-practising gratitude.",
+    "Peter M. Gollwitzer & Paschal Sheeran, 'Implementation Intentions and Goal Achievement: A Meta-Analysis of Effects and Processes', Advances in Experimental Social Psychology, 2006 — 94 studies and 8,461 participants; a medium-to-large effect (d = .65) of if-then planning on goal attainment.",
+    "Ethan Kross et al., 'Self-Talk as a Regulatory Mechanism: How You Do It Matters', Journal of Personality and Social Psychology, 2014, with Orvell et al., Clinical Psychological Science, 2021 — using your own name and non-first-person pronouns lowers emotional reactivity across a range of emotionally intense experiences, and appears to do so with little effortful control.",
+    "Kristin Neff & Christopher Germer, 'A Pilot Study and Randomized Controlled Trial of the Mindful Self-Compassion Program', Journal of Clinical Psychology, 2013 — the self-compassionate letter as taught within MSC; participants reported greater self-compassion than a comparison group.",
+    "Geoffrey L. Cohen & David K. Sherman, 'The Psychology of Change: Self-Affirmation and Social Psychological Intervention', Annual Review of Psychology, 2014 — brief writing about a core personal value can buffer threat, with effects that are timing-dependent and not universal.",
+    "Julia Cameron, The Artist's Way, 1992 — morning pages: three pages of longhand, stream-of-consciousness writing done first thing. A creative practice with a long following, not a research finding."
+  ],
+  "subtitle": "the Stoic journal, brought up to date",
+  "origin": "From the Greek hypomnēmata, 'notes, reminders'. Marcus Aurelius' notebooks were titled ta eis heauton — 'to himself'; 'Meditations' was a 17th-century editor's invention."
+}

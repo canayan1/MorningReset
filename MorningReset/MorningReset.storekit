@@ -1,67 +1,129 @@
 {
-  "identifier" : "6DFBE7CA",
-  "nonConsumableProducts" : [
-
-  ],
-  "nonRenewingSubscriptionProducts" : [
-
-  ],
-  "products" : [
-
-  ],
-  "settings" : {
-    "_availableInAllEnvironments" : false,
-    "_failTransactionsEnabled" : false,
-    "_locale" : "en_US",
-    "_storeKitVersion" : 2,
-    "_timeRate" : "MONTHLY_RENEWAL_EVERY_THIRTY_MINUTES"
+  "identifier": "6DFBE7CA",
+  "nonConsumableProducts": [],
+  "nonRenewingSubscriptionProducts": [],
+  "products": [],
+  "settings": {
+    "_availableInAllEnvironments": false,
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storeKitVersion": 2,
+    "_timeRate": "MONTHLY_RENEWAL_EVERY_THIRTY_MINUTES"
   },
-  "subscriptionGroups" : [
+  "subscriptionGroups": [
     {
-      "id" : "21497758",
-      "localizations" : [
-
-      ],
-      "name" : "Morning Reset Premium",
-      "performanceData" : {
-
-      },
-      "subscriptions" : [
+      "id": "21497758",
+      "localizations": [],
+      "name": "Morning Reset Premium",
+      "performanceData": {},
+      "subscriptions": [
         {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "19.99",
-          "familySharable" : false,
-          "groupNumber" : 1,
-          "internalID" : "9A2B3C4D",
-          "introductoryOffer" : {
-            "duration" : "P7D",
-            "offerID" : "intro_offer",
-            "offerMode" : "FREE_TRIAL",
-            "offerType" : "introductory"
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "59.99",
+          "familySharable": false,
+          "groupNumber": 1,
+          "internalID": "9A2B3C4D",
+          "introductoryOffer": {
+            "duration": "P7D",
+            "offerID": "intro_offer",
+            "offerMode": "FREE_TRIAL",
+            "offerType": "introductory"
           },
-          "localizations" : [
+          "localizations": [
             {
-              "description" : "Unlock weekly pattern insight, a short guided pause, and Rise & Flow, a guided 5-minute movement reset.",
-              "displayName" : "Morning Reset Premium Annual",
-              "locale" : "en_US"
+              "description": "Premium unlocks the deeper layer: fuller weekly pattern insight, a guided pause, Rise & Flow (guided movement), Breath Reset (guided breathing), and Morning Pages (freewriting). The core morning ritual and energy read stay free.",
+              "displayName": "Morning Reset Premium Annual",
+              "locale": "en_US"
             }
           ],
-          "productID" : "com.canayan.MorningReset.premium.annual",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Morning Reset Premium Annual",
-          "subscriptionGroupID" : "21497758",
-          "type" : "RecurringSubscription"
+          "productID": "com.canayan.MorningReset.premium.annual",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "Morning Reset Premium Annual",
+          "subscriptionGroupID": "21497758",
+          "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "12.99",
+          "familySharable": false,
+          "groupNumber": 1,
+          "internalID": "9A2B3C4E",
+          "localizations": [
+            {
+              "description": "Premium monthly \u2014 the same deeper layer, billed each month.",
+              "displayName": "Morning Reset Premium Monthly",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.canayan.MorningReset.premium.monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Morning Reset Premium Monthly",
+          "subscriptionGroupID": "21497758",
+          "type": "RecurringSubscription"
+        }
+      ]
+    },
+    {
+      "id": "31000001",
+      "localizations": [],
+      "name": "Energy Reset \u2014 Foundations",
+      "performanceData": {},
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "2.99",
+          "familySharable": false,
+          "groupNumber": 1,
+          "internalID": "31A00001",
+          "localizations": [
+            {
+              "description": "Unlock the Foundations schools: Breath, Light, Move, and Reflect.",
+              "displayName": "Foundations tier",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.canayan.MorningReset.tier.foundations",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Foundations tier",
+          "subscriptionGroupID": "31000001",
+          "type": "RecurringSubscription"
+        }
+      ]
+    },
+    {
+      "id": "31000002",
+      "localizations": [],
+      "name": "Energy Reset \u2014 Deep",
+      "performanceData": {},
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "3.99",
+          "familySharable": false,
+          "groupNumber": 1,
+          "internalID": "31A00002",
+          "localizations": [
+            {
+              "description": "Unlock the Deep schools: Still, Sleep, Cold, Sound, Nature, and Fuel.",
+              "displayName": "Deep tier",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.canayan.MorningReset.tier.deep",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Deep tier",
+          "subscriptionGroupID": "31000002",
+          "type": "RecurringSubscription"
         }
       ]
     }
   ],
-  "version" : {
-    "major" : 3,
-    "minor" : 0
+  "version": {
+    "major": 3,
+    "minor": 0
   }
 }

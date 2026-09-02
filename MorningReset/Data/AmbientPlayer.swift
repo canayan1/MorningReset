@@ -50,6 +50,14 @@ final class AmbientPlayer {
         isRunning = false
     }
 
+    private(set) var isAlarming = false
+
+    /// Lower the bed while the guide speaks, then restore.
+    func duck(_ on: Bool) {
+        guard let node, isRunning, !isAlarming else { return }
+        node.volume = on ? 0.05 : 0.16
+    }
+
     func toggleMute() {
         Self.isMuted.toggle()
         if Self.isMuted { stop() } else { start(path: currentPath) }
@@ -144,4 +152,5 @@ final class AmbientPlayer {
         }
         return buf
     }
+
 }

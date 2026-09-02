@@ -1,0 +1,490 @@
+{
+  "id": "nature",
+  "name": "Shinrin-yoku",
+  "tagline": "Two things your body still expects: daylight, and somewhere green.",
+  "overview": "Nature & Light is the plainest school here and the one with the steadiest evidence behind it. Two separate lines of research sit underneath it: daylight is the main timing signal for the human body clock, and time spent outdoors in green or blue space is consistently associated with better mood and better self-reported health. The practices are undramatic on purpose. Step outside in the morning, sit by a window, walk slowly with nowhere to be, watch the light go at the end of the day. Nothing here needs equipment, countryside, or a free afternoon, though a free afternoon helps.",
+  "kind": "evidence",
+  "framing_note": "There is good evidence that daylight and its timing shape the human body clock, and reasonable observational evidence that time spent outdoors is associated with better mood, alertness and self-reported health. Associations are stated here as associations: most of the outdoor-time research is cross-sectional, and healthier, happier people may simply go outside more. Claims about 'grounding' or 'earthing' electrons, and claims made for negative ions, are not supported by good evidence and are not made anywhere in this school. This is experiential practice, not medical treatment or a substitute for care.",
+  "teachings": [
+    {
+      "id": "nature.t1",
+      "title": "Daylight is the signal your body clock actually uses",
+      "body": "You run on a roughly 24-hour internal clock that has to be reset every day, and the reset signal is light reaching the eye. The gap between indoors and outdoors is far wider than it feels, because your eyes adjust and hide it from you. A well-lit room sits somewhere around 100 to 500 lux. An overcast morning outdoors is often several thousand. Bright sun can pass 50,000. Zeitzer and colleagues showed in 2000 that around 100 lux in the evening already produces roughly half the melatonin suppression and clock shift of very bright light, which is why dimming the evening matters as much as brightening the morning. Wright's 2013 camping study found a week on sunlight and campfires raised daytime light exposure about fourfold and moved melatonin onset nearly two hours earlier."
+    },
+    {
+      "id": "nature.t2",
+      "title": "What the 120-minute finding actually says",
+      "body": "You will see two hours a week in nature quoted everywhere. It comes from one large English survey. White and colleagues, writing in Scientific Reports in 2019, looked at 19,806 adults in the Monitor of Engagement with the Natural Environment survey and found that, compared with no nature contact in the previous week, people reporting 120 minutes or more were more likely to describe themselves as in good health or high wellbeing. The association peaked between 200 and 300 minutes and climbed no further. It made no difference whether the time came as one long visit or several short ones. The authors are explicit that the data are cross-sectional: healthier, happier people may simply go outside more. Treat 120 minutes as a useful target, not a dose."
+    },
+    {
+      "id": "nature.t3",
+      "title": "Soft fascination, and why nature rests the mind",
+      "body": "Stephen and Rachel Kaplan proposed that the effort of holding attention on something not naturally interesting — a spreadsheet, a queue, a hard conversation — wears down across a day. Their attention restoration theory says recovery comes from settings with four qualities: being away, extent, compatibility, and fascination. Nature is unusually rich in what they called soft fascination. Moving water, shifting leaves, drifting cloud, birds crossing a garden. It holds your attention without demanding it, which leaves room to think. Berman and colleagues found in 2008 that a fifty-minute walk in an arboretum improved backwards digit span while an equivalent city walk did not. A 2016 systematic review by Ohly and colleagues found the picture is genuinely mixed: support for some attention measures, not for all of them."
+    },
+    {
+      "id": "nature.t4",
+      "title": "Shinrin-yoku, and what it actually is",
+      "body": "Shinrin-yoku translates roughly as forest bathing. The term was coined in 1982 by Japan's Forestry Agency, partly to encourage people to use and value the country's forests. It is not hiking, not exercise, and not a technique. It means going slowly, or barely moving at all, with no destination, and taking the place in through sight, sound, smell and touch. Bum-Jin Park, Yoshifumi Miyazaki and colleagues ran field experiments in 24 forests across Japan with 280 young adults, reporting lower salivary cortisol and shifts in heart rate and blood pressure after forest walks compared with city walks. Qing Li has led much of the later work. The studies are small, short, and heavily weighted toward young Japanese men — promising rather than settled."
+    },
+    {
+      "id": "nature.t5",
+      "title": "What holds up, and what is being sold to you",
+      "body": "Two things here rest on decent evidence. Daylight and its timing shape the body clock, and time outdoors is associated with better mood and self-reported health. Two things sold alongside them do not. Grounding, or earthing — the idea that electrons flow from the ground into your body and act as an antioxidant — has no accepted physiological mechanism and rests on small, poorly blinded studies, often run by people selling mats and sheets. Negative ions fare no better. Perez, Alexander and Bailey reviewed 33 studies for BMC Psychiatry in 2013 and found no consistent effect of air ionisation on anxiety, mood, relaxation, sleep or comfort. Walking barefoot on grass is worth doing because grass is interesting underfoot. That is the whole reason, and it is enough."
+    }
+  ],
+  "routines": [
+    {
+      "id": "nature.r01",
+      "title": "Two Minutes of Morning Daylight",
+      "group": "starter",
+      "minutes": 2,
+      "purpose": "The smallest useful version of this whole school: outdoor light on your eyes soon after waking.",
+      "steps": [
+        "Within an hour of waking, step outside. A doorstep, balcony, yard or stretch of pavement all count.",
+        "Leave sunglasses off if that is comfortable. Ordinary prescription glasses are fine.",
+        "Face the brightest part of the sky, well away from the sun itself.",
+        "Stand there for two minutes without your phone and let your eyes settle.",
+        "Notice one thing about the light: its colour, its angle, whether it is flat or sharp today.",
+        "Go back in. That is the entire practice."
+      ],
+      "safety": "Never look directly at the sun, even for a moment. Look at open sky away from it, or at lit walls and trees. If the ground is icy or the street feels unsafe, an open window or a bright doorway is a reasonable stand-in.",
+      "free": true
+    },
+    {
+      "id": "nature.r02",
+      "title": "The Window Sit",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "A daylight and attention practice for days when getting outside genuinely is not going to happen.",
+      "steps": [
+        "Find the brightest window in the building and pull a chair to it.",
+        "Sit facing out, close enough that the window fills most of your field of view.",
+        "Open the window if you can. Sound and moving air are half of what makes this work.",
+        "Spend the first two minutes on the far distance: rooftops, hills, the sky, whatever is furthest away.",
+        "Spend the next two on movement — traffic, weather, branches, birds, people.",
+        "Spend the last minute doing nothing in particular and let your gaze go where it wants."
+      ],
+      "safety": "Window glass cuts the light considerably and blocks most ultraviolet, so this gives you much less light than stepping outside. Treat it as a substitute, not an equal.",
+      "free": false
+    },
+    {
+      "id": "nature.r03",
+      "title": "One Daylight Break",
+      "group": "starter",
+      "minutes": 10,
+      "purpose": "Break the indoor day once, in daylight, with no errand attached to it.",
+      "steps": [
+        "Pick a fixed point in your day — after lunch works well — and put it in the calendar.",
+        "Go outside with no destination and no task. Not the shop. Not the post.",
+        "Walk in one direction for four minutes, then turn round and come back.",
+        "Keep the phone in your pocket the whole time.",
+        "Look up at least twice: once at the sky, once at the tops of buildings or trees.",
+        "Come back in before you feel you have to."
+      ],
+      "safety": "In strong sun use shade and cover up, and drink water in hot weather.",
+      "free": false
+    },
+    {
+      "id": "nature.r04",
+      "title": "Look Up",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Three minutes of sky, to break the close focus that screens and rooms hold you in.",
+      "steps": [
+        "Go to a window, a door, or just outside.",
+        "Tip your head back until all you can see is sky and the tops of things.",
+        "Let your eyes relax onto the furthest thing you can find. Do not hunt for detail.",
+        "Notice the colour at the top of the sky and the colour near the horizon. They are rarely the same.",
+        "Stay with it for three slow breaths after you think you are done.",
+        "Lower your head slowly, because it can make you a little dizzy."
+      ],
+      "safety": "Never look at or near the sun. If you feel unsteady tipping your head back, sit down or lean against a wall first.",
+      "free": false
+    },
+    {
+      "id": "nature.r05",
+      "title": "Weather Noticing",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "Meet the actual weather instead of the forecast, using your skin as the instrument.",
+      "steps": [
+        "Step outside without checking an app first.",
+        "Stand still and find the temperature on the back of your hands and your face.",
+        "Find the wind. Which way is it coming from, and is it steady or gusting?",
+        "Find the humidity in how the air feels in your nose and throat.",
+        "Look at the sky and guess what the next two hours will do.",
+        "Only now, if you want, check the forecast and see how close you were."
+      ],
+      "safety": "Dress for what is actually out there, and keep this short in severe cold, heat or storms.",
+      "free": false
+    },
+    {
+      "id": "nature.r06",
+      "title": "First Light",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "A longer, deliberate morning light exposure to anchor the start of the day.",
+      "steps": [
+        "Get outside within an hour of waking, ideally before you open email.",
+        "Choose the most open spot you can reach: a park, a wide street, a balcony facing the sky.",
+        "Spend the fifteen minutes outdoors rather than sitting inside by glass, which cuts the light sharply.",
+        "Keep sunglasses off unless glare is genuinely uncomfortable.",
+        "Walk gently or stand still — either works. The light is doing the work, not the movement.",
+        "On an overcast day, stay out for the full fifteen anyway. Cloud cuts the light but leaves plenty.",
+        "Do this at roughly the same time each day. Regularity matters more than duration."
+      ],
+      "safety": "Never look directly at the sun, particularly when it is low and looks harmless. Cover up or use sunscreen if the sun is already strong where you live.",
+      "free": false
+    },
+    {
+      "id": "nature.r07",
+      "title": "The Midday Daylight Walk",
+      "group": "core",
+      "minutes": 20,
+      "purpose": "A walk chosen for light and air rather than for getting anywhere.",
+      "steps": [
+        "Leave the building somewhere between late morning and mid-afternoon.",
+        "Pick the greenest route available, even if it adds a few minutes.",
+        "Walk at a pace you could hold a conversation at. This is not training.",
+        "Give the first half to looking outward: buildings, trees, weather, people.",
+        "Give the second half to whatever is on your mind, and let it wander.",
+        "Arrive back without hurrying the last stretch."
+      ],
+      "safety": "In strong sun, use shade where you can, wear a hat and sunscreen, and carry water in hot weather. Shorten it in extreme heat or cold.",
+      "free": false
+    },
+    {
+      "id": "nature.r08",
+      "title": "Cloud Watching",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "The clearest example of soft fascination there is: something to watch that asks nothing of you.",
+      "steps": [
+        "Find somewhere you can lie back or lean back comfortably with a wide view of sky.",
+        "Pick one cloud and follow it for a full minute without naming it.",
+        "Watch its edges. Clouds are constantly being made and unmade at the edges.",
+        "Let that cloud go and let your eyes drift to whatever moves next.",
+        "If your mind goes somewhere else, that is allowed here — come back to the sky when you notice.",
+        "Finish by looking at the whole sky at once rather than any part of it."
+      ],
+      "safety": "Lie on a mat, coat or bench rather than cold ground. Never track a cloud whose path takes your gaze across the sun.",
+      "free": false
+    },
+    {
+      "id": "nature.r09",
+      "title": "Five Senses Outdoors",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "A structured sensory inventory that pulls attention out of your head and into the place you are standing in.",
+      "steps": [
+        "Stand or sit somewhere outdoors and stay put for the whole ten minutes.",
+        "Name five things you can see, working from the furthest to the nearest.",
+        "Name four things you can hear, including the quietest one you can find.",
+        "Name three things you can feel: air on skin, ground under feet, sun or shade.",
+        "Name two things you can smell. Outdoor air usually has more in it than you expect.",
+        "Name one thing you can taste in the air — rain, salt, dust, cut grass, cold.",
+        "Sit for a final half minute with all of it at once, naming nothing."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "nature.r10",
+      "title": "Walking Without a Phone",
+      "group": "core",
+      "minutes": 20,
+      "purpose": "Remove the thing that competes hardest with the outdoors for your attention.",
+      "steps": [
+        "Decide the route before you leave, so you do not need a map.",
+        "Leave the phone at home, or switch it off and zip it away where you cannot idly reach it.",
+        "Walk the route without music or podcasts. The point is to be bored for a while.",
+        "Expect the first five minutes to feel twitchy. That passes.",
+        "When you notice you are composing a message or a post in your head, look at something far away instead.",
+        "At the end, note one thing you saw that you would have missed."
+      ],
+      "safety": "Tell someone your route if you are leaving your phone behind, stay on paths you know, keep to daylight, and stay aware of traffic and your surroundings.",
+      "free": false
+    },
+    {
+      "id": "nature.r11",
+      "title": "Birdsong Listening",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Ten minutes with birds as the main event instead of background noise.",
+      "steps": [
+        "Go out early if you can — dawn and the hour after are the loudest part of the day for birds.",
+        "Sit or stand still. Birds go quiet around movement and start up again once you settle.",
+        "Close your eyes for the first two minutes and count how many distinct voices you can hear.",
+        "Try to place each one: high or low, near or far, left or right, in a tree or on a roof.",
+        "Pick one voice and follow only that for a few minutes.",
+        "Open your eyes and see whether you can find the bird you were listening to.",
+        "If you live somewhere with few birds, a window at dawn or a recording is a fair substitute."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "nature.r12",
+      "title": "One Tree",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Give a single tree twelve minutes of real attention and find out how much you had never noticed.",
+      "steps": [
+        "Choose a tree you pass often and have never actually looked at.",
+        "Start at the base. Look at how it meets the ground and what is growing around it.",
+        "Move up the trunk slowly. Bark texture, colour, damage, lichen, insects, scars.",
+        "Follow one branch out to its end, then come back and follow another.",
+        "Step back far enough to see the whole shape and the gaps in it.",
+        "Put a hand on it for the last minute, and notice temperature as well as texture.",
+        "Come back to the same tree in a month and see what has changed."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "nature.r13",
+      "title": "City Nature Hunt",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "For people with no park within reach: find the nature already on your own street.",
+      "steps": [
+        "Walk a route of five or six streets, slowly, looking down and up rather than ahead.",
+        "Find plants growing where nobody planted them: pavement cracks, walls, gutters, waste ground.",
+        "Find three different birds, even if two of them are pigeons.",
+        "Find water: a puddle, a drain, a fountain, condensation, rain on glass.",
+        "Find the biggest patch of sky you can see between buildings and stand in it for a minute.",
+        "Find one living thing you cannot name, and look it up later if you want to.",
+        "Note where the best of these were, so you have somewhere to go tomorrow."
+      ],
+      "safety": "Stay aware of traffic while you are looking up, and keep to routes and hours where you feel safe.",
+      "free": false
+    },
+    {
+      "id": "nature.r14",
+      "title": "The Slow Sensory Walk",
+      "group": "deep",
+      "minutes": 45,
+      "purpose": "A shinrin-yoku-style walk: slow, aimless, sensory, with no distance to cover and nothing to achieve.",
+      "steps": [
+        "Choose somewhere wooded or heavily planted if you can, and give yourself the full forty-five minutes.",
+        "Walk far more slowly than feels natural. Many practitioners cover well under a mile in an hour.",
+        "Stop whenever anything catches you, and stay stopped until it stops being interesting.",
+        "Work through the senses as you go: what the place looks like, sounds like, smells like, feels like on skin.",
+        "Leave the phone away and do not photograph anything until the end.",
+        "Sit down somewhere for the last ten minutes and simply stay there.",
+        "Walk out at the same slow pace rather than snapping back to normal speed."
+      ],
+      "safety": "Moving this slowly for this long leaves you colder than a normal walk, so dress warmer than you think. Carry water in warm weather. Stay on paths you know and tell someone where you are going.",
+      "free": false
+    },
+    {
+      "id": "nature.r15",
+      "title": "The Sit Spot",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "Return to the same outdoor place again and again until it stops being scenery and becomes somewhere you know.",
+      "steps": [
+        "Pick one spot you can reach in under ten minutes and will actually return to.",
+        "Go at roughly the same time of day, and take something dry to sit on.",
+        "Sit still for the first ten minutes without doing anything at all. Wildlife resets around you in about that time.",
+        "Spend the next ten on sound alone, eyes soft or closed.",
+        "Spend the last ten looking, and note three things that are different from last time.",
+        "Leave the way you came in, quietly.",
+        "Aim for twice a week. The practice is the repetition, not the single visit."
+      ],
+      "safety": "Choose somewhere you feel safe sitting alone, stick to daylight hours, and dress for staying still rather than for walking.",
+      "free": false
+    },
+    {
+      "id": "nature.r16",
+      "title": "The Weekly Nature Block",
+      "group": "deep",
+      "minutes": 45,
+      "purpose": "One longer outdoor block a week, which on its own carries most of the way to the 120-minute mark.",
+      "steps": [
+        "Put a recurring 45-minute block in the calendar, treated like any other commitment.",
+        "Choose green or blue space: a park, a wood, a river, a canal, a coast, a big garden.",
+        "Decide before you leave that you are not doing errands inside this block.",
+        "Split it however suits — walking, sitting, or a mix. The survey evidence found the pattern did not matter.",
+        "Add two shorter outdoor breaks in the week and you are comfortably past two hours.",
+        "Keep a simple running tally for a month, and stop counting once it is a habit."
+      ],
+      "safety": "Dress for the weather, take water in heat, and let someone know your route if you are going somewhere remote.",
+      "free": false
+    },
+    {
+      "id": "nature.r17",
+      "title": "Barefoot on Grass",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "A pure sensory practice: let the soles of your feet do the noticing for once. There are no electrical or 'earthing' claims here, and no good evidence for any.",
+      "steps": [
+        "Find a patch of grass you can check over first, and walk it once with shoes on.",
+        "Take shoes and socks off and stand still for a minute before moving.",
+        "Notice temperature first, then wetness, then texture, then how uneven the ground actually is.",
+        "Walk very slowly across the patch, putting the whole foot down each time.",
+        "Change surface if you can — grass to soil, soil to moss, moss to sand — and feel the switch.",
+        "Sit down and let your feet dry in the air for the last few minutes.",
+        "Put your shoes back on before you leave the patch."
+      ],
+      "safety": "Check the ground for glass, thorns, sharp stones and animal waste before you start. Avoid this entirely if you have diabetes, reduced sensation in your feet, or any cut or sore on the foot. Skip very hot or very cold surfaces, and rinse your feet afterwards.",
+      "free": false
+    },
+    {
+      "id": "nature.r18",
+      "title": "Water's Edge",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "Sit beside moving water, which holds attention almost effortlessly and asks nothing back.",
+      "steps": [
+        "Find any water you can sit safely beside: river, canal, lake, harbour, shoreline, big fountain.",
+        "Settle somewhere stable and well back from the edge.",
+        "Give the first ten minutes to sound alone, with your eyes closed if that feels fine.",
+        "Open your eyes and watch one patch of surface, not the whole view.",
+        "Follow something floating for as long as you can see it, then find another.",
+        "Spend the last five minutes looking at the light on the water rather than the water.",
+        "Stand up slowly — long sitting by water tends to leave you stiffer than you expect."
+      ],
+      "safety": "Stay well back from fast water, steep or crumbling banks, slippery rocks and weirs. Check tide times at the coast. Do not do this alone at night, and keep children within arm's reach.",
+      "free": false
+    },
+    {
+      "id": "nature.r19",
+      "title": "The Dawn Walk",
+      "group": "deep",
+      "minutes": 40,
+      "purpose": "Be outside while the light changes, which is the largest and most reliable light shift of your day.",
+      "steps": [
+        "Check what time the sun rises where you are, and set out about twenty minutes before it.",
+        "Walk a route you know well, at an easy pace.",
+        "Watch the sky rather than the horizon. The colour arrives overhead before anything appears at the edge.",
+        "Notice when the birds start, which is usually well before the sun is up.",
+        "Once it is properly light, turn and walk back with the light behind or beside you.",
+        "Eat and start your day as normal afterwards rather than going back to bed.",
+        "Once a week is plenty. This is not meant to cost you sleep."
+      ],
+      "safety": "Never look at the sun as it comes up, low and dim as it looks. Walk a familiar route, wear something visible near roads, and take your phone or a companion if you are out before it is fully light. If it would mean cutting your sleep short, do this at a weekend instead.",
+      "free": false
+    },
+    {
+      "id": "nature.r20",
+      "title": "The Naturalist's Notebook",
+      "group": "deep",
+      "minutes": 25,
+      "purpose": "Draw and describe one small outdoor thing — the drawing is a way of looking, not an attempt at art.",
+      "steps": [
+        "Take a plain notebook and a pen outside and find somewhere to sit.",
+        "Choose one small thing within arm's reach: a leaf, a stone, a seed head, an insect, a piece of bark.",
+        "Spend the first five minutes only looking at it. No pen.",
+        "Draw it badly for ten minutes. Accuracy is irrelevant; the drawing is just what keeps you looking.",
+        "Write three sentences: what it is, where it was, and one thing you had not noticed before drawing it.",
+        "Add the date, the weather and the light.",
+        "Leave the thing where you found it and take the notebook home."
+      ],
+      "safety": "Do not pick, dig up or disturb protected plants or wildlife, and do not handle anything you cannot identify.",
+      "free": false
+    },
+    {
+      "id": "nature.r21",
+      "title": "The Evening Dim-Down",
+      "group": "restorative",
+      "minutes": 30,
+      "purpose": "Bring the light down over the last stretch of the evening so the room gets dark gradually rather than all at once.",
+      "steps": [
+        "Choose a time about an hour and a half before you intend to sleep, and start there.",
+        "Turn the big overhead light off and switch to one or two lamps low in the room.",
+        "Ordinary room light is enough to matter: around 100 lux produces roughly half the maximum effect on evening melatonin in laboratory studies.",
+        "Drop screen brightness and put phones and laptops further from your face rather than closer.",
+        "Do something that works in dim light: reading, tidying, talking, stretching, music.",
+        "Turn one more lamp off every ten minutes or so, ending near dark.",
+        "Keep the same order each night so the sequence itself becomes the cue."
+      ],
+      "safety": "Keep enough light to move around safely, especially on stairs, and do not dim the room while cooking or using anything sharp or hot.",
+      "free": false
+    },
+    {
+      "id": "nature.r22",
+      "title": "The Sunset Watch",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "Mark the end of the day by watching the light go, which is a clearer signal than any clock.",
+      "steps": [
+        "Find the most open west-facing view you have — a window, a roof, a park, a bridge.",
+        "Get there about fifteen minutes before the sun actually sets.",
+        "Watch the colour in the clouds and the eastern sky rather than the sun itself. The best of it is often behind you.",
+        "Stay for ten minutes after the sun has gone. Dusk keeps changing long after sunset.",
+        "Notice the sounds change as the light does — birds, traffic, people going in.",
+        "Go inside and dim the lights rather than turning everything on at once."
+      ],
+      "safety": "Even a low sun can damage your eyes. Look at the colour in the sky and clouds around it, never at the disc itself, and remember sunglasses do not make it safe.",
+      "free": false
+    },
+    {
+      "id": "nature.r23",
+      "title": "The Park Bench",
+      "group": "restorative",
+      "minutes": 15,
+      "purpose": "Sit down outdoors with no task at all, which is far harder than it sounds.",
+      "steps": [
+        "Walk to a bench, wall or step outdoors and sit down.",
+        "Put the phone away for the full fifteen minutes.",
+        "Do not read, plan, or make lists. Sitting is the whole activity.",
+        "Let your eyes go wherever they want and do not correct them.",
+        "When you feel the urge to get up and be useful, stay for two more minutes.",
+        "Stand up slowly and walk back the long way."
+      ],
+      "safety": "Pick somewhere you feel comfortable sitting alone with a clear view of your surroundings, and stick to daylight hours in unfamiliar places.",
+      "free": false
+    },
+    {
+      "id": "nature.r24",
+      "title": "Plant Care as Attention",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "Ten unhurried minutes with houseplants, treated as an attention practice rather than a chore.",
+      "steps": [
+        "Gather what you need first — water, a cloth, scissors — so you are not interrupted.",
+        "Take one plant at a time and look at it properly before touching it.",
+        "Check the soil with a finger rather than guessing, and water only what needs it.",
+        "Wipe the dust off a few leaves. It is slow, and that is the point.",
+        "Remove dead leaves and turn the pot a quarter so the far side gets the window.",
+        "Finish by moving one plant nearer the light and noticing how much brighter that spot is."
+      ],
+      "safety": "Wash your hands afterwards, keep known-irritant houseplants away from small children and pets, and wear gloves if you have sensitive skin.",
+      "free": false
+    },
+    {
+      "id": "nature.r25",
+      "title": "Night Sky, No Screen",
+      "group": "restorative",
+      "minutes": 15,
+      "purpose": "End the day looking at something very far away, in the dark, with no screen anywhere near your face.",
+      "steps": [
+        "Step outside, or open a window wide, once it is properly dark.",
+        "Leave your phone inside. A screen resets your dark adaptation within seconds.",
+        "Stand still for the first five minutes and let your eyes adjust. They keep improving for far longer than that.",
+        "Look slightly to the side of the faintest things — off-centre vision picks up dim light better.",
+        "Find three things: the brightest object, the faintest you can hold, and anything moving.",
+        "If you live under heavy light pollution, watch the underside of the clouds instead. City clouds carry the whole town's light.",
+        "Go back inside without switching on a bright overhead light."
+      ],
+      "safety": "Let your eyes adapt before you move around, and take care on steps and uneven ground in the dark. Stay somewhere familiar, and take a companion or your phone if you are going out at night.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "White MP, Alcock I, Grellier J, Wheeler BW, Hartig T, Warber SL, Bone A, Depledge MH, Fleming LE, 'Spending at least 120 minutes a week in nature is associated with good health and wellbeing', Scientific Reports, 2019;9:7730 - the 19,806-person Monitor of Engagement with the Natural Environment sample (2014/15-2015/16), odds ratios of 1.59 for health and 1.23 for wellbeing at 120-179 minutes versus none, a peak between 200-300 minutes, no difference by how the time was accumulated, and the authors' own statement that the cross-sectional design cannot separate cause from effect.",
+    "Bratman GN, Hamilton JP, Hahn KS, Daily GC, Gross JJ, 'Nature experience reduces rumination and subgenual prefrontal cortex activation', PNAS, 2015;112(28):8567-8572 - 38 healthy urban adults; a 90-minute walk in a natural setting lowered self-reported rumination and subgenual prefrontal cortex perfusion, while a matched urban walk did not.",
+    "Kaplan S, 'The restorative benefits of nature: toward an integrative framework', Journal of Environmental Psychology, 1995;15(3):169-182 - directed attention fatigue, soft fascination, and the four qualities of a restorative setting (being away, extent, compatibility, fascination) that underpin the sit spot, cloud watching and sky practices here.",
+    "Berman MG, Jonides J, Kaplan S, 'The cognitive benefits of interacting with nature', Psychological Science, 2008;19(12):1207-1212 - improved backwards digit span after roughly a fifty-minute walk in an arboretum, with no equivalent improvement after a matched walk through city streets.",
+    "Ohly H, White MP, Wheeler BW, Bethel A, Ukoumunne OC, Nikolaou V, Garside R, 'Attention Restoration Theory: a systematic review of the attention restoration potential of exposure to natural environments', Journal of Toxicology and Environmental Health Part B, 2016;19(7):305-343 - 31 studies; meta-analysis supported effects on some attention measures (digit span forward and backward, Trail Making B) but not others, which is the basis for the mixed-evidence framing in this school.",
+    "Park BJ, Tsunetsugu Y, Kasetani T, Kagawa T, Miyazaki Y, 'The physiological effects of Shinrin-yoku (taking in the forest atmosphere or forest bathing): evidence from field experiments in 24 forests across Japan', Environmental Health and Preventive Medicine, 2010;15(1):18-26 - 280 participants; lower salivary cortisol and autonomic differences after forest versus city walks, in short studies with small, mostly young male samples.",
+    "Zeitzer JM, Dijk DJ, Kronauer RE, Brown EN, Czeisler CA, 'Sensitivity of the human circadian pacemaker to nocturnal light: melatonin phase resetting and suppression', Journal of Physiology, 2000;526(Pt 3):695-702 - roughly 100 lux of ordinary room light produced about half the maximal melatonin suppression and phase delay seen with approximately 9,000 lux, the figure quoted in the evening dim-down routine.",
+    "Wright KP Jr, McHill AW, Birks BR, Griffin BR, Rusterholz T, Chinoy ED, 'Entrainment of the human circadian clock to the natural light-dark cycle', Current Biology, 2013;23(16):1554-1558 - a week of camping on sunlight and firelight raised daytime light exposure roughly fourfold and advanced melatonin onset by close to two hours relative to a normal week of electric lighting.",
+    "Gooley JJ, Chamberlain K, Smith KA, Khalsa SBS, Rajaratnam SMW, Van Reen E, Zeitzer JM, Czeisler CA, Lockley SW, 'Exposure to room light before bedtime suppresses melatonin onset and shortens melatonin duration in humans', Journal of Clinical Endocrinology and Metabolism, 2011;96(3):E463-E472 - 116 healthy adults; ordinary room light in the hours before bed shortened the nightly window of melatonin production compared with dim light.",
+    "Perez V, Alexander DD, Bailey WH, 'Air ions and mood outcomes: a review and meta-analysis', BMC Psychiatry, 2013;13:29 - 33 studies published between 1957 and 2012; no consistent effect of positive or negative air ionisation on anxiety, mood, relaxation, sleep or personal comfort, which is why negative-ion marketing is treated sceptically in the myth-busting teaching."
+  ],
+  "subtitle": "light, air and slow attention",
+  "pronunciation": "shin-rin YOH-koo",
+  "origin": "Shinrin-yoku (森林浴) — 'forest bathing', coined by Japan's Forestry Agency in 1982 as a public-health programme."
+}

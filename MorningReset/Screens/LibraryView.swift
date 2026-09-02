@@ -1,319 +1,171 @@
 import SwiftUI
 
-// MARK: - Library (retention / discovery screen)
+// Practice library — every routine across all ten schools in one place,
+// searchable and filterable by length. Complements SchoolsView (browse by
+// tradition) with a "just find me a practice" entry point.
 
 struct LibraryView: View {
     @Environment(AppState.self) private var appState
 
-    struct PracticeSelection: Identifiable {
-        let id = UUID()
-        let practice: PathPractice
-        let path: EnergyPath
+    @State private var query = ""
+    @State private var lengthFilter: LengthFilter = .any
+    @State private var playing: (SchoolContent, Routine)? = nil
+
+    private enum LengthFilter: String, CaseIterable, Identifiable {
+        case any, short, medium, long
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .any:    return "Any"
+            case .short:  return "≤5 min"
+            case .medium: return "6–15"
+            case .long:   return "15+"
+            }
+        }
+        func matches(_ m: Int) -> Bool {
+            switch self {
+            case .any:    return true
+            case .short:  return m <= 5
+            case .medium: return m > 5 && m <= 15
+            case .long:   return m > 15
+            }
+        }
     }
 
-    @State private var selected: PracticeSelection? = nil
+    private struct Item: Identifiable {
+        let school: SchoolContent
+        let routine: Routine
+        var id: String { routine.id }
+    }
 
-    private var todayPick: (PathPractice, EnergyPath) {
-        let day = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
-        if let path = appState.activePath {
-            return (path.practices[day % path.practices.count], path)
+    private var items: [Item] {
+        let all = SchoolContentStore.all.flatMap { s in s.routines.map { Item(school: s, routine: $0) } }
+        let q = query.trimmingCharacters(in: .whitespaces).lowercased()
+        return all.filter { i in
+            lengthFilter.matches(i.routine.minutes) &&
+            (q.isEmpty
+             || i.routine.title.lowercased().contains(q)
+             || i.routine.purpose.lowercased().contains(q)
+             || i.school.name.lowercased().contains(q))
         }
-        let all = EnergyPath.allCases.flatMap { p in p.practices.map { ($0, p) } }
-        return all[day % all.count]
     }
 
     var body: some View {
         ZStack {
-            AuraBackground(path: appState.activePath, intensity: 0.25)
-
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: DS.Space.xl) {
-
-                    // Header
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(L10n.text(en: "Library", tr: "Kütüphane", es: "Biblioteca"))
-                            .font(DS.Typo.title)
-                            .foregroundStyle(DS.textPrimary)
-                        Text(L10n.text(
-                            en: "All practices, at any time.",
-                            tr: "Tüm pratikler, her zaman.",
-                            es: "Todas las prácticas, en cualquier momento."
-                        ))
-                        .font(.subheadline)
-                        .foregroundStyle(DS.textSecondary)
-                    }
-                    .padding(.top, DS.Space.xl)
-
-                    // Today's Practice
-                    todaySection
-
-                    // Active path — Learn link
-                    if let path = appState.activePath {
-                        pathSection(path, isActive: true)
-                    }
-
-                    // Other paths
-                    ForEach(EnergyPath.allCases) { path in
-                        if path != appState.activePath {
-                            pathSection(path, isActive: false)
-                        }
-                    }
-
-                    Spacer().frame(height: DS.Space.xl)
-                }
-                .padding(.horizontal, DS.Space.lg)
-            }
-        }
-        .sheet(item: $selected) { sel in
-            PracticeDetailSheet(practice: sel.practice, path: sel.path)
-                .environment(appState)
-        }
-    }
-
-    // MARK: - Today's pick card
-
-    private var todaySection: some View {
-        let (practice, path) = todayPick
-        return VStack(alignment: .leading, spacing: DS.Space.sm) {
-            Text(L10n.text(en: "TODAY'S PRACTICE", tr: "BUGÜNÜN PRATİĞİ", es: "PRÁCTICA DE HOY"))
-                .font(.system(size: 9, weight: .semibold))
-                .kerning(1.2)
-                .foregroundStyle(DS.accent)
-
-            Button {
-                selected = PracticeSelection(practice: practice, path: path)
-            } label: {
-                HStack(spacing: DS.Space.md) {
-                    Image(systemName: practice.symbol)
-                        .font(.system(size: 28))
-                        .foregroundStyle(DS.accent)
-                        .frame(width: 40)
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(practice.title)
-                            .font(.system(.title3, design: .serif))
-                            .foregroundStyle(DS.textPrimary)
-                        Text(practice.why)
-                            .font(.caption)
-                            .foregroundStyle(DS.textSecondary)
-                            .lineSpacing(2)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+            AppBackground(intensity: 0.4)
+            VStack(spacing: 0) {
+                header
+                filters
+                if items.isEmpty {
                     Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(DS.textDim)
+                    Text("Nothing matches that.")
+                        .font(.callout).foregroundStyle(DS.textDim)
+                    Spacer()
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack(spacing: DS.Space.sm) {
+                            ForEach(items) { row($0) }
+                        }
+                        .padding(.horizontal, DS.Space.lg)
+                        .padding(.bottom, DS.Space.tabInset)
+                    }
                 }
-                .padding(DS.Space.md)
-                .background(DS.surface)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(DS.border, lineWidth: DS.hairline))
             }
+        }
+        .sheet(item: Binding(
+            get: { playing.map { PlayPair(school: $0.0, routine: $0.1) } },
+            set: { if $0 == nil { playing = nil } }
+        )) { pair in
+            RoutinePlayerView(school: pair.school, routine: pair.routine)
         }
     }
 
-    // MARK: - Path section
-
-    private func pathSection(_ path: EnergyPath, isActive: Bool) -> some View {
-        VStack(alignment: .leading, spacing: DS.Space.sm) {
-            HStack {
-                Image(systemName: path.symbol)
-                    .font(.callout)
-                    .foregroundStyle(DS.accent)
-                Text(path.title)
-                    .font(.system(.headline, design: .serif))
-                    .foregroundStyle(DS.textPrimary)
-                Spacer()
-                Button {
-                    appState.showPathLearn()
-                } label: {
-                    Text(L10n.text(en: "Learn", tr: "Öğren", es: "Aprender"))
-                        .font(.caption.bold())
-                        .foregroundStyle(DS.accent)
-                }
-            }
-
-            ForEach(path.practices) { practice in
-                practiceRow(practice, path: path)
-            }
-        }
+    private struct PlayPair: Identifiable {
+        let school: SchoolContent; let routine: Routine
+        var id: String { routine.id }
     }
 
-    // MARK: - Practice row
-
-    private func practiceRow(_ practice: PathPractice, path: EnergyPath) -> some View {
-        let isActive: Bool = {
-            if case .practice(let p, let id) = appState.activeFirstWin?.kind {
-                return p == path && id == practice.id
+    private var header: some View {
+        VStack(spacing: DS.Space.xs) {
+            Text("Practice Library")
+                .font(.system(size: 30, weight: .light, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+            Text("\(SchoolContentStore.all.reduce(0) { $0 + $1.routines.count }) routines across ten schools")
+                .font(.caption).foregroundStyle(DS.textSecondary)
+            HStack(spacing: DS.Space.sm) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 13)).foregroundStyle(DS.textDim)
+                TextField("Search practices", text: $query)
+                    .font(.callout).foregroundStyle(DS.textPrimary)
+                    .autocorrectionDisabled()
+                if !query.isEmpty {
+                    Button { query = "" } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 14)).foregroundStyle(DS.textDim)
+                    }
+                }
             }
-            return false
-        }()
+            .padding(.horizontal, DS.Space.md).padding(.vertical, 11)
+            .background(DS.surface.opacity(0.7)).clipShape(Capsule())
+            .overlay(Capsule().stroke(DS.border.opacity(0.7), lineWidth: DS.hairline))
+            .padding(.top, DS.Space.sm)
+        }
+        .padding(.horizontal, DS.Space.lg)
+        .padding(.top, DS.Space.xl)
+    }
 
+    private var filters: some View {
+        HStack(spacing: DS.Space.sm) {
+            ForEach(LengthFilter.allCases) { f in
+                Button { lengthFilter = f } label: {
+                    Text(f.title)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(lengthFilter == f ? DS.background : DS.textSecondary)
+                        .padding(.horizontal, DS.Space.md).padding(.vertical, 7)
+                        .background(lengthFilter == f ? DS.accent : DS.surface)
+                        .clipShape(Capsule())
+                        .overlay(Capsule().stroke(lengthFilter == f ? DS.accent : DS.border, lineWidth: DS.hairline))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.vertical, DS.Space.md)
+    }
+
+    private func row(_ i: Item) -> some View {
+        let open = appState.isRoutineUnlocked(i.routine, in: i.school)
+        let color = SchoolPalette.color(i.school.id)
         return Button {
-            selected = PracticeSelection(practice: practice, path: path)
+            if open { playing = (i.school, i.routine) }
+            else {
+                appState.paywallContext = .contextual
+                appState.screen = .paywall
+            }
         } label: {
             HStack(spacing: DS.Space.md) {
-                Image(systemName: practice.symbol)
-                    .font(.system(size: 15))
-                    .foregroundStyle(isActive ? DS.background : DS.accent)
+                Image(systemName: open ? SchoolPalette.symbol(i.school.id) : "lock.fill")
+                    .font(.system(size: 17))
+                    .foregroundStyle(open ? color : DS.textDim)
                     .frame(width: 26)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(practice.title)
-                        .font(.body)
-                        .foregroundStyle(isActive ? DS.background : DS.textPrimary)
-                    Text(practice.why)
-                        .font(.caption)
-                        .foregroundStyle(isActive ? DS.background.opacity(0.8) : DS.textDim)
-                        .lineLimit(1)
+                    Text(i.routine.title).font(.body.weight(.medium))
+                        .foregroundStyle(DS.textPrimary).multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("\(i.school.name) · \(i.routine.minutes) min")
+                        .font(.system(size: 10)).foregroundStyle(DS.textDim)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer()
-                if isActive {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 14))
+                if i.routine.free {
+                    Text("FREE").font(.system(size: 8, weight: .bold))
                         .foregroundStyle(DS.background)
-                } else {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(DS.textDim)
+                        .padding(.horizontal, 5).padding(.vertical, 2)
+                        .background(color).clipShape(Capsule())
                 }
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal, DS.Space.md)
-            .background(isActive ? DS.accent : DS.surface)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(isActive ? DS.accent : DS.border, lineWidth: DS.hairline))
+            .dreamCard(radius: DS.Radius.sm, padding: DS.Space.md, tint: open ? color : nil)
+            .opacity(open ? 1 : 0.72)
         }
-    }
-}
-
-// MARK: - Practice Detail Sheet
-
-struct PracticeDetailSheet: View {
-    @Environment(AppState.self) private var appState
-    @Environment(\.dismiss) private var dismiss
-
-    var practice: PathPractice
-    var path: EnergyPath
-
-    private var isActive: Bool {
-        if case .practice(let p, let id) = appState.activeFirstWin?.kind {
-            return p == path && id == practice.id
-        }
-        return false
-    }
-
-    var body: some View {
-        ZStack {
-            AuraBackground(path: path, intensity: 0.5)
-
-            VStack(spacing: 0) {
-                // Close button
-                HStack {
-                    Spacer()
-                    Button { dismiss() } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
-                            .foregroundStyle(DS.textDim)
-                    }
-                }
-                .padding(.horizontal, DS.Space.lg)
-                .padding(.top, DS.Space.md)
-
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: DS.Space.lg) {
-
-                        // Symbol + path label + title + why
-                        VStack(alignment: .leading, spacing: DS.Space.sm) {
-                            Image(systemName: practice.symbol)
-                                .font(.system(size: 36))
-                                .foregroundStyle(DS.accent)
-
-                            Text(path.title.uppercased())
-                                .font(.system(size: 10, weight: .semibold))
-                                .kerning(1.2)
-                                .foregroundStyle(DS.accent)
-
-                            Text(practice.title)
-                                .font(DS.Typo.title)
-                                .foregroundStyle(DS.textPrimary)
-
-                            Text(practice.why)
-                                .font(.callout.italic())
-                                .foregroundStyle(DS.textSecondary)
-                                .lineSpacing(3)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-
-                        // How
-                        VStack(alignment: .leading, spacing: DS.Space.xs) {
-                            Text(L10n.text(en: "HOW TO PRACTICE", tr: "NASIL YAPILIR", es: "CÓMO PRACTICAR"))
-                                .font(.system(size: 10, weight: .semibold))
-                                .kerning(1.2)
-                                .foregroundStyle(DS.accent)
-                            Text(practice.how)
-                                .font(.callout)
-                                .foregroundStyle(DS.textPrimary)
-                                .lineSpacing(4)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-
-                        // Steps
-                        if !practice.steps.isEmpty {
-                            VStack(alignment: .leading, spacing: DS.Space.sm) {
-                                ForEach(Array(practice.steps.enumerated()), id: \.offset) { i, step in
-                                    HStack(alignment: .top, spacing: DS.Space.sm) {
-                                        Text("\(i + 1)")
-                                            .font(.system(size: 13, weight: .semibold, design: .serif))
-                                            .foregroundStyle(DS.accent)
-                                            .frame(width: 20, alignment: .leading)
-                                        Text(step)
-                                            .font(.callout)
-                                            .foregroundStyle(DS.textPrimary)
-                                            .lineSpacing(3)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal, DS.Space.lg)
-                    .padding(.bottom, DS.Space.lg)
-                }
-
-                // CTA
-                if !isActive {
-                    Button {
-                        appState.selectActiveFirstWin(.practice(path: path, id: practice.id))
-                        appState.selectMorningPath(path)
-                        dismiss()
-                    } label: {
-                        Text(L10n.text(
-                            en: "Set as my practice",
-                            tr: "Pratiğim olarak seç",
-                            es: "Elegir como mi práctica"
-                        ))
-                        .font(.system(.body, design: .serif))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(DS.accent)
-                        .foregroundStyle(DS.background)
-                        .clipShape(Capsule())
-                    }
-                    .padding(.horizontal, DS.Space.lg)
-                    .padding(.bottom, DS.Space.lg)
-                } else {
-                    HStack {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(DS.accent)
-                        Text(L10n.text(en: "Your current practice", tr: "Şu anki pratiğin", es: "Tu práctica actual"))
-                            .font(.subheadline)
-                            .foregroundStyle(DS.textSecondary)
-                    }
-                    .padding(.bottom, DS.Space.lg)
-                }
-            }
-        }
-        .onAppear { AmbientPlayer.shared.start(path: path) }
-        .onDisappear { AmbientPlayer.shared.stop() }
+        .buttonStyle(.plain)
     }
 }

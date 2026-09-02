@@ -1,0 +1,488 @@
+{
+  "id": "yoga",
+  "name": "Hatha",
+  "tagline": "Move your spine in every direction it has — and learn to keep the range you gain.",
+  "overview": "Yoga asana is the physical limb of an old and much larger system: a vocabulary of shapes, linked to the breath, that takes your joints through ranges ordinary life never asks for. This school treats it as movement practice first — the spine in all four of its directions, hips and shoulders opened patiently, balance trained on purpose, and long quiet holds for when you need to come down rather than go up. The alignment follows the precise, prop-friendly approach B.K.S. Iyengar set out, and the breath-leads-movement principle comes from the Krishnamacharya lineage that modern flow classes descend from. Nothing here needs more than a mat, a wall and a couple of cushions.",
+  "kind": "evidence",
+  "framing_note": "What the research supports is modest and real. A 2022 Cochrane review found yoga produced small improvements in back-related function and pain compared with no exercise, and roughly the same benefit as other forms of exercise. Meta-analyses link yoga-based exercise with better balance and physical mobility in people over sixty, and with short-term improvements in low mood and in reported sleep quality. Reviews also find its adverse-event rate is comparable to other exercise, with the serious case reports concentrated in headstand and shoulderstand — which is why this school leaves both out. These routines are offered experientially, as movement practice. They are not medical treatment, not physiotherapy, and not a substitute for advice about an injury or condition.",
+  "teachings": [
+    {
+      "id": "yoga.t1",
+      "title": "Asana is one limb of a much larger system",
+      "body": "In Patanjali's Yoga Sutras the physical postures — asana — are the third of eight limbs, sitting alongside ethical guidelines, breath discipline, withdrawal of the senses, concentration, meditation and absorption. Patanjali spends just three words on posture: sthira sukham asanam, the posture should be steady and comfortable. That is the entire definition, and its original purpose was a body that could sit still and breathe without complaint. The wide vocabulary of shapes most of us now call yoga is far more recent; B.K.S. Iyengar's Light on Yoga, published in 1966, catalogued over two hundred of them with unusual precision and largely set what a modern class looks like. Practising asana on its own is entirely legitimate. It just helps to know you are standing in a doorway, not the whole house."
+    },
+    {
+      "id": "yoga.t2",
+      "title": "Let the breath lead and the movement follow",
+      "body": "Vinyasa means placing things in a deliberate sequence, and in the Krishnamacharya lineage — from which Ashtanga and most modern flow classes descend — the organising rule is that the breath starts first and the movement follows it. In practice: you begin the inhale, then the arms rise; you begin the exhale, then the body folds. As a rough map, anything that opens the front of the body or lengthens the spine rides the inhale, and anything that folds, twists or lowers rides the exhale. This is not decoration. It sets a pace you cannot rush, it keeps you breathing when a shape gets demanding, and it turns a string of stretches into something closer to a moving meditation. If you lose the breath, the pose is too much for today."
+    },
+    {
+      "id": "yoga.t3",
+      "title": "Your spine moves four ways — visit all of them",
+      "body": "The spine flexes forward, extends backward, rotates and side-bends. Almost every posture is one of those four or a blend of them, which makes it a genuinely useful map, because ordinary life is lopsided. Most of us spend hours in mild flexion at a desk and almost never rotate or side-bend under any control at all. Cat-cow covers flexion and extension. A seated or reclined twist covers rotation. A standing side-bend covers the fourth. Ten minutes that visits all four leaves the back feeling quite different from ten minutes of hamstring stretching, and many people find it eases the stiffness that builds through a sitting day. When time is short, pick the direction you have been neglecting rather than the one you are good at."
+    },
+    {
+      "id": "yoga.t4",
+      "title": "Flexibility is range you have; mobility is range you can use",
+      "body": "Flexibility is how far a joint can be taken, usually by gravity, a strap or a hand. Mobility is how far you can take it yourself, with your own muscles, under control. The gap between the two is where most people get stuck. Lie down, let a strap pull your leg toward you and it might reach ninety degrees; lift the same leg with nothing but your own hip flexors and it may stop well short. Closing that gap means adding a little active work at the end of your range — holding the leg up unaided for a few breaths, or engaging into a shape rather than hanging in it. It is also worth knowing that much of the early range you gain from stretching reflects your nervous system tolerating the sensation better, not tissue permanently lengthening."
+    },
+    {
+      "id": "yoga.t5",
+      "title": "No pain, warm first, props without apology",
+      "body": "Stretch sensation is broad and dull and it eases as you breathe. Pain is sharp, electrical, pinching or one-sided, and it does not ease. Back out of the second every time; pushing through it is the most common way yoga hurts people. Warm up before deep shapes, because cold hips and cold hamstrings do not negotiate. Use props freely — a block under the hand in Triangle or under the hip in Pigeon is not a lesser version of a pose, it is exactly what Iyengar designed props for. If you are pregnant, injured or living with a condition affecting your joints, blood pressure or eyes, get individual advice first and tell any teacher you practise with. This school has no headstand or shoulderstand: reviews of yoga injury reports attribute a disproportionate share of the serious ones to those two."
+    }
+  ],
+  "routines": [
+    {
+      "id": "yoga.r01",
+      "title": "Cat-Cow Spinal Wake-Up",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Three minutes of flexion and extension to take the overnight stiffness out of your back before anything else.",
+      "steps": [
+        "Come onto hands and knees. Hands under the shoulders, knees under the hips, shins parallel. Spread the fingers and press the whole palm down.",
+        "Find a flat back first — long from the crown of the head to the tailbone, belly gently drawn in.",
+        "Inhale into Cow (Bitilasana): let the belly drop, tilt the tailbone up, draw the chest forward, and lift the gaze without crunching the back of the neck.",
+        "Exhale into Cat (Marjaryasana): tuck the tailbone under, press the floor away so the upper back domes, and let the head hang heavy.",
+        "Continue for ten slow rounds, one breath per movement. Let each breath begin the change of shape, not the other way round.",
+        "Finish with five slow hip circles in each direction, still on hands and knees, then sit back onto the heels for three breaths."
+      ],
+      "safety": "If the wrists complain, come down onto your forearms or make loose fists so the wrists stay straight. Kneel on a folded blanket if your knees are sensitive.",
+      "free": true
+    },
+    {
+      "id": "yoga.r02",
+      "title": "All Four Directions of the Spine",
+      "group": "starter",
+      "minutes": 7,
+      "purpose": "A short seated and kneeling sequence that takes the spine into flexion, extension, rotation and side-bending, so nothing gets left out.",
+      "steps": [
+        "Sit cross-legged on the front edge of a cushion so the hips sit above the knees. Sit tall for three breaths.",
+        "Flexion and extension: hands on the knees, inhale and lift the chest into a small arch, exhale and round the back with the chin toward the chest. Six slow rounds.",
+        "Side-bend: right hand to the floor beside you, inhale the left arm overhead, exhale and reach it up and over to the right. Keep both sitting bones down. Five breaths, then the other side.",
+        "Rotation: one hand outside the opposite knee, one hand behind you. Inhale to lengthen upward, exhale to turn a little further from the base of the ribs. Five breaths each side.",
+        "Come onto hands and knees for Thread the Needle (Parsva Balasana): slide the right arm under the left, right shoulder and temple resting down. Five breaths, then swap.",
+        "Sit back into Child's Pose (Balasana) with the knees wide and the forehead down, for ten breaths."
+      ],
+      "safety": "Turn from the ribcage rather than levering on a knee, and let the neck follow the rest of the turn instead of leading it. In pregnancy keep twists open — turn away from the front knee rather than pressing across the belly.",
+      "free": false
+    },
+    {
+      "id": "yoga.r03",
+      "title": "Standing Warm-Up",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "Wakes up the legs, hips and shoulders so the standing poses and salutations that follow are not themselves the warm-up.",
+      "steps": [
+        "Stand in Tadasana: feet hip-width, weight even across the heel and both sides of the ball of the foot. Legs firm, ribs stacked over the pelvis, crown lifting.",
+        "Roll the shoulders back ten times, then swing the arms across the chest and open them wide, ten times, breathing freely.",
+        "Inhale the arms overhead, exhale into a side-bend to the right; inhale back to centre, exhale to the left. Five each side.",
+        "Hold a wall or chair and swing one leg forward and back ten times, then across the body and out ten times. Repeat with the other leg.",
+        "Ten slow squats to whatever depth is comfortable, arms reaching forward as a counterweight.",
+        "Half Sun Salutation: inhale arms up, exhale fold to Uttanasana, inhale to a flat-backed half lift, exhale fold, inhale rise. Four rounds."
+      ],
+      "safety": "Hold a wall or chair for the leg swings and keep them within an easy range rather than kicking to your limit. Squat only as deep as the heels stay down and the knees stay comfortable.",
+      "free": false
+    },
+    {
+      "id": "yoga.r04",
+      "title": "Sun Salutation A, Taught Slowly",
+      "group": "starter",
+      "minutes": 9,
+      "purpose": "Learn the movements of Surya Namaskara A one at a time, with a pause in each, so you can later flow through them without thinking.",
+      "steps": [
+        "Stand at the top of the mat in Samasthiti, feet together or hip-width, palms together at the chest. Three breaths here.",
+        "Inhale, sweep the arms out and overhead (Urdhva Hastasana), palms facing each other, shoulders sliding away from the ears.",
+        "Exhale, hinge from the hips and fold into Uttanasana. Bend the knees as much as you need to bring the belly toward the thighs.",
+        "Inhale, slide the hands to the shins and lift halfway (Ardha Uttanasana) with a long flat back and the gaze just ahead of you.",
+        "Exhale, step both feet back to a plank, then lower with the elbows bending to about ninety degrees and hugging the ribs (Chaturanga Dandasana) — or lower the knees first, then the chest.",
+        "Inhale, roll over the toes and lift the chest into Upward-Facing Dog (Urdhva Mukha Svanasana) with the thighs off the floor — or take Cobra instead, thighs and pelvis staying down.",
+        "Exhale, press back into Downward-Facing Dog (Adho Mukha Svanasana): hands shoulder-width, sitting bones lifting up and back, knees as bent as they need to be. Stay five breaths.",
+        "Inhale, step or walk the feet to the hands and half lift; exhale, fold; inhale, rise all the way up with the arms overhead; exhale, hands to the chest. That is one round — build to three."
+      ],
+      "safety": "If the wrists are sensitive, take plank and the lowering phase on your forearms or with the knees down. Swap Upward-Facing Dog for Cobra if the lower back pinches, and skip the jump-back entirely — stepping is not a lesser version.",
+      "free": false
+    },
+    {
+      "id": "yoga.r05",
+      "title": "Five-Minute Mobility Snack",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "A quick, everything-a-little sequence for the middle of a working day, done standing beside your desk in ordinary clothes.",
+      "steps": [
+        "Stand tall. Ten slow neck nods, then five slow turns to each side, moving only as far as stays smooth.",
+        "Ten shoulder rolls backward, then interlace the fingers behind you, straighten the arms and open the chest for three breaths.",
+        "Arms overhead, side-bend to the right for three breaths, then to the left for three breaths.",
+        "Hands on the hips, turn the ribs right and left five times each way, letting the gaze follow the turn.",
+        "Step one foot back into a lunge with the back heel lifted, and press that hip forward for five breaths. Swap sides.",
+        "Fold forward with soft knees and let the head hang for five breaths, then roll up one vertebra at a time."
+      ],
+      "safety": "Keep neck movements slow and well inside a comfortable range — no forceful circles and no rolling the head backward. Stop and get it looked at if neck movement brings on dizziness, visual changes, or pins and needles in the arms.",
+      "free": false
+    },
+    {
+      "id": "yoga.r06",
+      "title": "Three Rounds of Sun Salutation A",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "The classic opening of an Ashtanga practice: one breath per movement, five breaths in Downward Dog, three rounds to start.",
+      "steps": [
+        "Stand in Samasthiti and take five breaths, choosing a pace you could keep for the whole practice.",
+        "Round one: inhale arms up; exhale fold; inhale half lift; exhale step back and lower to Chaturanga; inhale Upward Dog; exhale Downward Dog for five breaths; inhale half lift; exhale fold; inhale rise; exhale hands to the chest.",
+        "Round two: the same sequence at the same pace. Notice that the breath, not a count in your head, is setting the speed.",
+        "Round three: the same again. If the breath shortens or gets noisy, slow the movement down rather than pushing on.",
+        "Add a fourth and fifth round only once three leave you warm rather than winded.",
+        "Finish standing still, arms by your sides, for ten breaths before moving on."
+      ],
+      "safety": "Modify or skip Chaturanga if you have a shoulder injury — lower the knees, or hold a plank instead. Step out of a round early rather than finishing it with ragged breathing.",
+      "free": false
+    },
+    {
+      "id": "yoga.r07",
+      "title": "Standing Sequence: Warriors and Triangle",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "The main standing poses, held long enough to build leg strength and open the hips — the backbone of most yoga classes.",
+      "steps": [
+        "Warm up with three rounds of Sun Salutation A, then stand at the top of the mat.",
+        "Warrior II (Virabhadrasana II): step the feet about a leg's length apart, turn the right foot out ninety degrees and the left foot slightly in. Bend the right knee toward the ankle but not past it, arms parallel to the floor, gaze over the right hand. Five breaths.",
+        "Extended Side Angle (Utthita Parsvakonasana): from Warrior II, rest the right forearm on the right thigh or take a hand to a block outside the foot, and reach the left arm over the ear. Five breaths.",
+        "Triangle (Utthita Trikonasana): straighten the right leg, reach forward, then lower the right hand to the shin or a block and open the left arm upward. Both legs firm, chest turning toward the ceiling. Five breaths.",
+        "Come back to standing and repeat all three on the left side.",
+        "Wide-Legged Forward Fold (Prasarita Padottanasana): feet parallel and wide, hands to the floor or blocks, crown of the head heavy. Eight breaths.",
+        "Chair (Utkatasana): feet together, hips sitting back, arms overhead, weight in the heels. Five breaths, then fold forward and rest."
+      ],
+      "safety": "Keep the front knee tracking over the middle toes in both warriors and never let it drift inward. Use a block under the lower hand in Triangle rather than dumping weight into the front leg. Come up slowly from the wide-legged fold if you are prone to lightheadedness.",
+      "free": false
+    },
+    {
+      "id": "yoga.r08",
+      "title": "Hamstring Length, Step by Step",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Patient hamstring work with a strap and the floor, where you can control the load — kinder than hanging in a deep standing fold.",
+      "steps": [
+        "Lie on your back with the knees bent and feet on the floor. Five breaths to settle.",
+        "Reclined Hand-to-Big-Toe (Supta Padangusthasana): loop a strap or belt around the right foot, straighten that leg upward and draw it toward you until you feel a broad pull behind the thigh. Keep the left leg long and heavy on the floor. Eight breaths.",
+        "Still holding the strap, lower the right leg a few degrees and then lift it back up using only the leg itself, with no pulling. Five slow lifts — this is the active version and it is meant to feel like work.",
+        "Take the right leg out to the right side, strap in the right hand, left hip staying down. Five breaths. Then swap legs and repeat these three steps.",
+        "Come to kneeling for Half Splits (Ardha Hanumanasana): right leg straight forward with the heel down and toes up, hands or blocks either side. Hinge from the hips with a long spine. Eight breaths each side.",
+        "Sit with both legs long in Dandasana, then fold gently forward (Paschimottanasana) with the knees softly bent. Ten breaths."
+      ],
+      "safety": "Work at an intensity you could hold and breathe through, not one you are bracing against. Stop if you feel anything sharp or electrical running down the back of the leg rather than a broad pull in the muscle, and get persistent leg pain assessed before continuing.",
+      "free": false
+    },
+    {
+      "id": "yoga.r09",
+      "title": "Shoulders and Chest Opener",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Undoes the rounded-forward shape of a day at a keyboard, working through the arms and upper back rather than hanging on the joint.",
+      "steps": [
+        "Stand or sit tall and take ten slow, full shoulder rolls backward.",
+        "Eagle arms (Garudasana arms): cross the right elbow under the left, wrap the forearms if they reach, and lift the elbows toward shoulder height. Five breaths, then swap the cross.",
+        "Cow-face arms (Gomukhasana arms): right arm up and bent at the elbow, left arm behind the back reaching up. Hold a strap between the hands if they do not meet. Five breaths each way.",
+        "Interlace the fingers behind the back, straighten the arms and lift the hands away from you as the chest broadens. Five breaths.",
+        "Puppy Pose (Uttana Shishosana): from hands and knees, walk the hands forward and melt the chest toward the floor with the hips staying over the knees. Eight breaths.",
+        "Thread the Needle (Parsva Balasana): slide the right arm under the left with the shoulder and temple down. Five breaths each side.",
+        "Finish lying on your back with a rolled blanket lengthways under the spine and the arms out wide, for ten breaths."
+      ],
+      "safety": "Go only as far as the chest stays broad — if the shoulders round forward or creep up toward the ears, you are past useful range. Use a strap instead of binding the hands, and get advice first if you have had a dislocation, a rotator cuff injury or shoulder surgery.",
+      "free": false
+    },
+    {
+      "id": "yoga.r10",
+      "title": "Thoracic Rotation Set",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Rotation mostly belongs to the mid-back, and most people have very little of it. This drills it without loading the lower spine.",
+      "steps": [
+        "Lie on your right side with the knees stacked and bent to ninety degrees, a block or cushion between them, arms stretched out in front with the palms together.",
+        "Open Book: inhale and sweep the top arm up and over to the left, following it with your eyes, until the shoulder blade reaches the floor or as far as it goes. Exhale to return. Ten slow rounds.",
+        "On the last one, stay open for five breaths and let gravity do the rest.",
+        "Roll over and repeat the whole thing on the other side.",
+        "Come to hands and knees, place the right hand behind the head, then rotate the right elbow up toward the ceiling on an inhale and down under the body on an exhale. Ten rounds each side.",
+        "Sit cross-legged and take a simple seated twist each way for five breaths, turning from the base of the ribs upward."
+      ],
+      "safety": "Move at a speed where you could stop at any point — this is a controlled range drill, not a wrench. Keep the lower back still and let the movement come from the ribs. Keep any twisting open and gentle in pregnancy.",
+      "free": false
+    },
+    {
+      "id": "yoga.r11",
+      "title": "Desk Neck and Shoulder Reset",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "A short seated set for the neck and upper shoulders, done in an office chair without leaving your desk.",
+      "steps": [
+        "Sit forward on the chair with both feet flat, and lengthen upward without arching the lower back.",
+        "Draw the chin gently back over the throat — a small nod, not a hard tuck — and hold three breaths. Repeat five times.",
+        "Drop the right ear toward the right shoulder and let the left shoulder stay heavy. Rest a hand on the head for its weight only. Five breaths each side.",
+        "Turn to look over the right shoulder for three breaths, then the left. Three rounds each way.",
+        "Look down toward the right armpit for five breaths, then toward the left.",
+        "Interlace the hands behind the head with the elbows wide, and lean the upper back gently over the chair top for five breaths.",
+        "Finish with ten slow shoulder rolls and one long exhale."
+      ],
+      "safety": "Move slowly and stay well inside a comfortable range. Do not pull hard on your own head and do not roll the head backward in a full circle. Stop and seek advice if neck movement brings on dizziness, nausea, visual changes, or pins and needles into the arms or hands.",
+      "free": false
+    },
+    {
+      "id": "yoga.r12",
+      "title": "Wrist Care for Weight-Bearing",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "Prepares and looks after the wrists, which carry the load in every plank, dog and salutation you do.",
+      "steps": [
+        "Sit or kneel. Circle the wrists ten times in each direction, then open and close the hands ten times.",
+        "Extend the right arm forward with the palm up, and use the left hand to draw the fingers gently down and back. Five breaths, then swap.",
+        "Turn the palm down and gently draw the back of the hand toward you. Five breaths each side.",
+        "On hands and knees, spread the fingers wide and press the whole hand down — especially the mound below the index finger — then shift your weight slowly forward and back ten times.",
+        "Turn the hands so the fingers point back toward the knees, and ease your hips back until you feel the front of the forearms. Five breaths, backing off as needed.",
+        "Make loose fists and press the knuckles into the mat, rocking forward and back a few times. This is your alternative whenever the wrists have had enough."
+      ],
+      "safety": "Ease off at once if you feel pinching at the back of the wrist joint rather than a stretch through the forearm. If you have carpal tunnel symptoms or a wrist injury, work on fists or forearms only and get individual advice before loading the joint.",
+      "free": false
+    },
+    {
+      "id": "yoga.r13",
+      "title": "Balance: Tree and Warrior III",
+      "group": "core",
+      "minutes": 11,
+      "purpose": "Balance is trainable and it fades if you never practise it; research links yoga-based exercise with improved balance and mobility in people over sixty.",
+      "steps": [
+        "Stand in Tadasana within reach of a wall. Feel all four corners of each foot, then lift and spread the toes and set them down again.",
+        "Shift onto the right foot and lift the left knee toward hip height. Hold five breaths, then change sides.",
+        "Tree (Vrksasana): place the left foot on the inner right calf or inner thigh — above or below the knee, never against the side of the knee joint. Press foot and leg into each other. Hands at the chest, then overhead if steady. Eight breaths each side.",
+        "Repeat Tree with the eyes closed and fingertips resting on the wall. This is far harder, and it is where most of the training happens.",
+        "Warrior III (Virabhadrasana III): from a lunge, hinge forward over the front leg and float the back leg up until torso and leg are roughly parallel to the floor. Hands to the wall, to blocks, or at the chest. Five breaths each side.",
+        "Finish with thirty seconds standing still on each foot, arms by your sides."
+      ],
+      "safety": "Practise within arm's reach of a wall or sturdy chair, especially with the eyes closed. If you are unsteady on your feet, have low blood pressure, an inner-ear condition or a history of falls, keep a hand on support the whole time and consider working with a teacher or physiotherapist first.",
+      "free": false
+    },
+    {
+      "id": "yoga.r14",
+      "title": "Hip Openers: Low Lunge and Lizard",
+      "group": "deep",
+      "minutes": 16,
+      "purpose": "Works the front and inside of the hips, which shorten from sitting — approached gradually with the ground supporting you.",
+      "steps": [
+        "Warm up with two rounds of Sun Salutation A, or five minutes of cat-cow and hip circles. Do not begin this cold.",
+        "Low Lunge (Anjaneyasana): right foot forward, left knee down on a folded blanket, hips settling forward until you feel the front of the left hip. Hands on the front thigh or on blocks. Eight breaths.",
+        "Keep the shape and add a small backbend: arms overhead, tailbone tucking slightly under so the lower back does not compress. Five breaths.",
+        "Lizard (Utthan Pristhasana): walk the right foot to the outside of the right hand, let the right knee angle out, and lower onto forearms or blocks only if the hips allow it. Ten breaths.",
+        "Repeat the lunge, backbend and lizard on the left side.",
+        "Wide-kneed Child's Pose for ten breaths, then a supported squat (Malasana) with the heels on a rolled mat, for ten breaths.",
+        "Finish on your back with the knees hugged in, rocking gently side to side."
+      ],
+      "safety": "Deep hip work should feel like a broad stretch and never a pinch at the front crease of the hip or a sharp line down the leg. Come out if the front knee objects, and use blocks under the hands so you are not hanging on the joint. Go noticeably lighter in pregnancy, when relaxin makes it easy to overshoot, and get advice first if you have hip impingement, a labral tear, or a hip or knee replacement.",
+      "free": false
+    },
+    {
+      "id": "yoga.r15",
+      "title": "Pigeon, Done Carefully",
+      "group": "deep",
+      "minutes": 14,
+      "purpose": "The outer-hip stretch most people are after, built up in stages so the knee is never the thing taking the load.",
+      "steps": [
+        "Warm the hips first: five minutes of cat-cow, hip circles on hands and knees, and two low lunges each side.",
+        "Start on your back with Figure Four: right ankle across the left thigh, hands behind the left thigh drawing it toward you. Ten breaths each side. Many people never need to go further than this.",
+        "If you do go further, set up your props: a folded blanket or block ready to go under the front hip so the pelvis can stay level.",
+        "Pigeon prep (Eka Pada Rajakapotasana, first stage): from hands and knees, bring the right knee behind the right wrist and let the right foot land where it lands — the shin does not need to be parallel to the front of the mat. Prop the right hip until you are level rather than tipping.",
+        "Stay upright on the hands for five breaths, then fold forward over the front leg only as far as the hips stay square. Ten to fifteen breaths.",
+        "Come out slowly, tuck the back toes and press back to Downward-Facing Dog for five breaths, then repeat on the left.",
+        "Finish on your back with the knees hugged in and a slow reclined twist to each side."
+      ],
+      "safety": "Any pain in the front knee means come out and use the supine Figure Four instead — this stretch belongs in the outer hip and buttock, never in the knee. Always prop the hip so the pelvis stays level. Avoid the kneeling version if you have a knee injury, a meniscus problem or a hip replacement, and use the reclined version in pregnancy.",
+      "free": false
+    },
+    {
+      "id": "yoga.r16",
+      "title": "Gentle Backbends: Sphinx to Bridge",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "Extension for a spine that spends its day in flexion, built from the mildest shapes upward rather than starting deep.",
+      "steps": [
+        "Lie on your front with the forehead down and take five breaths, feeling the belly move against the floor.",
+        "Sphinx (Salamba Bhujangasana): forearms down, elbows under or slightly ahead of the shoulders, chest lifting, legs relaxed. Ten breaths. This is a complete pose, not a preparation for something bigger.",
+        "Cobra (Bhujangasana): hands under the shoulders, press lightly and lift only as high as you can hold with the legs working and the pelvis staying on the floor. Five breaths, three times, resting in between.",
+        "Locust (Salabhasana): arms alongside the body, lift the chest and legs on an inhale and lower on an exhale. Five rounds, then one hold of five breaths.",
+        "Roll over for Bridge (Setu Bandha Sarvangasana): feet hip-width and parallel, knees over ankles, press through the feet to lift the hips, arms long beside you. Five breaths, three times.",
+        "Rest with the knees dropping side to side, then hug the knees in for ten breaths."
+      ],
+      "safety": "A backbend should spread across the whole spine, not concentrate as a pinch in the lower back — if it does, lift less and work the legs more. Keep the head still and facing upward in Bridge rather than turning it. Skip the face-down backbends in pregnancy, and get advice first if you have spinal stenosis, spondylolisthesis, a disc injury or recent abdominal surgery.",
+      "free": false
+    },
+    {
+      "id": "yoga.r17",
+      "title": "Full Standing Practice",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "A complete practice with a warm-up, standing work, a hip and hamstring section and a proper rest — the closest thing here to a full class.",
+      "steps": [
+        "Five minutes of warm-up: cat-cow, Thread the Needle, and three rounds of Sun Salutation A.",
+        "Standing sequence, five breaths each side: Warrior II, Extended Side Angle, Triangle, then Warrior I with the back heel down and the hips turning forward.",
+        "Balance: Tree for eight breaths a side, then Warrior III for five breaths a side with the hands on a wall or on blocks.",
+        "Hips and hamstrings: Low Lunge and Half Splits, eight breaths each, on both sides.",
+        "Floor work: Pigeon prep with the hip propped, ten breaths a side, then a seated forward fold for ten breaths.",
+        "Backbend and counter: Bridge three times for five breaths, then knees to chest and a reclined twist each way.",
+        "Savasana for a full five minutes, and let it actually be five."
+      ],
+      "safety": "Warm up properly before the standing and hip sections rather than jumping in. Keep the front knee over the ankle in the warriors, prop the hip in Pigeon, and stay near a wall for the balances. Shorten or skip any section that has you bracing rather than breathing.",
+      "free": false
+    },
+    {
+      "id": "yoga.r18",
+      "title": "Twists, Seated and Standing",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "Rotation held long enough to be felt, with length in the spine always coming before the turn.",
+      "steps": [
+        "Sit on the front edge of a cushion with the legs crossed, and lengthen upward on an inhale before turning at all.",
+        "Easy seated twist: right hand behind you, left hand outside the right knee. Inhale to grow taller, exhale to turn a little further. Five breaths, then the other side.",
+        "Half Lord of the Fishes (Ardha Matsyendrasana): right foot outside the left thigh, left leg bent in or left long. Left elbow or forearm to the outside of the right knee, right hand behind you. Eight breaths, then swap.",
+        "Standing twist: feet hip-width, hands at the chest, sit down into Chair, then hook the left elbow outside the right knee or simply rest the hands on the thighs and turn. Five breaths each side.",
+        "Revolved Low Lunge: right foot forward, back knee down, hands at the chest, turning the ribs to the right. Five breaths each side.",
+        "Lie down and finish with a slow reclined twist, knees dropping to each side for eight breaths."
+      ],
+      "safety": "Length first, rotation second — never lever yourself around with an arm against a rigid spine, and let the turn come from the ribcage rather than the lower back or the neck. Keep twists open and shallow in pregnancy, and avoid deep closed twists if you have had recent abdominal or spinal surgery, a disc injury, or osteoporosis.",
+      "free": false
+    },
+    {
+      "id": "yoga.r19",
+      "title": "Forward Folds, Seated and Wide",
+      "group": "deep",
+      "minutes": 13,
+      "purpose": "Long, quiet folds for the back of the legs and the whole back line, held with the front of the body relaxed rather than gripping.",
+      "steps": [
+        "Sit on a folded blanket with the legs long in Dandasana, hands beside the hips, and lengthen upward for five breaths.",
+        "Seated Forward Fold (Paschimottanasana): hinge from the hips with the knees softly bent, hands to the shins or a strap around the feet, head heavy. Two minutes.",
+        "Head-to-Knee (Janu Sirsasana): right leg long, left sole to the inner right thigh, turn the chest over the right leg and fold. Ninety seconds each side.",
+        "Wide-Legged Seated Fold (Upavistha Konasana): legs apart to a comfortable angle, walk the hands forward with a long spine and stop where the sensation stays steady. Two minutes.",
+        "Bound Angle (Baddha Konasana): soles together, knees supported on cushions if they sit high, fold forward gently. Two minutes.",
+        "Lie down, hug the knees in, and rest for three minutes."
+      ],
+      "safety": "Fold from the hips with the knees bent rather than rounding hard through the lower back, and sit up on a blanket if the pelvis tips backwards. These are long holds, so choose an intensity you could happily stay at for the whole time. Ease off if you feel anything sharp or electrical down the back of a leg, and get advice first if you have a disc injury or sciatic symptoms.",
+      "free": false
+    },
+    {
+      "id": "yoga.r20",
+      "title": "Yin-Style Long Holds for the Lower Body",
+      "group": "deep",
+      "minutes": 30,
+      "purpose": "Yin-style practice: few poses, muscles deliberately relaxed, three to five minutes each — a very different experience from an active flow.",
+      "steps": [
+        "Set up with a cushion, a blanket and two blocks within reach, and agree with yourself in advance that you will move slowly and stay put.",
+        "Butterfly: sitting, soles together with the feet well forward of the pelvis, fold over with a rounded back and rest the head on a block if that helps. Three minutes.",
+        "Dragon, a lizard variation: right foot forward, back knee down on a blanket, hands on blocks, hips settling. Three minutes each side.",
+        "Swan, a pigeon variation: right knee forward with the hip propped level, staying upright or folding. Three minutes each side.",
+        "Caterpillar: legs long, fold forward with a soft rounded spine and no effort at all to straighten anything. Four minutes.",
+        "Reclined twist: on your back, knees dropping to the right, arms wide. Three minutes each side.",
+        "Rest on your back for five minutes and notice how different this feels from an active practice."
+      ],
+      "safety": "Find an edge where the sensation is moderate and dull and you can breathe easily — not your maximum. Long holds make it easy to drift past a safe range without noticing, so back off if sensation sharpens, and come out slowly and move gently afterwards. Skip long holds over joints that are injured, hypermobile or recently operated on, and shorten them considerably in pregnancy.",
+      "free": false
+    },
+    {
+      "id": "yoga.r21",
+      "title": "Legs Up the Wall",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Viparita Karani — a mild inversion that takes the load out of the legs and gives you a long, undemanding stretch of quiet.",
+      "steps": [
+        "Sit sideways with one hip against the wall, then swing the legs up as you lower the shoulders and head to the floor. Shuffle the hips to whatever distance from the wall feels easy — touching it is not required.",
+        "Slide a folded blanket under the hips if you want a little lift, and let the legs rest against the wall rather than holding themselves there.",
+        "Arms out to the sides with the palms up, shoulders wide, eyes closed or softly lowered.",
+        "Breathe normally for two minutes, then let the exhale become a little longer than the inhale.",
+        "Stay for eight to ten minutes. If the feet start to tingle, bend the knees or come down for a moment.",
+        "To come out, bend the knees, roll to one side, rest there for a few breaths, then press up slowly."
+      ],
+      "safety": "This is a gentle inversion, and head-down positions have been measured to raise pressure inside the eye — check with your doctor first if you have glaucoma, recent eye surgery or a detached retina. Check first too if you have uncontrolled high blood pressure or a heart condition. From the second trimester of pregnancy, lying flat on the back for long periods is generally discouraged; use a side-lying rest instead. Come out slowly to avoid lightheadedness.",
+      "free": false
+    },
+    {
+      "id": "yoga.r22",
+      "title": "Supported Child's Pose",
+      "group": "restorative",
+      "minutes": 9,
+      "purpose": "One shape, properly propped, held long enough that the back and shoulders genuinely let go rather than merely pausing.",
+      "steps": [
+        "Kneel with a folded blanket behind the knees if the heels do not reach the hips, and place a bolster or two firm cushions lengthways in front of you.",
+        "Take the knees wide with the big toes touching, and settle the hips back toward the heels.",
+        "Lay the torso along the bolster so the chest and belly are fully supported, and turn the head to one side.",
+        "Rest the arms alongside the bolster or reaching forward, whichever lets the shoulders drop.",
+        "Stay four minutes, then turn the head to the other side for four more.",
+        "Come up slowly, one vertebra at a time, and sit still for a few breaths before moving on."
+      ],
+      "safety": "Add height under the chest, the hips, or both, so there is no strain at the knees, ankles or lower back — a supported pose you can hold in comfort is doing its job. Take the knees wide and use plenty of height in pregnancy. Skip or heavily modify if you have a knee injury or a recent knee replacement.",
+      "free": false
+    },
+    {
+      "id": "yoga.r23",
+      "title": "Reclined Twist Before Sleep",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "A slow, propped twist to unwind the back at the end of the day, done on the floor or in bed with the lights already low.",
+      "steps": [
+        "Lie on your back with the knees bent and feet on the floor. Five breaths with one hand on the belly.",
+        "Draw the knees in toward the chest, then let them drop slowly to the right, keeping both shoulders down.",
+        "Place a cushion between or under the knees so they rest rather than hang — this twist should feel supported, not suspended.",
+        "Take the left arm out to the side, and turn the head to the left only if the neck is comfortable turning.",
+        "Stay two to three minutes, letting each exhale soften the shape a little further.",
+        "Bring the knees back through the middle, pause for three breaths, then repeat to the left.",
+        "Finish on your back with the knees bent, feet wide and knees leaning together, for two minutes."
+      ],
+      "safety": "Let gravity do the work — never push the knees down, and never twist through a shoulder that is lifting off the floor. Keep the neck neutral if turning it is uncomfortable. Use plenty of support and keep the twist very open in pregnancy, and get advice first if you have a disc injury, osteoporosis or a spinal fusion.",
+      "free": false
+    },
+    {
+      "id": "yoga.r24",
+      "title": "Evening Wind-Down Flow",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "A slow, low-to-the-ground sequence for the hour before bed; reviews link regular yoga with modest improvements in reported sleep quality.",
+      "steps": [
+        "Dim the lights. Sit for two minutes and breathe, letting the exhale gradually become longer than the inhale.",
+        "Ten rounds of cat-cow, slower than feels natural, one breath per movement.",
+        "Thread the Needle for six breaths each side, then wide-kneed Child's Pose for ten breaths.",
+        "Half Splits for eight breaths each side, then a supine Figure Four for ten breaths each side.",
+        "Reclined Bound Angle (Supta Baddha Konasana) with cushions under the knees, for two minutes.",
+        "Reclined twist for two minutes each side, knees supported on a cushion.",
+        "Savasana for four minutes with a blanket over you and something thin under the head."
+      ],
+      "safety": "Keep everything here well inside a comfortable range — this practice is for winding down, not for making progress on flexibility. Prop generously. In pregnancy, take the final rest lying on your left side with cushions rather than flat on your back.",
+      "free": false
+    },
+    {
+      "id": "yoga.r25",
+      "title": "Supported Savasana with Long Exhales",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "The final rest, set up properly and given real time — the pose most people skip and most people need.",
+      "steps": [
+        "Lie on your back with a rolled blanket or bolster under the knees, a thin cushion under the head, and a blanket over you.",
+        "Let the feet fall out to the sides, arms resting a little away from the body, palms up.",
+        "Take three slow breaths through the nose, letting each exhale be audible if it wants to be.",
+        "Then let the breathing be entirely ordinary, and simply count each exhale from one to ten, starting again whenever you lose the thread.",
+        "Stay still for eight to ten minutes. Thoughts will come and go; the practice is noticing that and returning to the next exhale.",
+        "To finish, wiggle the fingers and toes, stretch, roll onto one side, and sit up slowly."
+      ],
+      "safety": "If lying flat is uncomfortable, raise the head and chest on a bolster or lie on your side with a cushion between the knees — from the second trimester of pregnancy onward, side-lying is the usual advice. Keep warm, since body temperature drops once you are still.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Patanjali, Yoga Sutras, c. 350-450 CE — sutra 2.29 lists the eight limbs and places asana third; sutra 2.46, sthira sukham asanam, defines posture as steady and comfortable. Source for the teaching that asana is one limb of a larger system.",
+    "B.K.S. Iyengar, Light on Yoga, 1966 — the reference catalogue of over 200 asanas with detailed alignment description, and the origin of the modern use of props (blocks, belts, chairs, blankets). Source for the pose-by-pose alignment cues and the prop-first attitude throughout this school.",
+    "T.K.V. Desikachar, The Heart of Yoga: Developing a Personal Practice, 1995 — the Krishnamacharya and viniyoga principle that the breath leads the movement, and that the practice is adapted to the person rather than the person to the practice. Source for the breath-led movement teaching.",
+    "Wieland, Skoetz, Pilkington, Harbin, D'Adamo, Daubenmier & Berman, Yoga for chronic non-specific low back pain, Cochrane Database of Systematic Reviews, 2022 — low- to moderate-certainty evidence that yoga produces small improvements in back-related function and pain at three months versus no exercise, and little or no difference versus other exercise. The honest basis for everything this school says about backs.",
+    "Cramer, Lauche, Langhorst & Dobos, Yoga for depression: a systematic review and meta-analysis, Depression and Anxiety, 2013 — twelve randomised trials with 619 participants; moderate evidence for short-term effects on depressive symptoms compared with usual care. Basis for the cautious mood language in the framing note.",
+    "Youkhana, Dean, Wolff, Sherrington & Tiedemann, Yoga-based exercise improves balance and mobility in people aged 60 and over: a systematic review and meta-analysis, Age and Ageing, 2016;45(1):21-29 — small effect on balance and medium effect on physical mobility. Supports the balance routine and the claim made in its purpose line.",
+    "Cramer, Ward, Saper, Fishbein, Dobos & Lauche, The safety of yoga: a systematic review and meta-analysis of randomized controlled trials, American Journal of Epidemiology, 2015;182(4):281-293 — adverse-event rates in yoga trials comparable to usual care and to other exercise. Basis for the honest safety framing rather than either alarm or complacency.",
+    "Cramer, Krucoff & Dobos, Adverse events associated with yoga: a systematic review of published case reports and case series, PLOS ONE, 2013 — headstand, shoulderstand, lotus and forceful breathing account for a disproportionate share of the serious reported injuries, with neck injuries attributed to sirsasana and sarvangasana. The reason this school contains no inversions loaded on the head or neck.",
+    "Jasien, Jonas, de Moraes & Ritch, Intraocular pressure rise in subjects with and without glaucoma during four common yoga positions, PLOS ONE, 2015 — downward dog, standing forward bend, plough and legs-up-the-wall each raised intraocular pressure by roughly 6 to 11 mmHg within one minute, returning to baseline within two. Source for the eye-related cautions on inverted and head-down positions.",
+    "American College of Sports Medicine, ACSM's Guidelines for Exercise Testing and Prescription, 11th edition, 2021, plus Weppler & Magnusson, Increasing muscle extensibility: a matter of increasing length or modifying sensation?, Physical Therapy, 2010;90:438-449 — ACSM sets flexibility work at two to three or more days a week with static holds of 10-30 seconds accumulating to about 60 seconds per muscle group, performed warm; Weppler and Magnusson argue much of the range gained reflects increased stretch tolerance rather than permanent tissue lengthening. Together these underpin the hold lengths and the mobility-versus-flexibility teaching."
+  ],
+  "subtitle": "postures and long holds",
+  "pronunciation": "HUT-huh",
+  "origin": "Haṭha — the postural tradition described in the 15th-century Haṭha Yoga Pradīpikā. The long yin-style holds here are modern."
+}

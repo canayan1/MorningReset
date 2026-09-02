@@ -13,7 +13,7 @@ struct QuizView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: appState.activePath, intensity: 0.4)
 
             VStack(spacing: 0) {
 
@@ -38,6 +38,11 @@ struct QuizView: View {
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
+
+                Image(systemName: appState.activePath?.symbol ?? "moon.stars.fill")
+                    .font(.system(size: 52, weight: .ultraLight))
+                    .foregroundStyle(DS.accent.opacity(0.65))
+                    .padding(.bottom, DS.Space.xl)
 
                 VStack(spacing: DS.Space.lg) {
                     Text(current.text)
@@ -92,7 +97,7 @@ struct QuizView: View {
                     .foregroundStyle(isSelected ? DS.background : DS.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.vertical, 16)
+            .padding(.vertical, 20)
             .padding(.horizontal, DS.Space.md)
             .background(isSelected ? DS.accent : DS.surface)
             .clipShape(Capsule())

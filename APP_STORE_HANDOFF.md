@@ -6,14 +6,30 @@ This file is the manual checklist for shipping `Morning Reset` to the App Store.
 
 - App name: `Morning Reset`
 - Bundle identifier: `com.canayan.MorningReset`
-- Version: `1.0`
-- Build: `1`
+- Version (MARKETING_VERSION): `1.1`
+- Build (CURRENT_PROJECT_VERSION): `4`  (bumped for this update; increment again if `4` was already uploaded)
 - Platform: iPhone only
-- Minimum iOS version: `17.6`
-- Privacy URL: `https://canayan1.github.io/MorningReset/privacy-policy.html`
-- Support URL: `https://canayan1.github.io/MorningReset/support.html`
+- Minimum iOS version: `17.6`  (app target; note the unit/UI-test targets are set to 26.4 — that does not affect the shipped app)
+- Privacy URL: `https://canayan-ios-apps.vercel.app/apps/morning-reset/privacy`
+- Support URL: `https://canayan-ios-apps.vercel.app/apps/morning-reset/support`
+  (pages live in the `canayanIOSapps` Next.js site — see Manual step 1)
 - Subscription product ID: `com.canayan.MorningReset.premium.annual`
+- Subscription price: `$99.99 / year` (premium top-band)
 - Subscription offer: annual plan with `7-day free trial`
+
+## Build 4 — design pass (this update)
+
+- App-wide UI redesign enforcing four rules on every screen: one clear primary
+  button (shared `.primaryCTA()` gold capsule), text density ≤ 20%, no flat/white
+  background (shared living `AppBackground()` aura everywhere), symmetric/centered
+  composition. See the `design-rules` memory.
+- Paywall trimmed from ~45% → ~20% text; onboarding "building" percent counter
+  fixed; `AuraBackground` now pauses under `-uiTesting` (XCUITest reliability).
+- **All App Store assets regenerated against the new design:**
+  `AppStoreAssets/screenshots_en|_tr|_es` (6 each, 9:41 status bar),
+  `AppStoreAssets/onboarding` (PA01–PA05), and `AppStoreAssets/AppPreview_6.9.mp4`
+  (1320×2868, H.264, 29.9 s).
+- Full unit + UI suite green; device build installed and launched.
 
 ## What is already handled in the repo
 
@@ -179,11 +195,13 @@ In App Store Connect:
 4. Confirm the platform is iOS.
 5. Confirm the app is iPhone-only.
 
-Use the shipping copy from `/Users/can/Projects/MorningReset/README.md`:
+Use the canonical, trilingual copy from the "Copy-paste App Store metadata"
+section above (do not retype it here — that section is the single source of
+truth so the subtitle/promo text stay consistent across languages):
 
 - Name: `Morning Reset`
-- Subtitle: `Interrupt the scroll impulse`
-- Promotional text: `Use your normal alarm, then start with five quick questions and one first win before you open anything else.`
+- Subtitle: `Own the first three minutes`
+- Promotional text: `Keep your usual alarm. Morning Reset waits on your lock screen, ready to greet you when you reach for your phone.`
 - Support URL: `https://canayan1.github.io/MorningReset/support.html`
 - Privacy Policy URL: `https://canayan1.github.io/MorningReset/privacy-policy.html`
 
@@ -229,20 +247,42 @@ That means the app declares that it does not use non-exempt proprietary encrypti
 
 If you later add your own crypto library, VPN behavior, or custom secure transport, revisit this answer before submitting.
 
-## Manual step 5 — Create the subscription in App Store Connect
+## Manual step 5 — Create the subscriptions in App Store Connect
 
-Create one auto-renewable subscription:
+Create **two** auto-renewable subscriptions in the **same subscription group**
+(`Morning Reset Premium`). The app's paywall shows both as a plan picker with the
+annual pre-selected and badged "BEST VALUE". Both are already in the local
+`.storekit` for testing.
 
-- Subscription group name: `Morning Reset Premium`
+**Plan 1 — Annual (hero plan, with trial):**
+
 - Product ID: `com.canayan.MorningReset.premium.annual`
 - Reference name: `Morning Reset Premium Annual`
 - Duration: `1 year`
-- Introductory offer: `7-day free trial`
+- **Price: `$99.99 / year`** (premium top-band — Morning Reset combines a morning
+  ritual + guided energy practices + the on-device energy read in one app; this
+  sits at the top of the mainstream wellbeing band, below the $129–150 premium
+  breathwork outliers.)
+- Introductory offer: `7-day free trial` (on this annual plan only)
+
+**Plan 2 — Monthly (anchor plan, no trial):**
+
+- Product ID: `com.canayan.MorningReset.premium.monthly`
+- Reference name: `Morning Reset Premium Monthly`
+- Duration: `1 month`
+- **Price: `≈ €18 / month` (the `$17.99` USD tier)** — deliberately high so the
+  $99.99 annual reads as a strong discount (~55% off vs paying monthly).
+- Introductory offer: none
+
+To see both plans while testing in the simulator: Xcode → Edit Scheme → Run →
+Options → **StoreKit Configuration → `MorningReset.storekit`**, then run and open
+the paywall. On a real device the paywall shows whatever is live in App Store
+Connect, so add the monthly product there to see both plans on device.
 
 Suggested English display copy:
 
 - Display name: `Morning Reset Premium Annual`
-- Description: `Unlock weekly pattern insight, a short guided pause, Rise & Flow (guided 5-minute movement reset), Breath Reset (guided breathing), and Morning Pages (freewriting prompt).`
+- Description: `Premium unlocks the deeper layer: fuller weekly pattern insight, a guided pause, Rise & Flow (guided 5-minute movement reset), Breath Reset (guided breathing), and Morning Pages (freewriting prompt). The core morning ritual and energy read stay free.`
 
 Important:
 
@@ -257,6 +297,31 @@ Important:
    - Morning Pages
 
 ## Manual step 6 — Upload screenshots
+
+### Generated assets (already produced in this repo)
+
+Real 6.9-inch (1320×2868) assets are checked in under `AppStoreAssets/`:
+
+- `AppStoreAssets/screenshots_en/01_WakeHome.png` … `06_Checkout.png` — six English
+  product-page screenshots straight from the running app.
+- `AppStoreAssets/AppPreview_6.9.mp4` — a ~27s App Preview video (H.264, 30fps,
+  1320×2868) walking the morning ritual. Within App Store Connect spec for the 6.9" slot.
+
+To regenerate after UI changes (capture runs on `iPhone 17 Pro Max`):
+
+```
+xcodebuild test \
+  -project MorningReset/MorningReset.xcodeproj -scheme MorningReset \
+  -destination 'id=<iPhone 17 Pro Max sim udid>' -parallel-testing-enabled NO \
+  -only-testing:MorningResetUITests/MorningResetUITests/testCaptureAppStoreScreenshots \
+  -resultBundlePath /tmp/shots.xcresult
+xcrun xcresulttool export attachments --path /tmp/shots.xcresult --output-path /tmp/shots_out
+```
+
+For Turkish/Spanish localized screenshots, change the language in
+`testCaptureAppStoreScreenshots` (`launchApp(language:region:)`) and re-run.
+
+### Apple's requirement
 
 Apple’s current screenshot reference says iPhone apps need 6.9-inch screenshots, or 6.5-inch if 6.9-inch is not provided. The easiest path is:
 
@@ -297,9 +362,9 @@ In Xcode:
 1. Open `/Users/can/Projects/MorningReset/MorningReset/MorningReset.xcodeproj`.
 2. Select the `MorningReset` scheme.
 3. Select `Any iOS Device (arm64)`.
-4. Set version/build to:
-   - Version `1.0`
-   - Build `1`
+4. Confirm version/build:
+   - Version `1.1`
+   - Build `3` (or the next unused build number if `3` was already used in TestFlight)
 5. Run `Product -> Archive`.
 6. In Organizer, choose `Distribute App`.
 7. Choose `App Store Connect`.

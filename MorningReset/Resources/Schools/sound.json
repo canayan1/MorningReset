@@ -1,0 +1,485 @@
+{
+  "id": "sound",
+  "name": "Nada Yoga",
+  "tagline": "Use your voice, then use your ears.",
+  "overview": "Sound & Mantra brings together two very old habits: making a sound on purpose, and listening on purpose. The practices here run from a quiet hum on the out-breath to counted mantra repetition on a mala, from chanting Om aloud to sitting with a struck bell until the tone has completely gone. Most of it comes from Indian and East Asian contemplative traditions, with a small amount borrowed from twentieth-century listening practice. None of it needs talent, a good voice, or an audience.",
+  "kind": "traditional",
+  "framing_note": "This school is rooted in traditional vocal and sound practice, mainly Indian mantra and pranayama and Japanese and Chinese Buddhist bell and flute practice. Some parts of it have measured physiological correlates: humming raises nitric oxide in air leaving the nose, and reciting a mantra at around six breaths a minute slows breathing and increases heart rate variability. Those are measurements, not medical benefits, and the studies are small. The traditional meanings are offered as the tradition's own account, not as physiology. This is experiential practice, not medical treatment or a substitute for care.",
+  "teachings": [
+    {
+      "id": "sound.t1",
+      "title": "Why voice changes how you feel",
+      "body": "Making a sustained sound does three things at once. It stretches out the exhale, because the vocal folds and the shape of your mouth act as a slow release valve. It produces vibration you can feel in the lips, teeth, sinuses and chest. And it gives attention a clear, repeating thing to sit on. The out-breath part is measurable: in a 2001 BMJ study, Bernardi and colleagues had 23 healthy adults recite the Ave Maria in Latin and a Sanskrit yoga mantra, and both settled breathing to roughly six breaths a minute, with increased heart rate variability and baroreflex sensitivity. That is a description of what the body does while you chant. It is not a claim about what chanting does to your health."
+    },
+    {
+      "id": "sound.t2",
+      "title": "Bhramari, and the humming finding",
+      "body": "Bhramari is named after bhramara, the black bee. The fifteenth-century Hatha Yoga Pradipika (2.68) describes it plainly: breathe in with a humming like the male bee, breathe out slowly with the sound of the female bee. Modern teaching usually adds closing the ears so the sound fills the head. There is one much-quoted measurement behind it. In 2002 Weitzberg and Lundberg published a study of ten healthy people in which nitric oxide in air leaving the nose rose about fifteen-fold during humming compared with a quiet exhale at the same flow rate, because oscillating airflow moves gas between the paranasal sinuses and the nose. Their proposal was a non-invasive test of sinus ventilation. It is not evidence that humming treats anything. Small studies also report a parasympathetic shift after bhramari; they are small."
+    },
+    {
+      "id": "sound.t3",
+      "title": "Mantra, japa and the mala",
+      "body": "A mantra is a fixed sound used deliberately: a syllable, a name, or a short line. Patanjali's Yoga Sutra names Om (pranava) as the sound standing for Ishvara, and then gives the practice in four words, taj-japah tad-artha-bhavanam: repeat it, and dwell on what it means. Repetition plus attention, not repetition alone. That repetition is called japa, and it is traditionally counted on a mala of 108 beads, drawn one at a time over the middle finger with the thumb; at the larger meru bead you turn back rather than crossing it. Three registers are distinguished: spoken aloud, whispered, and purely mental. Bija or seed syllables such as lam, vam, ram, yam and ham come from tantric tradition. These are traditional meanings, and the practice works as attention training whether or not you hold them."
+    },
+    {
+      "id": "sound.t4",
+      "title": "Nada yoga: listening as the practice",
+      "body": "Nada yoga splits sound in two. Ahata nada is struck sound, anything caused by two things meeting, including your own voice. Anahata nada is unstruck sound, what is heard inwardly with no external source. The fourth chapter of the Hatha Yoga Pradipika is largely given over to nada anusandhana, the pursuit of that inner sound: close the ears, listen, and follow whatever you find as coarser sounds give way to finer ones. Twentieth-century music arrived somewhere similar from the other direction. Pauline Oliveros coined Deep Listening in 1989 for going below the surface of what is heard while holding the whole field of sound, and R. Murray Schafer's soundscape work made the sound walk an ordinary practice. Different lineages, one instruction: stop filtering."
+    },
+    {
+      "id": "sound.t5",
+      "title": "Traditional, or just marketing",
+      "body": "Two popular stories in this field are not true. The Solfeggio frequencies (396, 417, 528 Hz and the rest) are not ancient: they were produced in the 1970s by Joseph Puleo, using numerological reduction on a passage in the Book of Numbers, and popularised in a 1999 book with Leonard Horowitz. Medieval solmisation named scale degrees, never fixed frequencies, and standard pitch was not settled until the twentieth century. No replicated evidence supports 528 Hz repairing DNA or any number producing a specific emotion. Second, the ancient Tibetan singing bowl: anthropologists including Ben Joffe point out there is no Tibetan word for it and no historical record of such use. Struck standing bells are genuinely liturgical in Japanese and Chinese Buddhism. Enjoy the sound; skip the physics."
+    }
+  ],
+  "routines": [
+    {
+      "id": "sound.r01",
+      "title": "The Humming Exhale",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "The smallest version of the whole school: one long hum on every out-breath, ten times.",
+      "steps": [
+        "Sit comfortably, spine tall but not stiff, jaw loose and teeth slightly apart.",
+        "Breathe in easily through the nose. Do not take a big breath.",
+        "Close your lips and hum out through the nose, low and steady, until the breath runs out comfortably.",
+        "Keep it quiet. You are looking for a buzz you can feel in the lips, teeth and cheekbones rather than a note anyone could admire.",
+        "Let the next in-breath arrive on its own, then hum again. Do ten in total.",
+        "Sit still for thirty seconds without humming and notice what the room sounds like afterwards."
+      ],
+      "safety": "Keep the volume and pitch easy, and never squeeze out the last of the breath. Do not hum through a sore throat. Stop if your voice feels rough or you feel lightheaded.",
+      "free": true
+    },
+    {
+      "id": "sound.r02",
+      "title": "The Voiced Sigh",
+      "group": "starter",
+      "minutes": 3,
+      "purpose": "Let go of a held breath and a clenched jaw with a sound that is deliberately not musical.",
+      "steps": [
+        "Sit or stand, shoulders down, and let your jaw hang slightly open.",
+        "Breathe in through the nose for about four counts.",
+        "Let the breath out through an open mouth with an audible haaah, like fogging a window.",
+        "Let it be unmusical and slightly untidy. The point is release, not tone.",
+        "Do six to eight of these, letting each one get quieter than the last.",
+        "Finish with three silent breaths and notice whether your jaw and shoulders sit differently."
+      ],
+      "safety": "Keep it soft. This is a sigh, not a shout. Stop if your throat feels scratchy.",
+      "free": false
+    },
+    {
+      "id": "sound.r03",
+      "title": "Bhramari, the Bee Breath",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "The classical humming breath with the ears lightly closed, so the sound fills your head instead of the room.",
+      "steps": [
+        "Sit with your elbows out to the sides and rest your thumbs on the small flap of cartilage at the front of each ear.",
+        "Press only enough to soften outside noise. This is a light contact on cartilage, never a finger pushed into the ear canal.",
+        "Rest your remaining fingers gently on your forehead and cheeks, eyes closed.",
+        "Breathe in through the nose without hurrying.",
+        "Hum out through the nose, low and even, for as long as is comfortable. The Hatha Yoga Pradipika calls this the sound of a bee.",
+        "Do six to ten rounds, dropping your hands to your lap whenever your arms tire.",
+        "Finish with hands down and one full minute of ordinary listening."
+      ],
+      "safety": "Press the ear cartilage gently and never seal the ear hard or push anything into the canal. Skip the ear-closing entirely, and simply hum with hands down, if you have ear pain, an ear infection, a perforated eardrum or recent ear surgery. Keep the hum quiet and stop if your voice or ears feel uncomfortable.",
+      "free": false
+    },
+    {
+      "id": "sound.r04",
+      "title": "Follow the Fade",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Train attention on one decaying sound: a single strike, followed all the way down into silence.",
+      "steps": [
+        "Use whatever you have that rings: a small bell, a struck standing bell, a chime, or a single tone from your phone.",
+        "Strike once, softly, then put the mallet down so your hands are still.",
+        "Follow the sound as it fades. When you can no longer hear it at all, stay with the silence for five more seconds.",
+        "Strike again and repeat. Do six rounds.",
+        "On the last round, do not strike. Sit and listen to whatever the room offers instead.",
+        "Notice whether the silence after the bell sounds different from the silence before it."
+      ],
+      "safety": "Strike softly rather than hard, and keep the bell away from your ears. If you are using a recording through headphones, keep the volume moderate.",
+      "free": false
+    },
+    {
+      "id": "sound.r05",
+      "title": "The Room, As It Is",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "Ordinary deep listening: hear the room you are actually sitting in, without naming or ranking any of it.",
+      "steps": [
+        "Sit somewhere you can stay still, and close your eyes.",
+        "Find the furthest sound you can hear and stay with it for about a minute.",
+        "Move to the nearest sound, which may be your own clothing or breath, for another minute.",
+        "Now try to hold the whole field at once, near and far together, without choosing.",
+        "Whenever you catch yourself naming a sound, drop the name and keep the sound.",
+        "Open your eyes and sit for a few seconds before you move."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sound.r06",
+      "title": "Om, Nine Rounds",
+      "group": "core",
+      "minutes": 7,
+      "purpose": "Chant Om aloud with the closing hum given most of the breath, which is where the vibration is easiest to feel.",
+      "steps": [
+        "Sit with your spine tall and take one easy breath in.",
+        "Begin with an open aah, throat relaxed, for about a quarter of the breath.",
+        "Round the lips into ooh for the next quarter, feeling the sound move forward in the mouth.",
+        "Close the lips into mmm and let the hum carry the remaining half of the breath.",
+        "Leave a short silence before the next in-breath, and do not rush to fill it.",
+        "Do nine rounds in total, keeping the pitch in an easy part of your range.",
+        "Sit quietly for one minute at the end without chanting."
+      ],
+      "safety": "Pick a comfortable pitch and volume rather than the lowest or loudest you can manage. Stop if your voice becomes hoarse or your throat feels tight.",
+      "free": false
+    },
+    {
+      "id": "sound.r07",
+      "title": "Seed Sounds",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Move a chanted syllable up through the body and notice, honestly, where each one actually buzzes.",
+      "steps": [
+        "Sit upright. You will use five bija or seed syllables from tantric tradition: lam, vam, ram, yam and ham.",
+        "Chant lam five times, one per out-breath, with a hand resting low on the belly.",
+        "Move to vam five times with the hand just below the navel, then ram five times with the hand on the upper belly.",
+        "Chant yam five times with the hand on the sternum, then ham five times with the hand at the throat.",
+        "Each time, notice where you can genuinely feel vibration under your hand, and where you cannot.",
+        "The traditional mapping of these syllables to centres in the body is the tradition's own account, not anatomy, so hold it lightly.",
+        "Finish with one round of plain humming and half a minute of stillness."
+      ],
+      "safety": "Keep every syllable at an easy pitch and moderate volume. Stop if your voice tires or feels rough.",
+      "free": false
+    },
+    {
+      "id": "sound.r08",
+      "title": "One Mala, One Mantra",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "A counted round of repetition: 108 beads, one short mantra, one bead at a time.",
+      "steps": [
+        "Choose a short mantra and keep it for the whole round. Om, So Ham, Om Namah Shivaya, or a plain phrase in your own language all work.",
+        "Hold the mala draped over your middle finger and draw each bead with the thumb. Tradition avoids using the index finger for this.",
+        "Start at the bead next to the larger meru bead, and say the mantra once per bead, aloud or whispered.",
+        "Keep the pace steady and slightly slower than feels natural.",
+        "When the meru bead comes round again, do not cross it. Either stop, or turn the mala and go back the other way.",
+        "Sit still for one minute at the end without counting anything."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sound.r09",
+      "title": "Silent Mantra",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Drop the sound but keep the repetition, so the mantra runs under the breath rather than over it.",
+      "steps": [
+        "Say your chosen mantra aloud ten times, at conversational volume.",
+        "Repeat it in a whisper ten more times, so it is barely audible.",
+        "Now repeat it mentally only, with no movement of lips or tongue.",
+        "Pair it with the breath if that helps: for So Ham, So on the way in and Ham on the way out.",
+        "Your attention will wander repeatedly. Each time you notice, start the mantra again from wherever you are, without a verdict.",
+        "For the last two minutes, let the mantra go and sit with whatever is left."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sound.r10",
+      "title": "Call and Response",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Sing a line back after hearing it, which is how chant has been passed on for as long as it has existed.",
+      "steps": [
+        "Find a recording of a simple call-and-response chant. Indian kirtan, a Gregorian antiphon or any folk chant will do.",
+        "Listen to one full line without singing, so you know its shape.",
+        "Sing it back in your own comfortable pitch. Match the shape and rhythm, not the exact notes.",
+        "Alternate listening and answering for about ten minutes.",
+        "Halfway through, deliberately sing more quietly, and notice whether you listen more closely when you do.",
+        "End by listening to one final line without responding at all."
+      ],
+      "safety": "Keep headphone volume moderate. Sing within a comfortable range and stop if your voice tires or feels rough.",
+      "free": false
+    },
+    {
+      "id": "sound.r11",
+      "title": "Toning the Vowels",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "Sustain plain vowel sounds and hear how each one reshapes your throat and face. Toning is a modern practice, not an old one.",
+      "steps": [
+        "Sit tall and take one easy breath.",
+        "Sustain ah for one full out-breath at moderate volume, then rest for a breath.",
+        "Do the same with oh, then oo, then ay, then ee, resting a breath between each.",
+        "As you go, notice which vowels you feel in the chest and which you feel in the face.",
+        "Repeat the whole set three times, getting quieter each pass.",
+        "Finish with one long hum and sit in the silence after it."
+      ],
+      "safety": "Keep the pitch and volume easy. Do not push for the extremes of your range, and stop if your voice becomes hoarse.",
+      "free": false
+    },
+    {
+      "id": "sound.r12",
+      "title": "Chest and Head",
+      "group": "core",
+      "minutes": 9,
+      "purpose": "Find out by hand and ear where your own voice actually resonates, which makes every other practice here easier.",
+      "steps": [
+        "Place one palm flat on your sternum and hum a low, comfortable note. Feel for vibration under the hand.",
+        "Move the palm to your forehead and hum a note noticeably higher. Notice how the buzz moves upward.",
+        "Now slide slowly from low to high across several breaths, keeping one hand on the chest and one on the head.",
+        "Find a pitch where you can feel something under both hands at once. It is usually in the middle of your range.",
+        "Stay on that pitch for ten unhurried out-breaths.",
+        "Finish in silence and notice how long the sensation lasts after the sound stops."
+      ],
+      "safety": "Do not push the top or bottom of your range. Keep the volume moderate and stop if your voice cracks repeatedly, tires or feels strained.",
+      "free": false
+    },
+    {
+      "id": "sound.r13",
+      "title": "Sound Walk",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "Walk a familiar route with listening as the main task instead of an afterthought.",
+      "steps": [
+        "Pick a route you know well and can walk safely. Leave headphones at home.",
+        "Walk noticeably slower than usual, and let your eyes stay soft on the path ahead.",
+        "For the first five minutes, listen only for the furthest sounds you can pick out.",
+        "For the next five, listen only to the sounds you are making: feet, clothing, breath.",
+        "For the last five, try to hold everything at once without sorting it into wanted and unwanted.",
+        "Stop once, stand still for thirty seconds, and listen without moving.",
+        "When you get back, write down three sounds you had never consciously noticed on that route."
+      ],
+      "safety": "Keep your eyes and attention on traffic, cyclists and other people. Do not wear headphones, and do not use a route that needs your full attention to be safe.",
+      "free": false
+    },
+    {
+      "id": "sound.r14",
+      "title": "Long Bhramari",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Extend the humming breath into a longer sitting, where the hum gets quieter and the gaps between rounds get longer.",
+      "steps": [
+        "Sit comfortably and warm up with five easy hums, hands resting in your lap.",
+        "Bring the thumbs to the cartilage at the front of the ears with light pressure, and hum out through the nose.",
+        "Work through twenty rounds, making each hum a little slower and a little quieter than the one before.",
+        "Every five rounds, drop your hands, rest, and listen for half a minute before starting again.",
+        "For the final five rounds, hum so quietly that you can only just hear yourself.",
+        "Sit in silence for three minutes at the end with your hands down."
+      ],
+      "safety": "Press the ear cartilage gently and never push into the ear canal or seal the ear hard. Skip the ear contact if you have ear pain, an infection, a perforated eardrum or recent ear surgery. Keep the hum quiet, and stop if your voice becomes rough or you feel lightheaded.",
+      "free": false
+    },
+    {
+      "id": "sound.r15",
+      "title": "Listening for the Inner Sound",
+      "group": "deep",
+      "minutes": 18,
+      "purpose": "The traditional nada practice described in the fourth chapter of the Hatha Yoga Pradipika: make sound, then follow what remains.",
+      "steps": [
+        "Sit somewhere as quiet as you can find, and settle for a minute.",
+        "Do ten rounds of quiet humming with the ears lightly closed, then let your hands rest down.",
+        "Now simply listen inward, without making any sound at all.",
+        "Whatever you notice, a faint ringing, a hiss, your own pulse, rest attention on it without trying to make it louder or clearer.",
+        "If several things are present, tradition says to follow the finer and quieter one rather than the obvious one.",
+        "Continue for around twelve minutes, returning to the listening each time you drift.",
+        "Treat whatever you hear as an experience to sit with, not as a sign of anything."
+      ],
+      "safety": "If you have tinnitus, this practice deliberately turns attention toward internal sound and may be uncomfortable or unhelpful; choose an outward-listening practice instead. Keep any ear contact light and on the cartilage only.",
+      "free": false
+    },
+    {
+      "id": "sound.r16",
+      "title": "The Full Round",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "108 repetitions taken slowly, one to a breath, so the mantra and the breathing end up on the same clock.",
+      "steps": [
+        "Sit with the mala in your right hand and choose one short mantra for the whole round.",
+        "Say the mantra once on each out-breath, whispered, and let the in-breath be silent.",
+        "Move one bead per repetition, drawing each with the thumb over the middle finger.",
+        "If you lose count, do not restart. The bead in your hand is the count.",
+        "At the halfway point, notice without judgement whether you have sped up. Most people do.",
+        "Stop at the meru bead rather than crossing it.",
+        "Sit for three minutes afterwards with the mala put down and nothing to count."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sound.r17",
+      "title": "Singing Into a Drone",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Sustain your own note against a steady drone and listen for the point where the two stop fighting each other.",
+      "steps": [
+        "Play a tanpura recording or any long sustained drone at low volume, through speakers if you can.",
+        "Listen for three minutes without making any sound at all.",
+        "Hum a note that feels comfortable against it, then adjust your pitch slightly up and down.",
+        "Listen for the beating, the slow wobble between your note and the drone, and move until it smooths out.",
+        "Alternate one minute of humming with one minute of silent listening, six times.",
+        "The drone is a musical reference tone, exactly as it is in Indian classical music. No particular pitch does anything particular to your body.",
+        "Finish with three minutes of listening only."
+      ],
+      "safety": "Keep the volume moderate across a long sitting, especially with headphones. Sing only within a comfortable range and rest your voice if it tires.",
+      "free": false
+    },
+    {
+      "id": "sound.r18",
+      "title": "One Instrument, All the Way Through",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "Listen to a single unaccompanied instrument from beginning to end with nothing else happening at the same time.",
+      "steps": [
+        "Choose one solo recording: shakuhachi honkyoku, solo cello, solo piano, or an unaccompanied voice.",
+        "Sit where you can see no screen, and start the piece.",
+        "When your mind starts narrating, come back to timbre, the grain and texture of the sound, rather than the tune.",
+        "Listen for the player's own sounds: breaths, bow changes, fingers, the silences they leave.",
+        "The shakuhachi honkyoku were played by komuso monks of the seventeenth-century Fuke sect as suizen, blowing Zen, which is worth knowing if that is what you chose.",
+        "When the piece ends, sit in the silence for a full minute before you move or start anything else."
+      ],
+      "safety": "Keep the volume moderate, especially with headphones.",
+      "free": false
+    },
+    {
+      "id": "sound.r19",
+      "title": "A, U, M and the Silence",
+      "group": "deep",
+      "minutes": 16,
+      "purpose": "Chant Om in its three parts and then sit in the silence that the Mandukya Upanishad counts as the fourth.",
+      "steps": [
+        "Sit upright and settle your breathing for a minute.",
+        "Chant Om in three clear parts: an open aah, a rounded ooh, and a closed hum on mmm.",
+        "After the hum ends, stay completely still and give the silence at least as long as the sound lasted.",
+        "Do twelve rounds like this, keeping the volume low and the silences honest.",
+        "The Mandukya Upanishad maps A, U and M onto waking, dream and deep sleep, and the silence after them onto a fourth state called turiya. That is the tradition's own account of the syllable.",
+        "Stop chanting and sit for five minutes in the silence itself."
+      ],
+      "safety": "Keep the pitch in an easy range and the volume low. Stop if your throat feels tight or your voice becomes hoarse.",
+      "free": false
+    },
+    {
+      "id": "sound.r20",
+      "title": "The Space After the Bell",
+      "group": "deep",
+      "minutes": 22,
+      "purpose": "Use a struck bell as a metronome for silence, striking again only when the last sound has completely gone.",
+      "steps": [
+        "Sit with a bell and mallet within reach and your back supported if you need it.",
+        "Strike once, softly, and follow the tone all the way down.",
+        "When the sound has entirely gone, count ten slow breaths before you strike again.",
+        "Repeat for about ten strikes, letting the counted silence grow a little longer each time.",
+        "If you find yourself waiting impatiently for the next strike, that impatience is the interesting part. Keep sitting.",
+        "For the final round, do not strike at all. Sit for three minutes in plain silence.",
+        "Put the bell away deliberately rather than leaving it out."
+      ],
+      "safety": "Strike softly and keep the bell at arm's length rather than near your ears. A hard strike close to the head is loud and unpleasant.",
+      "free": false
+    },
+    {
+      "id": "sound.r21",
+      "title": "Humming Into Sleep",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "A low, short hum done lying down, made steadily quieter until it stops by itself.",
+      "steps": [
+        "Lie on your back or side with the lights off and settle.",
+        "Hum very quietly on each out-breath, low in pitch and with as little effort as possible.",
+        "Do ten rounds like that, keeping each one shorter than feels necessary.",
+        "Then make every hum quieter and briefer than the one before it.",
+        "At some point stop humming altogether and keep the same slow breathing.",
+        "Do not check whether it is working. That is the one thing that reliably stops it working."
+      ],
+      "safety": "Keep the hum quiet enough that it takes less effort than speaking. Skip it if your throat is sore or your voice is tired.",
+      "free": false
+    },
+    {
+      "id": "sound.r22",
+      "title": "The Evening Bell",
+      "group": "restorative",
+      "minutes": 6,
+      "purpose": "A short closing ritual: one bell, one honest sentence about the day, one more bell, and then you stop.",
+      "steps": [
+        "At the end of the day, sit down somewhere with a bell and no screen.",
+        "Strike once and listen until the tone has completely gone.",
+        "Say one plain sentence out loud about the day. Not a mantra and not a summary, just one true sentence.",
+        "Strike the bell a second time and follow the fade again.",
+        "Sit until the room feels quiet, then put the bell back in the same place you always keep it.",
+        "In Japanese temples the great bonsho is struck 108 times at New Year, as joya no kane. The bell as a marker of time is the oldest use it has."
+      ],
+      "safety": "Strike softly and keep the bell away from your ears.",
+      "free": false
+    },
+    {
+      "id": "sound.r23",
+      "title": "Lying Down With a Drone",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "Rest underneath one long sustained tone, with no melody to follow and nothing at all to do.",
+      "steps": [
+        "Lie down somewhere warm with a blanket and set a timer for twenty minutes.",
+        "Play a sustained drone or tanpura recording at low volume, through speakers rather than headphones if you can.",
+        "Close your eyes and let attention drift. You are not supposed to concentrate here.",
+        "Each time you notice you have gone somewhere else, come back to the tone without correcting yourself.",
+        "When the timer sounds, stay lying down for one more minute in the silence before you get up.",
+        "Notice what the room sounds like once the drone has stopped."
+      ],
+      "safety": "Keep the volume low across the whole sitting, especially with headphones. Falling asleep is fine in the evening; set a separate alarm if you need to be up.",
+      "free": false
+    },
+    {
+      "id": "sound.r24",
+      "title": "Whispered Mantra for Winding Down",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "A whispered repetition on the out-breath only, designed to fade out along with your energy.",
+      "steps": [
+        "Sit or lie somewhere comfortable with the lights low.",
+        "Choose a short phrase, traditional or in plain English, and keep it for the whole practice.",
+        "Whisper it once on each out-breath. Say nothing at all on the in-breath.",
+        "After about five minutes, let the whisper become mental only.",
+        "If you lose the mantra completely, leave it lost. There is nothing to correct at this time of day.",
+        "Let the practice end whenever it ends rather than at a fixed point."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sound.r25",
+      "title": "Night Sounds",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "Outward listening at the end of the day: rain, traffic, wind, whatever is actually out there.",
+      "steps": [
+        "Sit near an open window, or outside if the weather allows, with the lights low.",
+        "Listen for around ten minutes without labelling anything you hear.",
+        "If it is genuinely silent, listen to the silence and to your own breathing inside it.",
+        "When your mind starts planning tomorrow, return to the furthest sound you can hear.",
+        "Before you finish, pick one sound you would normally have filtered out completely.",
+        "Go to bed without checking your phone on the way."
+      ],
+      "safety": "If you are outside after dark, stay somewhere you know is safe.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Weitzberg E, Lundberg JON, 'Humming Greatly Increases Nasal Nitric Oxide', American Journal of Respiratory and Critical Care Medicine, 2002;166(2):144-145 - the roughly fifteen-fold rise in nasal nitric oxide during humming versus a quiet exhalation in ten healthy subjects, explained by oscillating airflow increasing gas exchange with the paranasal sinuses, and proposed as a non-invasive test of sinus ventilation rather than as a therapy.",
+    "Bernardi L, Sleight P, Bandinelli G, Cencetti S, Fattorini L, Wdowczyc-Szulc J, Lagi A, 'Effect of rosary prayer and yoga mantras on autonomic cardiovascular rhythms: comparative study', BMJ, 2001;323(7327):1446-1449 - recitation of the Latin Ave Maria and of a yoga mantra both slowed breathing to about six per minute and raised heart rate variability and baroreflex sensitivity in 23 healthy adults.",
+    "Kuppusamy M, Kamaldeen D, Pitani R, Amaldas J, Shanmugam P, 'Effects of Bhramari Pranayama on health - A systematic review', Journal of Traditional and Complementary Medicine, 2018;8(1):11-16 - the small, uneven evidence base behind bhramari, including reported shifts toward parasympathetic activity, and the reasons for reading it cautiously.",
+    "Kalyani BG, Venkatasubramanian G, Arasappa R, et al., 'Neurohemodynamic correlates of OM chanting: A pilot functional magnetic resonance imaging study', International Journal of Yoga, 2011;4(1):3-6 - limbic deactivation during audible Om chanting compared with rest in twelve volunteers, described by its authors as a pilot.",
+    "Chanda ML, Levitin DJ, 'The neurochemistry of music', Trends in Cognitive Sciences, 2013;17(4):179-193 - review of how music is used to regulate mood and arousal, covering reward, stress and social affiliation, and the limits of that evidence.",
+    "Svatmarama, Hatha Yoga Pradipika (15th century), 2.68 and chapter 4 - bhramari described as humming like a bee on the in-breath and out-breath, and nada anusandhana, the practice of closing the ears and following the inner sound from coarse to fine.",
+    "Patanjali, Yoga Sutra 1.27-1.28 - Om (pranava) as the sound designating Ishvara, and the instruction taj-japah tad-artha-bhavanam, repeat it and dwell on its meaning; the basis for treating japa as repetition plus attention. The Mandukya Upanishad supplies the A-U-M and turiya analysis used in the Om practices.",
+    "Pauline Oliveros, Deep Listening: A Composer's Sound Practice, iUniverse, 2005 - Deep Listening, a term she coined in 1989, as going below the surface of what is heard while holding the whole field of sound; with R. Murray Schafer's The Tuning of the World (1977) for the soundscape and the sound walk.",
+    "Leonard Horowitz and Joseph Puleo, Healing Codes for the Biological Apocalypse, Tetrahedron, 1999 - the actual documented origin of the Solfeggio frequencies, derived by numerological reduction from the Book of Numbers in the 1970s; cited as the source of the claim, not as support for it.",
+    "Ben Joffe, 'Tripping on Good Vibrations: Cultural Commodification and Tibetan Singing Bowls', Savage Minds, 2015 - the anthropological case that Tibetan singing bowls are a modern Western construct, with no Tibetan term and no historical record of such use, against the genuine liturgical use of struck standing bells in Japanese and Chinese Buddhism."
+  ],
+  "subtitle": "sound and listening",
+  "pronunciation": "NAH-dah YOH-gah",
+  "origin": "Nāda Yoga — 'union through sound', from Haṭha Yoga Pradīpikā ch. 4, which distinguishes struck sound (āhata) from inner sound (anāhata)."
+}

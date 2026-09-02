@@ -46,12 +46,12 @@ struct MoveView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(L10n.text(en: "60-SECOND MOVE", tr: "60 SANİYELİK HAREKET", es: "MOVIMIENTO DE 60 SEGUNDOS"))
                         .font(DS.Typo.label)
                         .foregroundStyle(DS.textDim)
@@ -64,13 +64,10 @@ struct MoveView: View {
                     Text(cue)
                         .font(.title3.weight(.semibold))
                         .foregroundStyle(DS.textPrimary)
-
-                    Text(L10n.text(en: "Any simple movement counts. Keep it clean and continuous.", tr: "Her basit hareket sayılır. Temiz ve kesintisiz tut.", es: "Cualquier movimiento sencillo cuenta. Manténlo limpio y continuo."))
-                        .font(.subheadline)
-                        .foregroundStyle(DS.textSecondary)
-                        .lineSpacing(3)
+                        .multilineTextAlignment(.center)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
@@ -83,12 +80,7 @@ struct MoveView: View {
                 Button(primaryButtonTitle) {
                     handlePrimaryAction()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.horizontal, DS.Space.lg)
                 .disabled(isRunning)
                 .accessibilityIdentifier("move.primaryButton")

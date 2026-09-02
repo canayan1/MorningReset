@@ -34,12 +34,12 @@ struct GuidedPauseView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(alignment: .center, spacing: DS.Space.xs) {
                     Text(L10n.text(en: "PAUSE", tr: "DURAKLAMA", es: "PAUSA"))
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundStyle(DS.textDim)
@@ -48,7 +48,9 @@ struct GuidedPauseView: View {
                     Text(prompt.breath)
                         .font(.title2.bold())
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
                 }
+                .frame(maxWidth: .infinity)
 
                 Spacer().frame(height: DS.Space.lg)
 

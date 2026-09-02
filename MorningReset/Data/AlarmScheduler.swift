@@ -36,9 +36,9 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
 
         let center  = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
-        content.title    = "Morning Reset"
+        content.title    = "Inner Light"
         content.body     = L10n.text(
-            en: "Tap to start your reset before the scroll begins.",
+            en: "Tap to start your daily reset.",
             tr: "Scroll başlamadan önce reset'i başlatmak için dokun.",
             es: "Toca para empezar tu reset antes de que comience el scroll."
         )
@@ -74,7 +74,7 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
             WakeActivityController.reconcile(
                 fireDate: fireDate,
                 tagline: L10n.text(
-                    en: "One quiet ritual before the scroll begins.",
+                    en: "Your daily reset is ready.",
                     tr: "Scroll başlamadan önce sessiz bir ritüel.",
                     es: "Un ritual tranquilo antes del scroll."
                 )
@@ -106,49 +106,162 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
     }
 }
 
-// MARK: - AlarmKitWakeScheduler (iOS 26+)
+// MARK: - AlarmKitWakeScheduler (iOS 26.1+)
 //
-// ─────────────────────────────────────────────────────────────────────────
-// STATUS: Structure ready. AlarmKit calls not yet written.
-//
-// To complete this implementation:
-//   1. Add `import AlarmKit` here
-//   2. Link AlarmKit.framework in Xcode → Build Phases → Link Binary With Libraries
-//   3. Verify entitlement requirements at developer.apple.com
-//   4. Replace the LocalNotificationWakeScheduler delegation below with AlarmKit calls
-//   5. In AlarmEntryRouter, add any AlarmKit-specific delegate conformance
-//      and call routeToWakeFlow() from the AlarmKit wake callback
-//
-// AlarmKit provides: bypass silent mode, system-level alarm UI,
-// no critical-alerts entitlement needed. All routing still goes through
-// AlarmEntryRouter — this manager only handles scheduling, not navigation.
-//
-// Until implementation is complete: delegates to LocalNotificationWakeScheduler
-// so WakeNotificationManager.current works end-to-end on iOS 26+ devices.
-// ─────────────────────────────────────────────────────────────────────────
+// Replaces the local-notification backend on iOS 26.1+.
+// AlarmKit alarms bypass Silent mode and Sleep Focus — the system shows
+// a full-screen alarm UI identical to the built-in Clock app.
+// When the user presses Stop, StopMorningAlarmIntent opens the app and
+// AlarmEntryRouter picks up the UserDefaults flag to start the flow.
 
-@available(iOS 26, *)
+import AlarmKit
+import SwiftUI
+
+@available(iOS 26.1, *)
 final class AlarmKitWakeScheduler: WakeScheduling {
 
     private let base = LocalNotificationWakeScheduler()
 
+    // Stable IDs so reschedule replaces, not duplicates.
+    private static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
+    private static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
+
     func requestAuthorization() async -> Bool {
-        // TODO: Replace with AlarmKit authorization request.
-        await base.requestAuthorization()
+        // If AlarmKit is unavailable (entitlement missing, throws, or permission denied),
+        // fall through to local notifications so the user still gets a morning ping.
+        if (try? await AlarmManager.shared.requestAuthorization()) == .authorized { return true }
+        return await base.requestAuthorization()
     }
 
-    func schedule(_ schedule: WakeSchedule) async {
-        // TODO: Replace with AlarmKit.AlarmManager.shared.schedule(...) or equivalent.
-        await base.schedule(schedule)
+    func schedule(_ wakeSchedule: WakeSchedule) async {
+        cancel()
+        guard wakeSchedule.isEnabled else { return }
+
+        let presentation = AlarmPresentation(
+            alert: AlarmPresentation.Alert(title: "Inner Light")
+        )
+        let attrs = AlarmAttributes<MorningAlarmMeta>(
+            presentation: presentation,
+            tintColor: .orange
+        )
+        let stopIntent = StopMorningAlarmIntent()
+
+        let weekdayConfig = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
+            schedule: .relative(Alarm.Schedule.Relative(
+                time: .init(hour: wakeSchedule.weekdayHour, minute: wakeSchedule.weekdayMinute),
+                repeats: .weekly([.monday, .tuesday, .wednesday, .thursday, .friday])
+            )),
+            attributes: attrs,
+            stopIntent: stopIntent
+        )
+        let weekendConfig = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
+            schedule: .relative(Alarm.Schedule.Relative(
+                time: .init(hour: wakeSchedule.weekendHour, minute: wakeSchedule.weekendMinute),
+                repeats: .weekly([.saturday, .sunday])
+            )),
+            attributes: attrs,
+            stopIntent: stopIntent
+        )
+
+        // Try AlarmKit (bypasses Sleep Focus & Silent). Fall back to local notifications
+        // if AlarmKit is unavailable — e.g. entitlement not yet granted or permission denied.
+        do {
+            try await AlarmManager.shared.schedule(id: Self.weekdayAlarmID, configuration: weekdayConfig)
+            try await AlarmManager.shared.schedule(id: Self.weekendAlarmID, configuration: weekendConfig)
+
+            let fireDate = nextFireDate(for: wakeSchedule)
+            await MainActor.run {
+                WakeActivityController.reconcile(
+                    fireDate: fireDate,
+                    tagline: L10n.text(
+                        en: "Your daily reset is ready.",
+                        tr: "Scroll başlamadan önce sessiz bir ritüel.",
+                        es: "Un ritual tranquilo antes del scroll."
+                    )
+                )
+            }
+        } catch {
+            // AlarmKit failed — fall back to local notification + Live Activity so the
+            // user still receives a morning ping even without the AlarmKit entitlement.
+            await base.schedule(wakeSchedule)
+        }
     }
 
     func cancel() {
-        // TODO: Replace with AlarmKit cancel call.
+        try? AlarmManager.shared.cancel(id: Self.weekdayAlarmID)
+        try? AlarmManager.shared.cancel(id: Self.weekendAlarmID)
+        // Also cancel any local notification fallback alarms from a previous schedule.
         base.cancel()
     }
 
     func nextFireDate(for schedule: WakeSchedule) -> Date? {
-        // TODO: Replace with AlarmKit next-fire query if available.
         base.nextFireDate(for: schedule)
+    }
+}
+
+// MARK: - ReEngagementNotifier
+//
+// Self-correcting lapse re-engagement. Each time the user completes a morning
+// reset we (re)arm two one-shot local notifications:
+//   1. "Streak at risk" — tomorrow evening, to protect the running streak.
+//   2. "Comeback"       — two mornings out, to reclaim a lapsed streak.
+// Completing the next reset cancels and re-arms them, so a consistent user
+// never sees them; only a genuine lapse lets one fire.
+
+enum ReEngagementNotifier {
+    private static let atRiskID   = "mr_atrisk"
+    private static let comebackID = "mr_comeback"
+
+    static func cancelAll() {
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: [atRiskID, comebackID])
+    }
+
+    static func scheduleAfterReset(streak: Int, schedule: WakeSchedule) {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [atRiskID, comebackID])
+        guard schedule.isEnabled else { return }
+
+        let cal = Calendar.current
+        let now = Date()
+
+        // 1. Streak at risk — tomorrow evening at 19:00
+        if streak > 0,
+           let tomorrow = cal.date(byAdding: .day, value: 1, to: now),
+           let atRisk   = cal.date(bySettingHour: 19, minute: 0, second: 0, of: tomorrow) {
+            let content = UNMutableNotificationContent()
+            content.title    = "Inner Light"
+            content.body     = L10n.text(
+                en: "Your \(streak)-day streak is still alive. Keep it going before the day ends.",
+                tr: "\(streak) günlük serin hâlâ sürüyor. Gün bitmeden devam ettir.",
+                es: "Tu racha de \(streak) días sigue viva. Mantenla antes de que acabe el día."
+            )
+            content.sound    = .default
+            content.userInfo = ["action": "startWakeFlow"]
+            let comps   = cal.dateComponents([.year, .month, .day, .hour, .minute], from: atRisk)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+            center.add(UNNotificationRequest(identifier: atRiskID, content: content, trigger: trigger))
+        }
+
+        // 2. Comeback — two mornings out, at the user's wake time
+        if let day2 = cal.date(byAdding: .day, value: 2, to: now) {
+            let weekday = cal.component(.weekday, from: day2)
+            let h = schedule.hour(forWeekday: weekday)
+            let m = schedule.minute(forWeekday: weekday)
+            if let comeback = cal.date(bySettingHour: h, minute: m, second: 0, of: day2) {
+                let content = UNMutableNotificationContent()
+                content.title    = "Inner Light"
+                content.body     = L10n.text(
+                    en: "Your practice is here whenever you are.",
+                    tr: "Pratiğin, sen hazır olduğunda burada.",
+                    es: "Tu práctica está aquí cuando tú lo estés."
+                )
+                content.sound    = .default
+                content.userInfo = ["action": "startWakeFlow"]
+                let comps   = cal.dateComponents([.year, .month, .day, .hour, .minute], from: comeback)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+                center.add(UNNotificationRequest(identifier: comebackID, content: content, trigger: trigger))
+            }
+        }
     }
 }

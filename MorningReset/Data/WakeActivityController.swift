@@ -17,7 +17,7 @@ import ActivityKit
 @MainActor
 enum WakeActivityController {
 
-    private static let label = "Morning Reset"
+    private static let label = "Inner Light"
 
     // Live Activities have a hard system limit (~12 hours with frequent
     // updates entitlement). Only start the Activity inside this window

@@ -43,6 +43,8 @@ struct RootView: View {
             case .monthlyStory:       MonthlyStoryView().transition(.opacity)
             case .firstWinPick:       FirstWinPickScreen().transition(.opacity)
             case .pathLearn:          PathLearnView().transition(.opacity)
+            case .energyRead:         EnergyReadView().transition(.opacity)
+            case .nightSound:         NightSoundView().transition(.opacity)
             }
         }
         .animation(.easeOut(duration: 0.2), value: appState.screen)

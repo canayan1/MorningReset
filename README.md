@@ -51,10 +51,10 @@ App name:
 `Morning Reset`
 
 Subtitle:
-`Interrupt the scroll impulse`
+`Own the first three minutes`
 
 Promotional text:
-`Use your normal alarm, then start with five quick questions and one first win before you open anything else.`
+`Keep your usual alarm. Morning Reset waits on your lock screen, ready to greet you when you reach for your phone.`
 
 Short description:
 `A short notification-led ritual that helps you start the day with one clear first win.`

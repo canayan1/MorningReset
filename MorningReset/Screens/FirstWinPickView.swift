@@ -10,19 +10,22 @@ struct EnergyPathPickView: View {
             AuraBackground(path: nil, intensity: 0.9)
 
             VStack(alignment: .leading, spacing: DS.Space.lg) {
-                VStack(alignment: .leading, spacing: DS.Space.xs) {
+                VStack(spacing: DS.Space.xs) {
                     Text(L10n.text(en: "Choose your path", tr: "Yolunu seç", es: "Elige tu camino"))
                         .font(DS.Typo.title)
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
                     Text(L10n.text(
-                        en: "Each tradition raises your morning energy a different way.",
-                        tr: "Her gelenek sabah enerjini farklı bir yoldan yükseltir.",
-                        es: "Cada tradición eleva tu energía matinal de una forma distinta."
+                        en: "Each tradition raises your energy a different way.",
+                        tr: "Her gelenek enerjini farklı bir yoldan yükseltir.",
+                        es: "Cada tradición eleva tu energía de una forma distinta."
                     ))
                     .font(.subheadline)
                     .foregroundStyle(DS.textSecondary)
+                    .multilineTextAlignment(.center)
                     .lineSpacing(3)
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.top, DS.Space.xl)
 
                 VStack(spacing: DS.Space.md) {
@@ -104,18 +107,21 @@ struct PathBasicsView: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: DS.Space.lg) {
-                        VStack(alignment: .leading, spacing: DS.Space.sm) {
+                        VStack(spacing: DS.Space.sm) {
                             Image(systemName: path.symbol)
                                 .font(.system(size: 36))
                                 .foregroundStyle(DS.accent)
                             Text(path.title)
                                 .font(DS.Typo.title)
                                 .foregroundStyle(DS.textPrimary)
+                                .multilineTextAlignment(.center)
                             Text(path.essence)
                                 .font(.callout)
                                 .foregroundStyle(DS.textSecondary)
+                                .multilineTextAlignment(.center)
                                 .lineSpacing(3)
                         }
+                        .frame(maxWidth: .infinity)
                         .padding(.top, showBack ? DS.Space.xs : DS.Space.xl)
 
                         ForEach(Array(path.basics.enumerated()), id: \.offset) { _, section in
@@ -145,12 +151,7 @@ struct PathBasicsView: View {
                 Button(ctaTitle) {
                     onContinue()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, DS.Space.lg)
                 .accessibilityIdentifier("pathBasics.continueButton")
@@ -231,20 +232,23 @@ struct FirstWinPickView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(spacing: 0) {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: DS.Space.lg) {
-                        VStack(alignment: .leading, spacing: DS.Space.xs) {
+                        VStack(spacing: DS.Space.xs) {
                             Text(title)
                                 .font(DS.Typo.title)
                                 .foregroundStyle(DS.textPrimary)
+                                .multilineTextAlignment(.center)
                             Text(subtitle)
                                 .font(.subheadline)
                                 .foregroundStyle(DS.textSecondary)
+                                .multilineTextAlignment(.center)
                                 .lineSpacing(3)
                         }
+                        .frame(maxWidth: .infinity)
                         .padding(.top, DS.Space.xl)
 
                         VStack(spacing: DS.Space.sm) {
@@ -277,12 +281,8 @@ struct FirstWinPickView: View {
                 Button(ctaTitle) {
                     if let kind = resolvedKind { onPick(kind) }
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(resolvedKind == nil ? DS.surfaceAlt : DS.accent)
-                .foregroundStyle(resolvedKind == nil ? DS.textDim : DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
+                .opacity(resolvedKind == nil ? 0.5 : 1)
                 .disabled(resolvedKind == nil)
                 .animation(.easeOut(duration: 0.15), value: resolvedKind == nil)
                 .padding(.horizontal, DS.Space.lg)
@@ -368,7 +368,7 @@ struct FirstWinPickView: View {
 
             if selected {
                 TextField(
-                    L10n.text(en: "e.g. Morning meditation", tr: "örn. Sabah meditasyonu", es: "ej. Meditación matinal"),
+                    L10n.text(en: "e.g. Daily meditation", tr: "örn. Günlük meditasyon", es: "ej. Meditación diaria"),
                     text: $customText
                 )
                 .focused($customFocused)

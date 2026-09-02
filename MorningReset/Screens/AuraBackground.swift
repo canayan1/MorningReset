@@ -10,17 +10,21 @@ struct AuraBackground: View {
     var intensity: Double = 1.0
     var showEmblem: Bool = true
 
+    // Pause the continuous animation under UI testing so the app can reach an
+    // idle state — XCUITest blocks taps/queries while a view animates forever.
+    private let isUITesting = ProcessInfo.processInfo.arguments.contains("-uiTesting")
+
     private var tints: [Color] {
         switch path {
-        case .reiki:      return [DS.accentSoft, Color(red: 0.93, green: 0.66, blue: 0.55)]
-        case .breathwork: return [Color(red: 0.62, green: 0.78, blue: 0.80), DS.accentSoft]
-        case .qigong:     return [Color(red: 0.66, green: 0.78, blue: 0.62), DS.accentSoft]
-        case .none:       return [DS.accentSoft, DS.accent]
+        case .reiki:      return [DS.accentSoft, Color(red: 0.78, green: 0.68, blue: 0.88)]   // periwinkle + soft violet
+        case .breathwork: return [DS.calmSoft, DS.accentSoft]                                 // still water + cornflower
+        case .qigong:     return [Color(red: 0.62, green: 0.78, blue: 0.78), DS.accentSoft]   // seafoam + cornflower
+        case .none:       return [DS.accentSoft, DS.calmSoft]                                 // dawn: lilac drifting into blue
         }
     }
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: isUITesting)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
 
             ZStack {
@@ -30,19 +34,19 @@ struct AuraBackground: View {
                     let w = geo.size.width
                     let h = geo.size.height
                     ZStack {
-                        orb(color: tints[0], t: t, w: w, h: h, speed: 0.045, phase: 0.0, size: w * 1.1, yBias: 0.42)
-                        orb(color: tints[1], t: t, w: w, h: h, speed: 0.037, phase: 2.1, size: w * 0.95, yBias: 0.66)
-                        orb(color: tints[0].opacity(0.7), t: t, w: w, h: h, speed: 0.029, phase: 4.3, size: w * 0.8, yBias: 0.28)
+                        orb(color: tints[0], t: t, w: w, h: h, speed: 0.022, phase: 0.0, size: w * 1.35, yBias: 0.38)
+                        orb(color: tints[1], t: t, w: w, h: h, speed: 0.017, phase: 2.1, size: w * 1.15, yBias: 0.70)
+                        orb(color: tints[0].opacity(0.6), t: t, w: w, h: h, speed: 0.013, phase: 4.3, size: w * 0.95, yBias: 0.24)
                     }
-                    .blur(radius: 60)
-                    .opacity(0.5 * intensity)
+                    .blur(radius: 95)
+                    .opacity(0.42 * intensity)
 
                     if showEmblem {
                         EnergyEmblem()
-                            .stroke(tints[0].opacity(0.10 * intensity), lineWidth: 1.2)
+                            .stroke(tints[0].opacity(0.06 * intensity), lineWidth: 1.0)
                             .frame(width: w * 0.7, height: w * 0.7)
                             .position(x: w * 0.5, y: h * 0.34)
-                            .rotationEffect(.degrees((t * 2).truncatingRemainder(dividingBy: 360)))
+                            .rotationEffect(.degrees((t * 0.8).truncatingRemainder(dividingBy: 360)))
                     }
                 }
             }
@@ -51,8 +55,8 @@ struct AuraBackground: View {
     }
 
     private func orb(color: Color, t: Double, w: CGFloat, h: CGFloat, speed: Double, phase: Double, size: CGFloat, yBias: Double) -> some View {
-        let x = 0.5 + 0.30 * sin(t * speed + phase)
-        let y = yBias + 0.16 * cos(t * speed * 1.3 + phase)
+        let x = 0.5 + 0.22 * sin(t * speed + phase)
+        let y = yBias + 0.12 * cos(t * speed * 1.3 + phase)
         return Circle()
             .fill(RadialGradient(colors: [color.opacity(0.9), color.opacity(0.0)], center: .center, startRadius: 0, endRadius: size / 2))
             .frame(width: size, height: size)

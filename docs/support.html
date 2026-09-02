@@ -3,75 +3,183 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Morning Reset Support</title>
+  <title>Inner Light — Support</title>
   <style>
     :root {
-      color-scheme: light;
-      --bg: #fff9f2;
-      --surface: #fef3e7;
-      --text: #2f2114;
-      --muted: #6b5d51;
-      --accent: #c68434;
-      --border: #e8d1bb;
+      color-scheme: light dark;
+      --bg: #f4f6fc;
+      --bg2: #edf1fa;
+      --surface: rgba(255, 255, 255, 0.72);
+      --text: #272b42;
+      --muted: #5d657e;
+      --dim: #929aaf;
+      --accent: #6f73c7;
+      --accent-ink: #44478f;
+      --border: #e0e5f1;
+      --shadow: 0 18px 46px rgba(39, 43, 66, 0.07);
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #131624;
+        --bg2: #191d2f;
+        --surface: rgba(31, 36, 56, 0.72);
+        --text: #e8ebf6;
+        --muted: #a8b0c8;
+        --dim: #767e99;
+        --accent: #9ca5e0;
+        --accent-ink: #b8bfec;
+        --border: #2b3149;
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+      }
+    }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, var(--bg), #fff4e6);
+      background: radial-gradient(120% 80% at 50% 0%, var(--bg2), var(--bg));
+      background-attachment: fixed;
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
 
     main {
-      max-width: 760px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 48px 20px 72px;
+      padding: 56px 20px 80px;
     }
 
     .card {
-      background: rgba(254, 243, 231, 0.9);
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 18px 40px rgba(47, 33, 20, 0.06);
+      border-radius: 28px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 10px;
     }
 
     h1, h2 {
       font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      color: var(--text);
       margin-top: 0;
+      line-height: 1.25;
     }
 
-    p, li {
-      line-height: 1.6;
-      color: var(--muted);
+    h1 { font-size: 2rem; letter-spacing: -0.01em; }
+
+    h2 {
+      margin-top: 34px;
+      margin-bottom: 10px;
+      font-size: 1.18rem;
     }
 
-    a {
-      color: var(--accent);
+    p, li { line-height: 1.65; color: var(--muted); }
+    p { margin: 0 0 14px; }
+    ul { margin: 14px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    strong { color: var(--text); font-weight: 600; }
+
+    .date { color: var(--dim); font-size: 0.9rem; margin-bottom: 26px; }
+
+    a { color: var(--accent-ink); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .rule { height: 1px; background: var(--border); border: 0; margin: 34px 0; }
+
+    .links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+
+    .note {
+      background: rgba(111, 115, 199, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin: 18px 0;
+    }
+    .note p:last-child { margin-bottom: 0; }
+
+    footer {
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.82rem;
+      margin-top: 28px;
     }
   </style>
 </head>
 <body>
   <main>
     <div class="card">
-      <h1>Morning Reset Support</h1>
-      <p>Morning Reset is designed for the morning you reach for your phone. From the night you set your wake time, it waits on your lock screen via a Live Activity, ready to greet you when you turn on the screen.</p>
+      <p class="eyebrow">Inner Light</p>
+      <h1>Support</h1>
+      <p>Inner Light is a daily practice app built around ten schools of energy practice. Pick one practice, do it today, and watch your energy orb grow. Below are the answers people ask for most.</p>
 
-      <h2>How Morning Reset reaches you</h2>
+      <h2>Getting started</h2>
       <ul>
-        <li><strong>Lock-screen Live Activity</strong> (iOS 16.1+): a persistent Morning Reset card stays on your lock screen from bedtime to your wake time. Tap it before anything else.</li>
-        <li><strong>Local notification backup</strong>: at your scheduled wake time, a notification also fires so you have a second touchpoint.</li>
-        <li>Morning Reset does not replace your trusted alarm. Keep using the iOS Clock alarm to wake up.</li>
-        <li>If your phone is in Silent or Focus mode, the notification may be quiet, but the Live Activity is still visible on your lock screen.</li>
-        <li>The core morning ritual works without Premium.</li>
+        <li>There is no account and no sign-up. Open the app and you are in.</li>
+        <li>Onboarding is four short screens: a welcome, your energy orb, the ten schools, and your first practice.</li>
+        <li><strong>Every school keeps one routine free, forever</strong> — ten free routines in total, plus the daily loop and the optional check-in.</li>
       </ul>
 
-      <h2>Need help?</h2>
-      <p>For support or App Review follow-up, open an issue at <a href="https://github.com/canayan1/MorningReset/issues">github.com/canayan1/MorningReset/issues</a>.</p>
+      <h2>The energy orb</h2>
+      <p>Your orb is the app's memory of your practice. Each routine you finish feeds it, and it grows brighter and larger the longer you keep going. Miss a day and nothing is taken away — the orb waits for you.</p>
+      <p>Partial and skipped sessions are logged honestly, so the orb reflects practice you actually did rather than buttons you pressed.</p>
 
-      <h2>Legal</h2>
-      <p>Read the <a href="privacy-policy.html">Privacy Policy</a>.</p>
+      <h2>Editing your practice history</h2>
+      <p>Interrupted mid-routine, or not happy with how a session went? Open <strong>Wins</strong>, find the session, and delete it, change its outcome, or run it again. Your history is yours to correct.</p>
+
+      <h2>The daily reminder</h2>
+      <ul>
+        <li>The reminder is optional. Set one if a fixed time helps you; skip it if it does not.</li>
+        <li>To set or change it: the <strong>⋯</strong> menu on the Today screen, or <em>Edit reminder</em> beneath the main button.</li>
+        <li>When a reminder is set, a notification fires at your time and a lock-screen Live Activity may appear shortly before it. Both are local to your phone.</li>
+        <li>Inner Light is not an alarm clock and does not replace the iOS Clock alarm.</li>
+      </ul>
+
+      <h2>The energy check-in</h2>
+      <p>Optional, always. It takes one still frame with the front camera, reads it on your device, and discards the image immediately — nothing is saved, uploaded or shared. The app is fully usable if you decline camera access. See the <a href="privacy-policy.html">privacy policy</a> for the detail.</p>
+
+      <h2>Sound and the spoken guide</h2>
+      <ul>
+        <li>Routines play a soft ambient bed with a quiet spoken guide over it.</li>
+        <li>Tap the speaker icon at the top of the player to mute or unmute the voice.</li>
+        <li>Audio continues if your screen locks mid-routine, and stops when the routine ends.</li>
+        <li>No microphone access is ever requested.</li>
+      </ul>
+
+      <h2>Subscriptions and restoring</h2>
+      <ul>
+        <li>Unlock a single tier for its schools, or All-Access for all 250 routines, every soundscape, your full history and every school added later.</li>
+        <li>Switched phones or reinstalled? Tap <strong>Restore</strong> on any unlock card.</li>
+        <li>Manage or cancel any time in <em>iOS Settings → your name → Subscriptions</em>. Cancelling from within the App Store is the only way to stop a renewal — we cannot do it for you.</li>
+      </ul>
+
+      <h2>Safety</h2>
+      <p>Routines involving cold, heat, breath retention or physical movement carry safety notes and contraindications. Please read them. Never hold your breath in or near water. Stop any practice that causes pain, dizziness or distress, and speak to a health professional if you have a condition that these practices might affect.</p>
+
+      <hr class="rule">
+
+      <h2>Still stuck?</h2>
+      <p>Open an issue at <a href="https://github.com/canayan1/MorningReset/issues">github.com/canayan1/MorningReset/issues</a> and describe what you saw, on which screen. App Review enquiries are welcome at the same address.</p>
+
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </div>
     </div>
+    <footer>Inner Light · Daily Practice</footer>
   </main>
 </body>
 </html>

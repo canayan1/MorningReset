@@ -8,12 +8,12 @@ struct WinView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.md) {
+                VStack(alignment: .center, spacing: DS.Space.md) {
                     Image(systemName: win.symbol)
                         .font(.system(size: 40))
                         .foregroundStyle(DS.accent)
@@ -21,12 +21,15 @@ struct WinView: View {
                     Text(win.winTitle)
                         .font(DS.Typo.display)
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
 
                     Text(win.winBody)
                         .font(.callout)
                         .foregroundStyle(DS.textSecondary)
                         .lineSpacing(4)
+                        .multilineTextAlignment(.center)
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
@@ -34,12 +37,7 @@ struct WinView: View {
                 Button(L10n.text(en: "Continue", tr: "Devam et", es: "Continuar")) {
                     appState.showFlowCheckout()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, DS.Space.xl)
                 .accessibilityIdentifier("win.continueButton")

@@ -65,7 +65,7 @@ struct PremiumHubView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(spacing: 0) {
                 ScrollView(showsIndicators: false) {
@@ -123,12 +123,8 @@ struct PremiumHubView: View {
                     Button(L10n.text(en: "Done for today", tr: "Bugünlük tamam", es: "Listo por hoy")) {
                         appState.showWakeHome()
                     }
-                    .font(.system(.body, design: .serif))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(DS.accent)
-                    .foregroundStyle(DS.background)
-                    .clipShape(Capsule())
+                    .primaryCTA()
+                    .accessibilityIdentifier("premiumHub.doneButton")
 
                     if !appState.isPremium {
                         Button(L10n.text(en: "Unlock all three features", tr: "Üç özelliğin kilidini aç", es: "Desbloquear las tres funciones")) {
@@ -137,6 +133,7 @@ struct PremiumHubView: View {
                         }
                         .font(.subheadline)
                         .foregroundStyle(DS.textSecondary)
+                        .accessibilityIdentifier("premiumHub.unlockButton")
                     }
                 }
                 .padding(.horizontal, DS.Space.lg)
@@ -173,9 +170,9 @@ struct PremiumHubView: View {
                     .foregroundStyle(DS.textPrimary)
 
                     Text(L10n.text(
-                        en: "Written from your morning entries",
+                        en: "Written from your practice entries",
                         tr: "Sabah girişlerinizden yazıldı",
-                        es: "Escrita a partir de tus entradas matinales"
+                        es: "Escrita a partir de tus entradas de práctica"
                     ))
                     .font(.caption)
                     .foregroundStyle(DS.textDim)
@@ -244,8 +241,7 @@ private struct FeatureCard: View {
                     Text(subtitle)
                         .font(.caption)
                         .foregroundStyle(DS.textDim)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Spacer()

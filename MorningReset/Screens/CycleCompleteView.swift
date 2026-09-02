@@ -16,12 +16,12 @@ struct CycleCompleteView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.lg) {
+                VStack(alignment: .center, spacing: DS.Space.lg) {
                     Text(IntentionType(rawValue: selectedIntention)?.label ?? "")
                         .font(DS.Typo.label)
                         .tracking(1.4)
@@ -31,7 +31,7 @@ struct CycleCompleteView: View {
                         .background(DS.accent)
                         .clipShape(Capsule())
 
-                    VStack(alignment: .leading, spacing: DS.Space.sm) {
+                    VStack(alignment: .center, spacing: DS.Space.sm) {
                         Text(L10n.text(en: "7 wins", tr: "7 kazanım", es: "7 logros"))
                             .font(.system(size: 52, design: .serif).weight(.regular))
                             .foregroundStyle(DS.textPrimary)
@@ -40,7 +40,7 @@ struct CycleCompleteView: View {
                             .foregroundStyle(DS.textSecondary)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
@@ -68,13 +68,7 @@ struct CycleCompleteView: View {
                 Button(L10n.text(en: "Start fresh", tr: "Yeniden başla", es: "Comenzar de nuevo")) {
                     appState.endFlow()
                 }
-                .font(.system(.body, design: .serif))
-                .tracking(0.5)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, DS.Space.xl)
             }

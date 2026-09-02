@@ -13,4 +13,8 @@ enum UDKey {
     static let morningGoal         = "morning_goal"
     static let energyPath          = "energy_path"
     static let ambientMuted        = "ambient_muted"
+    static let ownedTiers          = "owned_tiers"
+    static let activeSchool        = "active_school"
+    static let todaysRoutinePick   = "todays_routine_pick"
+    static let voiceMuted          = "voice_muted"
 }

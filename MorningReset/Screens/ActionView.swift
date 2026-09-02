@@ -5,29 +5,44 @@ struct ActionView: View {
 
     private var win: FirstWinPresentation { appState.ritualPresentation }
 
+    private var practiceContext: (EnergyPath, String)? {
+        guard let kind = appState.activeFirstWin?.kind else { return nil }
+        if case .practice(let path, let id) = kind { return (path, id) }
+        return nil
+    }
+
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AuraBackground(path: appState.activePath, intensity: 0.45)
 
-            VStack(alignment: .leading, spacing: 0) {
-                Spacer()
+            VStack(alignment: .center, spacing: 0) {
+                Spacer().frame(height: DS.Space.xl)
 
                 // The action — icon-forward, nothing else competes
-                VStack(alignment: .leading, spacing: DS.Space.md) {
+                VStack(alignment: .center, spacing: DS.Space.md) {
                     Image(systemName: win.symbol)
-                        .font(.system(size: 44))
+                        .font(.system(size: 68))
                         .foregroundStyle(DS.accent)
 
                     Text(win.title)
                         .font(DS.Typo.display)
                         .foregroundStyle(DS.textPrimary)
+                        .multilineTextAlignment(.center)
 
                     if !win.how.isEmpty {
                         Text(win.how)
                             .font(.callout)
                             .foregroundStyle(DS.textSecondary)
                             .lineSpacing(4)
+                            .multilineTextAlignment(.center)
                     }
+                }
+                .frame(maxWidth: .infinity)
+
+                if let ctx = practiceContext {
+                    PracticeVisual(path: ctx.0, practiceId: ctx.1, showYouTubeLink: true)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, DS.Space.lg)
                 }
 
                 if !win.steps.isEmpty {
@@ -54,12 +69,7 @@ struct ActionView: View {
                 Button(L10n.text(en: "I did it", tr: "Yaptım", es: "Lo hice")) {
                     appState.completeFirstWin()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .accessibilityIdentifier("action.primaryButton")
 
                 if appState.isPremium {
@@ -69,6 +79,7 @@ struct ActionView: View {
                     .font(.footnote)
                     .foregroundStyle(DS.textDim)
                     .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
                     .padding(.top, DS.Space.md)
                     .accessibilityIdentifier("action.riseAndFlowButton")
                 }

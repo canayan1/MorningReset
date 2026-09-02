@@ -3,7 +3,7 @@ import Observation
 import StoreKit
 import WidgetKit
 
-enum AppTab: Equatable { case today, library, wins }
+enum AppTab: Equatable { case today, schools, library, wins }
 
 enum Screen: Equatable {
     case alarm
@@ -29,6 +29,8 @@ enum Screen: Equatable {
     case firstWinPick
     case myWins
     case pathLearn
+    case energyRead
+    case nightSound
 }
 
 @Observable
@@ -60,6 +62,13 @@ final class AppState {
     var morningGoal: MorningGoal? = nil
     var activePath: EnergyPath? = nil
 
+    // Energy schools — unlocked tiers (all-access = isPremium implies all)
+    var ownedTiers: Set<EnergyTier> = []
+    var activeSchoolID: String = "reiki"
+    /// Bumped whenever today's routine is pinned, so views observing
+    /// `todaysRoutine` refresh even when the school did not change.
+    var todaysPickRevision: Int = 0
+
     private var inactivityTimer: Timer?
 
     // MARK: - Mobility state
@@ -83,6 +92,11 @@ final class AppState {
         completedFirstWins   = FirstWinStore.loadCompleted()
         morningGoal          = UserDefaults.standard.string(forKey: UDKey.morningGoal).flatMap(MorningGoal.init(rawValue:))
         activePath           = UserDefaults.standard.string(forKey: UDKey.energyPath).flatMap(EnergyPath.init(rawValue:))
+        ownedTiers           = Set((UserDefaults.standard.stringArray(forKey: UDKey.ownedTiers) ?? []).compactMap(EnergyTier.init(rawValue:)))
+        activeSchoolID       = UserDefaults.standard.string(forKey: UDKey.activeSchool) ?? "reiki"
+        let widgetSuite      = UserDefaults(suiteName: "group.com.canayan.MorningReset")
+        if let path = activePath { widgetSuite?.set(path.rawValue, forKey: "widget_path") }
+        widgetSuite?.set(MantraEngine.weeklyMantra(), forKey: "widget_mantra")
         if !skipEntitlementCheck {
             Task { await self.checkEntitlement() }
         }
@@ -111,6 +125,7 @@ final class AppState {
     func selectMorningPath(_ path: EnergyPath) {
         activePath = path
         UserDefaults.standard.set(path.rawValue, forKey: UDKey.energyPath)
+        UserDefaults(suiteName: "group.com.canayan.MorningReset")?.set(path.rawValue, forKey: "widget_path")
     }
 
     var pathPractices: [PathPractice] {
@@ -126,6 +141,16 @@ final class AppState {
     func showPathLearn() {
         stopInactivityTimer()
         screen = .pathLearn
+    }
+
+    func showEnergyRead() {
+        stopInactivityTimer()
+        screen = .energyRead
+    }
+
+    func showNightSound() {
+        stopInactivityTimer()
+        screen = .nightSound
     }
 
     var recommendedNextFirstWin: FirstWinPreset {
@@ -182,9 +207,12 @@ final class AppState {
 
     // MARK: - Streak
 
+    /// Days in a row of practice. Read from the practice log, which is what the
+    /// app actually writes to — the old morning-flow entries are only still used
+    /// by the insight engine.
     var streakCount: Int {
         if let cached = _cachedStreak { return cached }
-        let value = Self.computeStreak(from: DailyEntryStore.load())
+        let value = PracticeLogStore.currentStreak()
         _cachedStreak = value
         return value
     }
@@ -193,10 +221,10 @@ final class AppState {
         _cachedStreak = nil
     }
 
-    static func computeStreak(from entries: [DailyEntry]) -> Int {
+    static func computeStreak(from entries: [DailyEntry], now: Date = Date()) -> Int {
         guard !entries.isEmpty else { return 0 }
         let cal = Calendar.current
-        let today = cal.startOfDay(for: Date())
+        let today = cal.startOfDay(for: now)
         let yesterday = cal.date(byAdding: .day, value: -1, to: today)!
         let days = Array(Set(entries.map { cal.startOfDay(for: $0.date) })).sorted(by: >)
         guard let first = days.first, first == today || first == yesterday else { return 0 }
@@ -229,9 +257,11 @@ final class AppState {
         AmbientPlayer.shared.stop()
     }
 
+    /// Onboarding ends on Today — the reminder is optional and lives in the menu,
+    /// so it never gates the first run.
     func completeOnboardingAndShowScheduleSetup() {
         dismissOnboarding()
-        showScheduleSetup()
+        showWakeHome()
     }
 
     func finishScheduleSetup() {
@@ -240,13 +270,21 @@ final class AppState {
 
     func startFlow() {
         resetFlowSession()
-        screen = .quiz
-        resetInactivityTimer()
         WakeActivityController.markCompleted(tagline: L10n.text(
             en: "You showed up.",
             tr: "Devam ettin.",
             es: "Apareciste."
         ))
+        // Check-in is optional: the daily reset goes straight to the practice with a
+        // neutral default. Users can check in on demand via the energy-read card.
+        resolveQuiz(mode: .steady)
+    }
+
+    /// Explicit, opt-in check-in (the mode quiz) — reachable on demand, never forced.
+    func showCheckIn() {
+        resetFlowSession()
+        screen = .quiz
+        resetInactivityTimer()
     }
 
     func recordAnswer(_ answer: String) {
@@ -331,6 +369,7 @@ final class AppState {
             DailyEntryStore.append(mode: mode.rawValue, intention: intentionStr)
             invalidateStreakCache()
             WidgetCenter.shared.reloadAllTimelines()
+            ReEngagementNotifier.scheduleAfterReset(streak: streakCount, schedule: WakeScheduleStore.load())
         }
         let s = streakCount
         if s == 3 || s == 7 || s == 14 || s == 30 {
@@ -415,7 +454,24 @@ final class AppState {
     }
 
     func nextScreenAfterInsightPreview(now: Date) -> Screen {
-        return .guidedPause
+        // The guided pause is a Premium feature — premium users flow into it directly.
+        if isPremium { return .guidedPause }
+        // Free users: offer Premium at most once per flow, then continue to the action.
+        if !paywallShownThisFlow {
+            // A strong, earned pattern read is the highest-intent moment to offer Premium.
+            if insightStrength == .strong {
+                paywallContext = .contextual
+                return .paywall
+            }
+            // Otherwise a gentle periodic ask — but only for users who have seen the
+            // paywall before (lastShown > 0), so brand-new users are never hit on day one.
+            if paywallLastShownDate > 0,
+               now.timeIntervalSince1970 - paywallLastShownDate >= 21 * 86_400 {
+                paywallContext = .periodic
+                return .paywall
+            }
+        }
+        return .action
     }
 
     func dismissOnboarding() {

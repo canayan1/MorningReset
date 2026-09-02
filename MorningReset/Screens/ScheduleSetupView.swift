@@ -19,9 +19,9 @@ struct ScheduleSetupView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
 
                 // Nav
                 HStack {
@@ -38,47 +38,40 @@ struct ScheduleSetupView: View {
                 .padding(.top, 20)
                 .padding(.bottom, DS.Space.lg)
 
-                Text(L10n.text(en: "WAKE TIME", tr: "UYANMA SAATİ", es: "HORA DE DESPERTAR"))
+                Text(L10n.text(en: "DAILY REMINDER", tr: "GÜNLÜK HATIRLATICI", es: "RECORDATORIO DIARIO"))
                     .font(DS.Typo.label)
                     .foregroundStyle(DS.textSecondary)
                     .kerning(1.4)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
 
                 Spacer().frame(height: DS.Space.sm)
 
-                Text(L10n.text(en: "When do you\nwant to begin?", tr: "Ne zaman\nbaşlamak istersin?", es: "¿Cuándo\nquieres empezar?"))
+                Text(L10n.text(en: "Practice at the same\ntime each day?", tr: "Her gün aynı saatte\npratik yapalım mı?", es: "¿Practicar a la misma\nhora cada día?"))
                     .font(DS.Typo.title)
                     .foregroundStyle(DS.textPrimary)
                     .lineSpacing(6)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
 
                 Spacer().frame(height: DS.Space.sm)
 
                 Text(
                     L10n.text(
-                        en: "Keep using your trusted alarm. From the night you save this, Morning Reset waits on your lock screen — ready to greet you when you reach for your phone.",
-                        tr: "Güvendiğin alarmını kullanmaya devam et. Kaydettiğin geceden itibaren Morning Reset kilit ekranında bekler — telefonu eline aldığında seni karşılamaya hazır.",
-                        es: "Sigue usando tu alarma de confianza. Desde la noche que lo guardas, Morning Reset espera en tu pantalla bloqueada — listo para recibirte cuando tomas el teléfono."
+                        en: "Optional — we'll send a gentle reminder. Turn it off any time.",
+                        tr: "İsteğe bağlı — nazik bir hatırlatma göndeririz. İstediğinde kapat.",
+                        es: "Opcional — te enviaremos un recordatorio suave. Desactívalo cuando quieras."
                     )
                 )
                     .font(.caption)
                     .foregroundStyle(DS.textSecondary)
                     .lineSpacing(3)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
 
                 Spacer().frame(height: DS.Space.md)
 
                 lockScreenPreview
-
-                Spacer().frame(height: DS.Space.md)
-
-                Text(
-                    L10n.text(
-                        en: "A notification at the same time also fires, as a backup.",
-                        tr: "Yedek olarak aynı saatte bir bildirim de gelir.",
-                        es: "Como respaldo, también llega una notificación a la misma hora."
-                    )
-                )
-                    .font(.caption2)
-                    .foregroundStyle(DS.textDim)
-                    .lineSpacing(3)
 
                 Spacer().frame(height: 40)
 
@@ -95,10 +88,12 @@ struct ScheduleSetupView: View {
                 )
 
                 if authDenied {
-                    VStack(alignment: .leading, spacing: DS.Space.sm) {
-                        Text(L10n.text(en: "Notifications are off. Enable them in Settings → MorningReset to receive the morning ping.", tr: "Bildirimler kapalı. Sabah ping'ini almak için Ayarlar → MorningReset içinde etkinleştir.", es: "Las notificaciones están desactivadas. Actívalas en Ajustes → MorningReset para recibir el aviso matinal."))
+                    VStack(alignment: .center, spacing: DS.Space.sm) {
+                        Text(L10n.text(en: "Notifications are off. Enable them in Settings.", tr: "Bildirimler kapalı. Ayarlar'dan etkinleştir.", es: "Las notificaciones están desactivadas. Actívalas en Ajustes."))
                             .font(.caption)
                             .foregroundStyle(DS.accent)
+                            .frame(maxWidth: .infinity)
+                            .multilineTextAlignment(.center)
 
                         Button(L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
                             if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -116,13 +111,7 @@ struct ScheduleSetupView: View {
                 Button(L10n.text(en: "Save wake time", tr: "Uyanma saatini kaydet", es: "Guardar hora de despertar")) {
                     Task { await saveAndSchedule() }
                 }
-                .font(.system(.body, design: .serif))
-                .tracking(0.5)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(DS.accent)
-                .foregroundStyle(DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
                 .padding(.bottom, DS.Space.xl)
                 .accessibilityIdentifier("schedule.saveButton")
             }
@@ -136,18 +125,18 @@ struct ScheduleSetupView: View {
     private var lockScreenPreview: some View {
         HStack(alignment: .center, spacing: 14) {
             VStack(alignment: .leading, spacing: 3) {
-                Text("MORNING RESET")
+                Text("ENERGY RESET")
                     .font(.system(size: 9, weight: .semibold))
                     .tracking(1.4)
                     .foregroundStyle(DS.textDim)
                 Text(L10n.text(
-                    en: "One quiet ritual before the scroll begins.",
+                    en: "Your daily reset is ready.",
                     tr: "Scroll başlamadan önce sessiz bir ritüel.",
                     es: "Un ritual tranquilo antes del scroll."
                 ))
                 .font(.system(size: 13, design: .serif))
                 .foregroundStyle(DS.textPrimary)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 8)
             Text(weekdayDate, style: .time)

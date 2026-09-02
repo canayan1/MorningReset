@@ -6,7 +6,7 @@ struct MobilityFlowView: View {
 
     var body: some View {
         guard let flow = appState.currentMobilityFlow else {
-            return AnyView(DS.background.ignoresSafeArea())
+            return AnyView(AppBackground())
         }
         let move = flow.moves[appState.currentMobilityMoveIndex]
         let family = PoseFamily.resolve(move.animationName)
@@ -17,14 +17,14 @@ struct MobilityFlowView: View {
 
         return AnyView(
             ZStack {
-                DS.background.ignoresSafeArea()
+                AppBackground()
 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .center, spacing: 0) {
 
                     Spacer()
 
                     // MARK: Header
-                    VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    VStack(alignment: .center, spacing: DS.Space.xs) {
                         Text(L10n.text(en: "MOBILITY", tr: "HAREKETLİLİK", es: "MOVILIDAD"))
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(DS.textDim)
@@ -33,11 +33,9 @@ struct MobilityFlowView: View {
                         Text(flow.title)
                             .font(.title2.bold())
                             .foregroundStyle(DS.textPrimary)
-
-                        Text(flow.subtitle)
-                            .font(.callout)
-                            .foregroundStyle(DS.textSecondary)
                     }
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
 
                     Spacer().frame(height: DS.Space.lg)
 
@@ -55,7 +53,7 @@ struct MobilityFlowView: View {
                     Spacer().frame(height: DS.Space.lg)
 
                     // MARK: Move label + name
-                    VStack(alignment: .leading, spacing: DS.Space.xs) {
+                    VStack(alignment: .center, spacing: DS.Space.xs) {
                         Text(L10n.text(
                             en: "MOVE \(moveIndex + 1) OF \(totalMoves)",
                             tr: "HAREKET \(moveIndex + 1) / \(totalMoves)",
@@ -73,9 +71,12 @@ struct MobilityFlowView: View {
                         Text(move.cue)
                             .font(.callout)
                             .foregroundStyle(DS.textSecondary)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.center)
                             .animation(.easeInOut(duration: 0.25), value: moveIndex)
                     }
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
 
                     Spacer().frame(height: DS.Space.lg)
 
@@ -111,13 +112,8 @@ struct MobilityFlowView: View {
                     // MARK: Primary control
                     Button(action: primaryAction) {
                         Text(primaryLabel)
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 18)
-                            .background(DS.textPrimary)
-                            .foregroundStyle(DS.background)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
+                    .primaryCTA()
 
                     Spacer().frame(height: DS.Space.sm)
 

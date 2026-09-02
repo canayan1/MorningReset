@@ -1,0 +1,489 @@
+{
+  "id": "qigong",
+  "name": "Qigong",
+  "tagline": "Slow movement, quiet breath, and somewhere to rest your attention.",
+  "overview": "Qigong is a broad family of Chinese practices that put movement, breathing and attention together into a single exercise. Its roots run back more than two thousand years through older traditions called dao yin (guiding and pulling) and yang sheng (nourishing life), and it feeds the medical, martial and contemplative streams of Chinese culture alike. Most of what you will meet today is gentle: standing still, slow arm movements, long exhalations, and a great deal of noticing. It asks very little of the body and a fair amount of your patience.",
+  "kind": "traditional",
+  "framing_note": "Qigong is a traditional Chinese practice, not a medical treatment. There is reasonable evidence that gentle mind-body movement of this kind can support balance, flexibility, sleep and mood, though the trials are often small and unevenly designed. Qi, meridians and the dantian are traditional concepts from Chinese thought, offered here as the vocabulary the practice uses rather than as established physiology. Nothing here treats or cures anything, and none of it should replace care from a health professional.",
+  "teachings": [
+    {
+      "id": "qigong.t1",
+      "title": "What qigong actually is",
+      "body": "Qigong (气功) is a family of Chinese practices that do three things at once: hold a posture or movement, work with the breath, and place your attention somewhere on purpose. The National Qigong Association puts it plainly as cultivating energy through movement, breath and intention. The word itself is modern, coming into wide use in China during the 1950s, but the practices are old. Earlier names included dao yin, meaning 'guiding and pulling', and yang sheng, 'nourishing life'. A silk scroll recovered from a Han dynasty tomb sealed in 168 BCE, the Daoyin tu, already shows dozens of figures in recognisable exercise postures. What survives today ranges from slow standing forms to seated breathing methods to hard martial training."
+    },
+    {
+      "id": "qigong.t2",
+      "title": "Qi and the dantian, described honestly",
+      "body": "Qi is usually translated as breath, vapour or vital energy. In Chinese medicine and philosophy it is the organising idea behind how the body gets described: qi moves, gathers, stagnates, and is said to travel along channels called meridians. It is worth being straight about this. Qi and the meridian map are traditional concepts from a particular culture and era. They are not established Western physiology, and no measurement has confirmed them. They remain a workable vocabulary for practice. The dantian, or 'cinnabar field', is the same kind of idea: a lower one below the navel, a middle one at the chest, an upper one behind the forehead. In practice the lower dantian is mostly a place to rest your attention, and that is enough."
+    },
+    {
+      "id": "qigong.t3",
+      "title": "Standing and rooting: posture is the practice",
+      "body": "Zhan zhuang (站桩) means 'standing like a post', and Kenneth Cohen describes it as the most basic training method in qigong. You simply stand: feet about hip-width, toes forward, knees unlocked but not deeply bent, tailbone dropped so the lower back lengthens, crown of the head gently lifted, shoulders heavy, arms hanging or held as though around a large ball. Then you stay there. Depending on the school, sessions run from two minutes to two hours. The point is not the shape. It is the combination of an upright, unforced structure with a quiet mind, and finding the tension you were holding for no reason. Rooting means letting your weight settle down into the feet rather than gripping the floor."
+    },
+    {
+      "id": "qigong.t4",
+      "title": "The Eight Brocades (Ba Duan Jin)",
+      "body": "Ba Duan Jin (八段锦) means 'eight sections of brocade', brocade being fine woven silk, which is a compliment to the set. It is documented from the Song dynasty: an archaic version appears in The Pivot of the Way around 1150, and an illustrated one in Ten Compilations on Cultivating Perfection around 1300. The eight movements are Holding Up the Sky, Drawing the Bow to Shoot the Hawk, Separating Heaven and Earth, Wise Owl Gazes Back, Sway the Head and Wag the Tail, Two Hands Hold the Feet, Punching with Angry Eyes, and Seven Jolts Behind the Back. Standing and seated versions both exist; the standing one is far more widely practised. In 2003 the Chinese Health Qigong Association published a standardised form, and that is what most classes now teach."
+    },
+    {
+      "id": "qigong.t5",
+      "title": "The Six Healing Sounds (Liu Zi Jue)",
+      "body": "Liu Zi Jue (六字诀), the 'six-word knack', is a breathing practice built around six sustained exhalations: XU, HE, HU, SI, CHUI and XI. It is first recorded by the physician Tao Hongjing in the fifth or sixth century, who wrote that there is one way to breathe in and six ways to breathe out. Originally it was sound and breath alone; body movements were added by the Ming dynasty, and the Chinese Health Qigong Association published a standardised version in 2003. Each sound is traditionally paired with an organ and element: liver, heart, spleen, lungs, kidneys, and the triple burner. Treat that pairing as the traditional map it is. What you can verify for yourself is that a long, soft, shaped exhale slows you down."
+    }
+  ],
+  "routines": [
+    {
+      "id": "qigong.r01",
+      "title": "Wuji Standing: Finding Your Root",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Learn the basic qigong stance, so every other practice has somewhere to start from.",
+      "steps": [
+        "Stand with your feet about hip-width apart, toes pointing forward, weight even between both feet.",
+        "Soften your knees so they are unlocked but not really bent, just enough that they stop being stiff.",
+        "Let your tailbone drop slightly, so the lower back lengthens instead of arching.",
+        "Imagine the crown of your head being gently lifted from above, and let your chin settle back a fraction.",
+        "Let your shoulders drop. Arms hang with a small gap under each armpit, palms facing your thighs.",
+        "Breathe quietly through the nose for two to three minutes, feeling the pressure of the floor through the soles of your feet.",
+        "To finish, rub your palms together until they feel warm, then rest them on your lower belly for a few breaths."
+      ],
+      "safety": "Stay within a comfortable range and do not lock or deeply bend the knees. If standing still makes you lightheaded, or balance is an issue, do this seated on a firm chair with both feet flat. Stop if you feel dizzy or anything hurts.",
+      "free": true
+    },
+    {
+      "id": "qigong.r02",
+      "title": "Shake It Loose",
+      "group": "starter",
+      "minutes": 4,
+      "purpose": "A fast, gentle way to wake the body up when you feel stiff or half asleep.",
+      "steps": [
+        "Stand with feet hip-width apart, knees soft, arms hanging loose at your sides.",
+        "Bounce lightly through the knees so the whole body shakes. Heels stay near the floor. This is not jumping.",
+        "Keep shaking for about sixty seconds and let your arms, jaw and shoulders be as loose as you can make them.",
+        "Stop and stand completely still for thirty seconds. Notice the buzzing or tingling that usually follows.",
+        "Repeat the shaking and the stillness twice more.",
+        "Finish with both hands resting on your lower belly and three slow breaths."
+      ],
+      "safety": "Keep the bounce small and stay within a comfortable range. Reduce or skip the bouncing if you have joint pain, a recent injury, or are pregnant. Hold a chair back if you feel unsteady, and stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r03",
+      "title": "Lower Dantian Breathing",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "Slow the breath down and give your attention one simple place to rest.",
+      "steps": [
+        "Sit on the front edge of a chair with both feet flat, or stand in the wuji stance.",
+        "Rest one palm on your lower belly, roughly three finger-widths below the navel. Traditionally this area is called the lower dantian.",
+        "Breathe in through the nose and let the belly under your hand swell gently. Do not push it out.",
+        "Breathe out through the nose and let the belly settle back on its own, without squeezing.",
+        "Keep the breath quiet and even, slightly longer on the way out. Count ten breaths.",
+        "Do three rounds of ten, returning your attention to the palm each time it wanders off."
+      ],
+      "safety": "Never strain or hold the breath. If deepening the breath makes you lightheaded, go back to normal breathing. Sit rather than stand if balance is an issue, and stop if you feel dizzy.",
+      "free": false
+    },
+    {
+      "id": "qigong.r04",
+      "title": "Joint Circles, Head to Foot",
+      "group": "starter",
+      "minutes": 7,
+      "purpose": "Take every major joint through an easy circle before you practise anything harder.",
+      "steps": [
+        "Stand in wuji. Circle the head slowly: chin toward chest, ear toward shoulder, then reverse. Keep the circles small and avoid dropping the head far back.",
+        "Roll the shoulders backwards eight times, then forwards eight times.",
+        "Circle the elbows eight times each way, then the wrists eight times each way.",
+        "Rest your hands on your hips and circle the waist eight times each way, keeping the knees soft.",
+        "Place both palms on your knees, bend a little, and make eight small knee circles each way.",
+        "Lift one foot and circle the ankle eight times each way, then swap. Hold a wall if you need to.",
+        "Finish by standing still for a few breaths and noticing what has changed."
+      ],
+      "safety": "Small circles only. Do not force the neck, knees or lower back beyond a comfortable range. Hold a wall or chair back if you feel unsteady, and stop if anything is painful or you feel dizzy.",
+      "free": false
+    },
+    {
+      "id": "qigong.r05",
+      "title": "Gentle Pat-Down (Pai Da)",
+      "group": "starter",
+      "minutes": 6,
+      "purpose": "Wake up the surface of the body with light patting, a common warm-up before and after qigong.",
+      "steps": [
+        "Stand in wuji and make a loose, cupped hand: fingers together, palm slightly hollow.",
+        "Pat down the outside of one arm from shoulder to hand, then back up the inside. Three passes, then swap arms.",
+        "Pat lightly across the upper chest and along the tops of the shoulders.",
+        "Reach behind and pat the lower back and the sides of the waist, working downward.",
+        "Pat down the outside of each leg from hip to ankle, then up the inside from ankle to groin. Three passes per leg.",
+        "Stand still for thirty seconds and notice where the skin feels warm."
+      ],
+      "safety": "Light taps only, never hard slapping. Stay off the spine, the front of the throat, and any bruise, wound or varicose vein. Skip this if you bruise easily or take blood thinners. Stop if it hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r06",
+      "title": "Holding Up the Sky",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "The opening brocade: a long, whole-body stretch that sets the breath for everything after it.",
+      "steps": [
+        "Stand in wuji with feet hip-width apart and knees soft.",
+        "Turn both palms upward in front of the lower belly and interlace the fingers.",
+        "Breathing in, raise the interlaced hands up the centre line of the body to chest height.",
+        "Turn the palms over so they face the ceiling and keep pressing upward until the arms are long overhead, eyes following the hands.",
+        "Hold for one breath, feeling the stretch through the sides of the ribs.",
+        "Breathing out, unlace the fingers and float the arms down in a wide arc to your sides.",
+        "Repeat six to eight times, slowly enough that the breath never has to rush."
+      ],
+      "safety": "Raise the arms only as far as your shoulders comfortably allow, and do not arch the lower back to get higher. Do this seated if balance is an issue. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r07",
+      "title": "Drawing the Bow to Shoot the Hawk",
+      "group": "core",
+      "minutes": 7,
+      "purpose": "Open the chest and upper back with a wide stance and a slow, deliberate pull.",
+      "steps": [
+        "Step out so your feet are wider than your shoulders and sink into a shallow horse stance, knees tracking over the toes, back upright.",
+        "Cross both forearms in front of your chest, right arm outside.",
+        "Turn your head to the left. Extend the left arm out to the side with the index finger up and the thumb open, as if holding a bow.",
+        "At the same time draw the right hand into a loose fist and pull it back to the right at chest height, as if drawing the string. Look past the left index finger.",
+        "Hold for one breath, then release both arms forward and let them float down as you straighten the legs.",
+        "Repeat to the other side. Do three to five rounds each way."
+      ],
+      "safety": "Sink only as far as your knees are happy with. A shallow stance is a complete version of this. Do not force the shoulders back. Stop if you get knee pain, dizziness, or anything sharp.",
+      "free": false
+    },
+    {
+      "id": "qigong.r08",
+      "title": "Separating Heaven and Earth",
+      "group": "core",
+      "minutes": 7,
+      "purpose": "A long vertical stretch through one whole side of the body at a time.",
+      "steps": [
+        "Stand in wuji with both palms facing up in front of the lower belly.",
+        "Breathing in, float both hands up to chest height.",
+        "Breathing out, turn the left palm to face the ceiling and press it up above the head, fingers pointing right. At the same time the right palm turns down and presses toward the floor beside the hip.",
+        "Keep a gentle press in both directions for one breath, feeling the stretch along the left side of the body.",
+        "Breathing in, release and bring both palms back toward the belly.",
+        "Repeat with the right hand pressing up. Do four to six rounds on each side."
+      ],
+      "safety": "Press only into a comfortable range and keep the neck relaxed rather than craning to look up. Ease off if a shoulder complains. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r09",
+      "title": "Wise Owl Gazes Back",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "A slow rotation for the neck and upper spine. Useful after a long stretch at a screen.",
+      "steps": [
+        "Stand in wuji with the arms hanging, palms facing backwards beside the thighs.",
+        "Breathing in, turn the palms outward and roll the shoulders open, letting the chest widen.",
+        "Slowly turn your head to look back over the left shoulder, letting the turn come from the upper spine as well as the neck. Keep the hips facing forward.",
+        "Pause for one breath at the end of your comfortable range. Do not push for more.",
+        "Breathing out, return the head to centre and let the arms relax.",
+        "Repeat to the right. Four to six turns each way, going no further each time than feels easy."
+      ],
+      "safety": "Turn slowly and never force the neck. Keep the movement very small, or skip it, if you have neck problems or a history of vertigo or dizziness on turning. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r10",
+      "title": "Punching with Angry Eyes",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "The one clearly forceful brocade, traditionally practised to build strength and rouse a flat mood.",
+      "steps": [
+        "Step wide and sink into a shallow horse stance, back upright, knees tracking over the toes.",
+        "Draw both loose fists to the sides of your waist, palm side up.",
+        "Breathing out, punch the left fist slowly forward at chest height, turning the fist palm-down as it extends. Widen the eyes and look past the fist.",
+        "Open the hand, turn it over and close it lightly, as if gripping something, then draw the fist back to the waist as you breathe in.",
+        "Repeat with the right fist. Alternate for four to eight punches each side.",
+        "Straighten the legs, let the arms hang, and stand quietly for three breaths."
+      ],
+      "safety": "Punch slowly and never snap the elbow straight. Keep the stance shallow if your knees or back object. Drop the wide-eyed intensity if it feels agitating rather than energising. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r11",
+      "title": "Seven Jolts Behind the Back",
+      "group": "core",
+      "minutes": 5,
+      "purpose": "The traditional closing brocade: small heel drops that settle the end of a session.",
+      "steps": [
+        "Stand in wuji with the arms hanging, feet hip-width or heels together, whichever feels steadier.",
+        "Breathing in, press the heels up and rise onto the balls of the feet, lifting the crown of the head. Hold for a moment.",
+        "Breathing out, let the heels lower back to the floor with a small, controlled bump. Not a crash.",
+        "Feel the light jolt travel up through the legs and spine.",
+        "Repeat seven times, which is where the traditional name comes from.",
+        "Finish standing still, hands on the lower belly, for three quiet breaths."
+      ],
+      "safety": "Let the heels down gently. This is a tap, not a stamp. Skip the heel drop entirely if you have osteoporosis, back or disc problems, or joint pain, and hold a wall for balance. Stop if anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r12",
+      "title": "Spinal Wave",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Move the spine one segment at a time, so it stops behaving like a single stiff block.",
+      "steps": [
+        "Stand with feet hip-width, knees soft, hands resting lightly on the front of the thighs.",
+        "Start at the tailbone: tuck it under slightly, then let that movement travel up through the lower back, mid back and neck so the spine rounds gently forward.",
+        "Reverse it. Start again at the tailbone, tip it back, and let the wave travel up so the chest opens and the crown lifts.",
+        "Keep the range small at first and let the breath move with it: out as you round, in as you open.",
+        "Continue for about two minutes, letting the movement grow slightly larger only while it stays comfortable.",
+        "Add the arms: let them hang and swing softly in time with the wave, without steering them.",
+        "Stand still for a minute at the end and notice how the back feels."
+      ],
+      "safety": "Keep the range small and comfortable, and never force the lower back into a deep arch. Do this seated if standing is unsteady. Stop immediately if you get back pain, tingling down a leg, or dizziness.",
+      "free": false
+    },
+    {
+      "id": "qigong.r13",
+      "title": "Desk Qigong: Seated Reset",
+      "group": "core",
+      "minutes": 6,
+      "purpose": "A short seated sequence you can do at a desk without standing up or drawing attention.",
+      "steps": [
+        "Sit forward on the chair with both feet flat, spine long, shoulders dropped.",
+        "Rest both palms on the lower belly and take five quiet breaths, letting each exhale run a little longer.",
+        "Interlace the fingers, turn the palms out in front of you and press forward at chest height for one breath, then raise the interlaced palms overhead for one breath.",
+        "Release the arms and roll the shoulders backwards eight times.",
+        "Turn slowly to look over the left shoulder, pause for a breath, return to centre, then repeat right. Three each way.",
+        "Rub the palms together until warm, cover the eyes for a few seconds, then rest the hands on the lower belly for three closing breaths."
+      ],
+      "safety": "Move within a comfortable range and keep the neck turns slow and small. Do not force the arms overhead if the shoulders are sore. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r14",
+      "title": "The Full Eight Brocades (Ba Duan Jin)",
+      "group": "deep",
+      "minutes": 22,
+      "purpose": "Practise all eight movements in their traditional order as one complete set.",
+      "steps": [
+        "Open with two minutes of wuji standing and quiet breathing to settle.",
+        "One, holding up the sky: interlace the fingers and press the palms overhead, then float the arms down in a wide arc. Six times.",
+        "Two, drawing the bow: from a shallow horse stance, extend one arm and draw the other back as if pulling a bowstring. Three rounds each side.",
+        "Three, separating heaven and earth: press one palm up and the other down, then swap. Four each side. Then four, wise owl gazes back: turn the head and upper spine to look behind you, four each way.",
+        "Five, sway the head and wag the tail: in a shallow horse stance, circle the torso slowly and low. Three circles each way.",
+        "Six, two hands hold the feet: fold forward with clearly bent knees, slide the palms down the backs of the legs, then roll up and press both palms overhead. Six times.",
+        "Seven, punching with angry eyes: slow alternating punches from the horse stance with a wide gaze. Four each side.",
+        "Eight, seven jolts behind the back: rise onto the toes and let the heels drop gently, seven times. Close with hands on the lower belly and a minute of stillness."
+      ],
+      "safety": "Shallow stances are fine throughout. Do not force the knees or lower back, and keep the knees generously bent in the forward fold. Skip the heel drops if you have osteoporosis or back problems, and sit for parts of the set if balance is an issue. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r15",
+      "title": "Standing Post: Holding the Ball",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "The classic standing training of qigong: a long, quiet stand that builds patience and postural endurance.",
+      "steps": [
+        "Stand in wuji: feet hip- to shoulder-width, toes forward, knees unlocked, tailbone dropped, crown lifted.",
+        "Slowly raise both arms in front of the chest as though lightly holding a large beach ball. Elbows below the wrists, fingers apart and curved, a gap under each armpit.",
+        "Let the shoulders drop while the arms stay up. That contradiction is the whole exercise.",
+        "Rest your attention on the lower belly and breathe naturally through the nose. Do not manage the breath.",
+        "Stand for three minutes to begin with. When trembling or burning appears in the shoulders, soften instead of bracing, and lower the arms a little if you need to.",
+        "Build toward ten minutes over several weeks rather than in one heroic session.",
+        "To finish, lower the arms slowly, rub the palms warm and rest them on the lower belly for a minute."
+      ],
+      "safety": "Shaking and warmth are common; sharp pain is not. Lower the arms or shorten the stand whenever you need to, and keep the knees soft rather than deeply bent. Do the same arm position seated if standing is unsafe. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r16",
+      "title": "Six Healing Sounds: The Full Set",
+      "group": "deep",
+      "minutes": 18,
+      "purpose": "Work through all six traditional sounds in the standard order, one long exhale at a time.",
+      "steps": [
+        "Stand in wuji or sit tall. Breathe quietly for a minute, then take six slow belly breaths to settle.",
+        "XU, roughly 'shhh', lips slightly parted and teeth close: inhale through the nose, then exhale on the sound while extending the arms out to the sides. Traditionally paired with the liver. Six times.",
+        "HE, roughly 'huh', mouth open and tongue resting behind the lower teeth: inhale, then exhale on the sound as the palms rise in front of the chest and open outward. Traditionally paired with the heart. Six times.",
+        "HU, roughly 'hoo', lips rounded: inhale, then exhale on the sound as one palm turns up in front of the belly and the other presses down. Traditionally paired with the spleen. Six times.",
+        "SI, roughly 'sss', lips slightly spread and teeth close: inhale as the arms lift and open at chest height, then exhale on the sound as the palms press forward. Traditionally paired with the lungs. Six times.",
+        "CHUI, roughly 'chway', lips pursed as if cooling a hot drink: inhale, then exhale on the sound as the arms circle round the waist and the knees bend slightly. Traditionally paired with the kidneys. Six times.",
+        "XI, roughly 'shee', lips slightly spread: inhale as the hands rise up the front of the body, then exhale on the sound as the palms sweep down the sides. Traditionally linked to the triple burner. Six times.",
+        "Finish with the hands on the lower belly and two minutes of quiet standing or sitting."
+      ],
+      "safety": "Keep every sound soft. This is a long relaxed exhale, not a shout, and you should never squeeze the lungs empty. Sit for the whole set if standing is tiring. Stop if you feel lightheaded or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r17",
+      "title": "Walking Qigong",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Take the practice outdoors by matching a slow walk to a slow breath.",
+      "steps": [
+        "Find a flat, even stretch of path where you will not have to dodge people.",
+        "Stand still for a minute first: feet hip-width, knees soft, attention on the lower belly.",
+        "Begin walking slowly, placing the heel down first and rolling through to the toes, so each step is deliberate rather than automatic.",
+        "Set a breath pattern: breathe in over three steps, breathe out over three steps. Adjust the count until it feels easy rather than impressive.",
+        "Let the arms swing naturally and keep the shoulders low. Look ahead and slightly down with a soft gaze.",
+        "After about ten minutes, stop and stand still for a minute with the hands resting on the lower belly."
+      ],
+      "safety": "Choose even ground and keep your eyes up for obstacles. Shorten the breath count if you get short of breath, and never hold the breath while walking. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r18",
+      "title": "Two Hands Hold the Feet",
+      "group": "deep",
+      "minutes": 8,
+      "purpose": "The longest stretch of the eight brocades, running down the whole back of the body.",
+      "steps": [
+        "Stand in wuji with the palms resting on the front of the thighs.",
+        "Breathing in, raise both arms forward and up overhead, then turn the palms forward.",
+        "Breathing out, hinge forward from the hips with the knees clearly bent, sliding both palms down the backs of the legs as far as they comfortably reach. Thighs or knees is plenty.",
+        "Pause for one breath with the head and neck relaxed. Do not pull yourself deeper.",
+        "Breathing in, roll slowly back up leading with the tailbone, letting the head come up last, and press both palms overhead again.",
+        "Repeat four to six times, staying with the version that is comfortable rather than the deepest one available."
+      ],
+      "safety": "Keep the knees clearly bent and never force the fold. Reaching only the thighs is a complete version of this movement. Skip it if you have back or disc problems, or if bending forward makes you dizzy. Come up slowly and stop if anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r19",
+      "title": "Sway the Head and Wag the Tail",
+      "group": "deep",
+      "minutes": 8,
+      "purpose": "A big low circle through the torso, and the most demanding brocade for the legs.",
+      "steps": [
+        "Step out wide and sink into a horse stance, hands resting on the thighs above the knees, fingers pointing inward, elbows out.",
+        "Shift your weight to the right and lean the torso out over the right thigh.",
+        "Sweep the torso in a slow, low arc, forward and across to the left, letting the head follow the movement and the tailbone counterbalance behind you.",
+        "Come up on the left side and bring the torso back to centre, then circle the other way.",
+        "Let the breath go out as you sweep low and in as you rise.",
+        "Do three to five circles each way, then straighten the legs and stand still for a minute."
+      ],
+      "safety": "Keep the stance shallow and the circles small if your knees or lower back object. This one is easy to overdo. Do not let the knees roll inward. Stop if you feel dizzy or get knee or back pain.",
+      "free": false
+    },
+    {
+      "id": "qigong.r20",
+      "title": "Cloud Hands and Waist Turning",
+      "group": "deep",
+      "minutes": 12,
+      "purpose": "Learn to move the arms from the waist rather than the shoulders, which is the central habit of both qigong and tai chi.",
+      "steps": [
+        "Stand with feet shoulder-width, knees softly bent, weight even.",
+        "Let the arms hang and turn the waist slowly left and right, letting the arms swing loosely and wrap around the body. Twenty easy turns.",
+        "Now hold the arms in front: right palm at chest height facing you, left palm at belly height facing you.",
+        "Turn the waist to the right. As you do, let the upper hand sweep across in front of your face and the lower hand across in front of your belly.",
+        "At the end of the turn, swap the hands, upper one dropping and lower one rising, and turn the waist back to the left.",
+        "Shift the weight gently from foot to foot as you turn, keeping the head level and the movement continuous.",
+        "Continue for about five minutes, then let the arms hang and stand quietly for a minute."
+      ],
+      "safety": "Turn from the waist rather than twisting through the knees, and keep the knees pointing the same way as the toes. Reduce the range if the lower back objects, and hold a chair back if you feel unsteady. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r21",
+      "title": "XU: The Liver Sound",
+      "group": "restorative",
+      "minutes": 7,
+      "purpose": "One of the Six Healing Sounds on its own, traditionally used when you feel wound up or irritable.",
+      "steps": [
+        "Stand in wuji or sit tall, hands resting on the lower belly.",
+        "Take six quiet breaths through the nose, letting each exhale get slightly longer.",
+        "Learn the sound first with no movement: breathe in through the nose, then breathe out on a soft, sustained 'shhh', lips slightly parted, teeth close, tongue flat. Keep it whispered.",
+        "Add the movement: as you inhale, draw both hands up the sides of the belly. As you exhale on XU, extend one arm out to the side at shoulder height, fingers open, eyes following the hand.",
+        "Alternate sides for six rounds, keeping each exhale long and unforced.",
+        "Finish with both hands on the lower belly and a minute of quiet breathing."
+      ],
+      "safety": "Keep the sound soft and never push the last of the air out. Sit if standing is tiring. Stop if you feel lightheaded or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r22",
+      "title": "CHUI: The Kidney Sound Before Bed",
+      "group": "restorative",
+      "minutes": 7,
+      "purpose": "The traditional winter sound, used here as a slow wind-down at the end of the day.",
+      "steps": [
+        "Sit on the edge of a chair or stand in wuji, and let the shoulders drop.",
+        "Rest the backs of both hands against your lower back, just above the belt line, for a few breaths.",
+        "Practise the sound: inhale through the nose, then exhale through pursed lips on a soft 'chway', as if cooling a hot drink. Whispered, not blown hard.",
+        "Add the movement: as you inhale, slide the hands round to the front and cross the forearms loosely in front of the belly. As you exhale on CHUI, let the knees bend slightly and the hands slide down and out to the sides.",
+        "Rise slowly on the next inhale. Repeat six times.",
+        "Finish seated, both palms on the lower belly, for two minutes of quiet breathing."
+      ],
+      "safety": "Keep the knee bend shallow and the sound gentle. Do the whole thing seated if standing or bending is uncomfortable. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    },
+    {
+      "id": "qigong.r23",
+      "title": "XI: Lying-Down Settling Sound",
+      "group": "restorative",
+      "minutes": 8,
+      "purpose": "The sixth sound done lying down, which is the quietest practice in the whole set.",
+      "steps": [
+        "Lie on your back with the knees bent and feet flat, or with a cushion under the knees. Arms rest beside you, palms up.",
+        "Spend two minutes simply feeling the weight of the body against the floor or bed, breathing through the nose.",
+        "Rest one palm on the lower belly and one on the chest, and let the lower hand be the one that moves.",
+        "Inhale quietly, then exhale on a soft 'shee', lips slightly spread, barely audible. Let the whole body soften as the sound fades.",
+        "Repeat for eight to twelve breaths, pausing for a normal breath whenever you want one.",
+        "Let the sound go and lie still for a few minutes with ordinary breathing."
+      ],
+      "safety": "Never force the exhale or hold the breath. Use pillows so the lower back is comfortable, and do this propped up or seated if lying flat is difficult. Get up slowly. Stop if you feel lightheaded.",
+      "free": false
+    },
+    {
+      "id": "qigong.r24",
+      "title": "Evening Settling and Closing (Shou Gong)",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "The traditional way to end a qigong session, which also works on its own as a short evening practice.",
+      "steps": [
+        "Stand in wuji or sit tall, and let the eyes close or the gaze soften toward the floor.",
+        "Breathe in and let both arms float up and out to the sides in a wide arc until the palms are above the head.",
+        "Breathe out and lower both palms slowly down the centre line of the body, past the face, chest and belly, as if smoothing something down. Repeat six times.",
+        "Rub the palms briskly together until they feel warm.",
+        "Place both palms on the lower belly, one over the other, and rest them there for two minutes of quiet breathing.",
+        "Circle the palms lightly on the lower belly, a few turns one way then a few the other, with almost no pressure.",
+        "Open the eyes, look around the room for a few seconds, and take two ordinary breaths before you move on."
+      ],
+      "safety": "Move within a comfortable range and keep the arm arcs low if the shoulders are sore. Do all of it seated if standing is tiring, and stand up slowly at the end. Stop if you feel dizzy.",
+      "free": false
+    },
+    {
+      "id": "qigong.r25",
+      "title": "Quiet Sitting (Jing Zuo)",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "The meditative end of qigong: sitting still with the breath, with no movement to organise.",
+      "steps": [
+        "Sit on the front third of a firm chair with both feet flat, or cross-legged on a cushion if that is genuinely comfortable.",
+        "Let the spine be long without being rigid: tailbone dropped, crown lightly lifted, chin very slightly in.",
+        "Rest the hands in your lap, one palm over the other with the thumbs touching lightly, or simply on the thighs.",
+        "Close the eyes, or leave them slightly open with the gaze resting on the floor a few feet ahead.",
+        "Let the tongue rest against the roof of the mouth and breathe through the nose without managing the breath at all.",
+        "Rest your attention on the lower belly. Each time you notice you have wandered off, that noticing is the practice. Just come back.",
+        "Sit for about ten minutes, then rub the palms warm, cover the eyes briefly, and stretch before you stand."
+      ],
+      "safety": "Use whatever support you need, whether a chair, cushions or a wall behind you, and change position rather than enduring pain. Stand up slowly afterwards. Stop if you feel dizzy or anything hurts.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "National Qigong Association, 'What Is Qigong?' (nqa.org), accessed 2026 — the working definition used here: qigong as the cultivation of energy through movement, breath and intention, and the three components of posture, breath and mind.",
+    "Kenneth S. Cohen, The Way of Qigong: The Art and Science of Chinese Energy Healing, Ballantine Books, 1997 — qi and the dantian as traditional concepts, and zhan zhuang as the most basic method of qigong training.",
+    "Chinese Health Qigong Association, Ba Duan Jin: Eight-Section Qigong Exercises, Foreign Languages Press / Singing Dragon, 2008 (rev. 2017) — the standardised names, order and mechanics of the eight brocades.",
+    "Chinese Health Qigong Association, Liu Zi Jue: Six Sounds Approach to Qigong Breathing Exercises, Singing Dragon, 2008 (rev. 2021) — the order of the six sounds, mouth shapes, accompanying arm movements and the 2003 standardisation.",
+    "Zou L, Sasaki JE, Wang H, Xiao Z, Fang Q, Zhang M, 'A Systematic Review and Meta-Analysis of Baduanjin Qigong for Health Benefits: Randomized Controlled Trials', Evidence-Based Complementary and Alternative Medicine, 2017;2017:4548706 — 19 RCTs reporting improvements in balance, trunk flexibility, sleep quality and quality of life, with the authors' own caveats on population and language coverage.",
+    "Jahnke R, Larkey L, Rogers C, Etnier J, Lin F, 'A Comprehensive Review of Health Benefits of Qigong and Tai Chi', American Journal of Health Promotion, 2010;24(6):e1–e25 — the breadth of outcomes studied across qigong and tai chi, and the standing caution about trial quality.",
+    "Chang PS, Knobf T, Oh B, et al., 'Physical and Psychological Health Outcomes of Qigong Exercise in Older Adults: A Systematic Review and Meta-Analysis', American Journal of Chinese Medicine, 2019;47(2):301–322 — balance and psychological wellbeing outcomes in older practitioners.",
+    "Wang CW, Chan CH, Ho RT, Chan JS, Ng SM, Chan CL, 'Managing stress and anxiety through qigong exercise in healthy adults: a systematic review and meta-analysis of randomized controlled trials', BMC Complementary and Alternative Medicine, 2014;14:8 — reduced self-reported stress and anxiety in healthy adults after one to three months, from a small pool of trials.",
+    "Huang ZG, Feng YH, Li YH, Lv CS, 'Systematic review and meta-analysis: Tai Chi for preventing falls in older adults', BMJ Open, 2017;7(2):e013661 — supporting balance and fall-prevention evidence from the closely related mind-body practice.",
+    "US National Center for Complementary and Integrative Health, 'Qigong: What You Need To Know' (nccih.nih.gov) — safety guidance, the mixed and often low-quality state of the evidence, and the instruction not to use qigong to postpone seeing a health care provider."
+  ],
+  "subtitle": "slow movement and breath",
+  "pronunciation": "CHEE-gong",
+  "origin": "Qigong (氣功) — 'qi work'; includes the Ba Duan Jin and Six Healing Sounds sets."
+}

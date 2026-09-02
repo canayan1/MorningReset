@@ -27,7 +27,7 @@ struct MorningPagesView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
@@ -91,12 +91,8 @@ struct MorningPagesView: View {
                 Button(L10n.text(en: "Save", tr: "Kaydet", es: "Guardar")) {
                     saveEntry()
                 }
-                .font(.system(.body, design: .serif))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(trimmed.isEmpty ? DS.surface : DS.accent)
-                .foregroundStyle(trimmed.isEmpty ? DS.textDim : DS.background)
-                .clipShape(Capsule())
+                .primaryCTA()
+                .opacity(trimmed.isEmpty ? 0.4 : 1)
                 .disabled(trimmed.isEmpty)
 
                 Button(L10n.text(en: "Skip for today", tr: "Bugün atla", es: "Saltar hoy")) {
@@ -128,12 +124,7 @@ struct MorningPagesView: View {
             Button(L10n.text(en: "Done", tr: "Tamam", es: "Listo")) {
                 appState.showPremiumHub()
             }
-            .font(.system(.body, design: .serif))
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 18)
-            .background(DS.accent)
-            .foregroundStyle(DS.background)
-            .clipShape(Capsule())
+            .primaryCTA()
             .padding(.top, DS.Space.sm)
         }
     }

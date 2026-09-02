@@ -1,102 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Morning Reset</title>
-    <style>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inner Light — Daily Practice</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f6fc;
+      --bg2: #edf1fa;
+      --surface: rgba(255, 255, 255, 0.72);
+      --text: #272b42;
+      --muted: #5d657e;
+      --dim: #929aaf;
+      --accent: #6f73c7;
+      --accent-ink: #44478f;
+      --border: #e0e5f1;
+      --shadow: 0 18px 46px rgba(39, 43, 66, 0.07);
+    }
+
+    @media (prefers-color-scheme: dark) {
       :root {
-        color-scheme: light;
-        --bg: #f6f2e9;
-        --card: #fffaf0;
-        --text: #1f1a16;
-        --muted: #6d6257;
-        --line: #dacdbd;
-        --accent: #295f4e;
+        --bg: #131624;
+        --bg2: #191d2f;
+        --surface: rgba(31, 36, 56, 0.72);
+        --text: #e8ebf6;
+        --muted: #a8b0c8;
+        --dim: #767e99;
+        --accent: #9ca5e0;
+        --accent-ink: #b8bfec;
+        --border: #2b3149;
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
       }
+    }
 
-      * { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-      body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: linear-gradient(180deg, #f6f2e9 0%, #efe7d8 100%);
-        color: var(--text);
-      }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(120% 80% at 50% 0%, var(--bg2), var(--bg));
+      background-attachment: fixed;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
 
-      main {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 32px 20px;
-      }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 20px 80px;
+    }
 
-      .card {
-        width: min(680px, 100%);
-        background: rgba(255, 250, 240, 0.92);
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 32px;
-        box-shadow: 0 16px 40px rgba(31, 26, 22, 0.08);
-      }
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow);
+    }
 
-      .eyebrow {
-        margin: 0 0 12px;
-        font-size: 12px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 10px;
+    }
 
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(32px, 5vw, 52px);
-        line-height: 0.95;
-      }
+    h1, h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      color: var(--text);
+      margin-top: 0;
+      line-height: 1.25;
+    }
 
-      p {
-        margin: 0 0 16px;
-        color: var(--muted);
-        line-height: 1.6;
-      }
+    h1 { font-size: 2rem; letter-spacing: -0.01em; }
 
-      ul {
-        margin: 24px 0;
-        padding-left: 20px;
-        color: var(--muted);
-      }
+    h2 {
+      margin-top: 34px;
+      margin-bottom: 10px;
+      font-size: 1.18rem;
+    }
 
-      a {
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: 600;
-      }
+    p, li { line-height: 1.65; color: var(--muted); }
+    p { margin: 0 0 14px; }
+    ul { margin: 14px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    strong { color: var(--text); font-weight: 600; }
 
-      .links {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-top: 24px;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <section class="card">
-        <p class="eyebrow">Morning Reset</p>
-        <h1>Interrupt the scroll impulse.</h1>
-        <p>Morning Reset is an iPhone app that uses a local notification and a short ritual to help you start with one intentional first win before feeds take over.</p>
-        <ul>
-          <li>Uses your normal wake-up routine</li>
-          <li>Does not replace the system alarm</li>
-          <li>No account, ads, or third-party tracking in the launch build</li>
-        </ul>
-        <div class="links">
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="support.html">Support</a>
-          <a href="https://github.com/canayan1/MorningReset">GitHub Repository</a>
-        </div>
-      </section>
-    </main>
-  </body>
+    .date { color: var(--dim); font-size: 0.9rem; margin-bottom: 26px; }
+
+    a { color: var(--accent-ink); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .rule { height: 1px; background: var(--border); border: 0; margin: 34px 0; }
+
+    .links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+
+    .note {
+      background: rgba(111, 115, 199, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin: 18px 0;
+    }
+    .note p:last-child { margin-bottom: 0; }
+
+    footer {
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.82rem;
+      margin-top: 28px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <p class="eyebrow">Inner Light</p>
+      <h1>Ten traditions.<br>One practice a day.</h1>
+      <p>Most wellness apps hand you a timer and a voice. Inner Light teaches the practice first — what it is, where it comes from, and how to do it — then guides you through it, step by step.</p>
+
+      <h2>The ten schools</h2>
+      <ul>
+        <li><strong>Reiki</strong> — the hands-on Japanese practice</li>
+        <li><strong>Pranayama</strong> — the breath practices</li>
+        <li><strong>Qigong</strong> — slow movement and breath</li>
+        <li><strong>Bhavana</strong> — cultivating the mind</li>
+        <li><strong>Hatha</strong> — postures and long holds</li>
+        <li><strong>Nada Yoga</strong> — sound and listening</li>
+        <li><strong>Löyly</strong> — heat, cold and the swing between</li>
+        <li><strong>Nidra</strong> — sleep and deep rest</li>
+        <li><strong>Shinrin-yoku</strong> — light, air and slow attention</li>
+        <li><strong>Notes to Self</strong> — the Stoic journal, brought up to date</li>
+      </ul>
+
+      <h2>Your energy orb</h2>
+      <p>Every practice you finish feeds a small orb of light. It grows brighter and bigger the longer you keep going — a streak you can actually see. Miss a day and nothing is lost.</p>
+
+      <h2>Honest by design</h2>
+      <p>Traditional practices are labelled as traditional. Evidence-based schools cite their sources inside the app. Routines involving cold, heat, breathwork or movement carry safety notes. Nothing here treats or cures anything.</p>
+
+      <h2>Private by design</h2>
+      <p>No account, no sign-up, no analytics, no tracking. The optional check-in reads a selfie entirely on your device and never saves it. Your practice history stays on your phone.</p>
+
+      <div class="note">
+        <p><strong>Free forever:</strong> one routine in every school — ten in total — plus the daily loop and the optional check-in.</p>
+      </div>
+
+      <div class="links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/canayan1/MorningReset">GitHub</a>
+      </div>
+    </div>
+    <footer>Inner Light · Daily Practice</footer>
+  </main>
+</body>
 </html>

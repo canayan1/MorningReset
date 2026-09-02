@@ -1,0 +1,489 @@
+{
+  "id": "sleep",
+  "name": "Nidra",
+  "tagline": "Wind down, sleep deeper, and rest well even on the nights you don't.",
+  "overview": "Sleep is not something you do — it is something you allow. This school works with the two levers sleep research keeps pointing at: sleep pressure, which builds the longer you are awake, and your body clock, which is set mainly by light. Around those sit the habits and rest practices that make falling asleep easier — winding down, putting the day's thinking somewhere safe, keeping the bed for sleeping, and knowing how to rest deeply while still awake. Most adults need seven or more hours; nothing here needs special equipment.",
+  "kind": "evidence",
+  "framing_note": "The behavioural side of this school rests on strong evidence. Stimulus control, a consistent wake time, light timing and structured wind-down are the ingredients of cognitive behavioural therapy for insomnia (CBT-I), which sleep-medicine guidelines name as first-line care for chronic insomnia. The deep-rest side is thinner: yoga nidra has a handful of small trials, and NSDR is a modern relabel of that same practice rather than a separate science. Everything here is offered experientially, as skills for your own nights. It is not medical care, not a diagnosis, and not a substitute for seeing a clinician about insomnia, snoring, or any other sleep disorder.",
+  "teachings": [
+    {
+      "id": "sleep.t1",
+      "title": "Sleep pressure and the body clock",
+      "body": "Two things decide whether you feel sleepy. The first is sleep pressure: a chemical urge that builds steadily from the moment you wake and only drains away while you sleep. The longer you are awake, the heavier it gets. The second is your body clock, a roughly 24-hour rhythm that runs regardless of how tired you are — it pushes you toward alertness through the late morning and again in the early evening, then hands you over to sleep at night. Sleep researchers call this the two-process model, and it explains a lot: why a late-afternoon nap can flatten your evening, why you can feel wired at midnight after a terrible night, and why a steady wake time matters more than a steady bedtime."
+    },
+    {
+      "id": "sleep.t2",
+      "title": "Light is the main dial on your clock",
+      "body": "Your body clock is set mostly by light reaching your eyes. Morning light nudges the clock earlier, which makes you sleepy earlier that night; light in the late evening pushes it later. Laboratory work has mapped this precisely — the very same light has opposite effects depending on when in your day you get it. Human eyes are also more sensitive to evening light than most people assume: relatively modest indoor levels suppress melatonin and shift the clock, and a controlled study found that reading on a light-emitting tablet before bed delayed melatonin, delayed sleep, and left people less alert the next morning. The practical version is simple. Get outside early. Dim things down late."
+    },
+    {
+      "id": "sleep.t3",
+      "title": "The bed is for sleeping",
+      "body": "If you spend hours in bed awake — reading, worrying, checking your phone, willing yourself to drop off — your brain quietly learns that bed is a place for being awake. Stimulus control, first set out by Richard Bootzin in 1972, undoes that learning with a few blunt rules: go to bed only when sleepy; use the bed for sleep and sex only; and if you are lying there awake and frustrated, get up, go somewhere else, do something quiet in dim light, and come back when sleepiness returns. It feels counterproductive at two in the morning. It works because sleep cannot be forced, only allowed — and getting up removes the struggle that is keeping you awake."
+    },
+    {
+      "id": "sleep.t4",
+      "title": "Deep rest while you are awake",
+      "body": "Yoga nidra is an old practice with a simple structure: you lie still while a voice walks your attention through the body part by part, then through breath and sensation. It is not sleep and not quite meditation — you stay just awake, deeply settled. A small randomised trial in people with chronic insomnia found yoga nidra improved reported sleep quality and deep sleep measured in the lab, though the study had only 41 participants. You will also hear this called NSDR, or non-sleep deep rest. That is a modern label popularised by the neuroscientist Andrew Huberman, not a separate discipline with its own research base — the evidence behind it is largely the yoga nidra literature, and that literature is still small."
+    },
+    {
+      "id": "sleep.t5",
+      "title": "When to stop practising and see someone",
+      "body": "Bad nights are normal. Persistent insomnia is not, and it has a real, well-tested clinical answer. If trouble falling or staying asleep happens three or more nights a week for over three months, ask a doctor about cognitive behavioural therapy for insomnia — CBT-I. Sleep-medicine guidelines name it as first-line care, and meta-analyses show it reliably shortens both how long people take to fall asleep and how long they lie awake in the night. Separately, if you snore loudly, gasp or choke in your sleep, have been told you stop breathing, or feel wrecked all day despite enough hours in bed, get assessed for sleep apnoea. No app can find that. A sleep study can."
+    }
+  ],
+  "routines": [
+    {
+      "id": "sleep.r01",
+      "title": "Five-Minute Wind-Down",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "The smallest possible signal to your body that the day is finished.",
+      "steps": [
+        "Set a timer for five minutes and put your phone face down, out of reach.",
+        "Turn off the brightest light in the room. Leave one small, warm lamp on.",
+        "Sit somewhere that is not your bed, with your back supported.",
+        "Breathe in through your nose, then let the out-breath be slower and longer than the in-breath. Don't force it.",
+        "Keep going for the five minutes. If your mind runs to tomorrow, notice it and come back to the out-breath.",
+        "When the timer ends, go straight to bed — no detours, no last check of anything."
+      ],
+      "safety": "",
+      "free": true
+    },
+    {
+      "id": "sleep.r02",
+      "title": "Evening Dim-Down",
+      "group": "starter",
+      "minutes": 10,
+      "purpose": "Lower the light in your home before you try to lower the light in your head.",
+      "steps": [
+        "Pick a time about ninety minutes before you want to be asleep. That is your dim-down point.",
+        "At that time, switch off overhead lights. Use lamps at eye level or lower.",
+        "Where you can, put warmer, dimmer bulbs in the rooms you sit in after dark.",
+        "Turn every screen you still need down to its lowest comfortable brightness.",
+        "Leave the bathroom bright only if you have to — brushing your teeth by a dim lamp is easier than it sounds.",
+        "Over a week, notice whether you start feeling sleepy earlier in the evening. That is the effect you are after."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r03",
+      "title": "Screens-Down Ritual",
+      "group": "starter",
+      "minutes": 10,
+      "purpose": "Get the phone out of the bedroom without having to white-knuckle it every night.",
+      "steps": [
+        "Choose a cut-off time. An hour before bed is a good target; thirty minutes is a real improvement over nothing.",
+        "Pick the phone's overnight home — a shelf, a drawer, another room — and leave a charger there so there is no excuse.",
+        "At cut-off, run a short closing sequence: answer anything genuinely urgent, set the alarm, put the phone on its shelf.",
+        "If the phone is your alarm clock, buy a cheap clock instead. This one change removes most of the difficulty.",
+        "Replace the scroll with one specific thing you actually like: a paper book, a shower, tidying a single surface.",
+        "Expect to want the phone for the first few nights. The wanting fades faster than you think."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r04",
+      "title": "Caffeine Curfew",
+      "group": "starter",
+      "minutes": 5,
+      "purpose": "Set a cut-off time you can actually keep, based on how long caffeine really lasts in the body.",
+      "steps": [
+        "Write down your usual bedtime.",
+        "Count back eight hours. That is your curfew — a deliberately conservative line, since a controlled study found a large dose taken six hours before bed still measurably shortened people's sleep.",
+        "List everything caffeinated you drink: coffee, black and green tea, cola, energy drinks, pre-workout, dark chocolate.",
+        "Move your last one earlier by an hour this week rather than jumping to the full curfew at once.",
+        "If the afternoon slump is what drives the fourth coffee, try ten minutes outside in daylight instead.",
+        "Reassess after a week. Sensitivity varies enormously between people — find your own line."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r05",
+      "title": "Morning Light Anchor",
+      "group": "starter",
+      "minutes": 12,
+      "purpose": "The most reliable everyday way to nudge your body clock earlier.",
+      "steps": [
+        "Within an hour of waking, get outside. Not next to a window — outside.",
+        "Ten to fifteen minutes on a bright morning; twenty to thirty if it is grey and overcast.",
+        "Don't look at the sun. Just be out in the open with your eyes uncovered.",
+        "Leave the sunglasses off for this stretch unless you need them medically or for glare while driving.",
+        "Stack it onto something you already do: the walk to the station, the dog, coffee on the doorstep.",
+        "Keep it up for a week before judging it. Clock shifts show up over days, not overnight."
+      ],
+      "safety": "If you have an eye condition, or take a medication that makes you sensitive to light, ask your doctor before adding deliberate bright-light exposure.",
+      "free": false
+    },
+    {
+      "id": "sleep.r06",
+      "title": "Brain Dump Before Bed",
+      "group": "core",
+      "minutes": 12,
+      "purpose": "Move tomorrow's thinking onto paper hours before you lie down — in small studies this lowered pre-sleep mental arousal, though it did not shorten how long people took to fall asleep.",
+      "steps": [
+        "Do this in the early evening, at least two hours before bed, and not in the bedroom.",
+        "Draw a line down a page. Left column: what is on my mind. Right column: the next physical step.",
+        "Fill the left column fast and plainly. Don't solve anything yet.",
+        "Now fill the right column. One concrete next action each — 'email Sam', 'check the balance Tuesday'. 'Worry about it' is not an action.",
+        "For anything with no available next step, write 'nothing to do tonight' and leave it there.",
+        "Close the notebook and put it out of sight. If the thoughts come back at midnight, remind yourself they are written down and dealt with in the morning."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r07",
+      "title": "Slow-Exhale Breathing in Bed",
+      "group": "core",
+      "minutes": 8,
+      "purpose": "A quiet, unforced breath rhythm for once you are lying down and the light is off.",
+      "steps": [
+        "Lie however you normally sleep. Let the mattress take your weight.",
+        "Breathe in through your nose for a count of four.",
+        "Breathe out for a count of six or eight — whatever is comfortable without straining.",
+        "No pausing at either end. One breath rolls straight into the next.",
+        "If counting keeps you alert, drop the numbers and simply make each out-breath a little longer than each in-breath.",
+        "Continue until you lose track. Losing track is the point — you are not trying to complete an exercise."
+      ],
+      "safety": "If slowing your breathing makes you light-headed or uneasy, stop and breathe normally. If you have a respiratory or cardiac condition, check with your doctor before taking up a deliberate breathing practice.",
+      "free": false
+    },
+    {
+      "id": "sleep.r08",
+      "title": "Body Scan for Sleep",
+      "group": "core",
+      "minutes": 15,
+      "purpose": "Give attention somewhere to go that is not the day — one body part at a time.",
+      "steps": [
+        "Lie on your back or your side, whichever you sleep in. Eyes closed.",
+        "Start at the crown of your head. Rest attention there for a few breaths. You are not trying to relax it — just notice it.",
+        "Move down slowly: face, jaw, throat, shoulders, arms, hands.",
+        "Continue through chest, belly, back, hips, legs, feet. Two or three breaths each.",
+        "When you notice you have drifted into thinking, that is normal. Return to wherever you had got to.",
+        "If you reach your feet and are still awake, go back to the top and do it again, slower.",
+        "Falling asleep partway through is a fine outcome. So is not."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r09",
+      "title": "Can't Sleep — Get Up",
+      "group": "core",
+      "minutes": 20,
+      "purpose": "The counterintuitive move at the heart of stimulus control: break the link between your bed and lying there frustrated.",
+      "steps": [
+        "Notice when you have crossed from resting into struggling — roughly twenty minutes of being awake and annoyed. Go by feel; don't watch the clock.",
+        "Get up. Leave the bedroom if you can.",
+        "Keep the light very low. One lamp, not the ceiling. No bright screens.",
+        "Do something quiet and undemanding: a dull book, folding laundry, sitting in a chair doing nothing.",
+        "Wait for real sleepiness — heavy eyes, losing the thread of the page — not just tiredness.",
+        "Go back to bed. If you are awake and frustrated again twenty minutes later, get up again. Repeat as many times as the night needs.",
+        "Keep tomorrow's wake time the same regardless of how the night went."
+      ],
+      "safety": "Move carefully in the dark, especially if you are unsteady on your feet or take medication that affects balance. If you are getting up like this most nights for more than three weeks, talk to a doctor about CBT-I rather than continuing on your own.",
+      "free": false
+    },
+    {
+      "id": "sleep.r10",
+      "title": "Set Your Wake Time",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Anchor the whole system with the one time of day you can genuinely control.",
+      "steps": [
+        "Pick the latest wake time that works on your busiest weekday. That is your anchor.",
+        "Set it for all seven days, weekends included, for the next two weeks.",
+        "Get up when it goes off. No snooze — snoozing fragments your last stretch of sleep for nothing.",
+        "Get outside into daylight soon after, as in the morning light anchor.",
+        "Do not set a matching bedtime yet. Go to bed when you are sleepy and let sleep pressure do that job.",
+        "After two weeks, look at whether you are falling asleep faster. A fixed wake time usually pulls bedtime earlier by itself."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r11",
+      "title": "Sleep-Environment Reset",
+      "group": "core",
+      "minutes": 25,
+      "purpose": "Spend half an hour once making the room dark, cool and quiet, so you never have to think about it again.",
+      "steps": [
+        "Stand in your bedroom at night with the lights off. Find every light source: standby LEDs, chargers, streetlight through a gap in the curtains.",
+        "Cover, unplug or remove them. Tape over the stubborn ones. Fix the curtain gap, or get a sleep mask.",
+        "Set the room cooler than you would have it for sitting around — most people sleep better in a cool room under warm bedding. Around 18°C is a commonly suggested starting point; adjust to what suits you.",
+        "Deal with noise: earplugs, a fan, a closed door. Steady sound is far easier to sleep through than sudden sound.",
+        "Take one thing out of the room that is not for sleeping — the laundry pile, the work bag, the television.",
+        "Make the bed properly. It costs a minute and changes how it feels to get into."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r12",
+      "title": "Gentle Stretch Before Bed",
+      "group": "core",
+      "minutes": 10,
+      "purpose": "Take the day's holding out of your hips, back and shoulders before you lie down with it.",
+      "steps": [
+        "Do this on the floor in dim light, an hour or so before bed, in loose clothes.",
+        "Start on hands and knees. Round and arch your back slowly, five or six times, with the breath.",
+        "Sit back toward your heels, arms forward, forehead heading for the floor. Five slow breaths. Put a cushion under you if that is too far.",
+        "Lie on your back and hug one knee in, then the other, then both. Five breaths each.",
+        "Let both knees drop to one side, arms wide, head turned the other way. Five breaths, then swap sides.",
+        "Finish flat on your back for a minute, doing nothing.",
+        "Keep everything well short of pain. This is not a workout."
+      ],
+      "safety": "Stay in a comfortable range and skip anything that hurts. If you have a back, hip, neck or joint problem, or you are pregnant, get advice from a physiotherapist or doctor about which of these suit you.",
+      "free": false
+    },
+    {
+      "id": "sleep.r13",
+      "title": "Pre-Sleep Gratitude",
+      "group": "core",
+      "minutes": 5,
+      "purpose": "Give the mind something specific and pleasant to run on instead of the day's unfinished business.",
+      "steps": [
+        "Once you are in bed with the light off, bring to mind three things from today you are glad happened.",
+        "Keep them small and concrete: a decent coffee, someone holding a door, ten quiet minutes.",
+        "For each one, stay with the actual scene for a few breaths — where you were, what it looked like — rather than just naming it.",
+        "If nothing comes, use yesterday, or something you are looking forward to.",
+        "Don't let it turn into a review of everything else. If the mind slides toward problems, come back to the third small good thing.",
+        "Let it trail off. You don't need to finish."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r14",
+      "title": "Yoga Nidra: Full Rotation of Consciousness",
+      "group": "deep",
+      "minutes": 35,
+      "purpose": "The long form — lying completely still while attention is walked through the whole body, then breath, then sensation.",
+      "steps": [
+        "Lie on your back on a mat or the floor rather than the bed. Blanket over you, small cushion under the head and under the knees. You will cool down.",
+        "Set an intention in one short present-tense sentence — in the tradition this is called a sankalpa. Say it silently three times.",
+        "Rotate attention through the right side, naming each part silently and moving on without lingering: right thumb, second finger, third, fourth, fifth, palm, wrist, forearm, elbow, upper arm, shoulder, armpit, ribs, waist, hip, thigh, knee, calf, ankle, heel, sole, top of the foot, each toe. Then the whole right side at once.",
+        "Repeat the identical sequence on the left side, then the whole left side at once.",
+        "Do the same for the back of the body, then the front: forehead, eyebrows, eyelids, nose, lips, chin, throat, chest, navel, abdomen.",
+        "Count breaths backwards from twenty-seven to one, feeling the belly rise and fall. If you lose count, start again at twenty-seven.",
+        "Bring up pairs of opposite sensations — heaviness then lightness, warmth then coolness — feeling each fully before moving on.",
+        "Repeat your intention three times exactly as at the start, then come back gradually: sounds in the room, the floor beneath you, small movements of fingers and toes. Roll to your side before sitting up."
+      ],
+      "safety": "Never do this while driving or operating anything. Falling asleep partway through is common and harmless; if it happens every single time, that is a sign you are short on sleep — worth looking at your nights rather than pushing on.",
+      "free": false
+    },
+    {
+      "id": "sleep.r15",
+      "title": "Yoga Nidra: Short Form",
+      "group": "deep",
+      "minutes": 20,
+      "purpose": "The same structure, condensed — enough to settle you without needing the full forty minutes.",
+      "steps": [
+        "Lie down somewhere warm and flat where you will not be disturbed. Eyes closed.",
+        "Let the body arrive with three slow breaths, then stop controlling the breath entirely.",
+        "Move attention through the body in blocks rather than individual parts: right arm, left arm, right leg, left leg, back, front, head. Ten to fifteen seconds each.",
+        "Count breaths backwards from twenty-seven to one.",
+        "Feel heaviness through the whole body, then lightness through the whole body.",
+        "Rest with no instruction at all for two or three minutes.",
+        "Return slowly: sounds first, then the surface beneath you, then movement."
+      ],
+      "safety": "Not while driving or operating machinery. Come up slowly at the end — standing straight up after deep rest can leave you light-headed.",
+      "free": false
+    },
+    {
+      "id": "sleep.r16",
+      "title": "Waking in the Night",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "A protocol for the three-in-the-morning wake-up, so you are not inventing one while half-conscious.",
+      "steps": [
+        "First, decide that nothing has gone wrong. Waking in the night is ordinary; most people do it and simply don't remember.",
+        "Don't look at the clock. Knowing the time only starts the arithmetic of how little sleep is left.",
+        "Stay in the dark. No phone — the light and the content both work against you.",
+        "Lie still and put attention on the out-breath, or run a slow body scan from head to feet.",
+        "If you are still awake and it has turned into struggling, get up, keep the lights low, and do something dull until sleepiness returns.",
+        "Whatever happens, get up at your usual time. Sleeping in to compensate only moves the problem to tomorrow night.",
+        "In the morning, don't audit the night. Replaying bad nights keeps the anxiety loop alive."
+      ],
+      "safety": "If you wake gasping, choking, or with your heart racing, or a partner has seen you stop breathing, see a doctor. Those can be signs of sleep apnoea and need proper assessment.",
+      "free": false
+    },
+    {
+      "id": "sleep.r17",
+      "title": "Trim Your Time in Bed",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "A cautious, simplified home version of a clinical technique: spend less time in bed so the time you are there is more solidly asleep.",
+      "steps": [
+        "Read the safety note below first. If any of it applies to you, skip this one and speak to a clinician instead.",
+        "Keep a simple sleep diary for a week: time into bed, rough time asleep, times awake, time you got up.",
+        "Work out your average actual sleep per night, and compare it with the time you spent in bed.",
+        "If you are spending, say, nine hours in bed for seven hours of sleep, set a window closer to your actual sleep — but never shorter than five and a half hours.",
+        "Keep your wake time fixed and move your bedtime later to create the shorter window.",
+        "Hold it for a week. Once you are falling asleep quickly and sleeping through most of the window, add fifteen minutes back.",
+        "Repeat slowly. Expect to feel sleepier before things improve — that is the mechanism, not a fault."
+      ],
+      "safety": "Shortening time in bed increases daytime sleepiness in the first week or two. Do not do this if you drive for work, operate machinery, have bipolar disorder or a seizure disorder, are pregnant, or have untreated sleep apnoea. Never cut the window below five and a half hours. This is a home-scale version of a technique that is properly delivered by a trained CBT-I clinician — if your sleep is genuinely disturbed, go to one rather than doing this alone.",
+      "free": false
+    },
+    {
+      "id": "sleep.r18",
+      "title": "The Worry Window",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Give worry a scheduled slot in daylight so it stops claiming the slot at midnight.",
+      "steps": [
+        "Book fifteen minutes at the same time each day, late afternoon or early evening. Never within two hours of bed.",
+        "Sit somewhere that is not the bedroom, with paper.",
+        "For the first ten minutes, worry deliberately. Write everything down, including the unreasonable ones. Don't censor.",
+        "For the last five, go back through and mark each one: something I can act on, or something I can't.",
+        "For the actionable ones, write the single next step and when you will do it.",
+        "For the rest, write 'not mine to solve tonight'.",
+        "When a worry turns up outside the window, note it in one line and tell yourself it goes into tomorrow's window. Then return to what you were doing."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r19",
+      "title": "The Wind-Down Hour",
+      "group": "deep",
+      "minutes": 45,
+      "purpose": "A full sequence for the hour before bed, in the order that makes each step easier than the last.",
+      "steps": [
+        "Sixty minutes out: lights down, screens away, phone on its shelf, kitchen tidied enough that morning-you isn't ambushed.",
+        "Fifty minutes out: a warm shower or bath. The warming of your skin and the cooling afterwards are part of how the body eases toward sleep.",
+        "Forty minutes out: ten minutes of gentle floor stretching in dim light.",
+        "Thirty minutes out: the brain dump — anything unfinished onto paper, with a next step written beside it.",
+        "Twenty minutes out: read something on paper by lamplight. Fiction beats anything you will have opinions about.",
+        "Ten minutes out: bathroom, teeth, alarm set on a clock that is not a phone.",
+        "Bed. Light off. Slow out-breaths, or a body scan, until you lose track."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r20",
+      "title": "Map Your Light Day",
+      "group": "deep",
+      "minutes": 15,
+      "purpose": "Find out where your light actually comes from, then move the single biggest lever.",
+      "steps": [
+        "Across one ordinary day, note roughly how much time you spend outdoors, and when.",
+        "Note the same for bright indoor light after dark: overheads, kitchen, bathroom, screens.",
+        "Put the two lists side by side. Most indoor lives are dim in the morning and bright at night, which is exactly the wrong way round.",
+        "Pick one morning change: coffee outside, a walk before work, or breakfast at the brightest window if outdoors is impossible.",
+        "Pick one evening change: overheads off after nine, or the last hour by lamplight only.",
+        "Run both for a week and note when you first feel sleepy each night.",
+        "After that, change one thing at a time, or you will never know what worked."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r21",
+      "title": "Legs Up the Wall",
+      "group": "restorative",
+      "minutes": 12,
+      "purpose": "A supported, passive shape that takes the weight off your legs and asks nothing of you — pleasant and settling, though the research on this specific posture is thin.",
+      "steps": [
+        "Sit sideways with one hip touching a wall, knees bent.",
+        "Roll onto your back as you swing your legs up the wall, then shuffle your hips as close as is comfortable.",
+        "Let the legs rest against the wall. A slight bend in the knees is fine; they do not need to be straight.",
+        "Arms out to the sides, palms up. A folded blanket under the hips if that feels better, a cushion under the head.",
+        "Stay eight to twelve minutes. Breathe normally and let the out-breath be unhurried.",
+        "To come out, bend the knees, roll onto your side, and rest there a few breaths before sitting up."
+      ],
+      "safety": "Come out slowly — sitting up quickly from an inverted position can make you light-headed. Skip or modify this if you are pregnant, or have glaucoma or raised eye pressure, uncontrolled high blood pressure, a hernia, or a neck problem. Ask your doctor if you are unsure.",
+      "free": false
+    },
+    {
+      "id": "sleep.r22",
+      "title": "NSDR-Style Ten-Minute Rest",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "A short, plain-language deep rest for the middle of the day, when you need a reset but should not sleep.",
+      "steps": [
+        "Lie down or recline somewhere you will be undisturbed for ten minutes. Set a timer so you are not tracking time.",
+        "Close your eyes. Three slow breaths with long out-breaths, then let the breath do whatever it wants.",
+        "Sweep attention slowly down the body — head, throat, arms, chest, belly, legs, feet — without trying to change anything.",
+        "Feel the weight of your body against the surface underneath you, and let it sink.",
+        "Stay there. If you drift toward sleep that is fine; the aim is rest rather than unconsciousness, but nothing is ruined either way.",
+        "When the timer goes, move slowly: fingers, toes, a stretch, then up."
+      ],
+      "safety": "Never do this while driving or operating anything. If you need it every afternoon and are still exhausted, treat that as information — look at your nights, and see a doctor if it does not shift.",
+      "free": false
+    },
+    {
+      "id": "sleep.r23",
+      "title": "Nap Protocol: Short and Early",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "Take the useful part of a nap without the grogginess afterwards or the ruined night that follows.",
+      "steps": [
+        "Nap early — before about three in the afternoon. Later naps eat into the sleep pressure you need tonight.",
+        "Set an alarm for twenty minutes from lying down. In lab work on brief naps, around ten minutes of actual sleep gave quick benefit with little grogginess, while thirty minutes brought grogginess first.",
+        "Lie somewhere dim and cool, but not in your bed if you are working on your night-time sleep.",
+        "Don't chase sleep. Twenty minutes of resting with your eyes closed is still worth having if you don't drop off.",
+        "Get up when the alarm goes, whatever state you are in. Snoozing a nap is how twenty minutes becomes ninety.",
+        "Get bright light and move around for a couple of minutes afterwards."
+      ],
+      "safety": "If you have trouble falling asleep at night, skip naps altogether for a few weeks — they lower the sleep pressure you need at bedtime. New or worsening daytime sleepiness, or falling asleep without meaning to, is worth a doctor's opinion.",
+      "free": false
+    },
+    {
+      "id": "sleep.r24",
+      "title": "Weekend Consistency",
+      "group": "restorative",
+      "minutes": 10,
+      "purpose": "Stop the weekend from resetting your body clock two hours later, week after week.",
+      "steps": [
+        "Compare your wake time on a workday with your wake time on a Saturday. Researchers call the gap between the midpoints of those two nights social jetlag.",
+        "If the gap is more than about an hour, aim to close it. The effect is a bit like flying across a couple of time zones every weekend.",
+        "Keep your weekend wake time within an hour of your weekday one.",
+        "If you are genuinely short on sleep, go to bed earlier on Friday and Saturday rather than getting up later.",
+        "Get outside into daylight on weekend mornings too. Keeping that up is often what holds the clock steady, more than the lie-in itself.",
+        "If you want a slow morning, take it after the light: stay in bed reading rather than sleeping until noon."
+      ],
+      "safety": "",
+      "free": false
+    },
+    {
+      "id": "sleep.r25",
+      "title": "Fully Supported Rest",
+      "group": "restorative",
+      "minutes": 20,
+      "purpose": "Lie down so completely propped that no muscle has a job — a deliberate, unhurried version of doing nothing.",
+      "steps": [
+        "Gather what you have: two or three cushions, a rolled blanket, a folded towel, and something to cover yourself with.",
+        "Lie on your back. Roll or bolster under the knees so the lower back settles. A thin cushion under the head so the chin isn't tipped up.",
+        "A rolled towel or small cushion under each forearm so the shoulders can drop. Blanket over you — you will get cold lying still.",
+        "Eye cover if you have one, or a folded cloth laid over the eyes.",
+        "Set a timer for twenty minutes. Then stop arranging things.",
+        "Do nothing at all. No counting, no scanning, no intention. If thoughts run, let them run.",
+        "Come out slowly: small movements, roll onto one side, sit for a moment before standing."
+      ],
+      "safety": "Not while driving or operating machinery. If lying flat is uncomfortable for your back, for reflux, or in pregnancy, prop your upper body on a slope of cushions instead, or lie on your side.",
+      "free": false
+    }
+  ],
+  "sources": [
+    "Borbély, Daan, Wirz-Justice & Deboer, The two-process model of sleep regulation: a reappraisal, Journal of Sleep Research, 2016 — the framework behind teaching 1: sleep pressure (Process S) building across the waking day and an independent circadian process (Process C) setting when sleep is possible.",
+    "Edinger, Arnedt, Bertisch, Carney, Harrington, Lichstein, Sateia, Troxel, Zhou, Kazmi, Heald & Martin, Behavioral and psychological treatments for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline, Journal of Clinical Sleep Medicine, 2021 — the basis for naming CBT-I as first-line care and for recommending stimulus control, sleep restriction and relaxation; the same guideline advises against sleep hygiene as a stand-alone treatment, which is why this school pairs habits with the behavioural techniques.",
+    "Trauer, Qian, Doyle, Rajaratnam & Cunnington, Cognitive Behavioral Therapy for Chronic Insomnia: A Systematic Review and Meta-analysis, Annals of Internal Medicine, 2015 — meta-analysis of 20 randomised trials showing CBT-I shortens time to fall asleep and time awake after sleep onset; supports the claim in teaching 5 that there is a well-tested clinical answer.",
+    "Bootzin, Stimulus control treatment for insomnia, Proceedings of the American Psychological Association, 1972; and Jansson-Fröjmark, Nordenstam et al., Stimulus control for insomnia: a systematic review and meta-analysis, Journal of Sleep Research, 2024 — the origin of the bed-is-for-sleep rules and the 'get up if you can't sleep' protocol, plus an honest read on the evidence: 11 mostly older trials, methodological limitations, efficacious against passive comparators.",
+    "Khalsa, Jewett, Cajochen & Czeisler, A phase response curve to single bright light pulses in human subjects, The Journal of Physiology, 2003 — maps how the same light shifts the body clock earlier or later depending on when it lands; the basis for the morning light anchor and the light-mapping routine.",
+    "Zeitzer, Dijk, Kronauer, Brown & Czeisler, Sensitivity of the human circadian pacemaker to nocturnal light: melatonin phase resetting and suppression, The Journal of Physiology, 2000; and Chang, Aeschbach, Duffy & Czeisler, Evening use of light-emitting eReaders negatively affects sleep, circadian timing, and next-morning alertness, PNAS, 2015 — human eyes respond to evening light at surprisingly modest levels, and evening screen reading delayed melatonin and sleep and reduced next-morning alertness; supports the evening dim-down and screens-down routines.",
+    "Datta, Tripathi & Mallick, Yoga nidra practice shows improvement in sleep in patients with chronic insomnia: A randomized controlled trial, The National Medical Journal of India, 2021 — 41 participants randomised to CBT-I or yoga nidra, with improvements in reported sleep quality and in N3 sleep on polysomnography after yoga nidra; the small sample is why this school treats deep rest as promising rather than established. The label 'NSDR' (non-sleep deep rest) is a modern coinage popularised by neuroscientist Andrew Huberman, not a term from this research literature.",
+    "Carney & Waters, Effects of a structured problem-solving procedure on pre-sleep cognitive arousal in college students with insomnia, Behavioral Sleep Medicine, 2006; and Digdon & Koble, Effects of Constructive Worry, Imagery Distraction, and Gratitude Interventions on Sleep Quality: A Pilot Trial, Applied Psychology: Health and Well-Being, 2011 — the constructive-worry and gratitude routines; both are small studies, and Carney & Waters found reduced pre-sleep cognitive arousal without a change in how long people took to fall asleep, which is how the brain-dump routine is described here.",
+    "Drake, Roehrs, Shambroom & Roth, Caffeine effects on sleep taken 0, 3, or 6 hours before going to bed, Journal of Clinical Sleep Medicine, 2013; and Brooks & Lack, A brief afternoon nap following nocturnal sleep restriction: which nap duration is most recuperative?, SLEEP, 2006 — 400 mg of caffeine still disrupted sleep taken six hours before bed (basis for the eight-hour curfew), and a ten-minute nap gave immediate benefit while a thirty-minute nap brought grogginess first.",
+    "Watson, Badr, Belenky, Bliwise, Buxton, Buysse et al., Recommended amount of sleep for a healthy adult: a joint consensus statement of the American Academy of Sleep Medicine and Sleep Research Society, SLEEP, 2015; and Okamoto-Mizuno & Mizuno, Effects of thermal environment on sleep and circadian rhythm, Journal of Physiological Anthropology, 2012 — the 'seven or more hours' figure in the overview, and the evidence that room temperature meaningfully affects sleep, behind the sleep-environment reset."
+  ],
+  "subtitle": "sleep and deep rest",
+  "pronunciation": "NEE-drah",
+  "origin": "Nidrā — Sanskrit for sleep itself (Yoga Sūtra 1.10). Most routines here are clinical sleep techniques; the yoga nidra session follows the Bihar School lineage."
+}

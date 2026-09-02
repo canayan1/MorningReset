@@ -141,7 +141,7 @@ enum EnergyPath: String, Codable, CaseIterable, Identifiable, Equatable {
                 PathSection(
                     heading: L10n.text(en: "Charge or settle", tr: "Doldur ya da sakinleştir", es: "Cargar o serenar"),
                     body: L10n.text(
-                        en: "Some breaths build heat and alertness — the bellows breath, skull-shining breath, and solar breath. Others balance and calm — alternate-nostril and coherent breathing. Choose what your morning needs, and always stay gentle.",
+                        en: "Some breaths build heat and alertness — the bellows breath, skull-shining breath, and solar breath. Others balance and calm — alternate-nostril and coherent breathing. Choose what your practice needs, and always stay gentle.",
                         tr: "Kimi nefesler ısı ve uyanıklık üretir — körük nefesi, kafatası parlatan nefes ve güneş nefesi. Kimileri dengeler ve sakinleştirir — alternatif burun ve koherans nefesi. Sabahının ihtiyacına göre seç ve her zaman nazik kal.",
                         es: "Algunas respiraciones generan calor y alerta — la respiración de fuelle, la de cráneo brillante y la solar. Otras equilibran y calman — la de fosas alternas y la coherente. Elige lo que tu mañana necesita y mantente siempre suave."
                     )

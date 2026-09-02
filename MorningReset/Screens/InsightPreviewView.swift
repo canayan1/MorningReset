@@ -7,12 +7,12 @@ struct InsightPreviewView: View {
 
     var body: some View {
         ZStack {
-            DS.background.ignoresSafeArea()
+            AppBackground()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(spacing: 0) {
                 Spacer()
 
-                VStack(alignment: .leading, spacing: DS.Space.lg) {
+                VStack(spacing: DS.Space.lg) {
                     insightContent
 
                     if appState.insightStrength != .none {
@@ -20,9 +20,11 @@ struct InsightPreviewView: View {
                             .font(.system(.callout, design: .serif))
                             .italic()
                             .foregroundStyle(DS.textDim)
+                            .multilineTextAlignment(.center)
                             .lineSpacing(3)
                     }
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, DS.Space.lg)
 
                 Spacer()
@@ -48,14 +50,15 @@ struct InsightPreviewView: View {
     private var insightContent: some View {
         if appState.insightStrength == .strong && !appState.isPremium {
             // Teaser — keep it simple
-            VStack(alignment: .leading, spacing: DS.Space.xs) {
+            VStack(spacing: DS.Space.xs) {
                 Text(L10n.text(
-                    en: "Your mornings this week have a shape to them.",
-                    tr: "Bu haftaki sabahlarının bir şekli var.",
-                    es: "Tus mañanas de esta semana tienen una forma."
+                    en: "Your practice this week has a shape to it.",
+                    tr: "Bu haftaki pratiğinin bir şekli var.",
+                    es: "Tu práctica de esta semana tiene una forma."
                 ))
                 .font(.system(size: 22, weight: .regular, design: .serif))
                 .foregroundStyle(DS.textPrimary)
+                .multilineTextAlignment(.center)
                 .lineSpacing(4)
 
                 Text(L10n.text(
@@ -65,11 +68,15 @@ struct InsightPreviewView: View {
                 ))
                 .font(.callout)
                 .foregroundStyle(DS.textDim)
+                .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity)
         } else {
             Text(appState.insightText)
                 .font(.system(size: 22, weight: .regular, design: .serif))
                 .foregroundStyle(DS.textPrimary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
                 .lineSpacing(5)
         }
     }
