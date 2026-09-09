@@ -1,0 +1,13 @@
+Make a 30-second vertical (9:16) cinematic film for the iOS app "Inner Light: Daily Practice". No presenter, no avatar, no talking head: cinematic B-roll only, with a calm female narrator voice-over. Standard mode is fine.
+
+STORY (a real-use moment, three shots in this order):
+1. A front door opens from inside onto a quiet residential street under a bright overcast sky; a woman in her thirties in a cardigan over pyjamas steps out onto the doorstep holding a mug, a tree beside the path.
+2. Medium shot of the same woman standing on the doorstep, no sunglasses, face turned up toward the brightest part of the sky, eyes softly open, flat bright light on her face. Very slow push-in. A bird passes.
+3. Held frame from the street on the woman turning and going back inside, the door closing gently; the tree, the bright sky, the quiet street.
+Between shot 2 and 3, hold for three seconds on the tradition's name.
+
+VOICE-OVER (read exactly, unhurried, warm, no additions): "Within an hour of waking, step outside. Face the brightest part of the sky, away from the sun. Two minutes, no phone. Notice one thing about the light — its colour, its angle. Then go back in. That is the entire practice. Shinrin-yoku. It always was free."
+
+ON-SCREEN TEXT (only these, small, elegant serif, no other captions or subtitles): at the start "Daylight on your face." — over shot 2 "SHINRIN-YOKU · daylight and green". Final 3 seconds: a soft glowing periwinkle orb on a pale ground with the words "Inner Light" and "Ten traditions. One practice free."
+
+STYLE: Cinematic vertical 9:16 film, 35mm look, soft natural grain, natural light only. Muted palette with periwinkle and slate-blue tones, warm haze, never clinical white. One person alone, unhurried, eyes closed or turned from the lens, never smiling at camera. Camera barely moves: a slow push-in or a held frame, no whip pans. Any phone in shot is an ordinary smartphone with a dim, unreadable screen. No text, no logos, no subtitles. Music: a very quiet ambient bed under the narration, fading out at the end.
