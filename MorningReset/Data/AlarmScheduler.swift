@@ -38,9 +38,9 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
         let content = UNMutableNotificationContent()
         content.title    = "Inner Light"
         content.body     = L10n.text(
-            en: "Tap to start your daily reset.",
-            tr: "Scroll başlamadan önce reset'i başlatmak için dokun.",
-            es: "Toca para empezar tu reset antes de que comience el scroll."
+            en: "Your practice is ready. Tap to begin.",
+            tr: "Pratiğin hazır. Başlamak için dokun.",
+            es: "Tu práctica está lista. Toca para empezar."
         )
         content.sound    = .default
         content.userInfo = ["action": "startWakeFlow"]
@@ -74,9 +74,9 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
             WakeActivityController.reconcile(
                 fireDate: fireDate,
                 tagline: L10n.text(
-                    en: "Your daily reset is ready.",
-                    tr: "Scroll başlamadan önce sessiz bir ritüel.",
-                    es: "Un ritual tranquilo antes del scroll."
+                    en: "Your practice is ready.",
+                    tr: "Pratiğin hazır.",
+                    es: "Tu práctica está lista."
                 )
             )
         }
@@ -111,10 +111,12 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
 // Replaces the local-notification backend on iOS 26.1+.
 // AlarmKit alarms bypass Silent mode and Sleep Focus — the system shows
 // a full-screen alarm UI identical to the built-in Clock app.
-// When the user presses Stop, StopMorningAlarmIntent opens the app and
-// AlarmEntryRouter picks up the UserDefaults flag to start the flow.
+// The alarm rings with the guide's own voice. Its Begin button runs
+// BeginPracticeIntent, which opens the app; AlarmEntryRouter picks up the
+// shared-container flag and starts the practice without a tap.
 
 import AlarmKit
+import ActivityKit   // AlertConfiguration.AlertSound
 import SwiftUI
 
 @available(iOS 26.1, *)
@@ -127,8 +129,8 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     private static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
 
     func requestAuthorization() async -> Bool {
-        // If AlarmKit is unavailable (entitlement missing, throws, or permission denied),
-        // fall through to local notifications so the user still gets a morning ping.
+        // If the person declines alarms, fall through to notifications so the
+        // morning still reaches them — just not through Silent mode.
         if (try? await AlarmManager.shared.requestAuthorization()) == .authorized { return true }
         return await base.requestAuthorization()
     }
@@ -137,14 +139,21 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         cancel()
         guard wakeSchedule.isEnabled else { return }
 
+        // The alarm is the practice: it rings with the guide's own voice, and its
+        // second button opens the app straight into the session. Stop is the
+        // system's and only silences it.
         let presentation = AlarmPresentation(
-            alert: AlarmPresentation.Alert(title: "Inner Light")
+            alert: AlarmPresentation.Alert(
+                title: "Your practice is ready",
+                secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
+                secondaryButtonBehavior: .custom
+            )
         )
         let attrs = AlarmAttributes<MorningAlarmMeta>(
             presentation: presentation,
-            tintColor: .orange
+            tintColor: DS.accent
         )
-        let stopIntent = StopMorningAlarmIntent()
+        let begin = BeginPracticeIntent()
 
         let weekdayConfig = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
             schedule: .relative(Alarm.Schedule.Relative(
@@ -152,7 +161,8 @@ final class AlarmKitWakeScheduler: WakeScheduling {
                 repeats: .weekly([.monday, .tuesday, .wednesday, .thursday, .friday])
             )),
             attributes: attrs,
-            stopIntent: stopIntent
+            secondaryIntent: begin,
+            sound: .named("wake_opening.caf")
         )
         let weekendConfig = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
             schedule: .relative(Alarm.Schedule.Relative(
@@ -160,11 +170,12 @@ final class AlarmKitWakeScheduler: WakeScheduling {
                 repeats: .weekly([.saturday, .sunday])
             )),
             attributes: attrs,
-            stopIntent: stopIntent
+            secondaryIntent: begin,
+            sound: .named("wake_opening.caf")
         )
 
-        // Try AlarmKit (bypasses Sleep Focus & Silent). Fall back to local notifications
-        // if AlarmKit is unavailable — e.g. entitlement not yet granted or permission denied.
+        // AlarmKit rings through Sleep Focus and Silent. If scheduling fails —
+        // alarms declined in Settings, say — fall back to notifications.
         do {
             try await AlarmManager.shared.schedule(id: Self.weekdayAlarmID, configuration: weekdayConfig)
             try await AlarmManager.shared.schedule(id: Self.weekendAlarmID, configuration: weekendConfig)
@@ -174,15 +185,15 @@ final class AlarmKitWakeScheduler: WakeScheduling {
                 WakeActivityController.reconcile(
                     fireDate: fireDate,
                     tagline: L10n.text(
-                        en: "Your daily reset is ready.",
-                        tr: "Scroll başlamadan önce sessiz bir ritüel.",
-                        es: "Un ritual tranquilo antes del scroll."
+                        en: "Your practice is ready.",
+                        tr: "Pratiğin hazır.",
+                        es: "Tu práctica está lista."
                     )
                 )
             }
         } catch {
-            // AlarmKit failed — fall back to local notification + Live Activity so the
-            // user still receives a morning ping even without the AlarmKit entitlement.
+            // AlarmKit failed — fall back to notification + Live Activity so the
+            // morning still arrives.
             await base.schedule(wakeSchedule)
         }
     }

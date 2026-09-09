@@ -3,7 +3,7 @@ import StoreKit
 
 // Tier access + daily routine selection for the energy schools.
 // All-Access (isPremium) unlocks everything; otherwise a school's routines are
-// unlocked by owning its tier. Every school's one free routine is always open.
+// unlocked by owning its tier. The one free routine is always open.
 
 extension AppState {
 
@@ -51,22 +51,26 @@ extension AppState {
         todaysPickRevision &+= 1
     }
 
-    /// Today's routine: whatever the user pinned today, otherwise the active
-    /// school's daily rotation.
-    var todaysRoutine: Routine {
+    /// Today's practice with its school: whatever the user pinned today,
+    /// otherwise the active school's daily rotation — and when nothing in that
+    /// school is open to them, the one free practice, never a locked one.
+    var todaysPractice: (school: SchoolContent, routine: Routine) {
         _ = todaysPickRevision   // the pick is stored outside the model; this is what makes it observable
         if let pick = todaysPick,
            let (school, routine) = SchoolContentStore.lookup(schoolID: pick.schoolID,
                                                             routineID: pick.routineID),
            isRoutineUnlocked(routine, in: school) {
-            return routine
+            return (school, routine)
         }
         let s = activeSchool
         let day = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         let pool = isSchoolFullyUnlocked(s) ? s.routines : s.routines.filter(\.free)
+        if pool.isEmpty, let free = SchoolContentStore.freePractice { return free }
         let list = pool.isEmpty ? s.routines : pool
-        return list[(day - 1) % max(1, list.count)]
+        return (s, list[(day - 1) % max(1, list.count)])
     }
+
+    var todaysRoutine: Routine { todaysPractice.routine }
 
     /// The energy reading still speaks the old three-path vocabulary. Resolve it
     /// into real school content so the check-in can offer something the rest of

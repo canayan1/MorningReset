@@ -39,6 +39,10 @@ final class AppState {
     var activeTab: AppTab = .today
     var answers: [String] = []
 
+    /// Raised when an alarm opens the app. Today consumes it and starts the
+    /// practice without a tap.
+    var wakePracticePending = false
+
     // Premium state (persisted via UserDefaults)
     var isPremium: Bool
     var onboardingSeen: Bool
@@ -266,6 +270,12 @@ final class AppState {
 
     func finishScheduleSetup() {
         showWakeHome()
+    }
+
+    /// The alarm's "Begin": land on Today and go straight into the practice.
+    func beginWakePractice() {
+        showWakeHome()
+        wakePracticePending = true
     }
 
     func startFlow() {

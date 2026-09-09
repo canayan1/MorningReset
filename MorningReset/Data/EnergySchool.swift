@@ -4,7 +4,7 @@ import SwiftUI
 //
 // School *content* lives in bundled JSON (see SchoolContent.swift). This file
 // holds what the app layers on top: paid tiers, per-school colour, and local
-// progress. Every school ships one free routine, so all ten are sampleable.
+// progress. One routine is free for everyone; the rest open with a plan.
 
 enum EnergyTier: String, CaseIterable, Identifiable, Codable {
     case foundations

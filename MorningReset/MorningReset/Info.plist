@@ -14,8 +14,8 @@
 	<true/>
 	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
 	<true/>
-	<key>NSAlarmsUsageDescription</key>
-	<string>Inner Light uses alarms so your daily practice reminder can reach you — even through Sleep Focus and Silent mode.</string>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Inner Light uses an alarm to wake you into your morning practice — through Silent mode and Sleep Focus.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Inner Light uses the front camera for the optional check-in. Your photo is analysed on this device only, is never saved, and never leaves your phone.</string>
 	<key>UIBackgroundModes</key>

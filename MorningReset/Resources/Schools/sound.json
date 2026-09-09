@@ -48,7 +48,7 @@
         "Sit still for thirty seconds without humming and notice what the room sounds like afterwards."
       ],
       "safety": "Keep the volume and pitch easy, and never squeeze out the last of the breath. Do not hum through a sore throat. Stop if your voice feels rough or you feel lightheaded.",
-      "free": true
+      "free": false
     },
     {
       "id": "sound.r02",

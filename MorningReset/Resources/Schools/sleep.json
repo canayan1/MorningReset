@@ -48,7 +48,7 @@
         "When the timer ends, go straight to bed — no detours, no last check of anything."
       ],
       "safety": "",
-      "free": true
+      "free": false
     },
     {
       "id": "sleep.r02",

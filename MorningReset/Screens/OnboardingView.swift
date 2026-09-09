@@ -220,8 +220,9 @@ struct OnboardingView: View {
     // MARK: - First practice (before we ever ask for money)
 
     private var practiceStep: some View {
-        let school = chosenSchool
-        let routine = school?.freeRoutine ?? school?.routines.first
+        // The first practice is the free one, whatever school drew them in.
+        let school = SchoolContentStore.freePractice?.school
+        let routine = SchoolContentStore.freePractice?.routine
         return ZStack {
             AuraBackground(path: recommendedPath, intensity: 0.4)
             VStack(spacing: 0) {

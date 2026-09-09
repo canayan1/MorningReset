@@ -84,15 +84,16 @@ struct RoutinePlayerView: View {
     }
 
     /// A review is worth asking for right after a practice lands, never before.
-    /// Only completed sessions count, and only at the third, tenth and
-    /// twenty-fifth — enough of a pattern that the person has something to say.
+    /// Only completed sessions count: the first — one practice is enough to
+    /// have an opinion — and again at the tenth and twenty-fifth, since the
+    /// system may decline to show the first.
     private func askForReviewIfEarned(after outcome: PracticeOutcome) {
         // Never during automated runs: the sheet lands on top of the screen the
         // capture is trying to photograph.
         guard !ProcessInfo.processInfo.arguments.contains("-uiTesting") else { return }
         guard outcome.feedsOrb else { return }
         let done = PracticeLogStore.completedCount()
-        guard [3, 10, 25].contains(done) else { return }
+        guard [1, 10, 25].contains(done) else { return }
         let key = "review_asked_at_\(done)"
         guard !UserDefaults.standard.bool(forKey: key) else { return }
         UserDefaults.standard.set(true, forKey: key)

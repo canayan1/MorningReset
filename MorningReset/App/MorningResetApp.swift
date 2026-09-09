@@ -48,8 +48,8 @@ struct MorningResetApp: App {
                 }
                 .onOpenURL { url in
                     guard url.scheme == "morningreset", url.host == "start" else { return }
-                    // The daily reminder opens today's practice, not the retired ritual.
-                    appState.showWakeHome()
+                    // The lock-screen activity opens today's practice and starts it.
+                    appState.beginWakePractice()
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {

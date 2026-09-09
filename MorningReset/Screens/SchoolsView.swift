@@ -28,7 +28,7 @@ struct SchoolsView: View {
             Text("Ten Traditions")
                 .font(.system(size: 32, weight: .light, design: .serif))
                 .foregroundStyle(DS.textPrimary)
-            Text("Kept whole, named as they are.\nOne practice free in each.")
+            Text("Kept whole, named as they are.\nOne practice is free. The rest open with a plan.")
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
                 .multilineTextAlignment(.center)

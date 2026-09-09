@@ -47,7 +47,7 @@
         "Close the page. Don't reread it, don't improve it."
       ],
       "safety": "",
-      "free": true
+      "free": false
     },
     {
       "id": "journal.r02",

@@ -39,8 +39,8 @@ final class AlarmEntryRouter {
 
     private func performRoute() {
         DispatchQueue.main.async {
-            // Open the app on Today; the practice is one tap away.
-            self.appState?.showWakeHome()
+            // The alarm is the practice: land on Today and start it, no tap.
+            self.appState?.beginWakePractice()
         }
     }
 }

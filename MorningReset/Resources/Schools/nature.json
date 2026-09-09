@@ -48,7 +48,7 @@
         "Go back in. That is the entire practice."
       ],
       "safety": "Never look directly at the sun, even for a moment. Look at open sky away from it, or at lit walls and trees. If the ground is icy or the street feels unsafe, an open window or a bright doorway is a reasonable stand-in.",
-      "free": true
+      "free": false
     },
     {
       "id": "nature.r02",

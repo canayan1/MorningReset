@@ -133,19 +133,34 @@ struct AlarmView: View {
             withAnimation(.spring(response: 0.55, dampingFraction: 0.7)) {
                 numberScale = 1.0
             }
+            consumeWakePractice()
+        }
+        .onChange(of: appState.wakePracticePending) { _, pending in
+            if pending { consumeWakePractice() }
         }
         .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
         .sheet(isPresented: $playSession, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
-            RoutinePlayerView(school: appState.activeSchool, routine: appState.todaysRoutine)
+            RoutinePlayerView(school: appState.todaysPractice.school, routine: appState.todaysPractice.routine)
         }
+    }
+
+    /// An alarm opened the app: start the practice without a tap.
+    private func consumeWakePractice() {
+        guard appState.wakePracticePending else { return }
+        appState.wakePracticePending = false
+        playSession = true
+    }
+
+    /// When the morning practice is set, the next time it will ring.
+    private var nextFire: Date? {
+        LocalNotificationWakeScheduler().nextFireDate(for: schedule)
     }
 
     // MARK: - Today's session
 
     private var todaysSessionCard: some View {
-        let school = appState.activeSchool
-        let session = appState.todaysRoutine
+        let (school, session) = appState.todaysPractice
         let color = SchoolPalette.color(school.id)
         return Button { playSession = true } label: {
             HStack(spacing: DS.Space.md) {
@@ -194,6 +209,17 @@ struct AlarmView: View {
                              es: "Practica hoy y tu orbe crece."))
                 .font(.caption).foregroundStyle(DS.textSecondary)
                 .multilineTextAlignment(.center)
+
+            // The morning practice is the point of the app; say when it rings.
+            if let fire = nextFire {
+                let at = fire.formatted(date: .omitted, time: .shortened)
+                Text(L10n.text(language: language,
+                               en: "Wakes you at \(at)",
+                               tr: "Seni \(at)'de uyandırır",
+                               es: "Te despierta a las \(at)"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(SchoolPalette.color(appState.activeSchoolID))
+            }
 
             // The orb is the control, so it has to say so.
             Text(L10n.text(language: language, en: "Tap to begin",
@@ -429,7 +455,7 @@ struct AlarmView: View {
 
     private var secondaryLabel: String {
         notificationIsSet
-        ? L10n.text(language: language, en: "Edit reminder", tr: "Hatırlatıcıyı düzenle", es: "Editar recordatorio")
-        : L10n.text(language: language, en: "Set a daily reminder", tr: "Günlük hatırlatıcı kur", es: "Configurar recordatorio")
+        ? L10n.text(language: language, en: "Edit morning practice", tr: "Sabah pratiğini düzenle", es: "Editar práctica matutina")
+        : L10n.text(language: language, en: "Set your morning practice", tr: "Sabah pratiğini kur", es: "Configura tu práctica matutina")
     }
 }

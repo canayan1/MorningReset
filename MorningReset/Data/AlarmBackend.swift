@@ -26,15 +26,14 @@ protocol WakeScheduling {
 
 enum WakeNotificationManager {
     static var current: any WakeScheduling {
-        // AlarmKit (iOS 26.1+) is gated behind the `com.apple.developer.alarmkit`
-        // entitlement, which Apple's provisioning currently refuses to include for
-        // this App ID — verified for BOTH development and App Store profiles
-        // ("Entitlement com.apple.developer.alarmkit not found and could not be
-        // included in profile"). Until Apple opens the capability, ship the
-        // local-notification + Live Activity path on every OS version. When it
-        // becomes provisionable: re-add the entitlement and re-enable this branch.
-        //
-        // if #available(iOS 26.1, *) { return AlarmKitWakeScheduler() }
+        // AlarmKit needs no provisioning entitlement. An earlier attempt added a
+        // `com.apple.developer.alarmkit` key that does not exist, provisioning
+        // rejected it, and the failure was misread as Apple gating the framework.
+        // What it actually needs is `NSAlarmKitUsageDescription` in Info.plist —
+        // the plist carried `NSAlarmsUsageDescription`, so authorization silently
+        // failed. Both are fixed; on iOS 26.1+ the alarm rings through Silent
+        // mode and Sleep Focus, and older systems get the notification path.
+        if #available(iOS 26.1, *) { return AlarmKitWakeScheduler() }
         return LocalNotificationWakeScheduler()
     }
 }

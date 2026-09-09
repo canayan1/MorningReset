@@ -366,7 +366,6 @@ final class MorningResetTests: XCTestCase {
 
         for s in schools {
             XCTAssertEqual(s.routines.count, 25, "\(s.id): expected 25 routines")
-            XCTAssertEqual(s.routines.filter(\.free).count, 1, "\(s.id): expected exactly 1 free routine")
             XCTAssertGreaterThanOrEqual(s.teachings.count, 4, "\(s.id): too few teachings")
             XCTAssertFalse(s.framingNote.isEmpty, "\(s.id): missing framing note")
             XCTAssertFalse(s.sources.isEmpty, "\(s.id): missing sources")
@@ -378,6 +377,13 @@ final class MorningResetTests: XCTestCase {
                 XCTAssertGreaterThan(r.minutes, 0, "\(r.id): bad minutes")
             }
         }
+
+        // One practice is free for everyone, and it is the one the alarm wakes
+        // you into — so its identity is part of the contract, not just its count.
+        let free = schools.flatMap(\.routines).filter(\.free)
+        XCTAssertEqual(free.count, 1, "expected exactly one free routine app-wide, got \(free.map(\.id))")
+        XCTAssertEqual(SchoolContentStore.freePractice?.routine.id, "breathing.r01")
+        XCTAssertEqual(SchoolContentStore.freePractice?.school.id, "breathing")
     }
 }
 

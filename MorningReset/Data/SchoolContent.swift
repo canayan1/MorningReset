@@ -96,14 +96,23 @@ enum SchoolContentStore {
         all.first { $0.id == id }
     }
 
-    /// Which paid tier a school belongs to. Every school still ships one free
-    /// routine, so all ten are sampleable without paying.
+    /// The one practice that is free for everyone — and the one the alarm
+    /// wakes you into.
+    static var freePractice: (school: SchoolContent, routine: Routine)? {
+        for school in all {
+            if let routine = school.routines.first(where: \.free) { return (school, routine) }
+        }
+        return nil
+    }
+
     /// Resolve a logged session back to its school and routine.
     static func lookup(schoolID: String, routineID: String) -> (SchoolContent, Routine)? {
         guard let s = school(schoolID), let r = s.routines.first(where: { $0.id == routineID }) else { return nil }
         return (s, r)
     }
 
+    /// Which paid tier a school belongs to. One routine in the whole app is
+    /// free; everything else opens with its tier or All-Access.
     static func tier(for id: String) -> EnergyTier {
         switch id {
         case "breathing", "meditation", "yoga", "journal", "nature": return .foundations

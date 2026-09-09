@@ -48,7 +48,7 @@
         "Pat dry and stand still for twenty seconds before you move on. Notice how much sharper the room looks."
       ],
       "safety": "Talk to your doctor first if you have any heart condition (angina, past heart attack, arrhythmia, valve disease), uncontrolled high blood pressure, are pregnant, or have Raynaud's, cold urticaria, cold-triggered asthma or epilepsy. Stop immediately if you shiver uncontrollably, go numb, feel dizzy or faint, get chest pain, an irregular heartbeat, or your breathing will not settle. Never do cold work in open water, never alone, and never hold your breath in, under or near water — hyperventilating or breath-holding in water can cause shallow water blackout, which kills without warning. Never combine cold or heat exposure with alcohol, recreational drugs or sedating medication. Skip this if you have cold-triggered hives or facial nerve pain, and use cool rather than icy water on your first few tries.",
-      "free": true
+      "free": false
     },
     {
       "id": "coldheat.r02",

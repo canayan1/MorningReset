@@ -13,6 +13,7 @@
 		08E770B1558DC53AE9F0FE1F /* MoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B71A13B94D0692EA82FC7C2 /* MoveView.swift */; };
 		11999F06565BFC1F20E45D58 /* AIInsightModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60D85B9A7E3267D147C1DC6 /* AIInsightModels.swift */; };
 		1553223E3B3B301E88173E51 /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCABB07C5CE08961DD97FF5F /* ActionContent.swift */; };
+		1C890B8DA352AB1E43EC0722 /* wake_opening.caf in Resources */ = {isa = PBXBuildFile; fileRef = AAE1ED02F020B0658A175AC1 /* wake_opening.caf */; };
 		2182FDB66C6BD87A70EED768 /* AppState+Premium.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A852C3A47BC367E2BDD567 /* AppState+Premium.swift */; };
 		2D25D3C21AA49AC73AAF3153 /* CycleCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185284A57784993148A1E485 /* CycleCompleteView.swift */; };
 		3214155B6FAAFAA454CAABE1 /* InsightPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9307A7878C0E116E1FF3AF2D /* InsightPreviewView.swift */; };
@@ -21,6 +22,7 @@
 		44D72EE27CF8FF4E6C68FA30 /* AIInsightPromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C25D9DB22AE4C05B7A283 /* AIInsightPromptBuilder.swift */; };
 		46B6685AEFE29B23F1310D64 /* SpeechGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8CD16B7149A75A7942D86 /* SpeechGuide.swift */; };
 		497D03C6396D2A0C57CE9290 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B68FE6EEEE7FFFD5666EF7E /* UserDefaultsKeys.swift */; };
+		49E99EB44FBE24AC9DD614E1 /* AlarmMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */; };
 		4C20C3177756C64FEFA49A7A /* Schools in Resources */ = {isa = PBXBuildFile; fileRef = 05D2CD42CA1DDBED29A96662 /* Schools */; };
 		4CE73625533D929BDBA4B1CE /* MorningData+TR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99257E9B40648C7BA1370841 /* MorningData+TR.swift */; };
 		539BA6AC552A64382C0C6099 /* StickFigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0349C96A93791912A77076A /* StickFigureView.swift */; };
@@ -64,6 +66,7 @@
 		B2C3D4E5F6A70011B2C3D4E5 /* BreathResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F70011A2B3C4D5 /* BreathResetView.swift */; };
 		B3C4D5E6F7A80011B3C4D5E6 /* PremiumHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B4C5D6E7F80011A3B4C5D6 /* PremiumHubView.swift */; };
 		B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */; };
+		B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */; };
 		B8E56E6DAB477C3A18BB8D32 /* FlowCheckout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994A8859593319D38DDDC630 /* FlowCheckout.swift */; };
 		BC732108F90C47ED2484355D /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A498E106812943115E450 /* FeedbackView.swift */; };
 		BD71C494DC51348CA84C57D0 /* MantraLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AC9732D7821675AD4B41F5 /* MantraLibrary.swift */; };
@@ -180,6 +183,7 @@
 		AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeActivityAttributes.swift; sourceTree = "<group>"; };
 		AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeActivityController.swift; sourceTree = "<group>"; };
 		AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeAudioPlayer.swift; sourceTree = "<group>"; };
+		AAE1ED02F020B0658A175AC1 /* wake_opening.caf */ = {isa = PBXFileReference; includeInIndex = 1; path = wake_opening.caf; sourceTree = "<group>"; };
 		B0594CAEFBF4FD2AA0C92F45 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		B57F53F6167BE8771F8A4348 /* EnergyReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnergyReader.swift; sourceTree = "<group>"; };
 		B9AC9732D7821675AD4B41F5 /* MantraLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MantraLibrary.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 		BBBB0008BBBB0008BBBB0008 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		BBBB0009BBBB0009BBBB0009 /* PracticeVisual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVisual.swift; sourceTree = "<group>"; };
 		BBBB000ABBBB000ABBBB000A /* AlarmKitIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmKitIntents.swift; sourceTree = "<group>"; };
+		BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlarmMeta.swift; sourceTree = "<group>"; };
 		BE1D4D940683C45803ECC46D /* EnergySchool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnergySchool.swift; sourceTree = "<group>"; };
 		BF76935EE2FE37144AC54E54 /* SchoolDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SchoolDetailView.swift; sourceTree = "<group>"; };
 		C0A0F24F463D78D4267583AF /* FlowCheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCheckoutView.swift; sourceTree = "<group>"; };
@@ -308,6 +313,7 @@
 				40266B3C5FF1706AAB78F604 /* Localizable.xcstrings */,
 				05D2CD42CA1DDBED29A96662 /* Schools */,
 				CBC5BBD279C54E1211DDFB1B /* Voice */,
+				AAE1ED02F020B0658A175AC1 /* wake_opening.caf */,
 			);
 			path = Resources;
 			sourceTree = SOURCE_ROOT;
@@ -398,6 +404,7 @@
 				F7C8CD16B7149A75A7942D86 /* SpeechGuide.swift */,
 				EEDE3E9E68D1B50ACE0DBEEE /* PracticeLog.swift */,
 				A6D01BD446A784305E4AA799 /* TimeOfDay.swift */,
+				BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -607,6 +614,7 @@
 				9C1854EA9027E7C907E6709B /* Localizable.xcstrings in Resources */,
 				4C20C3177756C64FEFA49A7A /* Schools in Resources */,
 				EEA4202358B8711170070E31 /* Voice in Resources */,
+				1C890B8DA352AB1E43EC0722 /* wake_opening.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +641,7 @@
 			files = (
 				CC100005CC100005CC100005 /* MorningResetWidget.swift in Sources */,
 				AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */,
+				49E99EB44FBE24AC9DD614E1 /* AlarmMeta.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +732,7 @@
 				99460BB938805F20FB1AAAD6 /* PracticeLog.swift in Sources */,
 				F41789159188F5D0EC4686AC /* TimeOfDay.swift in Sources */,
 				EC532ABB2F0EFF88D15F37EE /* EnergyTreeView.swift in Sources */,
+				B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

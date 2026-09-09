@@ -38,7 +38,7 @@ struct ScheduleSetupView: View {
                 .padding(.top, 20)
                 .padding(.bottom, DS.Space.lg)
 
-                Text(L10n.text(en: "DAILY REMINDER", tr: "GÜNLÜK HATIRLATICI", es: "RECORDATORIO DIARIO"))
+                Text(L10n.text(en: "MORNING PRACTICE", tr: "SABAH PRATİĞİ", es: "PRÁCTICA MATUTINA"))
                     .font(DS.Typo.label)
                     .foregroundStyle(DS.textSecondary)
                     .kerning(1.4)
@@ -47,7 +47,7 @@ struct ScheduleSetupView: View {
 
                 Spacer().frame(height: DS.Space.sm)
 
-                Text(L10n.text(en: "Practice at the same\ntime each day?", tr: "Her gün aynı saatte\npratik yapalım mı?", es: "¿Practicar a la misma\nhora cada día?"))
+                Text(L10n.text(en: "Wake up into\nyour practice.", tr: "Pratiğinin içine\nuyan.", es: "Despierta dentro\nde tu práctica."))
                     .font(DS.Typo.title)
                     .foregroundStyle(DS.textPrimary)
                     .lineSpacing(6)
@@ -58,9 +58,9 @@ struct ScheduleSetupView: View {
 
                 Text(
                     L10n.text(
-                        en: "Optional — we'll send a gentle reminder. Turn it off any time.",
-                        tr: "İsteğe bağlı — nazik bir hatırlatma göndeririz. İstediğinde kapat.",
-                        es: "Opcional — te enviaremos un recordatorio suave. Desactívalo cuando quieras."
+                        en: "At the time you choose, a voice wakes you and the practice begins — through Silent mode and Sleep Focus. Change it or switch it off any time.",
+                        tr: "Seçtiğin saatte bir ses seni uyandırır ve pratik başlar — Sessiz mod ve Uyku Odağı'nda bile. İstediğin zaman değiştir ya da kapat.",
+                        es: "A la hora que elijas, una voz te despierta y la práctica comienza — incluso en modo Silencio y Concentración de sueño. Cámbialo o desactívalo cuando quieras."
                     )
                 )
                     .font(.caption)
@@ -89,7 +89,7 @@ struct ScheduleSetupView: View {
 
                 if authDenied {
                     VStack(alignment: .center, spacing: DS.Space.sm) {
-                        Text(L10n.text(en: "Notifications are off. Enable them in Settings.", tr: "Bildirimler kapalı. Ayarlar'dan etkinleştir.", es: "Las notificaciones están desactivadas. Actívalas en Ajustes."))
+                        Text(L10n.text(en: "Alarms are off for Inner Light. Enable them in Settings.", tr: "Inner Light için alarmlar kapalı. Ayarlar'dan etkinleştir.", es: "Las alarmas están desactivadas para Inner Light. Actívalas en Ajustes."))
                             .font(.caption)
                             .foregroundStyle(DS.accent)
                             .frame(maxWidth: .infinity)
@@ -108,7 +108,7 @@ struct ScheduleSetupView: View {
 
                 Spacer()
 
-                Button(L10n.text(en: "Save wake time", tr: "Uyanma saatini kaydet", es: "Guardar hora de despertar")) {
+                Button(L10n.text(en: "Set morning practice", tr: "Sabah pratiğini kur", es: "Configurar práctica matutina")) {
                     Task { await saveAndSchedule() }
                 }
                 .primaryCTA()
@@ -125,14 +125,14 @@ struct ScheduleSetupView: View {
     private var lockScreenPreview: some View {
         HStack(alignment: .center, spacing: 14) {
             VStack(alignment: .leading, spacing: 3) {
-                Text("ENERGY RESET")
+                Text("INNER LIGHT")
                     .font(.system(size: 9, weight: .semibold))
                     .tracking(1.4)
                     .foregroundStyle(DS.textDim)
                 Text(L10n.text(
-                    en: "Your daily reset is ready.",
-                    tr: "Scroll başlamadan önce sessiz bir ritüel.",
-                    es: "Un ritual tranquilo antes del scroll."
+                    en: "Your practice is ready.",
+                    tr: "Pratiğin hazır.",
+                    es: "Tu práctica está lista."
                 ))
                 .font(.system(size: 13, design: .serif))
                 .foregroundStyle(DS.textPrimary)

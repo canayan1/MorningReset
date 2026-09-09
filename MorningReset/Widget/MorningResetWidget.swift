@@ -2,6 +2,7 @@ import WidgetKit
 import SwiftUI
 import ActivityKit
 import AppIntents
+import AlarmKit
 
 // MARK: - Shared data reader
 
@@ -421,11 +422,12 @@ struct WidgetEntryView: View {
 
 // MARK: - Live Activity design tokens (fixed)
 
+// The app's own tokens (DesignSystem.swift), which the widget cannot import.
 private enum WDS {
-    static let bg      = Color(red: 0.973, green: 0.953, blue: 0.925)
-    static let accent  = Color(red: 0.549, green: 0.424, blue: 0.282)
-    static let text    = Color(red: 0.149, green: 0.118, blue: 0.090)
-    static let textDim = Color(red: 0.149, green: 0.118, blue: 0.090).opacity(0.40)
+    static let bg      = Color(red: 0.957, green: 0.965, blue: 0.988)   // dawn mist
+    static let accent  = Color(red: 0.435, green: 0.451, blue: 0.780)   // periwinkle
+    static let text    = Color(red: 0.153, green: 0.169, blue: 0.259)   // deep slate
+    static let textDim = Color(red: 0.153, green: 0.169, blue: 0.259).opacity(0.40)
 }
 
 // MARK: - Live Activity
@@ -479,7 +481,7 @@ private struct WakeLiveActivityLockScreenView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("ENERGY RESET")
+                Text("INNER LIGHT")
                     .font(.system(size: 10, weight: .semibold))
                     .tracking(1.4)
                     .foregroundStyle(WDS.textDim)
@@ -509,6 +511,67 @@ private struct WakeLiveActivityLockScreenView: View {
     }
 }
 
+// MARK: - Alarm Live Activity
+//
+// AlarmKit draws the alarm itself; this is what the lock screen and the
+// Dynamic Island show around it — the same lines the app uses everywhere.
+
+@available(iOS 26.1, *)
+struct AlarmLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: AlarmAttributes<MorningAlarmMeta>.self) { _ in
+            AlarmLockScreenView()
+                .widgetURL(URL(string: "morningreset://start"))
+        } dynamicIsland: { _ in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Image(systemName: "sun.horizon.fill").foregroundStyle(WDS.accent)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text("Begin →")
+                        .font(.system(size: 13, weight: .semibold, design: .serif))
+                        .foregroundStyle(WDS.accent)
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    Text("Your practice is ready.")
+                        .font(.system(size: 12, design: .serif))
+                        .foregroundStyle(WDS.textDim)
+                }
+            } compactLeading: {
+                Image(systemName: "sun.horizon.fill").foregroundStyle(WDS.accent)
+            } compactTrailing: {
+                Text("Begin").font(.system(size: 12, weight: .semibold)).foregroundStyle(WDS.accent)
+            } minimal: {
+                Image(systemName: "sun.horizon.fill").foregroundStyle(WDS.accent)
+            }
+            .widgetURL(URL(string: "morningreset://start"))
+        }
+    }
+}
+
+private struct AlarmLockScreenView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 14) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("INNER LIGHT")
+                    .font(.system(size: 10, weight: .semibold))
+                    .tracking(1.4)
+                    .foregroundStyle(WDS.textDim)
+                Text("Your practice is ready.")
+                    .font(.system(size: 16, design: .serif))
+                    .foregroundStyle(WDS.text)
+            }
+            Spacer(minLength: 8)
+            Text("Begin →")
+                .font(.system(size: 15, weight: .semibold, design: .serif))
+                .foregroundStyle(WDS.accent)
+        }
+        .padding(16)
+        .activityBackgroundTint(WDS.bg)
+        .activitySystemActionForegroundColor(WDS.accent)
+    }
+}
+
 // MARK: - Widget Bundle
 
 @main
@@ -516,6 +579,7 @@ struct MorningResetWidgetBundle: WidgetBundle {
     var body: some Widget {
         MorningResetWidget()
         WakeLiveActivity()
+        if #available(iOS 26.1, *) { AlarmLiveActivity() }
     }
 }
 
