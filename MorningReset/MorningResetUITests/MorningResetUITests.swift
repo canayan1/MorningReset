@@ -68,10 +68,10 @@ final class MorningResetUITests: XCTestCase {
         snapshot(locked, "03_Teachings")
         locked.terminate()
 
-        // The library and the record are about abundance, so show them to a
-        // subscriber. A column of padlocks sells nothing.
+        // The practice panel shows the practice everyone gets — the free one,
+        // which is also what the alarm wakes you into.
         let full = launchApp(language: "en", region: "en_US",
-                             extraArguments: ["-seedPractice", "-premiumUnlocked"])
+                             extraArguments: ["-seedPractice", "-premiumLocked"])
 
         let begin = full.buttons["alarm.primaryButton"]
         waitForElement(begin, timeout: 8)
@@ -80,6 +80,8 @@ final class MorningResetUITests: XCTestCase {
         snapshot(full, "04_Practice")
         full.terminate()
 
+        // The library and the record are about abundance, so show them to a
+        // subscriber. A column of padlocks sells nothing.
         let last = launchApp(language: "en", region: "en_US",
                              extraArguments: ["-seedPractice", "-premiumUnlocked"])
         last.tabBars.buttons["Library"].tap(); usleep(1_000_000)
