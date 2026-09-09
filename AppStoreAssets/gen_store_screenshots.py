@@ -26,7 +26,7 @@ import subprocess
 import sys
 
 W, H = 1320, 2868
-N = 6  # panels, used to walk the shared background across the set
+N = 8  # panels, used to walk the shared background across the set
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "v2_screenshots")
@@ -50,10 +50,19 @@ SANS = "Avenir Next"
 # from the inside, not taught — so no "learn", and nothing about a missed day.
 # Poetry on top, proof underneath: the leaders all pair an inward line with a
 # concrete number, and a new app has only the number to trade on.
+#
+# The set opens on the showcase: the alarm that wakes you with a voice, straight
+# into a practice. Everything after it is what that practice opens onto.
 PANELS = [
+    ("00_Alarm.png",
+     "Wake up", "into your practice",
+     "A voice, at the time you choose · through Silent mode"),
+    ("00_SetAlarm.png",
+     "Set it once,", "it stays",
+     "Weekdays and weekends, each with their own hour"),
     ("01_Today.png",
      "Come home", "to yourself",
-     "Ten traditions · 250 practices · one free in each"),
+     "Ten traditions · 250 practices · one free for everyone"),
     ("02_Schools.png",
      "Ten traditions,", "kept whole",
      "Reiki, Pranayama, Qigong, Hatha and six more"),
@@ -150,11 +159,16 @@ def panel_svg(shot_path, quiet, loud, support, i):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    # A missing capture is reported, not fatal: the ringing alarm is photographed
+    # on a device and dropped in by hand, and the rest of the set should not
+    # wait for it.
     missing = [f for f, *_ in PANELS if not os.path.exists(os.path.join(RAW, f))]
-    if missing:
-        sys.exit("Missing raw captures in %s: %s" % (RAW, ", ".join(missing)))
+    for f in missing:
+        print("skipping %s (no raw capture in %s)" % (f, RAW), file=sys.stderr)
 
     for i, (fname, quiet, loud, support) in enumerate(PANELS):
+        if fname in missing:
+            continue
         svg = panel_svg(os.path.join(RAW, fname), quiet, loud, support, i)
         svg_path = os.path.join(OUT, fname.replace(".png", ".svg"))
         png_path = os.path.join(OUT, fname)

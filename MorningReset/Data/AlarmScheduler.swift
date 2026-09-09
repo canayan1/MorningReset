@@ -118,6 +118,7 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
 import AlarmKit
 import ActivityKit   // AlertConfiguration.AlertSound
 import SwiftUI
+import os
 
 @available(iOS 26.1, *)
 final class AlarmKitWakeScheduler: WakeScheduling {
@@ -128,10 +129,18 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     private static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
     private static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
 
+    private static let log = Logger(subsystem: "com.canayan.MorningReset", category: "alarm")
+
     func requestAuthorization() async -> Bool {
         // If the person declines alarms, fall through to notifications so the
         // morning still reaches them — just not through Silent mode.
-        if (try? await AlarmManager.shared.requestAuthorization()) == .authorized { return true }
+        do {
+            let state = try await AlarmManager.shared.requestAuthorization()
+            Self.log.notice("AlarmKit authorization: \(String(describing: state), privacy: .public)")
+            if state == .authorized { return true }
+        } catch {
+            Self.log.error("AlarmKit authorization threw: \(error.localizedDescription, privacy: .public)")
+        }
         return await base.requestAuthorization()
     }
 
@@ -194,8 +203,10 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         } catch {
             // AlarmKit failed — fall back to notification + Live Activity so the
             // morning still arrives.
+            Self.log.error("AlarmKit schedule failed, using notifications: \(error.localizedDescription, privacy: .public)")
             await base.schedule(wakeSchedule)
         }
+        Self.log.notice("AlarmKit alarms scheduled for \(wakeSchedule.weekdayHour):\(wakeSchedule.weekdayMinute) / \(wakeSchedule.weekendHour):\(wakeSchedule.weekendMinute)")
     }
 
     func cancel() {

@@ -89,6 +89,70 @@ final class MorningResetUITests: XCTestCase {
         snapshot(last, "06_Progress")
     }
 
+    // MARK: - Alarm showcase
+
+    /// The store opens on the alarm. Two frames from the app: the screen where
+    /// you set it, and Today once it is set — at a morning hour, since that is
+    /// what the store is selling. The ringing alarm itself is captured on a
+    /// device: in the simulator the alarm never presented and mobiletimerd
+    /// logged no schedule (see `testCaptureAlarmRinging`, which documents the
+    /// attempt and what to read when it fails).
+    @MainActor
+    func testCaptureAlarmSetup() throws {
+        let app = launchApp(language: "en", region: "en_US",
+                            extraArguments: ["-seedPractice", "-premiumLocked"])
+        let edit = app.buttons["alarm.secondaryButton"]
+        waitForElement(edit, timeout: 8)
+        edit.tap()
+        let save = app.buttons["schedule.saveButton"]
+        waitForElement(save, timeout: 8)
+        snapshot(app, "00_SetAlarm")
+
+        save.tap()
+        allowAlarmsIfAsked()
+
+        waitForElement(app.buttons["alarm.primaryButton"], timeout: 10)
+        snapshot(app, "01_Today")
+    }
+
+    /// Arms a real AlarmKit alarm two minutes out and waits for it to ring.
+    /// Diagnostic more than capture: the app logs the authorization state and
+    /// any scheduling error under the "alarm" category, which is what to read
+    /// when this fails.
+    @MainActor
+    func testCaptureAlarmRinging() throws {
+        let app = launchApp(language: "en", region: "en_US",
+                            extraArguments: ["-seedPractice", "-premiumLocked",
+                                             "-scheduleMinutesFromNow", "2"])
+        let edit = app.buttons["alarm.secondaryButton"]
+        waitForElement(edit, timeout: 8)
+        edit.tap()
+        let save = app.buttons["schedule.saveButton"]
+        waitForElement(save, timeout: 8)
+        save.tap()
+        allowAlarmsIfAsked()
+        waitForElement(app.buttons["alarm.primaryButton"], timeout: 10)
+
+        // The alarm's buttons are the app's own "Begin" and the system's "Stop";
+        // either one means it is on screen.
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let deadline = Date().addingTimeInterval(170)
+        var rang = false
+        while Date() < deadline {
+            if springboard.buttons["Begin"].exists || springboard.buttons["Stop"].exists { rang = true; break }
+            sleep(2)
+        }
+        XCTAssertTrue(rang, "the alarm never rang")
+        snapshot(app, "00_Alarm")
+    }
+
+    /// AlarmKit asks once; the sheet belongs to SpringBoard, not the app.
+    private func allowAlarmsIfAsked() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let allow = springboard.buttons["Allow"]
+        if allow.waitForExistence(timeout: 6) { allow.tap() }
+    }
+
     // MARK: - Onboarding
 
     @MainActor

@@ -194,6 +194,17 @@ private struct LaunchConfiguration {
     }
 
     private func applyWakeScheduleIfNeeded() {
+        // `-scheduleMinutesFromNow N` saves a schedule a few minutes out so a
+        // capture test can set a real alarm with one tap and photograph it ringing.
+        if let i = arguments.firstIndex(of: "-scheduleMinutesFromNow"),
+           let minutes = Int(arguments.dropFirst(i + 1).first ?? ""),
+           let fire = Calendar.current.date(byAdding: .minute, value: minutes, to: .now) {
+            let h = Calendar.current.component(.hour, from: fire)
+            let m = Calendar.current.component(.minute, from: fire)
+            WakeScheduleStore.save(WakeSchedule(weekdayHour: h, weekdayMinute: m,
+                                                weekendHour: h, weekendMinute: m, isEnabled: true))
+            return
+        }
         guard arguments.contains("-enableSchedule") else { return }
         WakeScheduleStore.save(
             WakeSchedule(

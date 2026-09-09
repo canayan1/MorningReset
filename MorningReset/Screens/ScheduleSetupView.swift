@@ -117,7 +117,8 @@ struct ScheduleSetupView: View {
             }
             .padding(.horizontal, DS.Space.lg)
         }
-        .accessibilityIdentifier("schedule.screen")
+        // No identifier on the container: SwiftUI would stamp it onto every
+        // child and erase the save button's own.
     }
 
     // MARK: - Time block
