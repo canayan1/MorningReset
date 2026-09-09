@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait"
+  data-composition-variables='[
+    {"id":"name",   "type":"string", "label":"Tradition",   "default":"Pranayama"},
+    {"id":"rider",  "type":"string", "label":"Rider",       "default":"Breath"},
+    {"id":"clip1",  "type":"string", "label":"Shot 1",      "default":"assets/clips/01_pranayama_1.mp4"},
+    {"id":"clip2",  "type":"string", "label":"Shot 2",      "default":"assets/clips/01_pranayama_2.mp4"},
+    {"id":"clip3",  "type":"string", "label":"Shot 3",      "default":"assets/clips/01_pranayama_3.mp4"},
+    {"id":"insert", "type":"string", "label":"App frame",   "default":"assets/frames/04_Practice.png"},
+    {"id":"vo",     "type":"string", "label":"Voiceover",   "default":"assets/audio/01_pranayama.m4a"}
+  ]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Inner Light — tradition film, generated footage</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Charter"; src: local("Charter"), local("Charter Roman"); }
+      @font-face { font-family: "Avenir Next"; src: local("Avenir Next"), local("AvenirNext-Regular"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #1F2145; }
+      body { font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #F4F6FC; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: Charter, Georgia, "Times New Roman", serif; }
+      video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* the tradition's name arrives as a lower third over the second shot */
+      #veil2 { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(31,33,69,0) 55%, rgba(31,33,69,0.75) 100%); }
+      #eyebrow { position: absolute; left: 0; right: 0; top: 1500px; text-align: center; color: #E6ECFA; opacity: 0.92;
+                 font-size: 28px; font-weight: 600; letter-spacing: 7px; text-transform: uppercase; }
+      #name { position: absolute; left: 60px; right: 60px; top: 1550px; text-align: center; color: #F4F6FC;
+              font-size: 104px; font-weight: 400; line-height: 1.05; letter-spacing: -1px; }
+      #rider { position: absolute; left: 0; right: 0; top: 1690px; text-align: center; color: #C9CEF2; font-size: 36px; font-weight: 500; letter-spacing: 2px; }
+
+      /* the app, once: a device card on the app's own light ground */
+      #insert { background: linear-gradient(180deg, #E6ECFA 0%, #F4F6FC 55%, #E6ECFA 100%); }
+      .aura { position: absolute; width: 900px; height: 900px; border-radius: 50%; filter: blur(150px); }
+      #insert-line { position: absolute; left: 90px; right: 90px; top: 250px; text-align: center; color: #44478F; font-size: 72px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; }
+      #insert-sub { position: absolute; left: 90px; right: 90px; top: 430px; text-align: center; color: #5D657E; font-size: 38px; font-weight: 500; }
+      .device { position: absolute; left: 135px; top: 560px; width: 810px; height: 1760px; border-radius: 64px; overflow: hidden; background: #fff; box-shadow: 0 40px 100px rgba(34,38,61,0.22); }
+      .device img { display: block; width: 100%; height: auto; }
+      .device .frame { position: absolute; inset: 0; border-radius: 64px; border: 8px solid rgba(255,255,255,0.92); }
+
+      /* end card */
+      #end { background: linear-gradient(180deg, #E6ECFA 0%, #F4F6FC 60%, #E6ECFA 100%); }
+      #end-glow { position: absolute; left: 50%; top: 560px; width: 560px; height: 560px; margin: -130px 0 0 -280px; border-radius: 50%; background: #9CA5E0; filter: blur(90px); opacity: 0.5; }
+      #end-orb { position: absolute; left: 50%; top: 560px; width: 300px; height: 300px; margin-left: -150px; border-radius: 50%;
+                 background: radial-gradient(circle at 38% 34%, #FFFFFF 0%, #C9CEF2 22%, #9CA5E0 55%, #6F73C7 100%); box-shadow: 0 30px 90px rgba(111,115,199,0.35); }
+      #end-name { position: absolute; left: 0; right: 0; top: 980px; text-align: center; color: #22263D; font-size: 112px; font-weight: 400; }
+      #end-line { position: absolute; left: 0; right: 0; top: 1130px; text-align: center; color: #5D657E; font-size: 44px; font-weight: 500; }
+      #end-store { position: absolute; left: 50%; top: 1290px; width: 520px; height: 110px; margin-left: -260px; border-radius: 55px; background: #22263D; color: #F4F6FC;
+                   display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 600; letter-spacing: 0.5px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="film" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+
+      <!-- three generated shots, 8 s each, crossfaded -->
+      <section id="s1" class="clip" data-start="0" data-duration="8.5" data-track-index="1">
+        <div id="s1-scene" class="scene">
+          <video id="v1" data-var-src="clip1" src="assets/clips/01_pranayama_1.mp4" muted playsinline data-start="0" data-duration="8.5"></video>
+        </div>
+      </section>
+      <section id="s2" class="clip" data-start="8" data-duration="8.5" data-track-index="2">
+        <div id="s2-scene" class="scene">
+          <video id="v2" data-var-src="clip2" src="assets/clips/01_pranayama_2.mp4" muted playsinline data-start="8" data-duration="8.5"></video>
+          <div id="veil2"></div>
+          <div id="eyebrow">Inner Light</div>
+          <div id="name" class="serif">Pranayama</div>
+          <div id="rider">Breath</div>
+        </div>
+      </section>
+      <section id="s3" class="clip" data-start="16" data-duration="8.5" data-track-index="1">
+        <div id="s3-scene" class="scene">
+          <video id="v3" data-var-src="clip3" src="assets/clips/01_pranayama_3.mp4" muted playsinline data-start="16" data-duration="8.5"></video>
+        </div>
+      </section>
+
+      <!-- the app, for three seconds -->
+      <section id="insert" class="clip" data-start="24" data-duration="3.5" data-track-index="2">
+        <div id="insert-scene" class="scene">
+          <div class="aura" style="left:-200px; top:-100px; background:#9CA5E0; opacity:0.55"></div>
+          <div class="aura" style="left:600px; top:900px; background:#6998C4; opacity:0.35"></div>
+          <div id="insert-line">A quiet voice stays with you</div>
+          <div id="insert-sub">Every step read aloud, on a timer that never hurries you</div>
+          <div class="device" id="insert-device"><img id="insert-img" data-var-src="insert" src="assets/frames/04_Practice.png" alt="" /><div class="frame"></div></div>
+        </div>
+      </section>
+
+      <!-- end card -->
+      <section id="end" class="clip" data-start="27" data-duration="3" data-track-index="1">
+        <div id="end-scene" class="scene">
+          <div id="end-glow"></div>
+          <div id="end-orb"></div>
+          <div id="end-name" class="serif">Inner Light</div>
+          <div id="end-line">Ten traditions. One practice free.</div>
+          <div id="end-store">Download on the App Store</div>
+        </div>
+      </section>
+
+      <audio id="vo" data-var-src="vo" src="assets/audio/01_pranayama.m4a" data-start="1.0" data-duration="26" data-volume="1"></audio>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="30" data-volume="0.12"></audio>
+    </div>
+
+    <script>
+      const v = window.__hyperframes && window.__hyperframes.getVariables ? window.__hyperframes.getVariables() : {};
+      if (v.name)  document.getElementById("name").textContent  = v.name;
+      if (v.rider) document.getElementById("rider").textContent = v.rider;
+
+      const tl = gsap.timeline({ paused: true });
+
+      // shots hand over with a half-second dissolve; each one is killed hard at its boundary
+      tl.from("#s1-scene", { opacity: 0, duration: 0.8 }, 0);
+      tl.to("#s1-scene", { opacity: 0, duration: 0.5 }, 8.0);   tl.set("#s1-scene", { opacity: 0 }, 8.5);
+      tl.from("#s2-scene", { opacity: 0, duration: 0.5 }, 8.0);
+      tl.from(["#eyebrow", "#name", "#rider"], { opacity: 0, y: 24, duration: 0.9, ease: "power3.out", stagger: 0.12 }, 9.4);
+      tl.to("#s2-scene", { opacity: 0, duration: 0.5 }, 16.0);  tl.set("#s2-scene", { opacity: 0 }, 16.5);
+      tl.from("#s3-scene", { opacity: 0, duration: 0.5 }, 16.0);
+      tl.to("#s3-scene", { opacity: 0, duration: 0.5 }, 24.0);  tl.set("#s3-scene", { opacity: 0 }, 24.5);
+
+      // the app
+      tl.from("#insert-scene", { opacity: 0, duration: 0.5 }, 24.0);
+      tl.from(["#insert-line", "#insert-sub"], { opacity: 0, y: 26, duration: 0.7, ease: "power3.out", stagger: 0.12 }, 24.3);
+      tl.from("#insert-device", { y: 200, opacity: 0, duration: 0.9, ease: "power3.out" }, 24.4);
+      tl.to("#insert-scene", { opacity: 0, duration: 0.5 }, 27.0);  tl.set("#insert-scene", { opacity: 0 }, 27.5);
+
+      // end card
+      tl.from("#end-scene", { opacity: 0, duration: 0.5 }, 27.0);
+      tl.from("#end-orb", { scale: 0.7, opacity: 0, duration: 0.9, ease: "power3.out" }, 27.1);
+      tl.from(["#end-name", "#end-line", "#end-store"], { opacity: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.12 }, 27.5);
+
+      tl.fromTo("#bed", { volume: 0.12 }, { volume: 0, duration: 1.4, ease: "power1.in" }, 28.4);
+
+      window.__timelines["film"] = tl;
+    </script>
+  </body>
+</html>

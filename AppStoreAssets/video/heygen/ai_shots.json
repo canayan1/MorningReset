@@ -1,0 +1,55 @@
+{
+  "style": "Cinematic vertical 9:16 film, 35mm look, soft natural grain, natural light only. Muted palette with periwinkle and slate-blue tones, warm haze, never clinical white. One person alone, unhurried, eyes closed or turned from the lens, never smiling at camera. Camera barely moves: a slow push-in or a held frame, no whip pans. Any phone in shot is an ordinary smartphone with a dim, unreadable screen. No text, no logos, no subtitles.",
+  "films": [
+    {"id": "01_pranayama", "name": "Pranayama", "rider": "Breath", "vo": "assets/audio/01_pranayama.m4a", "insert": "assets/frames/04_Practice.png", "shots": [
+      "A woman in her thirties asleep in a dim bedroom at dawn, blue light at half-open curtains; a smartphone on the nightstand lights up softly beside her. Held frame, very slow push-in.",
+      "Close on the same woman lying in bed, eyes closed, taking two short breaths in through the nose and one long slow breath out through the mouth; the chest rises twice and falls once. Morning light climbing the wall behind her.",
+      "She opens her eyes and looks at the ceiling as warm morning light fills the room; a small calm smile begins. Nothing else moves. Held frame."
+    ]},
+    {"id": "02_qigong", "name": "Qigong", "rider": "Slow movement", "vo": "assets/audio/02_qigong.m4a", "insert": "assets/frames/04_Practice.png", "shots": [
+      "Wide shot at dawn on a snow terrace above Zermatt, the Matterhorn and peaks turning pink; one small figure in a ski jacket stands alone, breath visible, earphones in. Held wide frame.",
+      "Medium shot of a man in his forties in a ski jacket standing in the qigong Wuji stance on packed snow: feet hip-width, knees soft, shoulders dropped, arms hanging with a small gap under the armpits, eyes half closed, breathing slowly through the nose. Slow push-in.",
+      "Close on the same man rubbing his gloved palms together, then resting both hands on his lower belly, eyes closed, alpine light on his face; far below, a ski lift starts to turn."
+    ]},
+    {"id": "03_reiki", "name": "Reiki", "rider": "Quiet hands", "vo": "assets/audio/03_reiki.m4a", "insert": "assets/frames/01_Today.png", "shots": [
+      "A narrow city balcony at morning over terracotta rooftops; a small table with a steaming cup of coffee and a smartphone lying face-up beside it, screen dim. Soft haze. Held frame.",
+      "A woman in her fifties seated upright on the balcony chair, palms joined in front of her chest in gassho, fingers pointing up, shoulders soft, eyes closed; the coffee keeps steaming untouched. Slow push-in on the hands, then her face.",
+      "The same woman lowers her joined hands to her lap, sits a moment with eyes closed, then opens them and reaches for the coffee. Rooftops and morning light behind."
+    ]},
+    {"id": "04_bhavana", "name": "Bhavana", "rider": "Attention", "vo": "assets/audio/04_bhavana.m4a", "insert": "assets/frames/05_Library.png", "shots": [
+      "High wide aerial of a small Mallorca cala at seven in the morning: turquoise water, pale limestone cliffs, no people except one woman seated on a flat rock at the water's edge. Slow descent toward her.",
+      "Close on a woman in her late twenties in a linen shirt seated cross-legged on the rock, earphones in; she lays a smartphone face-down on the stone beside her and closes her eyes. Water moving gently behind.",
+      "Held frame on the same woman meditating, absolutely still, breath visible only at the collarbones; a wave arrives and withdraws, a gull crosses the frame. Morning light."
+    ]},
+    {"id": "05_hatha", "name": "Hatha", "rider": "Every direction", "vo": "assets/audio/05_hatha.m4a", "insert": "assets/frames/04_Practice.png", "shots": [
+      "A yoga mat unrolled on a bedroom floor between the bed and a bright window, early morning; bare feet step onto it; a smartphone is propped against a stack of books at the end of the mat, screen dim. Low angle.",
+      "Side profile of a man in his thirties in a t-shirt on hands and knees moving slowly through cat-cow: inhaling as the belly drops and chest comes forward, exhaling as the tailbone tucks and the upper back domes. One breath per movement, whole body in frame, held camera.",
+      "The same man sits back onto his heels on the mat, hands on thighs, eyes closed, window light on his shoulders, breathing slowly. Held frame."
+    ]},
+    {"id": "06_nada", "name": "Nada Yoga", "rider": "Voice and ear", "vo": "assets/audio/06_nada.m4a", "insert": "assets/frames/02_Schools.png", "shots": [
+      "Tracking shot from behind a woman in her forties walking along the Corniche seafront in Marseille in late afternoon, wind in her hair, earphones in, the Mediterranean and hazy islands to her left.",
+      "Close on the same woman seated on the low seafront wall, lips closed, jaw relaxed, humming quietly on a long out-breath with eyes closed; sea and sky behind her, wind moving her hair. Slow push-in.",
+      "Held frame on her face, eyes still closed, no longer humming, simply listening; the sea behind her, light lowering toward dusk."
+    ]},
+    {"id": "07_loyly", "name": "Löyly", "rider": "Cold and heat", "vo": "assets/audio/07_loyly.m4a", "insert": "assets/frames/04_Practice.png", "shots": [
+      "A wooden chalet bathroom in Verbier on a winter morning, frost on the small window, a white basin; a smartphone stands on the shelf above it, screen dim. Held frame, warm wood tones.",
+      "Close on a man in his late twenties in a thermal top at the basin, cupped hands full of cold water, splashing his face five or six times, breathing normally, droplets on the mirror. Slight slow motion on one splash.",
+      "The same man patting his face dry with a towel, then standing still and looking at himself in the mirror, awake, water on his neck, frost light from the window."
+    ]},
+    {"id": "08_shinrin", "name": "Shinrin-yoku", "rider": "Daylight and green", "vo": "assets/audio/08_shinrin.m4a", "insert": "assets/frames/02_Schools.png", "shots": [
+      "A front door opens from inside onto a quiet residential street under a bright overcast sky; a woman in her thirties in a cardigan over pyjamas steps out onto the doorstep holding a mug, a tree beside the path.",
+      "Medium shot of the same woman standing on the doorstep, no sunglasses, face turned up toward the brightest part of the sky, eyes softly open, flat bright light on her face. Very slow push-in. A bird passes.",
+      "Held frame from the street on the woman turning and going back inside, the door closing gently; the tree, the bright sky, the quiet street."
+    ]},
+    {"id": "09_nidra", "name": "Nidra", "rider": "Wind down", "vo": "assets/audio/09_nidra.m4a", "insert": "assets/frames/01_Today.png", "shots": [
+      "Close on a hand turning a smartphone face-down on a bedside table and sliding it out of reach; behind, a bedroom at night under a ceiling light which then switches off, leaving one small warm lamp.",
+      "A man in his forties seated in an armchair beside the bed, back supported, hands on his knees, eyes closed, breathing slowly with a long out-breath; one warm lamp, the rest of the room dark. Held frame, focus softening slightly.",
+      "The same man standing and switching off the warm lamp; the room goes to soft darkness with a faint glow from the window. Held frame."
+    ]},
+    {"id": "10_notes", "name": "Notes to Self", "rider": "On paper", "vo": "assets/audio/10_notes.m4a", "insert": "assets/frames/05_Library.png", "shots": [
+      "A café table on the Vieux-Port in Marseille early morning before the crowds: marble table, an espresso, a small notebook, a pen, a smartphone lying beside the saucer, harbour masts blurred behind. Held frame.",
+      "Close on a woman in her twenties writing one line in the notebook with a pen, ink on paper, the pen's shadow, harbour light; she pauses and adds a few words. We never read the line.",
+      "The same woman closing the notebook without rereading it, capping the pen, and lifting the espresso; harbour and morning light behind. Held frame."
+    ]}
+  ]
+}

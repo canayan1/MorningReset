@@ -22,3 +22,20 @@ drop the files in, stage the assets, `npx hyperframes check`, then
 The two things lint will catch if you edit: never tween a clip element's own
 opacity at its boundary (use the inner `.scene` wrapper + `tl.set` hard kill), and
 system fonts need a `@font-face { src: local(...) }` declaration.
+
+## Generated-footage films (HeyGen)
+
+- `heygen/ai_shots.json` — the house style plus three shot prompts per film,
+  lifted from the real-use scripts (a person, a place, the practice, the phone
+  as it sits in life; screens dim and unreadable so no interface is invented).
+- `heygen/build_requests.py` — turns those into `cinematic_avatar` request
+  bodies for `heygen video create` (one person pinned per film via avatar look
+  ids; the tradition's photograph passed as a reference).
+- `heygen/01_pranayama.prompt.txt` — the one-shot Video Agent prompt for the
+  showcase film (`heygen video-agent create --prompt "$(cat …)" --orientation portrait`).
+- `films-ai/index.html` — the assembly: three generated clips crossfaded, the
+  tradition's name as a lower third, one app frame, the end card, the app's
+  own voice and a music bed. Variables: name, rider, clip1–3, insert, vo.
+
+HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash`, then
+`heygen auth login --oauth` (subscription credits; an API key bills separately).
