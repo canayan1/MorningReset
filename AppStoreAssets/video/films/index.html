@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait"
+  data-composition-variables='[
+    {"id":"name",  "type":"string", "label":"Tradition",       "default":"Pranayama"},
+    {"id":"rider", "type":"string", "label":"Rider",           "default":"Breath"},
+    {"id":"photo", "type":"string", "label":"Photograph",      "default":"assets/photos/tradition-breathing.jpg"},
+    {"id":"vo",    "type":"string", "label":"Voiceover file",  "default":"assets/audio/01_pranayama.m4a"}
+  ]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Inner Light — tradition film</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Charter"; src: local("Charter"), local("Charter Roman"); }
+      @font-face { font-family: "Avenir Next"; src: local("Avenir Next"), local("AvenirNext-Regular"); }
+      .scene { position: absolute; inset: 0; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #1F2145; }
+      body { font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #F4F6FC; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .serif { font-family: Charter, Georgia, "Times New Roman", serif; }
+
+      /* the photograph is the film; everything else sits quietly on top of it */
+      #photo { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #veil { position: absolute; inset: 0;
+              background: linear-gradient(180deg, rgba(31,33,69,0.15) 0%, rgba(31,33,69,0) 35%, rgba(31,33,69,0.55) 72%, rgba(31,33,69,0.92) 100%); }
+      #tint { position: absolute; inset: 0; background: #6F73C7; opacity: 0.12; mix-blend-mode: multiply; }
+      #eyebrow { position: absolute; left: 0; right: 0; top: 1330px; text-align: center; color: #E6ECFA; opacity: 0.92;
+                 font-size: 30px; font-weight: 600; letter-spacing: 7px; text-transform: uppercase; }
+      #name { position: absolute; left: 60px; right: 60px; top: 1390px; text-align: center; color: #F4F6FC;
+              font-size: 120px; font-weight: 400; line-height: 1.05; letter-spacing: -1px; }
+      #rider { position: absolute; left: 0; right: 0; top: 1560px; text-align: center; color: #C9CEF2;
+               font-size: 40px; font-weight: 500; letter-spacing: 2px; }
+      #rule { position: absolute; left: 50%; top: 1660px; width: 120px; height: 3px; margin-left: -60px; background: #9CA5E0; opacity: 0.7; }
+
+      /* end card on the app's light ground */
+      #end { background: linear-gradient(180deg, #E6ECFA 0%, #F4F6FC 60%, #E6ECFA 100%); }
+      #end-glow { position: absolute; left: 50%; top: 560px; width: 560px; height: 560px; margin: -130px 0 0 -280px; border-radius: 50%;
+                  background: #9CA5E0; filter: blur(90px); opacity: 0.5; }
+      #end-orb { position: absolute; left: 50%; top: 560px; width: 300px; height: 300px; margin-left: -150px; border-radius: 50%;
+                 background: radial-gradient(circle at 38% 34%, #FFFFFF 0%, #C9CEF2 22%, #9CA5E0 55%, #6F73C7 100%);
+                 box-shadow: 0 30px 90px rgba(111,115,199,0.35); }
+      #end-name { position: absolute; left: 0; right: 0; top: 980px; text-align: center; color: #22263D; font-size: 112px; font-weight: 400; }
+      #end-line { position: absolute; left: 0; right: 0; top: 1130px; text-align: center; color: #5D657E; font-size: 44px; font-weight: 500; }
+      #end-store { position: absolute; left: 50%; top: 1290px; width: 520px; height: 110px; margin-left: -260px; border-radius: 55px;
+                   background: #22263D; color: #F4F6FC; display: flex; align-items: center; justify-content: center;
+                   font-size: 36px; font-weight: 600; letter-spacing: 0.5px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="tradition" data-start="0" data-duration="17" data-width="1080" data-height="1920">
+
+      <!-- 0–14.5s · one person, mid-practice, and the tradition's name -->
+      <section id="film" class="clip" data-start="0" data-duration="14.5" data-track-index="1">
+        <div id="film-scene" class="scene">
+        <img id="photo" data-var-src="photo" src="assets/photos/tradition-breathing.jpg" alt="" />
+        <div id="tint"></div>
+        <div id="veil"></div>
+        <div id="eyebrow">Inner Light</div>
+        <div id="name" class="serif" data-var-text="name">Pranayama</div>
+        <div id="rider" data-var-text="rider">Breath</div>
+        <div id="rule"></div>
+        </div>
+      </section>
+
+      <!-- 14.5–17s · end card -->
+      <section id="end" class="clip" data-start="14.5" data-duration="2.5" data-track-index="1">
+        <div id="end-scene" class="scene">
+        <div id="end-glow"></div>
+        <div id="end-orb"></div>
+        <div id="end-name" class="serif">Inner Light</div>
+        <div id="end-line">Ten traditions. One practice free.</div>
+        <div id="end-store">Download on the App Store</div>
+        </div>
+      </section>
+
+      <audio id="vo" data-var-src="vo" src="assets/audio/01_pranayama.m4a" data-start="0.8" data-duration="14" data-volume="1"></audio>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="17" data-volume="0.12"></audio>
+    </div>
+
+    <script>
+      // Media sources arrive through data-var-src; only the words need a hand. The timeline is the same for every film.
+      const v = window.__hyperframes && window.__hyperframes.getVariables ? window.__hyperframes.getVariables() : {};
+      if (v.name)  document.getElementById("name").textContent  = v.name;
+      if (v.rider) document.getElementById("rider").textContent = v.rider;
+
+      const tl = gsap.timeline({ paused: true });
+
+      // the photograph breathes: a slow settle, never a whip
+      tl.fromTo("#photo", { scale: 1.10 }, { scale: 1.0, duration: 14.5, ease: "none" }, 0);
+      tl.from("#film-scene", { opacity: 0, duration: 0.9, ease: "power1.out" }, 0);
+
+      // the name arrives once the picture has had a moment
+      tl.from("#eyebrow", { opacity: 0, y: 18, duration: 0.8, ease: "power2.out" }, 2.4);
+      tl.from("#name",    { opacity: 0, y: 30, duration: 1.0, ease: "power3.out" }, 2.7);
+      tl.from("#rider",   { opacity: 0, y: 18, duration: 0.8, ease: "power2.out" }, 3.1);
+      tl.fromTo("#rule", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power2.out" }, 3.3);
+      tl.to("#film-scene", { opacity: 0, duration: 0.7, ease: "power1.inOut" }, 13.9);
+      tl.set("#film-scene", { opacity: 0 }, 14.5);
+
+      // end card
+      tl.from("#end-scene", { opacity: 0, duration: 0.6 }, 14.5);
+      tl.from("#end-orb", { scale: 0.7, opacity: 0, duration: 0.9, ease: "power3.out" }, 14.6);
+      tl.from(["#end-name", "#end-line", "#end-store"], { opacity: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.12 }, 14.9);
+
+      tl.fromTo("#bed", { volume: 0.12 }, { volume: 0, duration: 1.4, ease: "power1.in" }, 15.6);
+
+      window.__timelines["tradition"] = tl;
+    </script>
+  </body>
+</html>

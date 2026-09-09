@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Inner Light — Wake up into your practice</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Charter"; src: local("Charter"), local("Charter Roman"); }
+      @font-face { font-family: "Avenir Next"; src: local("Avenir Next"), local("AvenirNext-Regular"); }
+      .scene { position: absolute; inset: 0; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #2C2F5E; }
+      body { font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #22263D; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .serif { font-family: Charter, Georgia, "Times New Roman", serif; }
+      .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 7px; text-transform: uppercase; }
+
+      /* Scene A — the alarm, in the app's own language, not a mock of the system's */
+      #ring { background: radial-gradient(120% 80% at 50% 20%, #3B3F7A 0%, #2C2F5E 55%, #1F2145 100%); }
+      #ring-glow { position: absolute; left: 50%; top: 42%; width: 620px; height: 620px; margin: -310px 0 0 -310px;
+                   border-radius: 50%; background: #9CA5E0; filter: blur(90px); opacity: 0.45; }
+      #ring-orb { position: absolute; left: 50%; top: 42%; width: 340px; height: 340px; margin: -170px 0 0 -170px;
+                  border-radius: 50%;
+                  background: radial-gradient(circle at 38% 34%, #FFFFFF 0%, #C9CEF2 22%, #9CA5E0 55%, #6F73C7 100%);
+                  box-shadow: 0 40px 120px rgba(0,0,0,0.35); }
+      #ring-time { position: absolute; left: 0; right: 0; top: 190px; text-align: center; color: #F4F6FC;
+                   font-size: 170px; font-weight: 300; letter-spacing: -4px; line-height: 1; }
+      #ring-eyebrow { position: absolute; left: 0; right: 0; top: 1130px; text-align: center; color: #9CA5E0; }
+      #ring-title { position: absolute; left: 0; right: 0; top: 1190px; text-align: center; color: #F4F6FC;
+                    font-size: 76px; font-weight: 400; line-height: 1.15; }
+      #ring-begin { position: absolute; left: 50%; top: 1440px; width: 420px; height: 132px; margin-left: -210px;
+                    border-radius: 66px; background: #6F73C7; color: #FFFFFF; display: flex; align-items: center;
+                    justify-content: center; gap: 18px; font-size: 46px; font-weight: 600;
+                    box-shadow: 0 24px 60px rgba(111,115,199,0.45); }
+      #ring-begin .tri { width: 0; height: 0; border-left: 30px solid #fff; border-top: 18px solid transparent;
+                         border-bottom: 18px solid transparent; }
+      #ring-stop { position: absolute; left: 0; right: 0; top: 1610px; text-align: center; color: #9CA5E0;
+                   font-size: 34px; font-weight: 500; }
+
+      /* Scenes B & C — device frames on the app's light ground */
+      .light { background: linear-gradient(180deg, #E6ECFA 0%, #F4F6FC 55%, #E6ECFA 100%); }
+      .aura { position: absolute; width: 900px; height: 900px; border-radius: 50%; filter: blur(150px); }
+      .quiet { position: absolute; left: 0; right: 0; top: 250px; text-align: center; color: #5D657E;
+               font-size: 84px; font-weight: 600; letter-spacing: -1px; }
+      .loud  { position: absolute; left: 0; right: 0; top: 355px; text-align: center; color: #44478F;
+               font-size: 96px; font-weight: 700; letter-spacing: -2px; }
+      .support { position: absolute; left: 90px; right: 90px; top: 500px; text-align: center; color: #5D657E;
+                 font-size: 40px; font-weight: 500; line-height: 1.3; }
+      .device { position: absolute; left: 135px; top: 690px; width: 810px; height: 1760px; border-radius: 64px;
+                overflow: hidden; background: #fff; box-shadow: 0 40px 100px rgba(34,38,61,0.22); }
+      .device img { display: block; width: 100%; height: auto; }
+      .device .frame { position: absolute; inset: 0; border-radius: 64px; border: 8px solid rgba(255,255,255,0.92); }
+
+      /* Scene D — end card */
+      #end { background: linear-gradient(180deg, #E6ECFA 0%, #F4F6FC 60%, #E6ECFA 100%); }
+      #end-orb { position: absolute; left: 50%; top: 560px; width: 300px; height: 300px; margin-left: -150px; border-radius: 50%;
+                 background: radial-gradient(circle at 38% 34%, #FFFFFF 0%, #C9CEF2 22%, #9CA5E0 55%, #6F73C7 100%);
+                 box-shadow: 0 30px 90px rgba(111,115,199,0.35); }
+      #end-glow { position: absolute; left: 50%; top: 560px; width: 560px; height: 560px; margin: -130px 0 0 -280px; border-radius: 50%;
+                  background: #9CA5E0; filter: blur(90px); opacity: 0.5; }
+      #end-name { position: absolute; left: 0; right: 0; top: 980px; text-align: center; color: #22263D; font-size: 112px; font-weight: 400; }
+      #end-line { position: absolute; left: 0; right: 0; top: 1130px; text-align: center; color: #5D657E; font-size: 44px; font-weight: 500; }
+      #end-store { position: absolute; left: 50%; top: 1290px; width: 520px; height: 110px; margin-left: -260px; border-radius: 55px;
+                   background: #22263D; color: #F4F6FC; display: flex; align-items: center; justify-content: center;
+                   font-size: 36px; font-weight: 600; letter-spacing: 0.5px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22" data-width="1080" data-height="1920">
+
+      <!-- A · 0–7.5s · the alarm rings with the guide's voice -->
+      <section id="ring" class="clip" data-start="0" data-duration="7.5" data-track-index="1">
+        <div id="ring-scene" class="scene">
+        <div id="ring-glow"></div>
+        <div id="ring-orb"></div>
+        <div id="ring-time" class="serif">7:00</div>
+        <div id="ring-eyebrow" class="eyebrow">Inner Light</div>
+        <div id="ring-title" class="serif">Your practice is ready</div>
+        <div id="ring-begin"><span class="tri"></span><span>Begin</span></div>
+        <div id="ring-stop">Stop</div>
+        </div>
+      </section>
+
+      <!-- B · 7.5–13s · set it once -->
+      <section id="setup" class="clip light" data-start="7.5" data-duration="5.5" data-track-index="1">
+        <div id="setup-scene" class="scene">
+        <div class="aura" id="aura-b1" style="left:-200px; top:-100px; background:#9CA5E0; opacity:0.55"></div>
+        <div class="aura" id="aura-b2" style="left:600px; top:900px; background:#6998C4; opacity:0.35"></div>
+        <div class="quiet" id="setup-quiet">Set it once,</div>
+        <div class="loud" id="setup-loud">it stays</div>
+        <div class="support" id="setup-support">Weekdays and weekends, each with their own hour</div>
+        <div class="device" id="setup-device"><img src="assets/frames/00_SetAlarm.png" alt="" /><div class="frame"></div></div>
+        </div>
+      </section>
+
+      <!-- C · 13–18.5s · wake up into the practice -->
+      <section id="practice" class="clip light" data-start="13" data-duration="5.5" data-track-index="1">
+        <div id="practice-scene" class="scene">
+        <div class="aura" id="aura-c1" style="left:400px; top:-150px; background:#9CA5E0; opacity:0.55"></div>
+        <div class="aura" id="aura-c2" style="left:-300px; top:1000px; background:#6998C4; opacity:0.35"></div>
+        <div class="quiet" id="practice-quiet">Wake up</div>
+        <div class="loud" id="practice-loud">into your practice</div>
+        <div class="support" id="practice-support">A voice, at the time you choose · through Silent mode</div>
+        <div class="device" id="today-device"><img src="assets/frames/01_Today.png" alt="" /><div class="frame"></div></div>
+        <div class="device" id="practice-device"><img src="assets/frames/04_Practice.png" alt="" /><div class="frame"></div></div>
+        </div>
+      </section>
+
+      <!-- D · 18.5–22s · end card -->
+      <section id="end" class="clip" data-start="18.5" data-duration="3.5" data-track-index="1">
+        <div id="end-scene" class="scene">
+        <div id="end-glow"></div>
+        <div id="end-orb"></div>
+        <div id="end-name" class="serif">Inner Light</div>
+        <div id="end-line">Ten traditions. One practice free.</div>
+        <div id="end-store">Download on the App Store</div>
+        </div>
+      </section>
+
+      <!-- sound: the guide's own voice, then a music bed underneath -->
+      <audio id="vo1" src="assets/audio/wake_opening.m4a" data-start="0.4" data-duration="7" data-volume="1"></audio>
+      <audio id="vo2" src="assets/audio/showcase_vo.m4a" data-start="8.2" data-duration="10.2" data-volume="1"></audio>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="22" data-volume="0.14"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // A — the alarm: orb breathes, Begin pulses, the clock settles in
+      tl.fromTo("#ring-orb", { scale: 0.92 }, { scale: 1.06, duration: 2.4, ease: "sine.inOut", repeat: 2, yoyo: true }, 0);
+      tl.fromTo("#ring-glow", { opacity: 0.3 }, { opacity: 0.55, duration: 2.4, ease: "sine.inOut", repeat: 2, yoyo: true }, 0);
+      tl.from("#ring-time", { opacity: 0, y: -30, duration: 1.0, ease: "power2.out" }, 0.2);
+      tl.from(["#ring-eyebrow", "#ring-title"], { opacity: 0, y: 24, duration: 0.9, ease: "power2.out", stagger: 0.12 }, 0.8);
+      tl.from("#ring-begin", { opacity: 0, y: 30, duration: 0.8, ease: "power2.out" }, 1.4);
+      tl.fromTo("#ring-begin", { scale: 1 }, { scale: 1.05, duration: 1.1, ease: "sine.inOut", repeat: 4, yoyo: true }, 2.2);
+      tl.from("#ring-stop", { opacity: 0, duration: 0.8 }, 1.8);
+      tl.to("#ring-scene", { opacity: 0, duration: 0.6, ease: "power1.inOut" }, 6.9);
+      tl.set("#ring-scene", { opacity: 0 }, 7.5);
+
+      // B — set it once
+      tl.from("#setup-scene", { opacity: 0, duration: 0.6 }, 7.5);
+      tl.from(["#setup-quiet", "#setup-loud", "#setup-support"], { opacity: 0, y: 30, duration: 0.8, ease: "power3.out", stagger: 0.14 }, 7.8);
+      tl.from("#setup-device", { y: 220, opacity: 0, duration: 1.1, ease: "power3.out" }, 8.0);
+      tl.to("#setup-device", { y: -40, duration: 3.4, ease: "none" }, 9.1);
+      tl.to("#setup-scene", { opacity: 0, duration: 0.5 }, 12.5);
+      tl.set("#setup-scene", { opacity: 0 }, 13.0);
+
+      // C — wake up into the practice: Today, then the session
+      tl.from("#practice-scene", { opacity: 0, duration: 0.6 }, 13);
+      tl.from(["#practice-quiet", "#practice-loud", "#practice-support"], { opacity: 0, y: 30, duration: 0.8, ease: "power3.out", stagger: 0.14 }, 13.3);
+      tl.from("#today-device", { y: 220, opacity: 0, duration: 1.1, ease: "power3.out" }, 13.5);
+      tl.fromTo("#practice-device", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: "power2.inOut" }, 15.6);
+      tl.to("#practice-device", { y: -40, duration: 1.5, ease: "none" }, 16.5);
+      tl.to("#practice-scene", { opacity: 0, duration: 0.5 }, 18.0);
+      tl.set("#practice-scene", { opacity: 0 }, 18.5);
+
+      // D — end card
+      tl.from("#end-scene", { opacity: 0, duration: 0.6 }, 18.5);
+      tl.from("#end-orb", { scale: 0.7, opacity: 0, duration: 1.0, ease: "power3.out" }, 18.6);
+      tl.from(["#end-name", "#end-line", "#end-store"], { opacity: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.14 }, 19.0);
+
+      // sound: the bed sits under the voice and leaves with the picture
+      tl.fromTo("#bed", { volume: 0.14 }, { volume: 0, duration: 1.6, ease: "power1.in" }, 20.4);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
