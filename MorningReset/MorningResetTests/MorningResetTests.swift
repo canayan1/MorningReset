@@ -431,62 +431,105 @@ final class MorningResetTests: XCTestCase {
 
     // MARK: - Pulse
 
-    /// A clean synthetic beat at a known rate must come back at that rate. The
-    /// camera cannot be driven in a test, so this is where the estimator is
-    /// actually held to account.
-    func testPulseEstimatorRecoversAKnownRate() {
-        for bpm in [48.0, 62.0, 75.0, 96.0, 124.0] {
-            let rate = 30.0, seconds = 20.0
-            let signal = (0..<Int(rate * seconds)).map { i -> Double in
-                let t = Double(i) / rate
-                // A beat is not a sine: the second harmonic is what gives it
-                // the sharp upstroke the peak finder looks for.
-                return 0.004 * sin(2 * .pi * bpm / 60 * t)
-                     + 0.0015 * sin(4 * .pi * bpm / 60 * t)
+    /// The band has to be flat where hearts actually beat. The filter this
+    /// replaced subtracted a 0.75s moving average, which is a comb: it passed
+    /// 80 and 160 bpm at full strength while taking a third out of 60 and two
+    /// thirds out of 40 — suppressing exactly the resting rates it existed for.
+    func testPulseBandIsFlatWhereHeartsBeat() {
+        func gain(_ bpm: Double) -> Double {
+            let fs = 30.0
+            let x = (0..<900).map { sin(2 * .pi * bpm / 60 * Double($0) / fs) }
+            let y = PulseSignal.bandpass(x, sampleRate: fs)
+            func amp(_ a: [Double]) -> Double {
+                let mid = Array(a[(a.count / 4)..<(3 * a.count / 4)])   // skip edge transients
+                return ((mid.max() ?? 0) - (mid.min() ?? 0)) / 2
             }
-            guard let result = PulseReader.estimate(signal, sampleRate: rate) else {
-                return XCTFail("no reading at \(bpm) bpm")
+            return amp(y) / amp(x)
+        }
+        for bpm in [60.0, 75, 100, 140] {
+            XCTAssertGreaterThan(gain(bpm), 0.85, "\(bpm) bpm is inside the band and must pass")
+        }
+        XCTAssertGreaterThan(gain(45), 0.65, "a slow resting heart must survive")
+        XCTAssertLessThan(gain(12), 0.15, "breathing drift must not")
+    }
+
+    /// The real thing: a hue trace with a slow baseline drift, uneven frame
+    /// times, and a pulse under two percent of the signal.
+    func testPulseSurvivesARealisticTrace() {
+        var seed: UInt64 = 11
+        func random() -> Double {
+            seed = seed &* 6364136223846793005 &+ 1442695040888963407
+            return Double(seed >> 40) / Double(1 << 24) - 0.5
+        }
+        for bpm in [48.0, 58, 72, 96, 124] {
+            var times: [Double] = [], values: [Double] = [], clock = 0.0
+            for _ in 0..<240 {
+                clock += 1.0 / 30 + random() * 0.012          // frames do not arrive evenly
+                values.append(0.020                            // a red frame's hue
+                              + 0.0015 * sin(2 * .pi * 0.07 * clock)   // the finger settling
+                              + 0.00035 * sin(2 * .pi * bpm / 60 * clock)
+                              + 0.00012 * sin(4 * .pi * bpm / 60 * clock)
+                              + random() * 0.0008)
+                times.append(clock)
             }
-            XCTAssertEqual(result.bpm, bpm, accuracy: 1.5, "off at \(bpm) bpm")
-            XCTAssertGreaterThan(result.confidence, 0.8, "should be sure of a clean signal at \(bpm)")
+            let grid = PulseSignal.resample(times: times, values: values, to: 30)
+            guard let r = PulseSignal.estimate(PulseSignal.bandpass(grid, sampleRate: 30), sampleRate: 30) else {
+                return XCTFail("lost the beat at \(bpm) bpm")
+            }
+            XCTAssertEqual(r.bpm, bpm, accuracy: 2.5, "off at \(bpm) bpm")
+            XCTAssertGreaterThan(r.confidence, PulseReader.minimumConfidence)
         }
     }
 
-    /// A real trace drifts and is noisy, and the beat is small against both.
-    /// This is the case that caught a five-percent overestimate: the octave
-    /// guard was taking any shorter lag that scored nearly as well, and near
-    /// the peak of an autocorrelation that is most of them.
-    func testPulseEstimatorSurvivesDriftAndNoise() {
-        var seed: UInt64 = 7
-        for bpm in [52.0, 68.0, 92.0, 118.0] {
-            let raw = (0..<600).map { i -> Double in
-                let t = Double(i) / 30
-                seed = seed &* 6364136223846793005 &+ 1442695040888963407
-                let noise = (Double(seed >> 40) / Double(1 << 24) - 0.5) * 0.012
-                return 0.35 + 0.02 * sin(2 * .pi * 0.08 * t)          // the finger settling
-                     + 0.004 * sin(2 * .pi * bpm / 60 * t)
-                     + 0.0015 * sin(4 * .pi * bpm / 60 * t) + noise
-            }
-            guard let r = PulseReader.estimate(PulseReader.strongerTrace(red: raw, green: raw),
-                                               sampleRate: 30) else {
-                return XCTFail("lost the beat at \(bpm) bpm under noise")
-            }
-            XCTAssertEqual(r.bpm, bpm, accuracy: 2.0, "drifted at \(bpm) bpm")
+    /// Presence is a ratio, not a brightness. The version this replaced asked
+    /// for red above 0.22 — about a quarter of what a torch-lit fingertip
+    /// actually reads — so it said yes while auto-exposure was still ramping,
+    /// which is the moment the old code chose to lock exposure.
+    func testFingerPresenceRejectsTheExposureRamp() {
+        func sample(r: Double, g: Double, b: Double) -> PulseSignal.Sample {
+            PulseSignal.Sample(hue: PulseSignal.hue(r: r, g: g, b: b),
+                               redShare: r / (r + g + b), red: r, clipped: 0)
         }
+        XCTAssertTrue(PulseSignal.fingerPresent(sample(r: 0.745, g: 0.04, b: 0.04)),
+                      "a torch-lit fingertip reads about 190/255 red")
+        XCTAssertFalse(PulseSignal.fingerPresent(sample(r: 0.22, g: 0.01, b: 0.01)),
+                       "mid-ramp is not a finger, however red it already looks")
+        XCTAssertFalse(PulseSignal.fingerPresent(sample(r: 0.42, g: 0.38, b: 0.36)),
+                       "a room is not a finger")
+        XCTAssertTrue(PulseSignal.fingerPresent(sample(r: 0.50, g: 0.05, b: 0.04)),
+                      "a darker fingertip, or a torch the phone has dimmed, is still a finger")
     }
 
-    /// Noise with no beat in it must be reported as nothing, never as a number.
+    /// Noise must be reported as nothing, never as a number.
     func testPulseEstimatorRefusesNoise() {
         var seed: UInt64 = 42
         let noise = (0..<600).map { _ -> Double in
             seed = seed &* 6364136223846793005 &+ 1442695040888963407
             return Double(seed >> 40) / Double(1 << 24) * 0.006 - 0.003
         }
-        XCTAssertNil(PulseReader.estimate(PulseReader.strongerTrace(red: noise, green: noise), sampleRate: 30),
+        XCTAssertNil(PulseSignal.estimate(PulseSignal.bandpass(noise, sampleRate: 30), sampleRate: 30),
                      "noise must not produce a reading")
         let flat = Array(repeating: 0.5, count: 600)
-        XCTAssertNil(PulseReader.estimate(PulseReader.strongerTrace(red: flat, green: flat), sampleRate: 30),
+        XCTAssertNil(PulseSignal.estimate(PulseSignal.bandpass(flat, sampleRate: 30), sampleRate: 30),
                      "a flat trace means no finger, not a pulse")
+    }
+
+    /// A number is shown when consecutive windows agree, not when one window
+    /// clears a threshold — band-limited noise clears one often enough.
+    func testReadingNeedsConsecutiveWindowsToAgree() {
+        XCTAssertEqual(PulseSignal.agreed([71, 72, 73]) ?? 0, 72, accuracy: 1)
+        XCTAssertNil(PulseSignal.agreed([72, 95, 60]), "windows that disagree are not a reading")
+        XCTAssertNil(PulseSignal.agreed([72, 72]), "two is not enough")
+        XCTAssertNotNil(PulseSignal.agreed([120, 71, 72, 73]), "an early stray does not spoil a settled run")
+    }
+
+    func testHueIsAChannelRatio() {
+        XCTAssertEqual(PulseSignal.hue(r: 1, g: 0, b: 0), 0, accuracy: 0.001, "pure red sits at zero")
+        // Doubling the light must not move the hue — the whole reason it is the
+        // analysed series rather than brightness.
+        XCTAssertEqual(PulseSignal.hue(r: 0.40, g: 0.02, b: 0.02),
+                       PulseSignal.hue(r: 0.80, g: 0.04, b: 0.04), accuracy: 0.001)
+        XCTAssertEqual(PulseSignal.hue(r: 0.5, g: 0.5, b: 0.5), 0, accuracy: 0.001, "grey has no hue")
     }
 
     /// The pair is the point: the drop is what the app shows.
@@ -502,6 +545,7 @@ final class MorningResetTests: XCTestCase {
         s.pulseAfter = 82
         XCTAssertEqual(s.pulseDrop, -4, "a rise is a real answer too")
     }
+
 
     func testSchoolContentLoadsAndIsWellFormed() throws {
         let schools = SchoolContentStore.all

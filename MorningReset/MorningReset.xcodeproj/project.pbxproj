@@ -45,6 +45,7 @@
 		9A6F860333674828A55EC7AF /* PatternReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBECDF6045C1F262F2BEFD3 /* PatternReader.swift */; };
 		9C1854EA9027E7C907E6709B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 40266B3C5FF1706AAB78F604 /* Localizable.xcstrings */; };
 		9F424CE148CBF51277D7F45D /* MobilityLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346CCDAED0357991D89A373C /* MobilityLibrary.swift */; };
+		A026B8AFAD6E9E0E7E91222E /* PulseSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5948D880202E107E9FC5713 /* PulseSignal.swift */; };
 		A232825DD6B5DBC0AA91F798 /* EnergyReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57F53F6167BE8771F8A4348 /* EnergyReader.swift */; };
 		A60684DCA0B2D07F15C9BE05 /* NightSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774884638105F4C7C4B23EBA /* NightSoundView.swift */; };
 		A8107443A94D7144B89DF985 /* EnergySchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D4D940683C45803ECC46D /* EnergySchool.swift */; };
@@ -214,6 +215,7 @@
 		C1D2E3F4A5B60011C1D2E3F4 /* MorningPagesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningPagesStore.swift; sourceTree = "<group>"; };
 		C2D3E4F5A6B70011C2D3E4F5 /* MorningPagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningPagesView.swift; sourceTree = "<group>"; };
 		C55D4C0E32823ED45264C056 /* AppState+Mobility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Mobility.swift"; sourceTree = "<group>"; };
+		C5948D880202E107E9FC5713 /* PulseSignal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PulseSignal.swift; sourceTree = "<group>"; };
 		CBC5BBD279C54E1211DDFB1B /* Voice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Voice; path = Voice; sourceTree = "<group>"; };
 		CC100001CC100001CC100001 /* MorningResetWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MorningResetWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC100004CC100004CC100004 /* MorningResetWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningResetWidget.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */,
 				E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */,
 				975EDA05F76448C2D6CB437C /* BreathDetector.swift */,
+				C5948D880202E107E9FC5713 /* PulseSignal.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */,
 				31F5C6231237F5DBC839A1CC /* SignatureMeditationView.swift in Sources */,
 				4015F895DE00DF5C91E2AB3D /* MorningRitualView.swift in Sources */,
+				A026B8AFAD6E9E0E7E91222E /* PulseSignal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
