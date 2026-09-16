@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import MorningReset
 
 final class MorningResetTests: XCTestCase {
@@ -359,6 +360,41 @@ final class MorningResetTests: XCTestCase {
     }
 
     // MARK: - School content (Energy Reset 2.0)
+
+    // MARK: - The tree you breathe
+
+    /// The character runs from a quick breath to a long one, and saturates
+    /// rather than running away at either end.
+    func testTreeCharacterMapsTheBreath() {
+        XCTAssertEqual(treeCharacter(averageExhale: 1.5), 0.0, accuracy: 0.01, "a short breath sits at the quick end")
+        XCTAssertEqual(treeCharacter(averageExhale: 4.0), 0.5, accuracy: 0.01, "a middling breath sits in the middle")
+        XCTAssertEqual(treeCharacter(averageExhale: 6.5), 1.0, accuracy: 0.01, "a long breath reaches the slow end")
+        XCTAssertEqual(treeCharacter(averageExhale: 20), 1.0, "and stays there")
+        XCTAssertEqual(treeCharacter(averageExhale: 0.2), 0.0, "and at the other end too")
+        XCTAssertEqual(treeCharacter(averageExhale: 0), 0.5, "no breath yet is the middle, not an extreme")
+    }
+
+    /// The whole promise of growing a tree from breath rather than a clock is
+    /// that two people do not get the same tree. That has to be true of the
+    /// drawing, not just of the copy.
+    func testTwoBreathsGrowDifferentTrees() {
+        let box = CGRect(x: 0, y: 0, width: 200, height: 200)
+        let quick = EnergyTree(progress: 1, character: 0).path(in: box).boundingRect
+        let slow  = EnergyTree(progress: 1, character: 1).path(in: box).boundingRect
+        XCTAssertGreaterThan(slow.width, quick.width + 8, "a slow breath must open a visibly wider tree")
+
+        // And the same breath twice must give the same tree — the shape is the
+        // person's, not a random number.
+        let again = EnergyTree(progress: 1, character: 1).path(in: box).boundingRect
+        XCTAssertEqual(slow, again, "the same breath must grow the same tree")
+    }
+
+    /// Growth comes from breaths counted, so no breathing means no tree.
+    func testTreeGrowthStaysPutWithoutBreath() {
+        XCTAssertEqual(treeGrowth(0), 0.30, accuracy: 0.001, "a seedling, not nothing")
+        XCTAssertEqual(treeGrowth(1), 1.0, accuracy: 0.001)
+        XCTAssertGreaterThan(treeGrowth(0.25), treeGrowth(0.1), "and it only ever goes up")
+    }
 
     // MARK: - Pulse
 

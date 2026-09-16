@@ -9,6 +9,7 @@ struct AlarmView: View {
     @State private var primaryTapped = 0
     @AppStorage("mrHomeNudgeSeen") private var homeNudgeSeen = false
     @State private var playSession = false
+    @State private var playSignature = false
     @State private var orbTotal = 0
 
     private let language = AppLanguage.current
@@ -105,6 +106,12 @@ struct AlarmView: View {
 
                 Spacer().frame(height: DS.Space.sm)
 
+                // ── The app's own practice ───────────────────────────
+                signatureEntry
+                    .padding(.horizontal, DS.Space.lg)
+
+                Spacer().frame(height: DS.Space.sm)
+
                 // ── Optional check-in ────────────────────────────────
                 energyReadEntry
                     .padding(.horizontal, DS.Space.lg)
@@ -147,6 +154,48 @@ struct AlarmView: View {
                               routine: appState.todaysPractice.routine,
                               measuresPulse: appState.todaysPractice.routine.minutes <= 3)
         }
+        .sheet(isPresented: $playSignature, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
+            SignatureMeditationView()
+        }
+    }
+
+    /// The one practice that is ours rather than a tradition's.
+    private var signatureEntry: some View {
+        Button { playSignature = true } label: {
+            HStack(spacing: DS.Space.md) {
+                ZStack {
+                    Circle().fill(DS.accent.opacity(0.14)).frame(width: 44, height: 44)
+                    Image(systemName: "tree")
+                        .font(.system(size: 21, weight: .medium))
+                        .foregroundStyle(DS.accent)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(L10n.text(language: language, en: "OURS", tr: "BİZE ÖZEL", es: "NUESTRA"))
+                        .font(.system(size: 9, weight: .semibold))
+                        .kerning(1.2)
+                        .foregroundStyle(DS.textDim)
+                    Text(L10n.text(language: language,
+                                   en: "The Tree You Breathe",
+                                   tr: "Nefesinle Büyüyen Ağaç",
+                                   es: "El Árbol Que Respiras"))
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(DS.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(L10n.text(language: language,
+                                   en: "Grown by your breath, not a timer",
+                                   tr: "Zamanlayıcı değil, nefesin büyütür",
+                                   es: "Lo hace crecer tu respiración"))
+                        .font(.caption)
+                        .foregroundStyle(DS.textSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(DS.textDim)
+            }
+            .dreamCard(radius: DS.Radius.lg, padding: DS.Space.md, tint: DS.accent)
+        }
+        .accessibilityIdentifier("alarm.signatureEntry")
     }
 
     /// An alarm opened the app: start the practice without a tap.
