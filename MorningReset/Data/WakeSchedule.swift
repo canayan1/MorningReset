@@ -8,6 +8,11 @@ struct WakeSchedule: Codable, Equatable {
     var weekendHour:   Int  = 8
     var weekendMinute: Int  = 0
     var isEnabled: Bool     = false
+    /// Keep ringing until the morning ritual is actually done. iOS will not let
+    /// anyone block its Stop button, so what this really does is put a short
+    /// chain of alarms behind the first one — the same thing every persistent
+    /// alarm app does — and finishing the ritual cancels what is left of it.
+    var insistUntilRitual: Bool = true
 
     // Weekday = Mon–Fri (weekday 2–6), Weekend = Sat–Sun (weekday 7, 1)
     func hour(forWeekday weekday: Int) -> Int {

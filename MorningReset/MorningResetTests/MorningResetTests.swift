@@ -361,6 +361,28 @@ final class MorningResetTests: XCTestCase {
 
     // MARK: - School content (Energy Reset 2.0)
 
+    // MARK: - The alarm chain
+
+    /// The follow-ups sit three minutes apart behind the first alarm.
+    func testAlarmChainStepsEveryThreeMinutes() {
+        let times = MorningAlarmChain.times(hour: 7, minute: 0)
+        XCTAssertEqual(times.count, 4)
+        XCTAssertEqual(times.map(\.hour), [7, 7, 7, 7])
+        XCTAssertEqual(times.map(\.minute), [3, 6, 9, 12])
+    }
+
+    /// A chain set late at night runs past midnight. An hour of 24 is not a
+    /// time, and an alarm scheduled at one would simply never ring.
+    func testAlarmChainWrapsPastMidnight() {
+        let times = MorningAlarmChain.times(hour: 23, minute: 55)
+        XCTAssertEqual(times.map { "\($0.hour):\($0.minute)" },
+                       ["23:58", "0:1", "0:4", "0:7"])
+        for t in times {
+            XCTAssertTrue((0..<24).contains(t.hour), "hour \(t.hour) is not a time of day")
+            XCTAssertTrue((0..<60).contains(t.minute), "minute \(t.minute) is not a minute")
+        }
+    }
+
     // MARK: - The signature session
 
     /// The shape of the practice is the spec: five rounds of three a side, then

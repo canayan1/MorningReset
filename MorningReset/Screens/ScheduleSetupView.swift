@@ -7,6 +7,7 @@ struct ScheduleSetupView: View {
     @State private var weekdayDate: Date
     @State private var weekendDate: Date
     @State private var authDenied = false
+    @State private var insist: Bool
 
     init() {
         let s   = WakeScheduleStore.load()
@@ -15,6 +16,7 @@ struct ScheduleSetupView: View {
         let we  = cal.date(bySettingHour: s.weekendHour, minute: s.weekendMinute, second: 0, of: .now) ?? .now
         _weekdayDate = State(initialValue: wd)
         _weekendDate = State(initialValue: we)
+        _insist = State(initialValue: s.insistUntilRitual)
     }
 
     var body: some View {
@@ -86,6 +88,10 @@ struct ScheduleSetupView: View {
                     label: L10n.text(en: "WEEKENDS  SAT – SUN", tr: "HAFTA SONU  CMT – PAZ", es: "FIN DE SEMANA  SÁB – DOM"),
                     date: $weekendDate
                 )
+
+                Spacer().frame(height: DS.Space.md)
+
+                insistToggle
 
                 if authDenied {
                     VStack(alignment: .center, spacing: DS.Space.sm) {
@@ -167,6 +173,35 @@ struct ScheduleSetupView: View {
         )
     }
 
+    /// iOS will not let anyone block its Stop button, so what this really does
+    /// is put a few more alarms behind the first one. The copy says that rather
+    /// than promising something the system does not allow.
+    private var insistToggle: some View {
+        Toggle(isOn: $insist) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(L10n.text(en: "Keep asking until I'm up",
+                               tr: "Kalkana kadar vazgeçme",
+                               es: "Insiste hasta que me levante"))
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(DS.textPrimary)
+                Text(L10n.text(
+                    en: "It rings again every three minutes until the morning is done.",
+                    tr: "Sabah tamamlanana kadar üç dakikada bir tekrar çalar.",
+                    es: "Suena otra vez cada tres minutos hasta terminar la mañana."
+                ))
+                .font(.caption)
+                .foregroundStyle(DS.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .tint(DS.accent)
+        .padding(.vertical, DS.Space.md)
+        .padding(.horizontal, DS.Space.md)
+        .background(DS.surface)
+        .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        .accessibilityIdentifier("schedule.insistToggle")
+    }
+
     private func timeBlock(label: String, date: Binding<Date>) -> some View {
         HStack {
             Text(label)
@@ -199,6 +234,7 @@ struct ScheduleSetupView: View {
         updated.weekendHour   = weComps.hour   ?? 8
         updated.weekendMinute = weComps.minute ?? 0
         updated.isEnabled     = true
+        updated.insistUntilRitual = insist
 
         let backend    = WakeNotificationManager.current
         let authorized = await backend.requestAuthorization()

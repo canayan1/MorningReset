@@ -45,6 +45,7 @@ struct MorningResetApp: App {
                     notificationDelegate.router   = router
                     checkAlarmKitWakeFlag()
                     reconcileWakeActivity()
+                    reconcileAlarmChain()
                 }
                 .onOpenURL { url in
                     guard url.scheme == "morningreset", url.host == "start" else { return }
@@ -55,6 +56,7 @@ struct MorningResetApp: App {
                     if phase == .active {
                         checkAlarmKitWakeFlag()
                         reconcileWakeActivity()
+                        reconcileAlarmChain()
                     }
                 }
         }
@@ -72,6 +74,14 @@ struct MorningResetApp: App {
         guard defaults?.bool(forKey: "alarmKitStartFlow") == true else { return }
         defaults?.removeObject(forKey: "alarmKitStartFlow")
         router.routeToWakeFlow()
+    }
+
+    /// Put tomorrow's chain back. The follow-ups are one-shot so that finishing
+    /// the ritual can clear today's without disarming the rest of the week;
+    /// something has to re-arm them, and app foreground is the reliable moment.
+    private func reconcileAlarmChain() {
+        guard #available(iOS 26.1, *) else { return }
+        Task { await AlarmKitWakeScheduler.reconcileFollowUps() }
     }
 
     @MainActor

@@ -129,7 +129,15 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     private static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
     private static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
 
-    private static let log = Logger(subsystem: "com.canayan.MorningReset", category: "alarm")
+    /// The chain behind the first alarm, at three-minute steps. One-shot, so
+    /// finishing the ritual can clear what is left of today without touching
+    /// tomorrow; they are re-armed whenever the app comes forward.
+    static let followUpIDs = (0..<4).map {
+        UUID(uuidString: String(format: "A0000000-0000-0000-0000-0000000000%02d", $0 + 16))!
+    }
+    private static let followUpStep = 3
+
+    static let log = Logger(subsystem: "com.canayan.MorningReset", category: "alarm")
 
     func requestAuthorization() async -> Bool {
         // If the person declines alarms, fall through to notifications so the
@@ -188,6 +196,9 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         do {
             try await AlarmManager.shared.schedule(id: Self.weekdayAlarmID, configuration: weekdayConfig)
             try await AlarmManager.shared.schedule(id: Self.weekendAlarmID, configuration: weekendConfig)
+            if wakeSchedule.insistUntilRitual {
+                await Self.armFollowUps(for: wakeSchedule, attributes: attrs, begin: begin)
+            }
 
             let fireDate = nextFireDate(for: wakeSchedule)
             await MainActor.run {
@@ -209,9 +220,63 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         Self.log.notice("AlarmKit alarms scheduled for \(wakeSchedule.weekdayHour):\(wakeSchedule.weekdayMinute) / \(wakeSchedule.weekendHour):\(wakeSchedule.weekendMinute)")
     }
 
+    /// The chain that makes the alarm insist.
+    ///
+    /// Each one is a one-shot at the next occurrence of its own clock time, so
+    /// they can be cleared for today the moment the ritual is finished without
+    /// disarming tomorrow. Scheduled ahead rather than on demand, because the
+    /// app does not get to run when somebody taps Stop and rolls over.
+    static func armFollowUps(for schedule: WakeSchedule,
+                             attributes: AlarmAttributes<MorningAlarmMeta>,
+                             begin: BeginPracticeIntent) async {
+        guard schedule.isEnabled, schedule.insistUntilRitual, !MorningRitual.completedToday else { return }
+        let cal = Calendar.current
+        let weekday = cal.component(.weekday, from: Date())
+        let times = MorningAlarmChain.times(hour: schedule.hour(forWeekday: weekday),
+                                            minute: schedule.minute(forWeekday: weekday))
+        for (id, time) in zip(followUpIDs, times) {
+            let config = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
+                schedule: .relative(Alarm.Schedule.Relative(
+                    time: .init(hour: time.hour, minute: time.minute),
+                    repeats: .never
+                )),
+                attributes: attributes,
+                secondaryIntent: begin,
+                sound: .named("wake_opening.caf")
+            )
+            try? await AlarmManager.shared.schedule(id: id, configuration: config)
+        }
+        log.notice("follow-up chain armed: \(times.count, privacy: .public) alarms")
+    }
+
+    /// Build the chain from nothing — for the app coming forward, when the
+    /// alarm's own scheduling call is long past.
+    static func reconcileFollowUps() async {
+        let schedule = WakeScheduleStore.load()
+        guard schedule.isEnabled, schedule.insistUntilRitual, !MorningRitual.completedToday else {
+            cancelFollowUps()
+            return
+        }
+        let attrs = AlarmAttributes<MorningAlarmMeta>(
+            presentation: AlarmPresentation(alert: AlarmPresentation.Alert(
+                title: "Your practice is ready",
+                secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
+                secondaryButtonBehavior: .custom)),
+            tintColor: DS.accent
+        )
+        await armFollowUps(for: schedule, attributes: attrs, begin: BeginPracticeIntent())
+    }
+
+    /// Called the moment the ritual is finished: the morning has happened, so
+    /// the rest of the chain has nothing left to insist about.
+    static func cancelFollowUps() {
+        for id in followUpIDs { try? AlarmManager.shared.cancel(id: id) }
+    }
+
     func cancel() {
         try? AlarmManager.shared.cancel(id: Self.weekdayAlarmID)
         try? AlarmManager.shared.cancel(id: Self.weekendAlarmID)
+        Self.cancelFollowUps()
         // Also cancel any local notification fallback alarms from a previous schedule.
         base.cancel()
     }
@@ -284,6 +349,25 @@ enum ReEngagementNotifier {
                 let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
                 center.add(UNNotificationRequest(identifier: comebackID, content: content, trigger: trigger))
             }
+        }
+    }
+}
+
+// MARK: - The chain
+
+/// When the follow-up alarms ring, as clock times.
+///
+/// Split out from the scheduling so the arithmetic can be checked: an alarm
+/// late at night pushes its chain past midnight, and a chain that silently
+/// landed at hour 24 would never ring at all.
+enum MorningAlarmChain {
+    static let count = 4
+    static let stepMinutes = 3
+
+    static func times(hour: Int, minute: Int) -> [(hour: Int, minute: Int)] {
+        (1...count).map { i in
+            let total = hour * 60 + minute + i * stepMinutes
+            return ((total / 60) % 24, total % 60)
         }
     }
 }

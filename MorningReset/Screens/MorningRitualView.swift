@@ -210,6 +210,8 @@ enum MorningRitual {
 
     static func markCompleted() {
         UserDefaults.standard.set(dayStamp(), forKey: key)
+        // The morning has happened. Whatever is left of the chain can go.
+        if #available(iOS 26.1, *) { AlarmKitWakeScheduler.cancelFollowUps() }
     }
 
     static var completedToday: Bool {
