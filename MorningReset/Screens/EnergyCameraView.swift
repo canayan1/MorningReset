@@ -36,6 +36,15 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
     private var autoCapture = true
 
     func configureAndStart() {
+        // Starting again means starting again. Without this the second run is
+        // deaf: `captured` stays true from the first capture and every frame
+        // returns at the guard, so "Read again" restarts the camera onto a
+        // session that can no longer produce anything.
+        captured = false
+        wantsCapture = false
+        smileStreak = 0
+        frameCount = 0
+
         sessionQueue.async { [weak self] in
             guard let self else { return }
             self.configure()
