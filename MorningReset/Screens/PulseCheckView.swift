@@ -14,11 +14,30 @@ struct PulseCheckView: View {
     enum Moment { case before, after }
 
     let moment: Moment
+    /// Speak over the reading. The morning ritual does; a reading taken either
+    /// side of a practice does not, because the practice has its own voice.
+    var affirmations: Bool = false
+    /// Hidden during the morning ritual, where the whole point is that it is
+    /// the thing you get up for.
+    var showsSkip: Bool = true
     var onFinish: (PulseReading?) -> Void
 
     @StateObject private var reader = PulseReader()
     @Environment(\.dismiss) private var dismiss
     @State private var pulseScale: CGFloat = 1
+    @State private var affirmationTimer: Timer?
+    @State private var affirmationIndex = 0
+
+    /// Said over the reading, in the guide's own voice. Nothing is asked of the
+    /// person here — they are holding a finger still, and these are the only
+    /// twenty seconds of the day when that is the whole job.
+    private static let lines = [
+        "Good morning. Stay just as you are for a moment.",
+        "Let the breath be easy. Nothing is asked of you yet.",
+        "Let your shoulders drop, and let your jaw soften.",
+        "You are already here. That is enough.",
+        "Be gentle with yourself today."
+    ]
 
     var body: some View {
         ZStack {
@@ -27,6 +46,7 @@ struct PulseCheckView: View {
             VStack(spacing: 0) {
                 HStack {
                     Spacer()
+                    if showsSkip {
                     Button {
                         reader.stop()
                         onFinish(nil)
@@ -37,7 +57,9 @@ struct PulseCheckView: View {
                             .foregroundStyle(DS.textSecondary)
                     }
                     .accessibilityIdentifier("pulse.skip")
+                    }
                 }
+                .frame(height: 24)
                 .padding(.top, 20)
 
                 Spacer()
@@ -84,8 +106,11 @@ struct PulseCheckView: View {
             .padding(.horizontal, DS.Space.lg)
         }
         .accessibilityIdentifier("pulse.screen")
-        .onAppear { reader.start() }
-        .onDisappear { reader.stop() }
+        .onAppear {
+            reader.start()
+            if affirmations { speakAffirmations() }
+        }
+        .onDisappear { reader.stop(); affirmationTimer?.invalidate() }
         .onChange(of: reader.phase) { _, phase in
             switch phase {
             case .done(let reading):
@@ -104,6 +129,16 @@ struct PulseCheckView: View {
             default:
                 break
             }
+        }
+    }
+
+    private func speakAffirmations() {
+        SpeechGuide.shared.speak(Self.lines[0])
+        affirmationIndex = 1
+        affirmationTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
+            guard affirmationIndex < Self.lines.count else { return }
+            SpeechGuide.shared.speak(Self.lines[affirmationIndex])
+            affirmationIndex += 1
         }
     }
 

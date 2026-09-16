@@ -2,16 +2,17 @@ import SwiftUI
 
 // MARK: - The Tree You Breathe
 //
-// The app's own practice, and the only one where nothing is on a clock. The
-// tree grows on the out-breath and waits on the in-breath, so sitting through
-// it without breathing grows nothing. Its shape comes from how you breathed —
-// long and slow opens a wide tree with few heavy limbs, quick and shallow a
-// narrow one with many fine ones — which means no two trees are the same and
-// yours is different tomorrow.
+// The app's own practice: box breathing, guided, with a tree that grows on the
+// out-breath. Five rounds at three seconds a side to settle into the shape,
+// then ten at four, which is the pace that actually does the work.
 //
-// It runs in silence. The microphone is listening for a breath, and an ambient
-// bed or a voice reading steps would be the loudest thing in the room. One line
-// at the start, one at the end, nothing in between.
+// The microphone is listening for the out-breath, so an audible one grows the
+// tree faster than a silent one — but a silent one still grows it. The point is
+// a practice that can tell whether you are doing it, not one that stops when it
+// cannot hear you.
+//
+// It runs without an ambient bed. The only thing in the room should be the
+// person breathing, or the microphone has nothing to listen to but us.
 
 struct SignatureMeditationView: View {
     @Environment(\.dismiss) private var dismiss
@@ -19,29 +20,57 @@ struct SignatureMeditationView: View {
 
     var onComplete: () -> Void = {}
 
-    /// Out-breaths for a full tree. At an unhurried pace that is most of three
-    /// minutes, so the tree fills about when the practice ends.
-    private static let breathsForFullTree = 24
-    private static let length: TimeInterval = 180
-    /// If the room never resolves into breathing, stop waiting on it.
-    private static let patience: TimeInterval = 30
+    /// One side of the box. Five short rounds to find the shape, then ten at
+    /// the longer count.
+    private static let rounds: [(count: Int, side: Double)] = [(5, 3), (10, 4)]
+
+    private enum Phase: Equatable {
+        case inhale, holdIn, exhale, holdOut
+
+        var label: String {
+            switch self {
+            case .inhale:  L10n.text(en: "Breathe in", tr: "Nefes al", es: "Inhala")
+            case .holdIn:  L10n.text(en: "Hold", tr: "Tut", es: "Sostén")
+            case .exhale:  L10n.text(en: "Breathe out", tr: "Nefes ver", es: "Exhala")
+            case .holdOut: L10n.text(en: "Hold", tr: "Tut", es: "Sostén")
+            }
+        }
+    }
+
+    /// The whole session, flattened: every phase in order with its length.
+    private static let schedule: [(phase: Phase, seconds: Double)] = {
+        var out: [(Phase, Double)] = []
+        for (count, side) in rounds {
+            for _ in 0..<count {
+                out += [(.inhale, side), (.holdIn, side), (.exhale, side), (.holdOut, side)]
+            }
+        }
+        return out
+    }()
+
+    static let exhaleCount = schedule.filter { $0.phase == .exhale }.count
+    static let totalSeconds = schedule.reduce(0) { $0 + $1.seconds }
 
     @StateObject private var breath = BreathDetector()
     @State private var started = false
     @State private var finished = false
-    @State private var elapsed: TimeInterval = 0
+    @State private var index = 0
+    @State private var inPhase: Double = 0
+    @State private var grown: Double = 0
+    @State private var exhalesDone = 0
+    @State private var effortTotal: Double = 0
+    @State private var effortSamples = 0
     @State private var ticker: Timer?
-    @State private var fellBackToTime = false
-    @State private var glow = false
+
+    private static let tick = 0.05
 
     var body: some View {
         ZStack {
             AppBackground(intensity: 0.3)
-
             VStack(spacing: 0) {
                 topBar
                 Spacer(minLength: DS.Space.md)
-                if finished { completeView } else if started { growingView } else { introView }
+                if finished { completeView } else if started { breathingView } else { introView }
                 Spacer(minLength: DS.Space.md)
                 controls
             }
@@ -54,20 +83,20 @@ struct SignatureMeditationView: View {
         }
     }
 
-    // MARK: - Growth
+    // MARK: - State
 
-    /// 0…1. The breath drives it; the clock only takes over when the room
-    /// turns out to be unlistenable.
-    private var grown: Double {
-        let byBreath = Double(breath.exhaleCount) / Double(Self.breathsForFullTree)
-        guard fellBackToTime else { return min(1, byBreath) }
-        return min(1, max(byBreath, elapsed / Self.length))
+    private var phase: Phase { Self.schedule[min(index, Self.schedule.count - 1)].phase }
+    private var phaseLength: Double { Self.schedule[min(index, Self.schedule.count - 1)].seconds }
+    private var secondsLeft: Int { max(1, Int(ceil(phaseLength - inPhase))) }
+
+    /// How hard the out-breaths have been. This is what makes the tree theirs:
+    /// everyone breathes to the same count here, but not everyone means it.
+    private var character: Double {
+        guard effortSamples > 0 else { return 0.5 }
+        return min(1, effortTotal / Double(effortSamples) * 1.6)
     }
 
-    private var character: Double { treeCharacter(averageExhale: breath.averageExhale) }
-
-    /// The colour carries the last thing the app measured about you: the more
-    /// the pulse came down, the deeper and stiller the tree.
+    /// The colour carries the last thing the app measured about this person.
     private var tint: Color {
         let drop = PracticeLogStore.all()
             .sorted { $0.date > $1.date }
@@ -76,23 +105,31 @@ struct SignatureMeditationView: View {
         return DS.accent.mixed(with: DS.calm, by: min(1, max(0, Double(drop) / 15)))
     }
 
+    /// The guide circle: full on a held-in breath, small on a held-out one.
+    private var circleScale: CGFloat {
+        let t = min(1, inPhase / phaseLength)
+        switch phase {
+        case .inhale:  return 0.55 + 0.45 * t
+        case .holdIn:  return 1.0
+        case .exhale:  return 1.0 - 0.45 * t
+        case .holdOut: return 0.55
+        }
+    }
+
     // MARK: - Screens
 
     private var introView: some View {
         VStack(spacing: DS.Space.lg) {
-            EnergyTreeView(progress: 0, tint: tint, size: 220, character: 0.5)
-                .opacity(0.5)
-
+            EnergyTreeView(progress: 0, tint: tint, size: 210, character: 0.5).opacity(0.5)
             VStack(spacing: DS.Space.sm) {
                 Text(L10n.text(en: "The Tree You Breathe", tr: "Nefesinle Büyüyen Ağaç", es: "El Árbol Que Respiras"))
                     .font(.system(size: 28, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
                     .multilineTextAlignment(.center)
-
                 Text(L10n.text(
-                    en: "It grows on the out-breath and waits on the in.\nHow you breathe is the shape it takes.",
-                    tr: "Verişte büyür, alışta bekler.\nNasıl nefes aldığın, aldığı şekildir.",
-                    es: "Crece al exhalar y espera al inhalar.\nCómo respiras es la forma que toma."
+                    en: "Five rounds of three, then ten of four.\nBreathe out towards the phone, and let it be heard.",
+                    tr: "Beş tur üçer, sonra on tur dörder.\nTelefona doğru ver, ve duyulsun.",
+                    es: "Cinco rondas de tres, luego diez de cuatro.\nExhala hacia el teléfono, y que se oiga."
                 ))
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
@@ -103,39 +140,44 @@ struct SignatureMeditationView: View {
         }
     }
 
-    private var growingView: some View {
+    private var breathingView: some View {
         VStack(spacing: DS.Space.lg) {
             ZStack {
-                // The glow rides the live breath, so the screen moves with the
-                // person rather than with a timer.
+                // The tree stands behind the whole thing, growing on the out-breath.
+                EnergyTreeView(progress: grown, tint: tint, size: 300, character: character)
+                    .opacity(0.5)
+                    .offset(y: -30)
+
+                // The guide: it opens as you breathe in and closes as you let go.
                 Circle()
-                    .fill(tint.opacity(0.10 + breath.level * 0.22))
-                    .frame(width: 300, height: 300)
-                    .blur(radius: 40)
-                    .scaleEffect(1 + breath.level * 0.12)
-                    .animation(.easeOut(duration: 0.35), value: breath.level)
+                    .fill(tint.opacity(0.12 + (phase == .exhale ? breath.level * 0.18 : 0)))
+                    .frame(width: 210, height: 210)
+                    .scaleEffect(circleScale)
 
-                EnergyTreeView(progress: grown, tint: tint, size: 280, character: character)
-            }
-            .frame(height: 340)
+                Circle()
+                    .stroke(tint.opacity(0.55), lineWidth: 2.5)
+                    .frame(width: 210, height: 210)
+                    .scaleEffect(circleScale)
 
-            VStack(spacing: DS.Space.xs) {
-                Text("\(breath.exhaleCount)")
-                    .font(.system(size: 44, weight: .light, design: .serif))
-                    .foregroundStyle(DS.textPrimary)
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.3), value: breath.exhaleCount)
-                Text(L10n.text(en: "BREATHS", tr: "NEFES", es: "RESPIRACIONES"))
-                    .font(DS.Typo.label).kerning(2)
-                    .foregroundStyle(DS.textDim)
+                VStack(spacing: 2) {
+                    Text(phase.label)
+                        .font(.system(size: 21, weight: .regular, design: .serif))
+                        .foregroundStyle(DS.textPrimary)
+                    Text("\(secondsLeft)")
+                        .font(.system(size: 46, weight: .light, design: .serif))
+                        .foregroundStyle(DS.textSecondary)
+                        .monospacedDigit()
+                        .contentTransition(.numericText())
+                }
             }
+            .frame(height: 360)
+            .animation(.linear(duration: Self.tick), value: circleScale)
 
             Text(hint)
                 .font(.footnote)
                 .foregroundStyle(DS.textDim)
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: 280)
+                .frame(maxWidth: 300, minHeight: 34)
                 .animation(.easeInOut(duration: 0.3), value: hint)
         }
     }
@@ -144,20 +186,16 @@ struct SignatureMeditationView: View {
         VStack(spacing: DS.Space.lg) {
             EnergyTreeView(progress: grown, tint: tint, size: 260, character: character)
                 .transition(.scale(scale: 0.9).combined(with: .opacity))
-
             VStack(spacing: DS.Space.xs) {
                 Text(L10n.text(en: "This one was yours.", tr: "Bu, senindi.", es: "Este fue tuyo."))
                     .font(.system(size: 24, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
-                Text(breath.exhaleCount > 0
-                     ? L10n.text(en: "\(breath.exhaleCount) breaths, and no one else's shape.",
-                                 tr: "\(breath.exhaleCount) nefes, başka kimsede olmayan bir şekil.",
-                                 es: "\(breath.exhaleCount) respiraciones, una forma de nadie más.")
-                     : L10n.text(en: "Logged.", tr: "Kaydedildi.", es: "Registrado."))
+                Text(L10n.text(en: "No one else grew this shape.",
+                               tr: "Bu şekli başka kimse büyütmedi.",
+                               es: "Nadie más hizo crecer esta forma."))
                     .font(.callout)
                     .foregroundStyle(DS.textSecondary)
                     .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, DS.Space.lg)
         }
@@ -180,41 +218,28 @@ struct SignatureMeditationView: View {
         VStack(spacing: DS.Space.sm) {
             if finished {
                 Button(L10n.text(en: "Done", tr: "Tamam", es: "Hecho")) { dismiss() }
-                    .primaryCTA()
-                    .accessibilityIdentifier("signature.done")
+                    .primaryCTA().accessibilityIdentifier("signature.done")
             } else if started {
                 Button(L10n.text(en: "Finish", tr: "Bitir", es: "Terminar")) { complete() }
-                    .primaryCTA()
-                    .accessibilityIdentifier("signature.finish")
+                    .primaryCTA().accessibilityIdentifier("signature.finish")
             } else {
                 Button(L10n.text(en: "Begin", tr: "Başla", es: "Comenzar")) { begin() }
-                    .primaryCTA()
-                    .accessibilityIdentifier("signature.begin")
+                    .primaryCTA().accessibilityIdentifier("signature.begin")
             }
         }
         .padding(.horizontal, DS.Space.lg).padding(.bottom, DS.Space.xl)
     }
 
     private var hint: String {
-        if !breath.available {
-            return L10n.text(en: "No microphone here, so the tree grows on time instead.",
-                             tr: "Burada mikrofon yok; ağaç bu kez zamanla büyüyor.",
-                             es: "Sin micrófono aquí; el árbol crece con el tiempo.")
+        guard phase == .exhale else { return "" }
+        if !breath.available || !breath.listening {
+            return L10n.text(en: "Breathe out slowly.", tr: "Yavaşça ver.", es: "Exhala despacio.")
         }
-        if fellBackToTime {
-            return L10n.text(en: "Too much in the room to hear a breath — growing on time instead.",
-                             tr: "Oda nefesi duyamayacak kadar kalabalık — ağaç zamanla büyüyor.",
-                             es: "Demasiado ruido para oír la respiración — crece con el tiempo.")
-        }
-        if !breath.listening {
-            return L10n.text(en: "Listening to the room…", tr: "Odayı dinliyorum…", es: "Escuchando la sala…")
-        }
-        if breath.exhaleCount == 0 {
-            return L10n.text(en: "Let the out-breath be long, and let it be audible.",
-                             tr: "Verişin uzun olsun, ve duyulsun.",
-                             es: "Que la exhalación sea larga, y que se oiga.")
-        }
-        return ""
+        return breath.level > 0.3
+            ? L10n.text(en: "That's it — it can hear you.", tr: "İşte böyle — seni duyuyor.", es: "Eso es — te oye.")
+            : L10n.text(en: "Out through the mouth, towards the phone.",
+                        tr: "Ağızdan, telefona doğru.",
+                        es: "Por la boca, hacia el teléfono.")
     }
 
     // MARK: - Running
@@ -223,17 +248,29 @@ struct SignatureMeditationView: View {
         guard !started else { return }
         started = true
         breath.start()
-        SpeechGuide.shared.speak("Let the out-breath be long, and let it be audible. The tree does the rest.")
-        glow = true
-        ticker = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            guard !finished else { return }
-            elapsed += 1
-            // Waited long enough on a room that will not settle.
-            if !fellBackToTime, elapsed > Self.patience, breath.exhaleCount == 0 {
-                fellBackToTime = true
-            }
-            if elapsed >= Self.length || grown >= 1 { complete() }
+        SpeechGuide.shared.speak("Breathe out towards the phone, and let it be heard. The tree does the rest.")
+        ticker = Timer.scheduledTimer(withTimeInterval: Self.tick, repeats: true) { _ in advance() }
+    }
+
+    private func advance() {
+        guard !finished else { return }
+        inPhase += Self.tick
+
+        if phase == .exhale {
+            // The tree creeps forward through the out-breath, and a breath the
+            // microphone can hear moves it further than a silent one.
+            let share = 1.0 / Double(Self.exhaleCount)
+            let effort = 0.45 + 0.55 * min(1, breath.level)
+            grown = min(1, grown + share * (Self.tick / phaseLength) * effort)
+            effortTotal += min(1, breath.level)
+            effortSamples += 1
         }
+
+        guard inPhase >= phaseLength else { return }
+        if phase == .exhale { exhalesDone += 1 }
+        inPhase = 0
+        index += 1
+        if index >= Self.schedule.count { complete() }
     }
 
     private func complete() {
@@ -242,18 +279,16 @@ struct SignatureMeditationView: View {
         ticker?.invalidate()
         breath.stop()
 
-        // It logs like any other practice, under the breath tradition it
-        // belongs to, so the orb and the streak count it.
         let routine = Routine(id: "breathing.signature",
                               title: "The Tree You Breathe",
                               group: .starter,
-                              minutes: max(1, Int(elapsed / 60)),
-                              purpose: "The app's own practice: a tree grown by the out-breath.",
+                              minutes: max(1, Int(Self.totalSeconds / 60)),
+                              purpose: "The app's own practice: box breathing, with a tree grown by the out-breath.",
                               steps: [],
                               safety: nil,
                               free: true)
         _ = PracticeLogStore.add(schoolID: "breathing", routine: routine,
-                                 outcome: grown >= 0.5 ? .done : .partial)
+                                 outcome: exhalesDone >= Self.exhaleCount / 2 ? .done : .partial)
         appState.invalidateStreakCache()
         SpeechGuide.shared.speak("That one was yours. No one else grew this tree.")
         onComplete()

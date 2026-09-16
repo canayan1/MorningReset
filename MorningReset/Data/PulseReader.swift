@@ -65,6 +65,9 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private var device: AVCaptureDevice?
 
     private var samples: [Double] = []
+    /// Kept alongside red: at full torch the red channel often saturates
+    /// against a fingertip, and then green is the one still moving.
+    private var greenSamples: [Double] = []
     private var startedAt: CFTimeInterval?
     private var fingerSince: CFTimeInterval?
     private var exposureLocked = false
@@ -75,6 +78,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     func start() {
         finished = false
         samples.removeAll()
+        greenSamples.removeAll()
         startedAt = nil
         fingerSince = nil
         exposureLocked = false
@@ -152,9 +156,9 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private func setTorch(on: Bool) {
         guard let device, device.hasTorch, (try? device.lockForConfiguration()) != nil else { return }
         if on {
-            // A quarter of full power is plenty through a fingertip, and it is
-            // not something to point at a face at dawn.
-            try? device.setTorchModeOn(level: 0.25)
+            // Full power. A quarter of it looked kinder on paper and simply did
+            // not put enough light through a fingertip to see blood move.
+            try? device.setTorchModeOn(level: 1.0)
         } else {
             device.torchMode = .off
         }
@@ -167,6 +171,9 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         guard let device, !exposureLocked, (try? device.lockForConfiguration()) != nil else { return }
         if device.isExposureModeSupported(.locked) { device.exposureMode = .locked }
         if device.isWhiteBalanceModeSupported(.locked) { device.whiteBalanceMode = .locked }
+        // A lens hunting for focus on a fingertip changes the frame as much as
+        // a heartbeat does.
+        if device.isFocusModeSupported(.locked) { device.focusMode = .locked }
         device.unlockForConfiguration()
         exposureLocked = true
     }
@@ -181,13 +188,15 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
 
         let now = CACurrentMediaTime()
 
-        // A fingertip over a lit lens reads as an almost pure red frame. Open
-        // air, a pocket or a face does not.
-        let covered = red > 0.40 && (red - green) > 0.14
+        // A fingertip over a lit lens reads as a red frame. How red and how
+        // bright varies enormously with skin and with how hard it is pressed,
+        // so the test is the ratio rather than an absolute level.
+        let covered = red > 0.22 && red > green * 1.45
         guard covered else {
             fingerSince = nil
             startedAt = nil
             samples.removeAll()
+            greenSamples.removeAll()
             publish { if self.phase != .unavailable { self.phase = .waitingForFinger }
                       self.progress = 0; self.liveBPM = nil; self.trace = [] }
             return
@@ -203,8 +212,9 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         }
 
         samples.append(red)
+        greenSamples.append(green)
         let elapsed = now - (startedAt ?? now)
-        let detrended = Self.detrend(samples)
+        let detrended = Self.strongerTrace(red: samples, green: greenSamples)
 
         publish {
             self.progress = min(1, elapsed / Self.fullWindow)
@@ -298,52 +308,96 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         return out
     }
 
-    /// Peak-to-peak timing. Returns nil when the trace has no rhythm worth
-    /// trusting — which is the honest answer for a shaking hand.
+    /// Whichever channel is actually moving.
+    ///
+    /// At full torch the red channel often pins against the top of its range on
+    /// a fingertip and stops carrying anything; green keeps its swing. Rather
+    /// than guessing which happens on a given phone and a given hand, both are
+    /// detrended and the one with more energy wins.
+    static func strongerTrace(red: [Double], green: [Double]) -> [Double] {
+        let r = detrend(red)
+        let g = detrend(green)
+        func energy(_ x: [Double]) -> Double {
+            guard !x.isEmpty else { return 0 }
+            return x.reduce(0) { $0 + $1 * $1 } / Double(x.count)
+        }
+        return energy(g) > energy(r) * 1.2 ? g : r
+    }
+
+    /// Finds the beat by asking how well the trace lines up with itself.
+    ///
+    /// Counting peaks is the obvious way and it is what this did first; it is
+    /// also fragile, because a fingertip trace is full of small bumps that look
+    /// like peaks and a single missed or doubled one throws the whole estimate.
+    /// Autocorrelation asks a steadier question — at what shift does this
+    /// signal most resemble itself — and answers it with a number between 0 and
+    /// 1 that is a fair measure of how sure we should be.
     static func estimate(_ signal: [Double], sampleRate: Double) -> (bpm: Double, confidence: Double)? {
-        guard signal.count > Int(sampleRate * 4) else { return nil }
+        guard signal.count > Int(sampleRate * 5) else { return nil }
 
-        let amplitude = (signal.max() ?? 0) - (signal.min() ?? 0)
-        guard amplitude > 0.0006 else { return nil }   // flat: no finger, or no blood moving
-        let threshold = amplitude * 0.30
-        let refractory = Int(sampleRate * 0.33)        // 180 bpm ceiling
+        let mean = signal.reduce(0, +) / Double(signal.count)
+        let x = signal.map { $0 - mean }
+        guard x.contains(where: { abs($0) > 1e-9 }) else { return nil }   // flat: no finger
 
-        var peaks: [Int] = []
-        var i = 1
-        while i < signal.count - 1 {
-            if signal[i] > threshold, signal[i] >= signal[i - 1], signal[i] > signal[i + 1] {
-                if let last = peaks.last, i - last < refractory {
-                    if signal[i] > signal[last] { peaks[peaks.count - 1] = i }
-                } else {
-                    peaks.append(i)
-                }
+        let minLag = Int(sampleRate * 60 / 180)   // 180 bpm
+        let maxLag = Int(sampleRate * 60 / 40)    //  40 bpm
+        guard maxLag < x.count / 2 else { return nil }
+
+        func correlation(at lag: Int) -> Double {
+            let n = x.count - lag
+            guard n > 0 else { return 0 }
+            var num = 0.0, a = 0.0, b = 0.0
+            for i in 0..<n {
+                num += x[i] * x[i + lag]
+                a += x[i] * x[i]
+                b += x[i + lag] * x[i + lag]
             }
-            i += 1
+            let denom = (a * b).squareRoot()
+            return denom > 0 ? num / denom : 0
         }
-        guard peaks.count >= 5 else { return nil }
 
-        // A peak rarely lands on a whole frame. At 30fps the gap between two
-        // whole frames is about 4bpm up at a running heart rate, so the peak is
-        // placed between frames by fitting a parabola through its neighbours.
-        let refined: [Double] = peaks.map { i in
-            guard i > 0, i < signal.count - 1 else { return Double(i) }
-            let (a, b, c) = (signal[i - 1], signal[i], signal[i + 1])
+        var scores: [Int: Double] = [:]
+        var best = (lag: 0, score: -1.0)
+        for lag in minLag...maxLag {
+            let c = correlation(at: lag)
+            scores[lag] = c
+            if c > best.score { best = (lag, c) }
+        }
+        guard best.lag > 0, best.score > 0.30 else { return nil }
+
+        // A signal also resembles itself at twice or three times its period, so
+        // the strongest match can be a whole beat too slow. Look specifically
+        // where a genuine subharmonic would be — near half and a third of the
+        // winning lag — rather than at any shorter lag that happens to score
+        // nearly as well, which is most of them, since the curve is smooth
+        // around its peak and taking the shortest of those reads every pulse
+        // about five percent fast.
+        var lag = best.lag
+        for divisor in [2, 3] {
+            let candidate = Int((Double(best.lag) / Double(divisor)).rounded())
+            guard candidate >= minLag else { continue }
+            let slack = max(1, candidate / 10)
+            let low = max(minLag, candidate - slack), high = min(maxLag, candidate + slack)
+            guard low <= high else { continue }
+            guard let local = (low...high).max(by: { (scores[$0] ?? 0) < (scores[$1] ?? 0) }),
+                  let score = scores[local], score >= best.score * 0.85 else { continue }
+            lag = local
+            break
+        }
+
+        // Place the lag between whole frames: at 30fps the gap between two of
+        // them is several bpm at a running heart rate.
+        var refined = Double(lag)
+        if lag > minLag, lag < maxLag,
+           let a = scores[lag - 1], let b = scores[lag], let c = scores[lag + 1] {
             let curve = a - 2 * b + c
-            guard abs(curve) > 1e-12 else { return Double(i) }
-            return Double(i) + max(-0.5, min(0.5, 0.5 * (a - c) / curve))
+            if abs(curve) > 1e-12 {
+                refined += max(-0.5, min(0.5, 0.5 * (a - c) / curve))
+            }
         }
 
-        let intervals = zip(refined.dropFirst(), refined).map { ($0 - $1) / sampleRate }
-        let sorted = intervals.sorted()
-        let median = sorted[sorted.count / 2]
-        guard median > 0.33, median < 1.5 else { return nil }   // 40–180 bpm
-
-        // Confidence is how closely the beats agree with each other. Below a
-        // floor there is no reading — a number nobody should trust is worse
-        // than no number, so it is never returned in the first place.
-        let spread = intervals.map { abs($0 - median) / median }.reduce(0, +) / Double(intervals.count)
-        let confidence = max(0, min(1, 1 - spread * 3.2))
-        guard confidence >= 0.25 else { return nil }
-        return (60.0 / median, confidence)
+        let bpm = 60 * sampleRate / refined
+        guard bpm > 40, bpm < 180 else { return nil }
+        return (bpm, min(1, max(0, best.score)))
     }
 }

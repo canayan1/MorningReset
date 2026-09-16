@@ -286,8 +286,7 @@ struct OnboardingView: View {
             withAnimation(.easeOut(duration: 0.3)) { step = .plan }
         }) {
             if let school, let routine {
-                // The first practice is the one that has to prove itself.
-                RoutinePlayerView(school: school, routine: routine, measuresPulse: true)
+                RoutinePlayerView(school: school, routine: routine)
             }
         }
     }

@@ -10,6 +10,7 @@ struct AlarmView: View {
     @AppStorage("mrHomeNudgeSeen") private var homeNudgeSeen = false
     @State private var playSession = false
     @State private var playSignature = false
+    @State private var showRitual = false
     @State private var orbTotal = 0
 
     private let language = AppLanguage.current
@@ -148,14 +149,14 @@ struct AlarmView: View {
         .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
         .sheet(isPresented: $playSession, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
-            // Short practices get the before/after pair: close enough together
-            // that the two numbers are about the practice and nothing else.
             RoutinePlayerView(school: appState.todaysPractice.school,
-                              routine: appState.todaysPractice.routine,
-                              measuresPulse: appState.todaysPractice.routine.minutes <= 3)
+                              routine: appState.todaysPractice.routine)
         }
         .sheet(isPresented: $playSignature, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
             SignatureMeditationView()
+        }
+        .fullScreenCover(isPresented: $showRitual, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
+            MorningRitualView()
         }
     }
 
@@ -198,11 +199,13 @@ struct AlarmView: View {
         .accessibilityIdentifier("alarm.signatureEntry")
     }
 
-    /// An alarm opened the app: start the practice without a tap.
+    /// An alarm opened the app. It opens into the morning ritual — a pulse, a
+    /// voice, a smile — and not into a practice: a practice is something you
+    /// choose, and nobody chooses anything in the first minute of being awake.
     private func consumeWakePractice() {
         guard appState.wakePracticePending else { return }
         appState.wakePracticePending = false
-        playSession = true
+        showRitual = true
     }
 
     /// When the morning practice is set, the next time it will ring.

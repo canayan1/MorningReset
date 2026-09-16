@@ -361,6 +361,17 @@ final class MorningResetTests: XCTestCase {
 
     // MARK: - School content (Energy Reset 2.0)
 
+    // MARK: - The signature session
+
+    /// The shape of the practice is the spec: five rounds of three a side, then
+    /// ten of four. Getting this wrong is silent — it would simply be a
+    /// different practice — so it is pinned here.
+    func testSignatureSessionIsFiveThreesThenTenFours() {
+        XCTAssertEqual(SignatureMeditationView.exhaleCount, 15, "five rounds then ten, one out-breath each")
+        XCTAssertEqual(SignatureMeditationView.totalSeconds, 5 * 4 * 3 + 10 * 4 * 4, accuracy: 0.001)
+        XCTAssertEqual(SignatureMeditationView.totalSeconds, 220, accuracy: 0.001, "three minutes and forty seconds")
+    }
+
     // MARK: - The tree you breathe
 
     /// The character runs from a quick breath to a long one, and saturates
@@ -414,8 +425,31 @@ final class MorningResetTests: XCTestCase {
             guard let result = PulseReader.estimate(signal, sampleRate: rate) else {
                 return XCTFail("no reading at \(bpm) bpm")
             }
-            XCTAssertEqual(result.bpm, bpm, accuracy: 2.0, "off at \(bpm) bpm")
+            XCTAssertEqual(result.bpm, bpm, accuracy: 1.5, "off at \(bpm) bpm")
             XCTAssertGreaterThan(result.confidence, 0.8, "should be sure of a clean signal at \(bpm)")
+        }
+    }
+
+    /// A real trace drifts and is noisy, and the beat is small against both.
+    /// This is the case that caught a five-percent overestimate: the octave
+    /// guard was taking any shorter lag that scored nearly as well, and near
+    /// the peak of an autocorrelation that is most of them.
+    func testPulseEstimatorSurvivesDriftAndNoise() {
+        var seed: UInt64 = 7
+        for bpm in [52.0, 68.0, 92.0, 118.0] {
+            let raw = (0..<600).map { i -> Double in
+                let t = Double(i) / 30
+                seed = seed &* 6364136223846793005 &+ 1442695040888963407
+                let noise = (Double(seed >> 40) / Double(1 << 24) - 0.5) * 0.012
+                return 0.35 + 0.02 * sin(2 * .pi * 0.08 * t)          // the finger settling
+                     + 0.004 * sin(2 * .pi * bpm / 60 * t)
+                     + 0.0015 * sin(4 * .pi * bpm / 60 * t) + noise
+            }
+            guard let r = PulseReader.estimate(PulseReader.strongerTrace(red: raw, green: raw),
+                                               sampleRate: 30) else {
+                return XCTFail("lost the beat at \(bpm) bpm under noise")
+            }
+            XCTAssertEqual(r.bpm, bpm, accuracy: 2.0, "drifted at \(bpm) bpm")
         }
     }
 
@@ -426,8 +460,10 @@ final class MorningResetTests: XCTestCase {
             seed = seed &* 6364136223846793005 &+ 1442695040888963407
             return Double(seed >> 40) / Double(1 << 24) * 0.006 - 0.003
         }
-        XCTAssertNil(PulseReader.estimate(noise, sampleRate: 30), "noise must not produce a reading")
-        XCTAssertNil(PulseReader.estimate(Array(repeating: 0.5, count: 600), sampleRate: 30),
+        XCTAssertNil(PulseReader.estimate(PulseReader.strongerTrace(red: noise, green: noise), sampleRate: 30),
+                     "noise must not produce a reading")
+        let flat = Array(repeating: 0.5, count: 600)
+        XCTAssertNil(PulseReader.estimate(PulseReader.strongerTrace(red: flat, green: flat), sampleRate: 30),
                      "a flat trace means no finger, not a pulse")
     }
 
