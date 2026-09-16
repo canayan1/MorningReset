@@ -360,6 +360,55 @@ final class MorningResetTests: XCTestCase {
 
     // MARK: - School content (Energy Reset 2.0)
 
+    // MARK: - Pulse
+
+    /// A clean synthetic beat at a known rate must come back at that rate. The
+    /// camera cannot be driven in a test, so this is where the estimator is
+    /// actually held to account.
+    func testPulseEstimatorRecoversAKnownRate() {
+        for bpm in [48.0, 62.0, 75.0, 96.0, 124.0] {
+            let rate = 30.0, seconds = 20.0
+            let signal = (0..<Int(rate * seconds)).map { i -> Double in
+                let t = Double(i) / rate
+                // A beat is not a sine: the second harmonic is what gives it
+                // the sharp upstroke the peak finder looks for.
+                return 0.004 * sin(2 * .pi * bpm / 60 * t)
+                     + 0.0015 * sin(4 * .pi * bpm / 60 * t)
+            }
+            guard let result = PulseReader.estimate(signal, sampleRate: rate) else {
+                return XCTFail("no reading at \(bpm) bpm")
+            }
+            XCTAssertEqual(result.bpm, bpm, accuracy: 2.0, "off at \(bpm) bpm")
+            XCTAssertGreaterThan(result.confidence, 0.8, "should be sure of a clean signal at \(bpm)")
+        }
+    }
+
+    /// Noise with no beat in it must be reported as nothing, never as a number.
+    func testPulseEstimatorRefusesNoise() {
+        var seed: UInt64 = 42
+        let noise = (0..<600).map { _ -> Double in
+            seed = seed &* 6364136223846793005 &+ 1442695040888963407
+            return Double(seed >> 40) / Double(1 << 24) * 0.006 - 0.003
+        }
+        XCTAssertNil(PulseReader.estimate(noise, sampleRate: 30), "noise must not produce a reading")
+        XCTAssertNil(PulseReader.estimate(Array(repeating: 0.5, count: 600), sampleRate: 30),
+                     "a flat trace means no finger, not a pulse")
+    }
+
+    /// The pair is the point: the drop is what the app shows.
+    func testPulseDropIsOnlyThereWhenBothReadingsAre() {
+        var s = PracticeSession(schoolID: "breathing", routineID: "breathing.r01",
+                                routineTitle: "Three Physiological Sighs",
+                                date: referenceDate, minutes: 1, outcome: .done)
+        XCTAssertNil(s.pulseDrop)
+        s.pulseBefore = 78
+        XCTAssertNil(s.pulseDrop, "one number is not a pair")
+        s.pulseAfter = 64
+        XCTAssertEqual(s.pulseDrop, 14)
+        s.pulseAfter = 82
+        XCTAssertEqual(s.pulseDrop, -4, "a rise is a real answer too")
+    }
+
     func testSchoolContentLoadsAndIsWellFormed() throws {
         let schools = SchoolContentStore.all
         XCTAssertFalse(schools.isEmpty, "No school content loaded from the bundle")

@@ -141,7 +141,11 @@ struct AlarmView: View {
         .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
         .sheet(isPresented: $playSession, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
-            RoutinePlayerView(school: appState.todaysPractice.school, routine: appState.todaysPractice.routine)
+            // Short practices get the before/after pair: close enough together
+            // that the two numbers are about the practice and nothing else.
+            RoutinePlayerView(school: appState.todaysPractice.school,
+                              routine: appState.todaysPractice.routine,
+                              measuresPulse: appState.todaysPractice.routine.minutes <= 3)
         }
     }
 

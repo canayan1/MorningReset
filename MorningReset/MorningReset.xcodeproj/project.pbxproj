@@ -46,6 +46,7 @@
 		A232825DD6B5DBC0AA91F798 /* EnergyReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57F53F6167BE8771F8A4348 /* EnergyReader.swift */; };
 		A60684DCA0B2D07F15C9BE05 /* NightSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774884638105F4C7C4B23EBA /* NightSoundView.swift */; };
 		A8107443A94D7144B89DF985 /* EnergySchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D4D940683C45803ECC46D /* EnergySchool.swift */; };
+		A8B5655663D3D92EFF3D8CF1 /* PulseCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5137AF70AFEA598F47CB18 /* PulseCheckView.swift */; };
 		A90F2D041FD884A84461E456 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C588E2D1855DFA975EA1393 /* AboutView.swift */; };
 		AA0100A1AA0100A1AA0100A1 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
 		AA0100A2AA0100A2AA0100A2 /* WakeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */; };
@@ -64,6 +65,7 @@
 		AE1D54C4BFF96D4D8AF83020 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18689358EE807FE55E4B3BE /* PaywallView.swift */; };
 		B1C2D3E4F5061122B1C2D3E4 /* StreakStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011A1B2C3D4 /* StreakStripView.swift */; };
 		B2C3D4E5F6A70011B2C3D4E5 /* BreathResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F70011A2B3C4D5 /* BreathResetView.swift */; };
+		B33C17A798E2E222B423734D /* PulseReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */; };
 		B3C4D5E6F7A80011B3C4D5E6 /* PremiumHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B4C5D6E7F80011A3B4C5D6 /* PremiumHubView.swift */; };
 		B7994162D71BCBBA499FE1D2 /* AlarmBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */; };
 		B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */; };
@@ -149,6 +151,7 @@
 		10972D0D1D8EDAA445C860E7 /* MobilityFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilityFlow.swift; sourceTree = "<group>"; };
 		185284A57784993148A1E485 /* CycleCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleCompleteView.swift; sourceTree = "<group>"; };
 		19752139D5D3A78FEAF17BAA /* EnergyCameraView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnergyCameraView.swift; sourceTree = "<group>"; };
+		1E5137AF70AFEA598F47CB18 /* PulseCheckView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PulseCheckView.swift; sourceTree = "<group>"; };
 		203DD8E9C9DE385CD7A968B0 /* SchoolContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SchoolContent.swift; sourceTree = "<group>"; };
 		21CBA95398AF7597EEB97CDE /* MantraEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MantraEngine.swift; sourceTree = "<group>"; };
 		2C588E2D1855DFA975EA1393 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -221,6 +224,7 @@
 		E1F2A3B4C5D60011E1F2A3B4 /* MonthlyStoryEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStoryEngine.swift; sourceTree = "<group>"; };
 		E2F3A4B5C6D70011E2F3A4B5 /* MonthlyStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStoryView.swift; sourceTree = "<group>"; };
 		E2FF39BF9CEA3C903F5184B6 /* AlarmBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmBackend.swift; sourceTree = "<group>"; };
+		E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PulseReader.swift; sourceTree = "<group>"; };
 		EEDE3E9E68D1B50ACE0DBEEE /* PracticeLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PracticeLog.swift; sourceTree = "<group>"; };
 		F1A852C3A47BC367E2BDD567 /* AppState+Premium.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Premium.swift"; sourceTree = "<group>"; };
 		F3CDF12D2F79C31A005E6880 /* MorningReset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningReset.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,6 +409,7 @@
 				EEDE3E9E68D1B50ACE0DBEEE /* PracticeLog.swift */,
 				A6D01BD446A784305E4AA799 /* TimeOfDay.swift */,
 				BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */,
+				E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				0AEDF4CCEE1B57C0A53AB745 /* SchoolSessionPlayerView.swift */,
 				FE6F4BFC04E92024AA88F22C /* EnergyOrbView.swift */,
 				DFE3A0D1B6ACBFFC86976A28 /* EnergyTreeView.swift */,
+				1E5137AF70AFEA598F47CB18 /* PulseCheckView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -733,6 +739,8 @@
 				F41789159188F5D0EC4686AC /* TimeOfDay.swift in Sources */,
 				EC532ABB2F0EFF88D15F37EE /* EnergyTreeView.swift in Sources */,
 				B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */,
+				B33C17A798E2E222B423734D /* PulseReader.swift in Sources */,
+				A8B5655663D3D92EFF3D8CF1 /* PulseCheckView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

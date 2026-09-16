@@ -10,6 +10,9 @@ struct RoutinePlayerView: View {
     let school: SchoolContent
     let routine: Routine
     var onComplete: () -> Void = {}
+    /// Take a pulse before and after. Only worth it on the short practices,
+    /// where the pair is close enough together to mean something.
+    var measuresPulse: Bool = false
 
     @State private var total: Int
     @State private var remaining: Int
@@ -24,12 +27,20 @@ struct RoutinePlayerView: View {
     @State private var spokenCues: Set<String> = []
     @State private var cueIndex = 0
     @State private var fedOrb = true
+    @State private var started = false
+    @State private var session: PracticeSession?
+    @State private var pulseBefore: PulseReading?
+    @State private var pulseAfter: PulseReading?
+    @State private var showPulseBefore = false
+    @State private var showPulseAfter = false
     @Environment(\.requestReview) private var requestReview
 
-    init(school: SchoolContent, routine: Routine, onComplete: @escaping () -> Void = {}) {
+    init(school: SchoolContent, routine: Routine,
+         onComplete: @escaping () -> Void = {}, measuresPulse: Bool = false) {
         self.school = school
         self.routine = routine
         self.onComplete = onComplete
+        self.measuresPulse = measuresPulse
         let secs = max(30, routine.minutes * 60)
         _total = State(initialValue: secs)
         _remaining = State(initialValue: secs)
@@ -115,9 +126,19 @@ struct RoutinePlayerView: View {
         .onAppear {
             pulse = true
             showSafety = hasSafety
-            AmbientPlayer.shared.start(path: nil)
-            startTicker()
-            speakCurrentStep()
+            if measuresPulse { showPulseBefore = true } else { begin() }
+        }
+        .fullScreenCover(isPresented: $showPulseBefore) {
+            PulseCheckView(moment: .before) { reading in
+                pulseBefore = reading
+                begin()
+            }
+        }
+        .fullScreenCover(isPresented: $showPulseAfter) {
+            PulseCheckView(moment: .after) { reading in
+                pulseAfter = reading
+                storePulse()
+            }
         }
         .onDisappear {
             ticker?.invalidate()
@@ -216,6 +237,9 @@ struct RoutinePlayerView: View {
                     .transition(.scale(scale: 0.85).combined(with: .opacity))
             }
             EnergyOrbBadge(total: orbTotal, tint: color, size: 160, celebrate: true)
+            if let before = pulseBefore?.bpm, let after = pulseAfter?.bpm {
+                pulseResult(before: before, after: after)
+            }
             VStack(spacing: DS.Space.xs) {
                 Text(fedOrb ? "Your orb is brighter" : "Logged")
                     .font(.system(size: 24, weight: .regular, design: .serif))
@@ -228,6 +252,45 @@ struct RoutinePlayerView: View {
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
+        }
+    }
+
+    /// The pair, side by side. The drop is the whole point, so it is the thing
+    /// set in the largest type — and when it went the other way, it says so.
+    private func pulseResult(before: Int, after: Int) -> some View {
+        let drop = before - after
+        return VStack(spacing: DS.Space.sm) {
+            HStack(spacing: DS.Space.md) {
+                pulseFigure(before, L10n.text(en: "BEFORE", tr: "ÖNCE", es: "ANTES"))
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(DS.textDim)
+                pulseFigure(after, L10n.text(en: "AFTER", tr: "SONRA", es: "DESPUÉS"))
+            }
+            Text(drop > 0
+                 ? L10n.text(en: "\(drop) beats slower", tr: "\(drop) atış daha yavaş", es: "\(drop) latidos más lento")
+                 : L10n.text(en: "Steady through", tr: "Baştan sona sabit", es: "Estable en todo"))
+                .font(.system(size: 19, weight: .medium, design: .serif))
+                .foregroundStyle(drop > 0 ? DS.calm : DS.textSecondary)
+        }
+        .padding(.vertical, DS.Space.md)
+        .padding(.horizontal, DS.Space.lg)
+        .background(DS.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(DS.border, lineWidth: DS.hairline))
+        .transition(.opacity)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func pulseFigure(_ bpm: Int, _ label: String) -> some View {
+        VStack(spacing: 2) {
+            Text("\(bpm)")
+                .font(.system(size: 40, weight: .light, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .monospacedDigit()
+            Text(label)
+                .font(DS.Typo.label).kerning(1.2)
+                .foregroundStyle(DS.textDim)
         }
     }
 
@@ -291,6 +354,24 @@ struct RoutinePlayerView: View {
         }
     }
 
+    /// The practice proper — held back until the first reading is in.
+    private func begin() {
+        guard !started else { return }
+        started = true
+        AmbientPlayer.shared.start(path: nil)
+        startTicker()
+        speakCurrentStep()
+    }
+
+    /// Attach the pair to the session already written to the log.
+    private func storePulse() {
+        guard var s = session else { return }
+        s.pulseBefore = pulseBefore?.bpm
+        s.pulseAfter = pulseAfter?.bpm
+        PracticeLogStore.update(s)
+        session = s
+    }
+
     private func complete() {
         guard !finished else { return }
         finished = true
@@ -303,11 +384,15 @@ struct RoutinePlayerView: View {
         else if fractionLeft > 0.25 { outcome = .partial }
         else                        { outcome = .done }
         fedOrb = outcome.feedsOrb
-        PracticeLogStore.add(schoolID: school.id, routine: routine, outcome: outcome)
+        session = PracticeLogStore.add(schoolID: school.id, routine: routine, outcome: outcome)
         appState.invalidateStreakCache()
         orbTotal = EnergyOrb.totalSessions
         askForReviewIfEarned(after: outcome)
         SpeechGuide.shared.speak(outcome.feedsOrb ? "Your light is a little brighter now." : "Noted. You can adjust this any time.")
+        // The second reading is only meaningful next to a first one.
+        if measuresPulse, pulseBefore != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { showPulseAfter = true }
+        }
         onComplete()
     }
 }

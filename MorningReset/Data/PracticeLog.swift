@@ -39,6 +39,18 @@ struct PracticeSession: Identifiable, Codable, Hashable {
     var minutes: Int
     var outcome: PracticeOutcome
     var note: String?
+    /// Beats per minute before and after, when the practice was measured.
+    /// Both optional: most practices are not, and a reading the app did not
+    /// trust is stored as nothing rather than as a number.
+    var pulseBefore: Int?
+    var pulseAfter: Int?
+
+    /// How far the pulse came down. Negative means it rose, which is a real
+    /// answer and is shown as one.
+    var pulseDrop: Int? {
+        guard let b = pulseBefore, let a = pulseAfter else { return nil }
+        return b - a
+    }
 }
 
 enum PracticeLogStore {
