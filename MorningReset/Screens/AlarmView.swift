@@ -101,12 +101,6 @@ struct AlarmView: View {
 
                 Spacer()
 
-                // ── Today's practice (the one thing to do) ───────────
-                todaysSessionCard
-                    .padding(.horizontal, DS.Space.lg)
-
-                Spacer().frame(height: DS.Space.sm)
-
                 // ── The app's own practice ───────────────────────────
                 signatureEntry
                     .padding(.horizontal, DS.Space.lg)
@@ -213,37 +207,6 @@ struct AlarmView: View {
         LocalNotificationWakeScheduler().nextFireDate(for: schedule)
     }
 
-    // MARK: - Today's session
-
-    private var todaysSessionCard: some View {
-        let (school, session) = appState.todaysPractice
-        let color = SchoolPalette.color(school.id)
-        return Button { playSession = true } label: {
-            HStack(spacing: DS.Space.md) {
-                ZStack {
-                    Circle().fill(color.opacity(0.16)).frame(width: 44, height: 44)
-                    Image(systemName: SchoolPalette.symbol(school.id)).font(.system(size: 20)).foregroundStyle(color)
-                }
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(L10n.text(language: language, en: "TODAY'S PRACTICE", tr: "BUGÜNÜN PRATİĞİ", es: "PRÁCTICA DE HOY"))
-                        .font(.system(size: 9, weight: .semibold)).kerning(1.1)
-                        .foregroundStyle(DS.textDim)
-                    Text(session.title)
-                        .font(.body.weight(.semibold)).foregroundStyle(DS.textPrimary)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text("\(school.name) · \(session.minutes) min")
-                        .font(.caption).foregroundStyle(DS.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                Spacer()
-                Image(systemName: "play.circle.fill").font(.system(size: 26)).foregroundStyle(color)
-            }
-            .dreamCard(radius: DS.Radius.lg, padding: DS.Space.md, tint: color)
-        }
-        .accessibilityIdentifier("alarm.todaysSession")
-    }
-
     // MARK: - Hero states
 
     private var orbHero: some View {
@@ -285,6 +248,13 @@ struct AlarmView: View {
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.vertical, 12)
                 .background(Capsule().fill(SchoolPalette.color(appState.activeSchoolID)))
+                .padding(.top, DS.Space.xs)
+
+            // What the button opens. This used to be a whole card below, which
+            // said the same thing twice.
+            Text("\(appState.todaysPractice.routine.title) · \(appState.todaysPractice.routine.minutes) min")
+                .font(.caption)
+                .foregroundStyle(DS.textDim)
                 .padding(.top, DS.Space.xs)
         }
         .frame(maxWidth: .infinity)
@@ -371,25 +341,30 @@ struct AlarmView: View {
 
     // MARK: - Morning energy read entry
 
+    /// The morning ritual, on demand.
+    ///
+    /// It is what the alarm opens, but reaching it should not require setting
+    /// one and waiting — and the smile it ends on is the check-in that used to
+    /// sit here on its own.
     private var energyReadEntry: some View {
-        Button { appState.showEnergyRead() } label: {
+        Button { showRitual = true } label: {
             HStack(spacing: DS.Space.md) {
                 ZStack {
                     Circle().fill(DS.calm.opacity(0.14)).frame(width: 44, height: 44)
-                    Image(systemName: "face.smiling")
+                    Image(systemName: "sun.horizon.fill")
                         .font(.system(size: 21, weight: .medium))
                         .foregroundStyle(DS.calm)
                 }
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(L10n.text(language: language, en: "ENERGY CHECK-IN", tr: "ENERJİ CHECK-IN", es: "CHEQUEO DE ENERGÍA"))
+                    Text(L10n.text(language: language, en: "MORNING RITUAL", tr: "SABAH RİTÜELİ", es: "RITUAL MATUTINO"))
                         .font(.system(size: 9, weight: .semibold))
                         .kerning(1.2)
                         .foregroundStyle(DS.textDim)
-                    Text(L10n.text(language: language, en: "Smile & read your energy", tr: "Gülümse, enerjini oku", es: "Sonríe y lee tu energía"))
+                    Text(L10n.text(language: language, en: "Your pulse, then a smile", tr: "Nabzın, sonra bir gülümseme", es: "Tu pulso, luego una sonrisa"))
                         .font(.body.weight(.semibold))
                         .foregroundStyle(DS.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
-                    Text(L10n.text(language: language, en: "Optional — a selfie reads your energy", tr: "İsteğe bağlı — selfie enerjini okur", es: "Opcional — un selfie lee tu energía"))
+                    Text(L10n.text(language: language, en: "Forty seconds, nothing asked of you", tr: "Kırk saniye, senden bir şey istenmiyor", es: "Cuarenta segundos, sin pedirte nada"))
                         .font(.caption)
                         .foregroundStyle(DS.textSecondary)
                 }
@@ -400,7 +375,7 @@ struct AlarmView: View {
             }
             .dreamCard(radius: DS.Radius.lg, padding: DS.Space.md, tint: DS.calm)
         }
-        .accessibilityIdentifier("alarm.energyReadEntry")
+        .accessibilityIdentifier("alarm.ritualEntry")
     }
 
     // MARK: - First Win entry
