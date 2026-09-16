@@ -47,7 +47,10 @@ def audit(path):
     ids = [x.get("id") for x in r]
     if len(set(ids)) != len(ids): issues.append("duplicate routine ids")
     free = [x for x in r if x.get("free")]
-    if len(free) != 1: issues.append(f"free routines: {len(free)} (expected exactly 1)")
+    # One routine in the whole app is free — the one the morning alarm wakes you
+    # into — so a school having none is the normal case now. What is checked
+    # app-wide, below, is that exactly one exists anywhere.
+    if len(free) > 1: issues.append(f"free routines: {len(free)} (at most 1 per school)")
     counts = {g: 0 for g in GROUPS}
     for x in r:
         g = x.get("group")
@@ -83,7 +86,7 @@ def audit(path):
 
     n_safety = sum(1 for x in r if (x.get("safety") or "").strip())
     print(f"\n=== {sid} ({d.get('name')}) — {d.get('kind')} ===")
-    print(f"  routines 25 ✓ | groups {dict(counts)} | free: {free[0]['title'] if len(free)==1 else '!!'} "
+    print(f"  routines 25 ✓ | groups {dict(counts)} | free: {free[0]['title'] if len(free)==1 else '—'} "
           f"| teachings {len(te)} | safety notes {n_safety} | sources {len(d.get('sources',[]))}")
     for i in issues: print("  ✗", i)
     for w in warns[:5]: print("  ~", w)
@@ -96,5 +99,15 @@ if __name__ == "__main__":
     total = 0
     for f in files:
         iss, _ = audit(f); total += len(iss)
+    # Exactly one free practice ships, app-wide: two would give a tier away,
+    # none would leave nothing to try. It is the one the morning alarm opens.
+    free_ids = [x["id"] for f in files for x in json.loads(f.read_text())["routines"] if x.get("free")]
+    print()
+    if free_ids == ["breathing.r01"]:
+        print(f"  ✓ one free practice app-wide: {free_ids[0]}")
+    else:
+        print(f"  ✗ app-wide free practices: {free_ids or 'none'} (expected exactly ['breathing.r01'])")
+        total += 1
+
     print(f"\n{'='*60}\nTOTAL BLOCKING ISSUES: {total} across {len(files)} school(s)")
     sys.exit(1 if total else 0)
