@@ -200,9 +200,7 @@ struct MorningCalendarView: View {
     private func accessibilityLabel(day: Date, record: MorningRecord?) -> String {
         let date = day.formatted(.dateTime.day().month(.wide))
         guard let record else {
-            return L10n.text(en: "\(date), no morning recorded",
-                             tr: "\(date), kayıtlı sabah yok",
-                             es: "\(date), sin mañana registrada")
+            return L10n.text(en: "\(date)", tr: "\(date)", es: "\(date)")
         }
         guard let bpm = record.bpm else {
             return L10n.text(en: "\(date), morning done", tr: "\(date), sabah tamam", es: "\(date), mañana hecha")
@@ -251,9 +249,9 @@ struct MorningCalendarView: View {
                         .foregroundStyle(DS.textSecondary)
                 }
             } else {
-                Text(L10n.text(en: "The morning happened. The reading didn't settle.",
-                               tr: "Sabah oldu. Okuma oturmadı.",
-                               es: "La mañana ocurrió. La lectura no se asentó."))
+                Text(L10n.text(en: "A morning you showed up for.",
+                               tr: "Geldiğin bir sabah.",
+                               es: "Una mañana en la que apareciste."))
                     .font(.caption)
                     .foregroundStyle(DS.textSecondary)
                     .multilineTextAlignment(.center)
@@ -264,24 +262,34 @@ struct MorningCalendarView: View {
         .background(DS.surface, in: RoundedRectangle(cornerRadius: DS.Radius.sm, style: .continuous))
     }
 
-    /// Said as a difference from the person's own usual morning, never as a
-    /// verdict. Four beats is inside the noise of a night's sleep, so under
-    /// that the honest answer is "the same".
+    /// What the morning was like, never how far off it was.
+    ///
+    /// The arithmetic is still a comparison with this person's own usual
+    /// morning — there is nothing else worth comparing a waking pulse to —
+    /// but the sentence never is. "Eight above your usual" is a verdict with
+    /// a number attached, and it lands on someone who has been awake for
+    /// ninety seconds. A lively morning is named as lively and then followed
+    /// by an invitation, which is the one thing that is actually useful: the
+    /// day is still unwritten, and it could be a slow one.
+    ///
+    /// Four beats is inside the noise of a night's sleep, so under that the
+    /// honest thing is to name the steadiness rather than invent a story.
     private func comparison(bpm: Int, typical: Int) -> String {
         let delta = bpm - typical
-        if abs(delta) < 4 {
-            return L10n.text(en: "About your usual morning.",
-                             tr: "Her zamanki sabahın gibi.",
-                             es: "Como tu mañana habitual.")
+
+        if delta <= -4 {
+            return L10n.text(en: "You woke up settled. Carry that with you.",
+                             tr: "Sakin uyanmışsın. Bunu yanında taşı.",
+                             es: "Despertaste en calma. Llévala contigo.")
         }
-        if delta < 0 {
-            return L10n.text(en: "\(-delta) below your usual \(typical).",
-                             tr: "Her zamanki \(typical) değerinin \(-delta) altında.",
-                             es: "\(-delta) por debajo de tus \(typical) habituales.")
+        if delta < 4 {
+            return L10n.text(en: "Your own steady morning.",
+                             tr: "Kendi dingin sabahın.",
+                             es: "Tu propia mañana serena.")
         }
-        return L10n.text(en: "\(delta) above your usual \(typical).",
-                         tr: "Her zamanki \(typical) değerinin \(delta) üstünde.",
-                         es: "\(delta) por encima de tus \(typical) habituales.")
+        return L10n.text(en: "Awake and lively. A slow day, maybe?",
+                         tr: "Uyanık ve canlı. Bugünü sakin geçirsen mi acaba?",
+                         es: "Despierta y con brío. ¿Un día tranquilo, quizá?")
     }
 
     private var monthSummary: some View {
