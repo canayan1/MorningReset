@@ -21,6 +21,7 @@
 		3214155B6FAAFAA454CAABE1 /* InsightPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9307A7878C0E116E1FF3AF2D /* InsightPreviewView.swift */; };
 		38431A8B6890AEDE612C6469 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9BEFCC32F315BFAD122C0 /* DesignSystem.swift */; };
 		3D930EB8803B4EC06E49F022 /* EnergyOrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6F4BFC04E92024AA88F22C /* EnergyOrbView.swift */; };
+		FD7FE3230C31458BBF7EE898 /* AlarmPermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382B2F772AD46A0909E1FAA /* AlarmPermissionGuideView.swift */; };
 		A6890E2C5C164363AB5A1CD8 /* MorningCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */; };
 		4015F895DE00DF5C91E2AB3D /* MorningRitualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0E0E46336800C4E485284 /* MorningRitualView.swift */; };
 		44D72EE27CF8FF4E6C68FA30 /* AIInsightPromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C25D9DB22AE4C05B7A283 /* AIInsightPromptBuilder.swift */; };
@@ -151,6 +152,7 @@
 
 /* Begin PBXFileReference section */
 		05D2CD42CA1DDBED29A96662 /* Schools */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Schools; path = Schools; sourceTree = "<group>"; };
+		8382B2F772AD46A0909E1FAA /* AlarmPermissionGuideView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlarmPermissionGuideView.swift; sourceTree = "<group>"; };
 		2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningCalendarView.swift; sourceTree = "<group>"; };
 		09D0E0E46336800C4E485284 /* MorningRitualView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningRitualView.swift; sourceTree = "<group>"; };
 		0AEDF4CCEE1B57C0A53AB745 /* SchoolSessionPlayerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SchoolSessionPlayerView.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				DFE3A0D1B6ACBFFC86976A28 /* EnergyTreeView.swift */,
 				1E5137AF70AFEA598F47CB18 /* PulseCheckView.swift */,
 				B7E093BA2F1A8BA19189A3F1 /* SignatureMeditationView.swift */,
+				8382B2F772AD46A0909E1FAA /* AlarmPermissionGuideView.swift */,
 				2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */,
 				09D0E0E46336800C4E485284 /* MorningRitualView.swift */,
 			);
@@ -766,6 +769,7 @@
 				DAC12F6A77564AC7B11A70D5 /* MorningLog.swift in Sources */,
 				AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */,
 				31F5C6231237F5DBC839A1CC /* SignatureMeditationView.swift in Sources */,
+				FD7FE3230C31458BBF7EE898 /* AlarmPermissionGuideView.swift in Sources */,
 				A6890E2C5C164363AB5A1CD8 /* MorningCalendarView.swift in Sources */,
 				4015F895DE00DF5C91E2AB3D /* MorningRitualView.swift in Sources */,
 				A026B8AFAD6E9E0E7E91222E /* PulseSignal.swift in Sources */,

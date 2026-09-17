@@ -11,6 +11,11 @@ struct AlarmView: View {
     @State private var playSession = false
     @State private var playSignature = false
     @State private var showRitual = false
+    /// Opens the alarm-permission guide straight away, for capturing it. The
+    /// screen is otherwise three taps in and behind a system permission state
+    /// that a simulator will not hand out.
+    @State private var showAlarmGuide = ProcessInfo.processInfo.arguments.contains("-uiTesting")
+        && ProcessInfo.processInfo.arguments.contains("-showAlarmGuide")
     @State private var orbTotal = 0
 
     private let language = AppLanguage.current
@@ -142,6 +147,7 @@ struct AlarmView: View {
         }
         .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
+        .sheet(isPresented: $showAlarmGuide) { AlarmPermissionGuideView() }
         .sheet(isPresented: $playSession, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
             RoutinePlayerView(school: appState.todaysPractice.school,
                               routine: appState.todaysPractice.routine)

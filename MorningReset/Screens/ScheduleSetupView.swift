@@ -13,6 +13,7 @@ struct ScheduleSetupView: View {
     /// cannot keep.
     @State private var deliveredAsNotification = false
     @State private var permission: WakeAlarmPermission = .notAsked
+    @State private var showsGuide = false
 
     init() {
         let s   = WakeScheduleStore.load()
@@ -120,10 +121,8 @@ struct ScheduleSetupView: View {
                             .fixedSize(horizontal: false, vertical: true)
 
                         HStack(spacing: DS.Space.lg) {
-                            Button(L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
-                                if let url = URL(string: UIApplication.openSettingsURLString) {
-                                    UIApplication.shared.open(url)
-                                }
+                            Button(L10n.text(en: "Show me how", tr: "Nasıl yapacağımı göster", es: "Muéstrame cómo")) {
+                                showsGuide = true
                             }
                             Button(L10n.text(en: "Keep it anyway", tr: "Yine de kalsın", es: "Dejarlo así")) {
                                 appState.finishScheduleSetup()
@@ -167,6 +166,18 @@ struct ScheduleSetupView: View {
         }
         // Re-checked every time the screen comes forward: alarms can be turned
         // on in Settings and the answer has to be current when they come back.
+        .sheet(isPresented: $showsGuide) {
+            AlarmPermissionGuideView { resolved in
+                permission = resolved
+                if resolved == .allowed {
+                    deliveredAsNotification = false
+                    // Granted while the screen was open: the morning that was
+                    // saved as a notification has to be re-made as an alarm,
+                    // or the switch changes nothing until they save again.
+                    Task { await WakeNotificationManager.current.schedule(WakeScheduleStore.load()) }
+                }
+            }
+        }
         .task { permission = WakeAlarmPermissionCheck.current }
         .onReceive(NotificationCenter.default.publisher(
             for: UIApplication.didBecomeActiveNotification)) { _ in
@@ -257,10 +268,8 @@ struct ScheduleSetupView: View {
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
 
-                Button(permission == .notAsked
-                       ? L10n.text(en: "Allow alarms", tr: "Alarmlara izin ver", es: "Permitir alarmas")
-                       : L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
-                    Task { await resolvePermission() }
+                Button(L10n.text(en: "Show me how", tr: "Nasıl yapacağımı göster", es: "Muéstrame cómo")) {
+                    showsGuide = true
                 }
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(DS.accent)
@@ -271,18 +280,6 @@ struct ScheduleSetupView: View {
             .frame(maxWidth: .infinity)
             .background(DS.surface)
             .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
-        }
-    }
-
-    @MainActor
-    private func resolvePermission() async {
-        if permission == .notAsked {
-            permission = await WakeAlarmPermissionCheck.request()
-            if permission == .allowed { deliveredAsNotification = false }
-            return
-        }
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            _ = await UIApplication.shared.open(url)
         }
     }
 
