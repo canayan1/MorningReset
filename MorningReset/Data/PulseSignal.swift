@@ -8,10 +8,10 @@ import Foundation
 // The measured facts this is built on, from real iPhone captures under the
 // torch: a fingertip reads red ≈ 190/255 with green and blue near zero, and the
 // pulse itself is 0.2%–2% of that — three counts out of 255. Two consequences
-// run through everything below. The signal has to be a *chromaticity* rather
-// than a brightness, because three counts do not survive an auto-exposure step
-// or the torch dimming as the phone warms. And the filter has to be flat across
-// the heart-rate band, because losing a few dB loses the whole beat.
+// run through everything below. The filter has to actually remove the drift,
+// because three counts sit on top of movements a hundred times their size —
+// breathing, the torch dimming, an exposure step. And it has to be flat across
+// the heart-rate band while doing it, because losing a few dB loses the beat.
 
 enum PulseSignal {
 
@@ -23,15 +23,25 @@ enum PulseSignal {
 
     /// What one frame contributes.
     struct Sample {
-        /// Hue of the frame's mean colour, 0…1. This is the analysed series:
-        /// it is a ratio between channels, so it barely moves when the overall
-        /// light level does — which is why the implementations that use it can
-        /// run without locking exposure at all.
+        /// Hue of the frame's mean colour, 0…1.
+        ///
+        /// Not the analysed series, and it must not become one: a torch-lit
+        /// fingertip is very nearly pure red, which sits exactly on hue's wrap
+        /// point. One count of difference between green and blue moves it from
+        /// 0.0005 to 0.9995, and the trace becomes a square wave between the
+        /// ends of the range rather than a pulse. Kept only because it is a
+        /// cheap way to describe the frame's colour.
         let hue: Double
         /// Red as a share of all three channels. A fingertip over a lit lens is
         /// overwhelmingly red; a room, a pocket or a face is not.
         let redShare: Double
-        /// Mean red, 0…1 — for the "press a little harder" and "ease off" cases.
+        /// Mean red, 0…1. **This is the analysed series.** Almost all of a
+        /// torch-lit fingertip's energy is in the red plane, and green and blue
+        /// sit near zero where a couple of counts of sensor noise is a large
+        /// fraction of them — so anything that divides by those channels is
+        /// noisier than the thing it was meant to stabilise. What red needs
+        /// instead is a filter that removes the slow drift and the occasional
+        /// exposure step, which is what `bandpass` is for.
         let red: Double
         /// Fraction of sampled pixels with red at the top of its range. A
         /// clipped channel carries no pulse at all.
@@ -112,12 +122,20 @@ enum PulseSignal {
         let high = Biquad.highPass(cutoff: 0.6, sampleRate: sampleRate)
         let low  = Biquad.lowPass(cutoff: 4.6, sampleRate: sampleRate)
 
-        // Start from the mean so the filter does not ring on the first sample.
+        // Reflect the ends before filtering and cut them off after. A finger
+        // still settling makes the window open on a ramp, and a ramp walking
+        // into a filter rings loudly enough to bury a beat that is a fraction
+        // of one count.
+        let pad = min(input.count - 1, Int(sampleRate))
         let mean = input.reduce(0, +) / Double(input.count)
-        var x = input.map { $0 - mean }
+        let centred = input.map { $0 - mean }
+        let head = (1...pad).map { 2 * centred[0] - centred[$0] }.reversed()
+        let tail = (1...pad).map { 2 * centred[centred.count - 1] - centred[centred.count - 1 - $0] }
+
+        var x = Array(head) + centred + tail
         x = low.apply(high.apply(x))
         x = low.apply(high.apply(x.reversed())).reversed()
-        return x
+        return Array(x[pad..<(x.count - pad)])
     }
 
     /// Resample onto an even grid.
@@ -182,10 +200,19 @@ enum PulseSignal {
         guard best.lag > 0, best.score > 0.35 else { return nil }
 
         // A signal resembles itself at twice and three times its period, so the
-        // strongest match can be a whole beat too slow. Look where a genuine
-        // subharmonic would be rather than at any shorter lag scoring nearly as
-        // well — near the peak that is most of them, and taking the shortest
-        // reads every pulse about five percent fast.
+        // strongest match can be a whole beat too slow — which is how a real
+        // 86 becomes 43, landing near the bottom of the band and looking like
+        // an alarmingly calm morning.
+        //
+        // Two things keep that from being traded for the opposite error. Only
+        // the narrow bands around lag/2 and lag/3 are considered, not any
+        // shorter lag that happens to score well: taking the shortest of those
+        // read every pulse about five percent fast. And within those bands the
+        // bar is deliberately low, because when the trace is weak — a loose
+        // finger, an exposure step — the true period scores well below the
+        // doubled one while still being the right answer. At 0.85 sixteen
+        // readings in a test of 135 came back halved; at 0.6 none do, and the
+        // mean error moves by six hundredths of a beat.
         var lag = best.lag
         for divisor in [2, 3] {
             let candidate = Int((Double(best.lag) / Double(divisor)).rounded())
@@ -194,7 +221,7 @@ enum PulseSignal {
             let low = max(minLag, candidate - slack), high = min(maxLag, candidate + slack)
             guard low <= high,
                   let local = (low...high).max(by: { (scores[$0] ?? 0) < (scores[$1] ?? 0) }),
-                  let score = scores[local], score >= best.score * 0.85 else { continue }
+                  let score = scores[local], score >= best.score * 0.6 else { continue }
             lag = local
             break
         }
@@ -218,7 +245,7 @@ enum PulseSignal {
     /// Nothing here settles because one number crossed one threshold once — a
     /// band-limited noise window autocorrelates above 0.35 often enough. It
     /// settles because consecutive windows say the same thing.
-    static func agreed(_ recent: [Double], within fraction: Double = 0.06) -> Double? {
+    static func agreed(_ recent: [Double], within fraction: Double = 0.05) -> Double? {
         guard recent.count >= 3 else { return nil }
         let last = Array(recent.suffix(3))
         let mean = last.reduce(0, +) / Double(last.count)

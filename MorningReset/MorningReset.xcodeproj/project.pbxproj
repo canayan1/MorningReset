@@ -20,6 +20,7 @@
 		3214155B6FAAFAA454CAABE1 /* InsightPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9307A7878C0E116E1FF3AF2D /* InsightPreviewView.swift */; };
 		38431A8B6890AEDE612C6469 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9BEFCC32F315BFAD122C0 /* DesignSystem.swift */; };
 		3D930EB8803B4EC06E49F022 /* EnergyOrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6F4BFC04E92024AA88F22C /* EnergyOrbView.swift */; };
+		A6890E2C5C164363AB5A1CD8 /* MorningCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */; };
 		4015F895DE00DF5C91E2AB3D /* MorningRitualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0E0E46336800C4E485284 /* MorningRitualView.swift */; };
 		44D72EE27CF8FF4E6C68FA30 /* AIInsightPromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C25D9DB22AE4C05B7A283 /* AIInsightPromptBuilder.swift */; };
 		46B6685AEFE29B23F1310D64 /* SpeechGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8CD16B7149A75A7942D86 /* SpeechGuide.swift */; };
@@ -65,6 +66,7 @@
 		AAAA0008AAAA0008AAAA0008 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0008BBBB0008BBBB0008 /* LibraryView.swift */; };
 		AAAA0009AAAA0009AAAA0009 /* PracticeVisual.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0009BBBB0009BBBB0009 /* PracticeVisual.swift */; };
 		AAAA000AAAAA000AAAAA000A /* AlarmKitIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB000ABBBB000ABBBB000A /* AlarmKitIntents.swift */; };
+		DAC12F6A77564AC7B11A70D5 /* MorningLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB5FF40893F47848218A87F /* MorningLog.swift */; };
 		AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975EDA05F76448C2D6CB437C /* BreathDetector.swift */; };
 		AE1D54C4BFF96D4D8AF83020 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18689358EE807FE55E4B3BE /* PaywallView.swift */; };
 		B1C2D3E4F5061122B1C2D3E4 /* StreakStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011A1B2C3D4 /* StreakStripView.swift */; };
@@ -148,6 +150,7 @@
 
 /* Begin PBXFileReference section */
 		05D2CD42CA1DDBED29A96662 /* Schools */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Schools; path = Schools; sourceTree = "<group>"; };
+		2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningCalendarView.swift; sourceTree = "<group>"; };
 		09D0E0E46336800C4E485284 /* MorningRitualView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningRitualView.swift; sourceTree = "<group>"; };
 		0AEDF4CCEE1B57C0A53AB745 /* SchoolSessionPlayerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SchoolSessionPlayerView.swift; sourceTree = "<group>"; };
 		0B71A13B94D0692EA82FC7C2 /* MoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveView.swift; sourceTree = "<group>"; };
@@ -181,6 +184,7 @@
 		8E6B5790C1EFA272B4D256FE /* AppState+Schools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppState+Schools.swift"; sourceTree = "<group>"; };
 		9307A7878C0E116E1FF3AF2D /* InsightPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightPreviewView.swift; sourceTree = "<group>"; };
 		96E8CEC7CB45DBBD52FA0D3D /* WeeklyAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAffirmationView.swift; sourceTree = "<group>"; };
+		0BB5FF40893F47848218A87F /* MorningLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningLog.swift; sourceTree = "<group>"; };
 		975EDA05F76448C2D6CB437C /* BreathDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BreathDetector.swift; sourceTree = "<group>"; };
 		99257E9B40648C7BA1370841 /* MorningData+TR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MorningData+TR.swift"; sourceTree = "<group>"; };
 		994A8859593319D38DDDC630 /* FlowCheckout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCheckout.swift; sourceTree = "<group>"; };
@@ -418,6 +422,7 @@
 				A6D01BD446A784305E4AA799 /* TimeOfDay.swift */,
 				BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */,
 				E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */,
+				0BB5FF40893F47848218A87F /* MorningLog.swift */,
 				975EDA05F76448C2D6CB437C /* BreathDetector.swift */,
 				C5948D880202E107E9FC5713 /* PulseSignal.swift */,
 			);
@@ -468,6 +473,7 @@
 				DFE3A0D1B6ACBFFC86976A28 /* EnergyTreeView.swift */,
 				1E5137AF70AFEA598F47CB18 /* PulseCheckView.swift */,
 				B7E093BA2F1A8BA19189A3F1 /* SignatureMeditationView.swift */,
+				2D718F6AF5BE4B469E11E504 /* MorningCalendarView.swift */,
 				09D0E0E46336800C4E485284 /* MorningRitualView.swift */,
 			);
 			path = Screens;
@@ -753,8 +759,10 @@
 				B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */,
 				B33C17A798E2E222B423734D /* PulseReader.swift in Sources */,
 				A8B5655663D3D92EFF3D8CF1 /* PulseCheckView.swift in Sources */,
+				DAC12F6A77564AC7B11A70D5 /* MorningLog.swift in Sources */,
 				AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */,
 				31F5C6231237F5DBC839A1CC /* SignatureMeditationView.swift in Sources */,
+				A6890E2C5C164363AB5A1CD8 /* MorningCalendarView.swift in Sources */,
 				4015F895DE00DF5C91E2AB3D /* MorningRitualView.swift in Sources */,
 				A026B8AFAD6E9E0E7E91222E /* PulseSignal.swift in Sources */,
 			);

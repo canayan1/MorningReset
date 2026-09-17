@@ -453,23 +453,31 @@ final class MorningResetTests: XCTestCase {
         XCTAssertLessThan(gain(12), 0.15, "breathing drift must not")
     }
 
-    /// The real thing: a hue trace with a slow baseline drift, uneven frame
-    /// times, and a pulse under two percent of the signal.
+    /// The real thing: a red trace carrying everything the camera puts on top
+    /// of a pulse — breathing fifty times its size, uneven frame times, sensor
+    /// noise — with the beat itself at half a percent of the signal.
+    ///
+    /// The pulse is shaped, not a sine. A sine repeats perfectly at twice its
+    /// period, so testing with one measures a problem the real signal does not
+    /// have and hides the one it does.
     func testPulseSurvivesARealisticTrace() {
         var seed: UInt64 = 11
         func random() -> Double {
             seed = seed &* 6364136223846793005 &+ 1442695040888963407
             return Double(seed >> 40) / Double(1 << 24) - 0.5
         }
-        for bpm in [48.0, 58, 72, 96, 124] {
+        for bpm in [46.0, 58, 72, 96, 124] {
             var times: [Double] = [], values: [Double] = [], clock = 0.0
             for _ in 0..<240 {
                 clock += 1.0 / 30 + random() * 0.012          // frames do not arrive evenly
-                values.append(0.020                            // a red frame's hue
-                              + 0.0015 * sin(2 * .pi * 0.07 * clock)   // the finger settling
-                              + 0.00035 * sin(2 * .pi * bpm / 60 * clock)
-                              + 0.00012 * sin(4 * .pi * bpm / 60 * clock)
-                              + random() * 0.0008)
+                let phase = (bpm / 60 * clock).truncatingRemainder(dividingBy: 1)
+                let beat = phase < 0.15
+                    ? sin(.pi * phase / 0.3)
+                    : cos(.pi * (phase - 0.15) / 1.7) * 0.85 + 0.12 * sin(2 * .pi * (phase - 0.15) / 0.5)
+                values.append(0.745                                    // a torch-lit fingertip
+                              + 0.020 * sin(2 * .pi * 0.2 * clock)     // breathing, fifty times the beat
+                              + 0.004 * beat
+                              + random() * 0.0015)
                 times.append(clock)
             }
             let grid = PulseSignal.resample(times: times, values: values, to: 30)
@@ -523,13 +531,165 @@ final class MorningResetTests: XCTestCase {
         XCTAssertNotNil(PulseSignal.agreed([120, 71, 72, 73]), "an early stray does not spoil a settled run")
     }
 
-    func testHueIsAChannelRatio() {
-        XCTAssertEqual(PulseSignal.hue(r: 1, g: 0, b: 0), 0, accuracy: 0.001, "pure red sits at zero")
-        // Doubling the light must not move the hue — the whole reason it is the
-        // analysed series rather than brightness.
-        XCTAssertEqual(PulseSignal.hue(r: 0.40, g: 0.02, b: 0.02),
-                       PulseSignal.hue(r: 0.80, g: 0.04, b: 0.04), accuracy: 0.001)
-        XCTAssertEqual(PulseSignal.hue(r: 0.5, g: 0.5, b: 0.5), 0, accuracy: 0.001, "grey has no hue")
+    /// Why the analysed series is red and not hue.
+    ///
+    /// This is a regression test for a reading that was wrong on the phone
+    /// while every other test passed. A torch-lit fingertip is so nearly pure
+    /// red that it sits on hue's wrap point, where the answer runs off one end
+    /// of the range and reappears at the other: one count between green and
+    /// blue is the whole scale. Anything built on hue is then reading a square
+    /// wave between 0 and 1 rather than a pulse.
+    func testHueIsUnusableOnAFingertip() {
+        let justAboveRed = PulseSignal.hue(r: 0.745, g: 0.042, b: 0.040)
+        let justBelowRed = PulseSignal.hue(r: 0.745, g: 0.040, b: 0.042)
+        XCTAssertLessThan(justAboveRed, 0.01)
+        XCTAssertGreaterThan(justBelowRed, 0.99)
+        XCTAssertGreaterThan(abs(justAboveRed - justBelowRed), 0.9,
+                             "two frames a count apart must not land at opposite ends of the scale")
+
+        // And the consequence, end to end: the same pulse that red recovers is
+        // lost entirely when it is taken through hue.
+        var seed: UInt64 = 5
+        func random() -> Double {
+            seed = seed &* 6364136223846793005 &+ 1442695040888963407
+            return Double(seed >> 40) / Double(1 << 24) - 0.5
+        }
+        var reds: [Double] = [], hues: [Double] = []
+        for i in 0..<240 {
+            let t = Double(i) / 30
+            let r = 0.745 + 0.02 * sin(2 * .pi * 0.2 * t) + 0.004 * sin(2 * .pi * 72 / 60 * t) + random() * 0.0015
+            let g = 0.041 + random() * 0.0008
+            let b = 0.041 + random() * 0.0008
+            reds.append(r)
+            hues.append(PulseSignal.hue(r: r, g: g, b: b))
+        }
+        let fromRed = PulseSignal.estimate(PulseSignal.bandpass(reds, sampleRate: 30), sampleRate: 30)
+        XCTAssertEqual(fromRed?.bpm ?? 0, 72, accuracy: 3, "red carries the beat")
+        let fromHue = PulseSignal.estimate(PulseSignal.bandpass(hues, sampleRate: 30), sampleRate: 30)
+        XCTAssertFalse((fromHue.map { abs($0.bpm - 72) < 3 }) ?? false,
+                       "hue must not be trusted with this, which is what the phone was doing")
+    }
+
+    /// A fast pulse must never come back halved.
+    ///
+    /// This is the other half of the reading the phone got wrong. A trace
+    /// repeats at twice its period as well as at its own, so the match can
+    /// land a whole beat too slow — and 86 halved is 43, which sits at the
+    /// bottom of the band and reads as a beautifully calm morning rather than
+    /// as a mistake. It showed up where the signal is weakest: a near-sinusoid
+    /// beat with the exposure stepping through the window.
+    ///
+    /// The property asserted is the one that matters. A window may refuse to
+    /// answer — the reader has another every half second — and it may answer
+    /// with low confidence. What it may not do is be *confident and wrong*.
+    func testAConfidentReadingIsNeverAnOctaveOut() {
+        var seed: UInt64 = 3
+        func random() -> Double {
+            seed = seed &* 6364136223846793005 &+ 1442695040888963407
+            return Double(seed >> 40) / Double(1 << 24) - 0.5
+        }
+        for bpm in [64.0, 78, 86, 96, 108, 124] {
+            for start in [UInt64(3), 11, 99, 4242] {
+                for weak in [false, true] {          // a shaped beat, and a near-sinusoid one
+                    seed = start
+                    let values = (0..<240).map { i -> Double in
+                        let t = Double(i) / 30
+                        let phase = (bpm / 60 * t).truncatingRemainder(dividingBy: 1)
+                        let beat = weak
+                            ? sin(2 * .pi * bpm / 60 * t)
+                            : (phase < 0.15 ? sin(.pi * phase / 0.3)
+                               : cos(.pi * (phase - 0.15) / 1.7) * 0.85 + 0.12 * sin(2 * .pi * (phase - 0.15) / 0.5))
+                        return 0.745 + 0.020 * sin(2 * .pi * 0.2 * t)
+                             + (i >= 120 ? -0.030 : 0)          // auto-exposure stepping
+                             + 0.004 * beat + random() * 0.0015
+                    }
+                    guard let r = PulseSignal.estimate(PulseSignal.bandpass(values, sampleRate: 30), sampleRate: 30),
+                          r.confidence >= PulseReader.minimumConfidence else { continue }
+                    XCTAssertEqual(r.bpm, bpm, accuracy: 5,
+                                   "\(bpm) bpm came back as \(Int(r.bpm)) at confidence \(r.confidence)")
+                }
+            }
+        }
+    }
+
+    /// A window that opens while the finger is still settling opens on a ramp,
+    /// and a ramp walking into a filter rings loudly enough to bury a beat this
+    /// small. The ends are reflected before filtering for exactly this case.
+    func testABeatSurvivesALargeDriftAtTheEdges() {
+        let values = (0..<240).map { i -> Double in
+            let t = Double(i) / 30
+            return 0.60 + 0.08 * t + 0.004 * sin(2 * .pi * 66 / 60 * t)   // still settling
+        }
+        guard let r = PulseSignal.estimate(PulseSignal.bandpass(values, sampleRate: 30), sampleRate: 30) else {
+            return XCTFail("a settling finger must not cost the reading")
+        }
+        XCTAssertEqual(r.bpm, 66, accuracy: 3)
+    }
+
+    // MARK: - The morning log
+
+    private func day(_ offset: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: offset, to: Date())!
+    }
+
+    /// A morning is one line, not one line per attempt. Someone who wakes,
+    /// half-does the ritual and comes back twenty minutes later has had one
+    /// morning, and the one that counts is the later one.
+    func testOneRecordPerDayAndTheLastOneWins() {
+        MorningLogStore.replaceAll([])
+        MorningLogStore.record(bpm: 82, smiled: false, on: day(0))
+        MorningLogStore.record(bpm: 61, smiled: true, on: day(0))
+        MorningLogStore.record(bpm: 70, smiled: true, on: day(-1))
+
+        XCTAssertEqual(MorningLogStore.all().count, 2)
+        XCTAssertEqual(MorningLogStore.record(for: day(0))?.bpm, 61)
+        XCTAssertEqual(MorningLogStore.record(for: day(0))?.smiled, true)
+        MorningLogStore.replaceAll([])
+    }
+
+    /// The usual morning is the median, not the mean. One bad contact reading
+    /// drags a mean several beats, and then every ordinary morning afterwards
+    /// is reported back to the person as unusual.
+    func testTypicalMorningIgnoresOneBadReading() {
+        MorningLogStore.replaceAll([])
+        for (i, bpm) in [58, 61, 59, 62, 178].enumerated() {
+            MorningLogStore.record(bpm: bpm, smiled: true, on: day(-i))
+        }
+        XCTAssertEqual(MorningLogStore.typicalBPM(), 61, "the median holds; a mean would say 83")
+
+        MorningLogStore.replaceAll([])
+        MorningLogStore.record(bpm: 60, smiled: true, on: day(0))
+        MorningLogStore.record(bpm: nil, smiled: true, on: day(-1))
+        XCTAssertNil(MorningLogStore.typicalBPM(), "two mornings is not a usual morning yet")
+        MorningLogStore.replaceAll([])
+    }
+
+    /// Mornings the reader refused are still mornings: the person got up and
+    /// did the thing. They are stored without a number rather than skipped, so
+    /// the calendar shows the day and not a hole.
+    func testAMorningWithoutAReadingIsStillAMorning() {
+        MorningLogStore.replaceAll([])
+        MorningLogStore.record(bpm: nil, smiled: true, on: day(0))
+        XCTAssertEqual(MorningLogStore.all().count, 1)
+        XCTAssertNil(MorningLogStore.record(for: day(0))?.bpm)
+        MorningLogStore.replaceAll([])
+    }
+
+    /// One missed morning is forgiven, the same way the practice streak
+    /// forgives one. Two in a row ends it.
+    func testMorningStreakForgivesASingleMiss() {
+        MorningLogStore.replaceAll([])
+        for offset in [0, -1, -3, -4] {           // -2 missed
+            MorningLogStore.record(bpm: 60, smiled: true, on: day(offset))
+        }
+        XCTAssertEqual(MorningLogStore.currentStreak(), 4)
+
+        MorningLogStore.replaceAll([])
+        for offset in [0, -3] {                    // -1 and -2 both missed
+            MorningLogStore.record(bpm: 60, smiled: true, on: day(offset))
+        }
+        XCTAssertEqual(MorningLogStore.currentStreak(), 1, "two blank days ends it")
+        MorningLogStore.replaceAll([])
     }
 
     /// The pair is the point: the drop is what the app shows.

@@ -22,6 +22,11 @@ struct MorningRitualView: View {
     @State private var reading: PulseReading?
     @State private var energy: EnergyReading?
     @State private var glow = false
+    @State private var smiled = false
+    /// Shown once the detector has had a fair chance and still hasn't seen
+    /// one. Someone smiling at a phone that will not respond stops smiling.
+    @State private var showsShutter = false
+    @State private var showsCalendar = false
 
     var body: some View {
         ZStack {
@@ -41,6 +46,7 @@ struct MorningRitualView: View {
                 withAnimation(.easeOut(duration: 0.35)) { step = .smile }
             }
         }
+        .sheet(isPresented: $showsCalendar) { MorningCalendarView() }
         .onDisappear {
             camera.stop()
             SpeechGuide.shared.stop()
@@ -91,18 +97,28 @@ struct MorningRitualView: View {
 
             Spacer().frame(height: DS.Space.xl)
 
-            Text(camera.available
-                 ? L10n.text(en: "It holds until it sees one. No hurry.",
-                             tr: "Görene kadar bekler. Acelesi yok.",
-                             es: "Espera hasta verla. Sin prisa.")
-                 : L10n.text(en: "No camera here — carry on.",
-                             tr: "Burada kamera yok — devam.",
-                             es: "Sin cámara aquí — continúa."))
+            Text(smileGuidance)
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
                 .multilineTextAlignment(.center)
+                .animation(.easeOut(duration: 0.25), value: camera.seesFace)
 
             Spacer()
+
+            // Their own shutter, once waiting has stopped being charming. It
+            // takes the picture from the same live frames, so the morning is
+            // finished the same way — just decided by them instead.
+            if showsShutter {
+                Button(L10n.text(en: "I'm smiling — take it",
+                                 tr: "Gülümsüyorum — çek",
+                                 es: "Estoy sonriendo — tómala")) {
+                    camera.capture()
+                }
+                .primaryCTA()
+                .padding(.bottom, DS.Space.md)
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                .accessibilityIdentifier("ritual.smileShutter")
+            }
 
             // Present, but quiet: the ritual is the point, not a gate that
             // traps someone who has to be somewhere.
@@ -118,12 +134,33 @@ struct MorningRitualView: View {
         .onAppear { startSmileCapture() }
     }
 
+    private var smileGuidance: String {
+        guard camera.available else {
+            return L10n.text(en: "No camera here — carry on.",
+                             tr: "Burada kamera yok — devam.",
+                             es: "Sin cámara aquí — continúa.")
+        }
+        if camera.smiling {
+            return L10n.text(en: "There it is.", tr: "İşte bu.", es: "Ahí está.")
+        }
+        if camera.seesFace {
+            return L10n.text(en: "It holds until it sees one. No hurry.",
+                             tr: "Görene kadar bekler. Acelesi yok.",
+                             es: "Espera hasta verla. Sin prisa.")
+        }
+        return L10n.text(en: "Bring your face into the circle.",
+                         tr: "Yüzünü çemberin içine getir.",
+                         es: "Trae tu cara al círculo.")
+    }
+
     private func startSmileCapture() {
         glow = true
+        showsShutter = false
         camera.setAutoCapture(true)
         camera.onCapture = { image in
             let result = EnergyReader.read(from: image, activePath: appState.activePath)
             energy = result
+            smiled = true
             camera.stop()
             finish()
         }
@@ -131,6 +168,13 @@ struct MorningRitualView: View {
         // A phone with no camera must not hold the morning hostage.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !camera.available, step == .smile { finish() }
+        }
+        // Eight seconds is long enough for a real smile to be found and short
+        // enough that nobody concludes the app is broken.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+            if step == .smile, camera.available {
+                withAnimation(.easeOut(duration: 0.3)) { showsShutter = true }
+            }
         }
     }
 
@@ -178,13 +222,22 @@ struct MorningRitualView: View {
 
             Spacer()
 
-            Button(L10n.text(en: "Begin the day", tr: "Güne başla", es: "Comenzar el día")) {
-                dismiss()
+            VStack(spacing: DS.Space.sm) {
+                Button(L10n.text(en: "Begin the day", tr: "Güne başla", es: "Comenzar el día")) {
+                    dismiss()
+                }
+                .primaryCTA()
+                .accessibilityIdentifier("ritual.done")
+
+                Button(L10n.text(en: "See your mornings", tr: "Sabahlarını gör", es: "Ver tus mañanas")) {
+                    showsCalendar = true
+                }
+                .font(.footnote)
+                .foregroundStyle(DS.accent)
+                .accessibilityIdentifier("ritual.seeMornings")
             }
-            .primaryCTA()
             .padding(.horizontal, DS.Space.lg)
             .padding(.bottom, DS.Space.xl)
-            .accessibilityIdentifier("ritual.done")
         }
     }
 
@@ -193,6 +246,11 @@ struct MorningRitualView: View {
     private func finish() {
         guard step != .done else { return }
         camera.stop()
+        // One line in the log for this morning. A reading the app did not
+        // trust goes in as nothing, so the calendar never shows a number that
+        // was really a shrug.
+        let trusted = reading.flatMap { $0.isTrustworthy && $0.bpm > 0 ? $0.bpm : nil }
+        MorningLogStore.record(bpm: trusted, smiled: smiled)
         MorningRitual.markCompleted()
         SpeechGuide.shared.speak("Good morning. The day is yours.")
         withAnimation(.easeOut(duration: 0.4)) { step = .done }

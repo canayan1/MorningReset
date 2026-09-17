@@ -14,13 +14,16 @@ import Foundation
 // This is a wellness reading, not a medical measurement, and the app says so
 // wherever a number is shown.
 //
-// Two decisions here are the opposite of what seems obvious, and both come from
-// what working implementations actually do. The analysed series is the *hue* of
-// the frame rather than its redness, because the pulse is about three counts
-// out of 255 and a brightness that small does not survive an exposure step or
-// the torch dimming as the phone warms — a ratio between channels does. And
-// exposure is therefore never locked: locking it early is what clips the red
-// channel, and a clipped channel has no pulse in it at all.
+// The analysed series is the frame's mean *red*, and the drift that comes with
+// it — breathing, the torch dimming as the phone warms, an exposure step — is
+// removed by the filter rather than by dividing red by the other channels. The
+// ratios are the tempting choice and both were tried: hue is unusable because a
+// torch-lit fingertip sits exactly on its wrap point, where one count between
+// green and blue swings it the whole way across the range, and red's share is
+// noisy because green and blue are near zero, where a couple of counts of
+// sensor noise is a large fraction of the value. Exposure is never locked:
+// locking it early is what clips the red channel, and a clipped channel has no
+// pulse in it at all.
 
 struct PulseReading: Codable, Equatable, Hashable {
     var bpm: Int
@@ -46,8 +49,8 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     static let minimumConfidence = 0.45
 
     /// The window each estimate is made from, and how often one is made.
-    private static let windowSeconds = 8.0
-    private static let hopSeconds = 1.0
+    private static let windowSeconds = 6.0
+    private static let hopSeconds = 0.5
     private static let gridRate = 30.0
     /// Give up rather than hold someone there forever.
     private static let patience = 40.0
@@ -69,7 +72,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private var device: AVCaptureDevice?
 
     private var times: [Double] = []
-    private var hues: [Double] = []
+    private var reds: [Double] = []
     private var startedAt: Double?
     private var lastEstimateAt: Double = 0
     private var candidates: [Double] = []
@@ -103,7 +106,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
 
     private func reset() {
         finished = false
-        times.removeAll(); hues.removeAll(); candidates.removeAll()
+        times.removeAll(); reds.removeAll(); candidates.removeAll()
         startedAt = nil; lastEstimateAt = 0; frameNumber = 0
         publish {
             self.phase = .waitingForFinger; self.progress = 0
@@ -198,7 +201,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         guard now.isFinite else { return }
 
         guard PulseSignal.fingerPresent(sample) else {
-            times.removeAll(); hues.removeAll(); candidates.removeAll()
+            times.removeAll(); reds.removeAll(); candidates.removeAll()
             startedAt = nil
             publish {
                 if self.phase != .unavailable { self.phase = .waitingForFinger }
@@ -211,7 +214,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
             startedAt = now
             publish { self.phase = .measuring }
         }
-        times.append(now); hues.append(sample.hue)
+        times.append(now); reds.append(sample.red)
 
         // The two things a person can actually do something about.
         let advice: String
@@ -243,7 +246,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         let cutoff = now - Self.windowSeconds
         var t: [Double] = [], v: [Double] = []
         for (i, time) in times.enumerated() where time >= cutoff {
-            t.append(time); v.append(hues[i])
+            t.append(time); v.append(reds[i])
         }
         let grid = PulseSignal.resample(times: t, values: v, to: Self.gridRate)
         let filtered = PulseSignal.bandpass(grid, sampleRate: Self.gridRate)
