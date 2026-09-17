@@ -13,6 +13,7 @@
 		08E770B1558DC53AE9F0FE1F /* MoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B71A13B94D0692EA82FC7C2 /* MoveView.swift */; };
 		11999F06565BFC1F20E45D58 /* AIInsightModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60D85B9A7E3267D147C1DC6 /* AIInsightModels.swift */; };
 		1553223E3B3B301E88173E51 /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCABB07C5CE08961DD97FF5F /* ActionContent.swift */; };
+		486B9ACE61E4420A9913FC22 /* inner_light_alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD5B9A70CDBB4E468F84FA11 /* inner_light_alarm.caf */; };
 		1C890B8DA352AB1E43EC0722 /* wake_opening.caf in Resources */ = {isa = PBXBuildFile; fileRef = AAE1ED02F020B0658A175AC1 /* wake_opening.caf */; };
 		2182FDB66C6BD87A70EED768 /* AppState+Premium.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A852C3A47BC367E2BDD567 /* AppState+Premium.swift */; };
 		2D25D3C21AA49AC73AAF3153 /* CycleCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185284A57784993148A1E485 /* CycleCompleteView.swift */; };
@@ -196,6 +197,7 @@
 		AA0100B1AA0100B1AA0100B1 /* WakeActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeActivityAttributes.swift; sourceTree = "<group>"; };
 		AA0200B1AA0200B1AA0200B1 /* WakeActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeActivityController.swift; sourceTree = "<group>"; };
 		AA0300B1AA0300B1AA0300B1 /* WakeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeAudioPlayer.swift; sourceTree = "<group>"; };
+		AD5B9A70CDBB4E468F84FA11 /* inner_light_alarm.caf */ = {isa = PBXFileReference; includeInIndex = 1; path = inner_light_alarm.caf; sourceTree = "<group>"; };
 		AAE1ED02F020B0658A175AC1 /* wake_opening.caf */ = {isa = PBXFileReference; includeInIndex = 1; path = wake_opening.caf; sourceTree = "<group>"; };
 		B0594CAEFBF4FD2AA0C92F45 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		B57F53F6167BE8771F8A4348 /* EnergyReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnergyReader.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				40266B3C5FF1706AAB78F604 /* Localizable.xcstrings */,
 				05D2CD42CA1DDBED29A96662 /* Schools */,
 				CBC5BBD279C54E1211DDFB1B /* Voice */,
+				AD5B9A70CDBB4E468F84FA11 /* inner_light_alarm.caf */,
 				AAE1ED02F020B0658A175AC1 /* wake_opening.caf */,
 			);
 			path = Resources;
@@ -638,6 +641,7 @@
 				9C1854EA9027E7C907E6709B /* Localizable.xcstrings in Resources */,
 				4C20C3177756C64FEFA49A7A /* Schools in Resources */,
 				EEA4202358B8711170070E31 /* Voice in Resources */,
+				486B9ACE61E4420A9913FC22 /* inner_light_alarm.caf in Resources */,
 				1C890B8DA352AB1E43EC0722 /* wake_opening.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

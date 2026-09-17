@@ -24,6 +24,19 @@ import UserNotifications
 // app used to report success either way. Now it records which one it got, so
 // the screen that promises a morning can say what it actually arranged.
 
+/// Whether the system will let this app ring a real alarm.
+///
+/// Told apart from "not yet asked" on purpose: one of them is a question the
+/// app can still put to the person, and the other is a trip to Settings. A
+/// screen that cannot tell the difference offers the wrong button.
+enum WakeAlarmPermission {
+    case notAsked
+    case allowed
+    case refused
+    /// Older than iOS 26.1 — there is no alarm to allow.
+    case unsupported
+}
+
 enum WakeDelivery: String, Codable {
     /// AlarmKit. Rings through Silent mode and Sleep Focus.
     case alarm
@@ -151,6 +164,25 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
     }
 }
 
+// MARK: - Alarm permission
+//
+// Deliberately a small enum rather than a Bool: "not asked" and "refused" want
+// different words and a different button, and collapsing them is how a screen
+// ends up telling someone to visit Settings for a prompt it never showed.
+
+enum WakeAlarmPermissionCheck {
+    static var current: WakeAlarmPermission {
+        if #available(iOS 26.1, *) { return AlarmKitWakeScheduler.permission }
+        return .unsupported
+    }
+
+    @discardableResult
+    static func request() async -> WakeAlarmPermission {
+        if #available(iOS 26.1, *) { return await AlarmKitWakeScheduler.requestAlarmPermission() }
+        return .unsupported
+    }
+}
+
 // MARK: - AlarmKitWakeScheduler (iOS 26.1+)
 //
 // Replaces the local-notification backend on iOS 26.1+.
@@ -224,7 +256,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
             )),
             attributes: attrs,
             secondaryIntent: begin,
-            sound: .named("wake_opening.caf")
+            sound: .named("inner_light_alarm.caf")
         )
         let weekendConfig = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
             schedule: .relative(Alarm.Schedule.Relative(
@@ -233,7 +265,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
             )),
             attributes: attrs,
             secondaryIntent: begin,
-            sound: .named("wake_opening.caf")
+            sound: .named("inner_light_alarm.caf")
         )
 
         // AlarmKit rings through Sleep Focus and Silent. If scheduling fails —
@@ -299,7 +331,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
                 )),
                 attributes: attributes,
                 secondaryIntent: begin,
-                sound: .named("wake_opening.caf")
+                sound: .named("inner_light_alarm.caf")
             )
             try? await AlarmManager.shared.schedule(id: id, configuration: config)
         }
@@ -335,6 +367,28 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// morning was set up.
     static var isAuthorized: Bool {
         AlarmManager.shared.authorizationState == .authorized
+    }
+
+    static var permission: WakeAlarmPermission {
+        switch AlarmManager.shared.authorizationState {
+        case .authorized:    return .allowed
+        case .denied:        return .refused
+        case .notDetermined: return .notAsked
+        @unknown default:    return .notAsked
+        }
+    }
+
+    /// Asks, and only asks. The system shows its prompt once; after that this
+    /// returns what was decided and the screen has to send the person to
+    /// Settings instead.
+    static func requestAlarmPermission() async -> WakeAlarmPermission {
+        guard AlarmManager.shared.authorizationState == .notDetermined else { return permission }
+        do {
+            _ = try await AlarmManager.shared.requestAuthorization()
+        } catch {
+            log.error("AlarmKit authorization threw: \(error.localizedDescription, privacy: .public)")
+        }
+        return permission
     }
 
     /// How many alarms the system is holding for this app. The honest answer

@@ -12,6 +12,7 @@ struct ScheduleSetupView: View {
     /// screen stays put in that case rather than closing on a promise it
     /// cannot keep.
     @State private var deliveredAsNotification = false
+    @State private var permission: WakeAlarmPermission = .notAsked
 
     init() {
         let s   = WakeScheduleStore.load()
@@ -83,7 +84,11 @@ struct ScheduleSetupView: View {
 
                 nextRingLine
 
-                Spacer().frame(height: 32)
+                Spacer().frame(height: DS.Space.md)
+
+                permissionRow
+
+                Spacer().frame(height: 28)
 
                 timeBlock(
                     label: L10n.text(en: "WEEKDAYS  MON – FRI", tr: "HAFTA İÇİ  PZT – CUM", es: "ENTRE SEMANA  LUN – VIE"),
@@ -160,6 +165,14 @@ struct ScheduleSetupView: View {
             }
             .padding(.horizontal, DS.Space.lg)
         }
+        // Re-checked every time the screen comes forward: alarms can be turned
+        // on in Settings and the answer has to be current when they come back.
+        .task { permission = WakeAlarmPermissionCheck.current }
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIApplication.didBecomeActiveNotification)) { _ in
+            permission = WakeAlarmPermissionCheck.current
+            if permission == .allowed { deliveredAsNotification = false }
+        }
         // No identifier on the container: SwiftUI would stamp it onto every
         // child and erase the save button's own.
     }
@@ -207,6 +220,70 @@ struct ScheduleSetupView: View {
             when = L10n.text(en: "Rings \(day)", tr: "\(day) çalar", es: "Suena el \(day)")
         }
         return "\(when) · \(time)"
+    }
+
+    /// What the system will actually do, said before it is asked to do it.
+    ///
+    /// Without this the only way to discover that an alarm is really a
+    /// notification is to sleep through it. The row states what will happen
+    /// and, when that is not a ringing alarm, carries the one control that
+    /// changes it — the prompt while there is still a prompt to show, and
+    /// Settings once there isn't.
+    @ViewBuilder
+    private var permissionRow: some View {
+        switch permission {
+        case .allowed, .unsupported:
+            HStack(spacing: DS.Space.xs) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 11))
+                Text(L10n.text(en: "Rings through Silent mode and Sleep Focus",
+                               tr: "Sessiz modda ve Uyku Odağı'nda da çalar",
+                               es: "Suena en modo Silencio y Concentración de sueño"))
+                    .font(.caption)
+            }
+            .foregroundStyle(DS.calm)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
+
+        case .notAsked, .refused:
+            VStack(spacing: DS.Space.sm) {
+                Text(L10n.text(
+                    en: "Alarms are off, so this would arrive as a notification — and Sleep Focus can hold one back.",
+                    tr: "Alarmlar kapalı, bu yüzden bu bir bildirim olarak gelir — ve Uyku Odağı bildirimi tutabilir.",
+                    es: "Las alarmas están desactivadas, así que esto llegaría como una notificación — y la Concentración de sueño puede retenerla."
+                ))
+                .font(.caption)
+                .foregroundStyle(DS.accent)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+
+                Button(permission == .notAsked
+                       ? L10n.text(en: "Allow alarms", tr: "Alarmlara izin ver", es: "Permitir alarmas")
+                       : L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
+                    Task { await resolvePermission() }
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(DS.accent)
+                .accessibilityIdentifier("schedule.allowAlarms")
+            }
+            .padding(.vertical, DS.Space.md)
+            .padding(.horizontal, DS.Space.md)
+            .frame(maxWidth: .infinity)
+            .background(DS.surface)
+            .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        }
+    }
+
+    @MainActor
+    private func resolvePermission() async {
+        if permission == .notAsked {
+            permission = await WakeAlarmPermissionCheck.request()
+            if permission == .allowed { deliveredAsNotification = false }
+            return
+        }
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            _ = await UIApplication.shared.open(url)
+        }
     }
 
     // MARK: - Time block
