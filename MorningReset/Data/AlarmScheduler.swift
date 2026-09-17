@@ -214,6 +214,14 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     }
     private static let followUpStep = 3
 
+    /// The alarm you can ask to hear now.
+    ///
+    /// An alarm is the one thing in an app that cannot be tried before it
+    /// matters: you find out whether it works by sleeping through it. This
+    /// fires the real thing — same sound, same presentation, same Stop — a few
+    /// seconds from now, so the morning is not the first time.
+    private static let previewID = UUID(uuidString: "A0000000-0000-0000-0000-0000000000FF")!
+
     static let log = Logger(subsystem: "com.canayan.MorningReset", category: "alarm")
 
     func requestAuthorization() async -> Bool {
@@ -284,6 +292,9 @@ final class AlarmKitWakeScheduler: WakeScheduling {
             try await AlarmManager.shared.schedule(id: Self.weekdayAlarmID, configuration: weekdayConfig)
             try await AlarmManager.shared.schedule(id: Self.weekendAlarmID, configuration: weekendConfig)
             WakeDeliveryStore.record(.alarm)
+            // What the system says it is holding, rather than what we believe
+            // we handed it. The two have already differed once.
+            UserDefaults.standard.set(Self.scheduledCount, forKey: "wake_alarm_count_v1")
             if wakeSchedule.insistUntilRitual {
                 await Self.armFollowUps(for: wakeSchedule, attributes: attrs, begin: begin)
             }
@@ -360,6 +371,30 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// the rest of the chain has nothing left to insist about.
     static func cancelFollowUps() {
         for id in followUpIDs { try? AlarmManager.shared.cancel(id: id) }
+    }
+
+    /// Rings the real alarm a few seconds from now.
+    static func previewAlarm() async -> Bool {
+        guard isAuthorized else { return false }
+        let config = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.timer(
+            duration: 4,
+            attributes: AlarmAttributes<MorningAlarmMeta>(
+                presentation: AlarmPresentation(alert: AlarmPresentation.Alert(
+                    title: "This is your alarm",
+                    secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
+                    secondaryButtonBehavior: .custom)),
+                tintColor: DS.accent),
+            secondaryIntent: BeginPracticeIntent(),
+            sound: .named("inner_light_alarm.caf")
+        )
+        do {
+            _ = try await AlarmManager.shared.schedule(id: previewID, configuration: config)
+            try AlarmManager.shared.countdown(id: previewID)
+            return true
+        } catch {
+            log.error("alarm preview failed: \(error.localizedDescription, privacy: .public)")
+            return false
+        }
     }
 
     /// Whether the system will actually ring, checked live rather than

@@ -14,6 +14,7 @@ struct ScheduleSetupView: View {
     @State private var deliveredAsNotification = false
     @State private var permission: WakeAlarmPermission = .notAsked
     @State private var showsGuide = false
+    @State private var previewing = false
 
     init() {
         let s   = WakeScheduleStore.load()
@@ -244,17 +245,36 @@ struct ScheduleSetupView: View {
     private var permissionRow: some View {
         switch permission {
         case .allowed, .unsupported:
-            HStack(spacing: DS.Space.xs) {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 11))
-                Text(L10n.text(en: "Rings through Silent mode and Sleep Focus",
-                               tr: "Sessiz modda ve Uyku Odağı'nda da çalar",
-                               es: "Suena en modo Silencio y Concentración de sueño"))
-                    .font(.caption)
+            VStack(spacing: DS.Space.sm) {
+                HStack(spacing: DS.Space.xs) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 11))
+                    Text(L10n.text(en: "Rings through Silent mode and Sleep Focus",
+                                   tr: "Sessiz modda ve Uyku Odağı'nda da çalar",
+                                   es: "Suena en modo Silencio y Concentración de sueño"))
+                        .font(.caption)
+                }
+                .foregroundStyle(DS.calm)
+                .multilineTextAlignment(.center)
+
+                // An alarm is the one thing you cannot try before it matters:
+                // you find out whether it works by sleeping through it.
+                Button(previewing
+                       ? L10n.text(en: "Listen…", tr: "Dinle…", es: "Escucha…")
+                       : L10n.text(en: "Hear it now", tr: "Şimdi dinle", es: "Escúchala ahora")) {
+                    Task {
+                        previewing = true
+                        if #available(iOS 26.1, *) { _ = await AlarmKitWakeScheduler.previewAlarm() }
+                        try? await Task.sleep(nanoseconds: 6_000_000_000)
+                        previewing = false
+                    }
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(DS.accent)
+                .disabled(previewing)
+                .accessibilityIdentifier("schedule.previewAlarm")
             }
-            .foregroundStyle(DS.calm)
             .frame(maxWidth: .infinity)
-            .multilineTextAlignment(.center)
 
         case .notAsked, .refused:
             VStack(spacing: DS.Space.sm) {

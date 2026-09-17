@@ -16,7 +16,15 @@ the app, and someone who needs eight waves gets them.
 """
 import math, os, struct, subprocess, tempfile, wave
 
-RATE, SECONDS = 24000, 10.0
+# 44.1 kHz, not the 24 kHz the voice clips use.
+#
+# The system plays this one, not the app, and what the system will accept is
+# narrower than what an audio file can be. The alarm that fired silently on the
+# phone — vibration and a lock-screen banner, no sound — was a 24 kHz file, and
+# so was the one before it, so nothing here has ever been shown to play. 44.1
+# kHz linear PCM is what Apple's own examples use, and there is no reason to be
+# the interesting case.
+RATE, SECONDS = 44100, 10.0
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "MorningReset", "Resources", "inner_light_alarm.caf")
 
@@ -40,8 +48,8 @@ for start, f0, amp in STRIKES:
         length = min(n - i0, int(decay * 5 * RATE))
         for i in range(length):
             env = math.exp(-i / (decay * RATE))
-            if i < 48:                      # 2 ms attack, no click
-                env *= i / 48
+            if i < 88:                      # 2 ms attack, no click
+                env *= i / 88
             buf[i0 + i] += amp * weight * env * math.sin(w * i)
 
 # A low drone under it, swelling as the strikes do: the room the bell is in.
@@ -67,7 +75,7 @@ with tempfile.TemporaryDirectory() as tmp:
     with wave.open(path, "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(RATE)
         w.writeframes(pcm)
-    subprocess.run(["afconvert", "-f", "caff", "-d", "LEI16", path, OUT],
+    subprocess.run(["afconvert", "-f", "caff", "-d", "LEI16@44100", path, OUT],
                    check=True, capture_output=True)
 
 print(f"{OUT}  {os.path.getsize(OUT)/1024:.0f} KB  {SECONDS:.0f} sn  tepe {peak*gain:.2f}")
