@@ -64,7 +64,7 @@ struct MorningCalendarView: View {
                 Text(L10n.text(en: "YOUR MORNINGS", tr: "SABAHLARIN", es: "TUS MAÑANAS"))
                     .font(DS.Typo.label).kerning(1.4)
                     .foregroundStyle(DS.textSecondary)
-                Text(month, format: .dateTime.month(.wide).year())
+                Text(month, format: .dateTime.month(.wide).year().locale(L10n.locale))
                     .font(DS.Typo.title)
                     .foregroundStyle(DS.textPrimary)
             }
@@ -107,7 +107,11 @@ struct MorningCalendarView: View {
     /// The week starts where the reader's calendar starts it — Monday in most
     /// of Europe, Sunday in the US — so the grid matches the phone's own.
     private var orderedWeekdaySymbols: [String] {
-        let symbols = calendar.veryShortStandaloneWeekdaySymbols
+        // The names come from the app's language; the week still starts where
+        // the reader's own calendar starts it, which is a region question.
+        var naming = calendar
+        naming.locale = L10n.locale
+        let symbols = naming.veryShortStandaloneWeekdaySymbols
         let first = calendar.firstWeekday - 1
         return Array(symbols[first...] + symbols[..<first])
     }
@@ -198,7 +202,7 @@ struct MorningCalendarView: View {
     }
 
     private func accessibilityLabel(day: Date, record: MorningRecord?) -> String {
-        let date = day.formatted(.dateTime.day().month(.wide))
+        let date = day.formatted(.dateTime.day().month(.wide).locale(L10n.locale))
         guard let record else {
             return L10n.text(en: "\(date)", tr: "\(date)", es: "\(date)")
         }
@@ -229,7 +233,7 @@ struct MorningCalendarView: View {
 
     private func selectedCard(_ record: MorningRecord) -> some View {
         VStack(spacing: DS.Space.xs) {
-            Text(record.date.formatted(.dateTime.weekday(.wide).day().month(.wide)))
+            Text(record.date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(L10n.locale)))
                 .font(DS.Typo.label).kerning(1.2)
                 .foregroundStyle(DS.textSecondary)
 

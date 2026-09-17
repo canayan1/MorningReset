@@ -228,7 +228,7 @@ struct ScheduleSetupView: View {
         } else if cal.isDateInTomorrow(fire) {
             when = L10n.text(en: "Rings tomorrow", tr: "Yarın çalar", es: "Suena mañana")
         } else {
-            let day = fire.formatted(.dateTime.weekday(.wide))
+            let day = fire.formatted(.dateTime.weekday(.wide).locale(L10n.locale))
             when = L10n.text(en: "Rings \(day)", tr: "\(day) çalar", es: "Suena el \(day)")
         }
         return "\(when) · \(time)"
