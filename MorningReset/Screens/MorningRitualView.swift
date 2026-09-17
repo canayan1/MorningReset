@@ -62,6 +62,21 @@ struct MorningRitualView: View {
             camera.stop()
             AlarmChime.shared.stop()
             SpeechGuide.shared.stop()
+
+            // Leaving early is not finishing.
+            //
+            // The system's Stop belongs to the phone's owner and always will —
+            // no app gets to cover it, and an alarm that cannot be silenced is
+            // a safety problem rather than a feature. What an app can decide is
+            // what Stop *achieves*: here it buys three minutes. Tapping Begin
+            // silenced the chain, so walking away without the morning having
+            // happened has to put it back, or the one escape route in the whole
+            // design is to start and then not finish.
+            if step != .done, !MorningRitual.completedToday {
+                if #available(iOS 26.1, *) {
+                    Task { await AlarmKitWakeScheduler.reconcileFollowUps() }
+                }
+            }
         }
     }
 

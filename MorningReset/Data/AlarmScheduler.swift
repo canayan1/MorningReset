@@ -246,7 +246,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         // system's and only silences it.
         let presentation = AlarmPresentation(
             alert: AlarmPresentation.Alert(
-                title: "Your practice is ready",
+                title: "Your morning is ready. Tap Begin.",
                 secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
                 secondaryButtonBehavior: .custom
             )
@@ -359,7 +359,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         }
         let attrs = AlarmAttributes<MorningAlarmMeta>(
             presentation: AlarmPresentation(alert: AlarmPresentation.Alert(
-                title: "Your practice is ready",
+                title: "Your morning is ready. Tap Begin.",
                 secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
                 secondaryButtonBehavior: .custom)),
             tintColor: DS.accent
