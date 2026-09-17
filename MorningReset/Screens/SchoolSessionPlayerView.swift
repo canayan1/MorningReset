@@ -35,6 +35,10 @@ struct RoutinePlayerView: View {
     @State private var resting = false
     @State private var restLine = ""
     @State private var restsTaken = 0
+    /// The pause carries on by itself unless it is stopped. Someone with their
+    /// eyes closed should not have to open them to keep practising, and a
+    /// screen waiting for a tap is a practice that has quietly halted.
+    @State private var restHeld = false
     @State private var pulseBefore: PulseReading?
     @State private var pulseAfter: PulseReading?
     @State private var showPulseBefore = false
@@ -98,6 +102,12 @@ struct RoutinePlayerView: View {
         (en: "Good. That's yours.",  tr: "Güzel. Bu senin.",      es: "Bien. Esa es tuya."),
         (en: "Something softened.",  tr: "Bir şey yumuşadı.",     es: "Algo se ablandó.")
     ]
+
+    /// How long the practice waits before carrying on by itself. Long enough
+    /// to land, short enough that the practice does not become a series of
+    /// stops. No number is shown counting it down — a practice with a clock
+    /// ticking at you is the opposite of the thing.
+    private static let restSeconds = 5.0
 
     private var cuePool: [String] {
         (school.id == "breathing" || school.id == "sound") ? Self.breathCues + Self.generalCues : Self.generalCues
@@ -267,9 +277,12 @@ struct RoutinePlayerView: View {
                 .foregroundStyle(DS.textPrimary)
                 .multilineTextAlignment(.center)
 
-            Text(L10n.text(en: "Shall we go on?", tr: "Devam edelim mi?", es: "¿Seguimos?"))
+            Text(restHeld
+                 ? L10n.text(en: "Whenever you're ready.", tr: "Hazır olduğunda.", es: "Cuando quieras.")
+                 : L10n.text(en: "Going on in a moment.", tr: "Birazdan devam ediyoruz.", es: "Seguimos en un momento."))
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
+                .animation(.easeOut(duration: 0.2), value: restHeld)
         }
         .padding(.horizontal, DS.Space.xl)
         .transition(.opacity.combined(with: .scale(scale: 0.96)))
@@ -346,9 +359,15 @@ struct RoutinePlayerView: View {
                 Button("Done") { dismiss() }.primaryCTA()
             } else {
                 if resting {
-                    Button(L10n.text(en: "Go on", tr: "Devam", es: "Seguir")) { goOn() }
-                        .primaryCTA()
-                        .accessibilityIdentifier("player.goOn")
+                    if restHeld {
+                        Button(L10n.text(en: "Go on", tr: "Devam", es: "Seguir")) { goOn() }
+                            .primaryCTA()
+                            .accessibilityIdentifier("player.goOn")
+                    } else {
+                        Button(L10n.text(en: "Stop", tr: "Dur", es: "Parar")) { holdRest() }
+                            .primaryCTA()
+                            .accessibilityIdentifier("player.holdRest")
+                    }
                     Button(L10n.text(en: "That's enough for today",
                                      tr: "Bugünlük bu kadar",
                                      es: "Por hoy es suficiente")) { complete() }
@@ -385,15 +404,34 @@ struct RoutinePlayerView: View {
         restsTaken += 1
         restLine = L10n.text(en: line.en, tr: line.tr, es: line.es)
         running = false
+        restHeld = false
         withAnimation(.easeOut(duration: 0.3)) { resting = true }
-        // The question is spoken too, not just shown: at this point in a
-        // breathing practice the eyes are usually closed, and a screen asking
-        // something silently is a practice that has quietly stopped.
-        SpeechGuide.shared.speak("\(line.en) Shall we go on?")
+        // Spoken as well as shown: at this point in a breathing practice the
+        // eyes are usually closed, and what the voice says is the only way to
+        // know the practice is still moving.
+        SpeechGuide.shared.speak("\(line.en) Going on in a moment.")
+
+        // Carries on by itself. The token is the rest count, so a rest that
+        // has already been stopped, skipped or finished cannot be resumed by
+        // a timer left over from it.
+        let token = restsTaken
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.restSeconds) {
+            guard resting, !restHeld, !finished, restsTaken == token else { return }
+            goOn()
+        }
+    }
+
+    /// Stop. The practice stays where it is until it is asked to move.
+    private func holdRest() {
+        guard resting else { return }
+        restsTaken += 1                 // invalidates the pending resume
+        withAnimation(.easeOut(duration: 0.2)) { restHeld = true }
+        SpeechGuide.shared.stop()
     }
 
     private func goOn() {
         guard resting else { return }
+        restHeld = false
         withAnimation(.easeOut(duration: 0.25)) {
             resting = false
             stepIndex = min(stepIndex + 1, max(0, steps.count - 1))

@@ -40,14 +40,15 @@ CUES = [
     "Breathe with me.", "Let the out-breath be longer.", "Easy in, slow out.",
     "Let the belly move.", "Nothing forced.", "Stay with the rhythm.",
     "Your light is a little brighter now.", "Noted. You can adjust this any time.",
-    # Said at the end of each step, with the question attached, so someone
-    # practising with their eyes closed knows the practice is waiting for them.
-    "That's one. Shall we go on?",
-    "You stayed with it. Shall we go on?",
-    "Still here. Shall we go on?",
-    "That one settled. Shall we go on?",
-    "Good. That's yours. Shall we go on?",
-    "Something softened. Shall we go on?",
+    # Said at the end of each step. The practice carries on by itself, so the
+    # line says so rather than asking: someone with their eyes closed should
+    # not have to open them to keep going.
+    "That's one. Going on in a moment.",
+    "You stayed with it. Going on in a moment.",
+    "Still here. Going on in a moment.",
+    "That one settled. Going on in a moment.",
+    "Good. That's yours. Going on in a moment.",
+    "Something softened. Going on in a moment.",
 ]
 
 def key(text):
