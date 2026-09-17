@@ -203,8 +203,8 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     private let base = LocalNotificationWakeScheduler()
 
     // Stable IDs so reschedule replaces, not duplicates.
-    private static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
-    private static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
+    static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
+    static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
 
     /// The chain behind the first alarm, at three-minute steps. One-shot, so
     /// finishing the ritual can clear what is left of today without touching
@@ -220,7 +220,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// matters: you find out whether it works by sleeping through it. This
     /// fires the real thing — same sound, same presentation, same Stop — a few
     /// seconds from now, so the morning is not the first time.
-    private static let previewID = UUID(uuidString: "A0000000-0000-0000-0000-0000000000FF")!
+    static let previewID = UUID(uuidString: "A0000000-0000-0000-0000-0000000000FF")!
 
     static let log = Logger(subsystem: "com.canayan.MorningReset", category: "alarm")
 
@@ -371,6 +371,17 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// the rest of the chain has nothing left to insist about.
     static func cancelFollowUps() {
         for id in followUpIDs { try? AlarmManager.shared.cancel(id: id) }
+    }
+
+    /// Stops whatever is ringing right now, without touching tomorrow.
+    ///
+    /// Every alarm this app owns, because the one that woke you could be the
+    /// morning alarm or any link of the chain behind it, and there is no way
+    /// to ask the system which one is making the noise.
+    static func silenceRinging() {
+        for id in [weekdayAlarmID, weekendAlarmID, previewID] + followUpIDs {
+            try? AlarmManager.shared.stop(id: id)
+        }
     }
 
     /// Rings the real alarm a few seconds from now.

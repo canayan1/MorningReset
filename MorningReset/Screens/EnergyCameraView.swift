@@ -54,6 +54,12 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
     /// every time it does — which is how someone ends up smiling at a phone
     /// that never takes the picture.
     private var recentSmiles: [Bool] = []
+    /// When the current smile began. The capture waits for it to be *held*,
+    /// because the difference between a smile and a twitch of the mouth is
+    /// how long it lasts — and a morning that snaps at the first flicker
+    /// hasn't really asked anyone to smile.
+    private var smileBegan: Date?
+    private var holdSeconds: Double = 0
     private var wantsCapture = false
     private var captured = false
     private var autoCapture = true
@@ -66,6 +72,7 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
         captured = false
         wantsCapture = false
         recentSmiles.removeAll()
+        smileBegan = nil
         frameCount = 0
 
         sessionQueue.async { [weak self] in
@@ -90,6 +97,10 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
     func capture() { wantsCapture = true }
 
     func setAutoCapture(_ on: Bool) { autoCapture = on }
+
+    /// How long a smile has to last before it is taken. Zero is the old
+    /// behaviour: the first look that qualifies wins.
+    func setSmileHold(_ seconds: Double) { holdSeconds = seconds }
 
     private func configure() {
         session.beginConfiguration()
@@ -151,7 +162,19 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
 
             recentSmiles.append(isSmiling)
             if recentSmiles.count > 3 { recentSmiles.removeFirst() }
-            if autoCapture, recentSmiles.filter({ $0 }).count >= 2 { wantsCapture = true }
+
+            // Two of the last three looks is what counts as smiling now; a
+            // single dropped frame in the middle of a held smile must not
+            // reset the clock.
+            let smilingNow = recentSmiles.filter({ $0 }).count >= 2
+            if smilingNow {
+                if smileBegan == nil { smileBegan = Date() }
+            } else {
+                smileBegan = nil
+            }
+            if autoCapture, let began = smileBegan, Date().timeIntervalSince(began) >= holdSeconds {
+                wantsCapture = true
+            }
         }
 
         if wantsCapture {

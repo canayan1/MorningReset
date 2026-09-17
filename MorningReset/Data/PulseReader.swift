@@ -78,6 +78,10 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private var candidates: [Double] = []
     private var frameNumber = 0
     private var finished = false
+    /// Once the analysed trace is being drawn, the raw one stops writing over
+    /// it — the filtered signal is the better picture and it should not flicker
+    /// back to the rough one between windows.
+    private var settled = false
 
     // MARK: - Lifecycle
 
@@ -106,6 +110,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
 
     private func reset() {
         finished = false
+        settled = false
         times.removeAll(); reds.removeAll(); candidates.removeAll()
         startedAt = nil; lastEstimateAt = 0; frameNumber = 0
         publish {
@@ -216,6 +221,23 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         }
         times.append(now); reds.append(sample.red)
 
+        // Draw something the moment the finger lands.
+        //
+        // The trace used to appear only after the first full window, six
+        // seconds in, so the screen answered a finger on the lens with nothing
+        // at all — and a reader that looks broken is one people take their
+        // finger off. This is the raw last two seconds with its mean removed:
+        // not the analysed signal and never turned into a number, just visible
+        // proof that the camera can see a pulse moving.
+        if reds.count % 3 == 0, reds.count > 12 {
+            let recent = Array(reds.suffix(60))
+            let mean = recent.reduce(0, +) / Double(recent.count)
+            let centred = recent.map { $0 - mean }
+            let span = max(centred.map { abs($0) }.max() ?? 0, 1e-6)
+            let normalised = centred.map { $0 / span }
+            publish { if !self.settled { self.trace = normalised } }
+        }
+
         // The two things a person can actually do something about.
         let advice: String
         if sample.clipped > 0.05 || sample.red > 0.98 {
@@ -252,6 +274,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         let filtered = PulseSignal.bandpass(grid, sampleRate: Self.gridRate)
         guard !filtered.isEmpty else { return }
 
+        settled = true
         publish { self.trace = Array(filtered.suffix(140)) }
 
         guard let result = PulseSignal.estimate(filtered, sampleRate: Self.gridRate) else {

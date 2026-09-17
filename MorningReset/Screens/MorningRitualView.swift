@@ -1,24 +1,29 @@
 import SwiftUI
 
-// MARK: - The morning ritual
+// MARK: - The morning check-up
 //
-// What the alarm opens into, and the only thing that ends it. Three steps and
-// none of them is a chore: hold a finger still while a voice says something
-// kind, then smile at the phone, then the morning is yours.
+// What the alarm opens into, and the only thing that ends it.
+//
+// The order is the argument. A smile first, because it is the one thing you
+// can do before you are really awake and it costs nothing — and because the
+// bell fades out as a result of it, so the room going quiet is something you
+// did rather than something that happened. Then the pulse, which asks you to
+// hold still, which is only reasonable once the noise has stopped. Then the
+// breath. Then the day.
 //
 // It is deliberately not a practice. A practice asks you to do something; this
-// asks you to be looked at for forty seconds while someone tells you the day
-// has not started making demands yet. The practices are elsewhere, for later,
+// asks you to be looked at for a minute while someone tells you the day has
+// not started making demands yet. The practices are elsewhere, for later,
 // when you have chosen them.
 
 struct MorningRitualView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
 
-    private enum Step { case pulse, smile, done }
+    private enum Step { case smile, pulse, breath, done }
 
     @StateObject private var camera = CameraSession()
-    @State private var step: Step = .pulse
+    @State private var step: Step = .smile
     @State private var reading: PulseReading?
     @State private var energy: EnergyReading?
     @State private var glow = false
@@ -33,8 +38,8 @@ struct MorningRitualView: View {
             AppBackground(intensity: 0.4)
 
             switch step {
-            case .pulse: Color.clear
             case .smile: smileStep
+            case .pulse, .breath: Color.clear
             case .done:  doneStep
             }
         }
@@ -42,13 +47,16 @@ struct MorningRitualView: View {
         .fullScreenCover(isPresented: .constant(step == .pulse)) {
             PulseCheckView(moment: .before, affirmations: true, showsSkip: false) { result in
                 reading = result
-                SpeechGuide.shared.speak("Now — let yourself smile.")
-                withAnimation(.easeOut(duration: 0.35)) { step = .smile }
+                withAnimation(.easeOut(duration: 0.35)) { step = .breath }
             }
+        }
+        .fullScreenCover(isPresented: .constant(step == .breath)) {
+            SignatureMeditationView { finish() }
         }
         .sheet(isPresented: $showsCalendar) { MorningCalendarView() }
         .onDisappear {
             camera.stop()
+            AlarmChime.shared.stop()
             SpeechGuide.shared.stop()
         }
     }
@@ -122,8 +130,10 @@ struct MorningRitualView: View {
 
             // Present, but quiet: the ritual is the point, not a gate that
             // traps someone who has to be somewhere.
-            Button(L10n.text(en: "Not this morning", tr: "Bu sabah değil", es: "Esta mañana no")) {
-                finish()
+            Button(L10n.text(en: "Skip this", tr: "Bunu geç", es: "Saltar esto")) {
+                camera.stop()
+                AlarmChime.shared.fadeOut(over: 1.0)
+                withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
             }
             .font(.footnote)
             .foregroundStyle(DS.textDim)
@@ -156,18 +166,31 @@ struct MorningRitualView: View {
     private func startSmileCapture() {
         glow = true
         showsShutter = false
+        // The alarm has been stopped; the same bell comes back underneath at a
+        // third of the level, and goes out when the smile lands.
+        AlarmChime.shared.startSoftly()
+        SpeechGuide.shared.speak("Good morning. Let yourself smile.")
         camera.setAutoCapture(true)
+        // Held, not glimpsed. Two seconds is long enough to be a smile and
+        // short enough that nobody feels held there.
+        camera.setSmileHold(2.0)
         camera.onCapture = { image in
             let result = EnergyReader.read(from: image, activePath: appState.activePath)
             energy = result
             smiled = true
             camera.stop()
-            finish()
+            // The room goes quiet because of the smile, not because of a timer.
+            AlarmChime.shared.fadeOut()
+            SpeechGuide.shared.speak("There it is. Now a finger on the camera.")
+            withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
         }
         camera.configureAndStart()
         // A phone with no camera must not hold the morning hostage.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if !camera.available, step == .smile { finish() }
+            if !camera.available, step == .smile {
+                AlarmChime.shared.fadeOut(over: 1.0)
+                withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
+            }
         }
         // Eight seconds is long enough for a real smile to be found and short
         // enough that nobody concludes the app is broken.
@@ -193,7 +216,9 @@ struct MorningRitualView: View {
             }
 
             VStack(spacing: DS.Space.sm) {
-                Text(L10n.text(en: "Good morning.", tr: "Günaydın.", es: "Buenos días."))
+                Text(L10n.text(en: "You're ready for the day.",
+                               tr: "Güne hazırsın.",
+                               es: "Estás listo para el día."))
                     .font(.system(size: 30, weight: .regular, design: .serif))
                     .foregroundStyle(DS.textPrimary)
 
@@ -246,13 +271,14 @@ struct MorningRitualView: View {
     private func finish() {
         guard step != .done else { return }
         camera.stop()
+        AlarmChime.shared.stop()
         // One line in the log for this morning. A reading the app did not
         // trust goes in as nothing, so the calendar never shows a number that
         // was really a shrug.
         let trusted = reading.flatMap { $0.isTrustworthy && $0.bpm > 0 ? $0.bpm : nil }
         MorningLogStore.record(bpm: trusted, smiled: smiled)
         MorningRitual.markCompleted()
-        SpeechGuide.shared.speak("Good morning. The day is yours.")
+        SpeechGuide.shared.speak("That's your morning check-up. The day is yours.")
         withAnimation(.easeOut(duration: 0.4)) { step = .done }
     }
 }

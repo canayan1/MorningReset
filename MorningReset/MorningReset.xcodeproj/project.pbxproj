@@ -68,6 +68,7 @@
 		AAAA0008AAAA0008AAAA0008 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0008BBBB0008BBBB0008 /* LibraryView.swift */; };
 		AAAA0009AAAA0009AAAA0009 /* PracticeVisual.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB0009BBBB0009BBBB0009 /* PracticeVisual.swift */; };
 		AAAA000AAAAA000AAAAA000A /* AlarmKitIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBB000ABBBB000ABBBB000A /* AlarmKitIntents.swift */; };
+		CF720E39AA0D4CDEA0CD17E3 /* AlarmChime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6538FF497D040E3A2E96149 /* AlarmChime.swift */; };
 		DAC12F6A77564AC7B11A70D5 /* MorningLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB5FF40893F47848218A87F /* MorningLog.swift */; };
 		AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975EDA05F76448C2D6CB437C /* BreathDetector.swift */; };
 		AE1D54C4BFF96D4D8AF83020 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18689358EE807FE55E4B3BE /* PaywallView.swift */; };
@@ -187,6 +188,7 @@
 		8E6B5790C1EFA272B4D256FE /* AppState+Schools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppState+Schools.swift"; sourceTree = "<group>"; };
 		9307A7878C0E116E1FF3AF2D /* InsightPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightPreviewView.swift; sourceTree = "<group>"; };
 		96E8CEC7CB45DBBD52FA0D3D /* WeeklyAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyAffirmationView.swift; sourceTree = "<group>"; };
+		A6538FF497D040E3A2E96149 /* AlarmChime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlarmChime.swift; sourceTree = "<group>"; };
 		0BB5FF40893F47848218A87F /* MorningLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MorningLog.swift; sourceTree = "<group>"; };
 		975EDA05F76448C2D6CB437C /* BreathDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BreathDetector.swift; sourceTree = "<group>"; };
 		99257E9B40648C7BA1370841 /* MorningData+TR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MorningData+TR.swift"; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				A6D01BD446A784305E4AA799 /* TimeOfDay.swift */,
 				BD10D186CE9BC2DFEE4B1FC9 /* AlarmMeta.swift */,
 				E374F088FEBBB5A6E18B5B35 /* PulseReader.swift */,
+				A6538FF497D040E3A2E96149 /* AlarmChime.swift */,
 				0BB5FF40893F47848218A87F /* MorningLog.swift */,
 				975EDA05F76448C2D6CB437C /* BreathDetector.swift */,
 				C5948D880202E107E9FC5713 /* PulseSignal.swift */,
@@ -766,6 +769,7 @@
 				B88CE3D9D9BB2DB7FDC39E71 /* AlarmMeta.swift in Sources */,
 				B33C17A798E2E222B423734D /* PulseReader.swift in Sources */,
 				A8B5655663D3D92EFF3D8CF1 /* PulseCheckView.swift in Sources */,
+				CF720E39AA0D4CDEA0CD17E3 /* AlarmChime.swift in Sources */,
 				DAC12F6A77564AC7B11A70D5 /* MorningLog.swift in Sources */,
 				AC734C113A8664D6FACDDA2C /* BreathDetector.swift in Sources */,
 				31F5C6231237F5DBC839A1CC /* SignatureMeditationView.swift in Sources */,

@@ -16,6 +16,12 @@ struct BeginPracticeIntent: LiveActivityIntent {
     func perform() async throws -> some IntentResult {
         UserDefaults(suiteName: "group.com.canayan.MorningReset")?
             .set(true, forKey: "alarmKitStartFlow")
+        // Silence the alarm here, not later. Begin used to only raise a flag,
+        // so the alarm kept ringing over the whole of the morning it had just
+        // handed over to — you were asked to hold still for a pulse reading
+        // while the phone shouted at you. The app brings the same bell back
+        // underneath, much quieter, as soon as the ritual opens.
+        if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
         return .result()
     }
 }
