@@ -28,7 +28,7 @@ struct SchoolDetailView: View {
             AppBackground(intensity: 0.35)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: DS.Space.lg) {
-                    closeBar
+                    Spacer().frame(height: 44)   // room for the pinned close
                     header
                     tabPicker
                     if tab == .practise {
@@ -43,6 +43,16 @@ struct SchoolDetailView: View {
                 .padding(.horizontal, DS.Space.lg)
                 .padding(.bottom, DS.Space.xxl)
             }
+
+            // Pinned, not scrolled.
+            //
+            // The close button used to be the first row inside the scroll
+            // view, so it left the screen as soon as anyone read past the
+            // header — and the only way out of a tradition was to flick the
+            // sheet down and hope. It now sits above the scrolling content and
+            // stays there, on its own surface so it is visible over a
+            // photograph, with a target big enough to hit half awake.
+            closeBar
         }
         .task {
             completions = SchoolProgressStore.completions(school.id)
@@ -56,17 +66,24 @@ struct SchoolDetailView: View {
     }
 
     private var closeBar: some View {
-        HStack {
-            Spacer()
-            Button { dismiss() } label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(DS.textDim).frame(width: 32, height: 32)
+        VStack {
+            HStack {
+                Spacer()
+                Button { dismiss() } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(DS.textSecondary)
+                        .frame(width: 40, height: 40)
+                        .background(DS.surface.opacity(0.92), in: Circle())
+                        .overlay(Circle().strokeBorder(DS.border, lineWidth: DS.hairline))
+                }
+                .accessibilityLabel("Close")
+                .accessibilityIdentifier("school.close")
             }
-            .accessibilityLabel("Close")
-            .accessibilityIdentifier("school.close")
+            Spacer()
         }
-        .padding(.top, DS.Space.md)
+        .padding(.top, DS.Space.sm)
+        .padding(.horizontal, DS.Space.lg)
     }
 
     private var header: some View {

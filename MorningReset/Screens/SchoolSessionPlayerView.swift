@@ -364,8 +364,14 @@ struct RoutinePlayerView: View {
                             .primaryCTA()
                             .accessibilityIdentifier("player.goOn")
                     } else {
+                        // Small, and deliberately so. The pause carries on by
+                        // itself; stopping it is the rarer thing, and a
+                        // full-width button saying Stop in the middle of a
+                        // practice reads as the thing you are meant to press.
                         Button(L10n.text(en: "Stop", tr: "Dur", es: "Parar")) { holdRest() }
-                            .primaryCTA()
+                            .font(.caption)
+                            .foregroundStyle(DS.textDim)
+                            .padding(.vertical, DS.Space.md)
                             .accessibilityIdentifier("player.holdRest")
                     }
                     Button(L10n.text(en: "That's enough for today",

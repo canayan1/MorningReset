@@ -47,6 +47,10 @@ struct MorningRitualView: View {
         .fullScreenCover(isPresented: .constant(step == .pulse)) {
             PulseCheckView(moment: .before, affirmations: true, showsSkip: false) { result in
                 reading = result
+                // Spoken, like every other turn in the flow. Nobody should
+                // have to read a screen to know what is being asked of them
+                // two minutes after waking.
+                SpeechGuide.shared.speak("Now the breath. Breathe out towards the phone.")
                 withAnimation(.easeOut(duration: 0.35)) { step = .breath }
             }
         }

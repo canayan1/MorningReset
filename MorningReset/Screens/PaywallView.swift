@@ -44,9 +44,9 @@ private struct PaywallCopy {
             es: "Diez escuelas. 250 rutinas."
         ),
         body: L10n.text(
-            en: "Every school keeps one routine free forever. A single tier opens its schools; All-Access opens everything — plus the soundscapes, your full history, and whatever we add next.",
-            tr: "Her okulun bir rutini sonsuza dek ücretsiz. Tek paket kendi okullarını açar; All-Access ise her şeyi — artı sesler, tüm geçmişin ve sonra eklenecekler.",
-            es: "Cada escuela mantiene una rutina gratis para siempre. Un nivel abre sus escuelas; All-Access lo abre todo — más los sonidos, tu historial completo y lo que añadamos."
+            en: "Your morning practice stays free forever. A single tier opens its schools; All-Access opens everything — plus the soundscapes, your full history, and whatever we add next.",
+            tr: "Sabah pratiğin sonsuza dek ücretsiz kalır. Tek paket kendi okullarını açar; All-Access ise her şeyi — artı sesler, tüm geçmişin ve sonra eklenecekler.",
+            es: "Tu práctica matutina es gratis para siempre. Un nivel abre sus escuelas; All-Access lo abre todo — más los sonidos, tu historial completo y lo que añadamos."
         ),
         features: sharedFeatures,
         secondaryCTA: L10n.text(en: "Continue without Premium", tr: "Premium olmadan devam et", es: "Continuar sin Premium")
@@ -55,9 +55,9 @@ private struct PaywallCopy {
     static let contextual = PaywallCopy(
         headline: L10n.text(en: "Open the whole school", tr: "Okulun tamamını aç", es: "Abre la escuela entera"),
         body: L10n.text(
-            en: "You have the free routine. All-Access opens every routine in all ten schools, with the teachings behind them.",
-            tr: "Ücretsiz rutin sende. All-Access, on okulun tüm rutinlerini ve ardındaki öğretileri açar.",
-            es: "Ya tienes la rutina gratuita. All-Access abre todas las rutinas de las diez escuelas, con sus enseñanzas."
+            en: "Your morning practice is yours. All-Access opens every routine in all ten traditions, and what lives inside each one.",
+            tr: "Sabah pratiğin senin. All-Access, on geleneğin tüm rutinlerini ve her birinin içinde yaşayanı açar.",
+            es: "Tu práctica matutina es tuya. All-Access abre todas las rutinas de las diez tradiciones, y lo que vive dentro de cada una."
         ),
         features: sharedFeatures,
         secondaryCTA: L10n.text(en: "Continue without Premium", tr: "Premium olmadan devam et", es: "Continuar sin Premium")
@@ -66,9 +66,9 @@ private struct PaywallCopy {
     static let periodic = PaywallCopy(
         headline: L10n.text(en: "All-Access is optional", tr: "All-Access isteğe bağlı", es: "All-Access es opcional"),
         body: L10n.text(
-            en: "The ten free routines stay free. If you want the full library, All-Access opens all 250.",
-            tr: "On ücretsiz rutin ücretsiz kalır. Tüm kütüphaneyi istersen All-Access 250 rutini açar.",
-            es: "Las diez rutinas gratuitas siguen siendo gratis. Si quieres la biblioteca completa, All-Access abre las 250."
+            en: "Your free morning practice stays free. If you want the full library, All-Access opens all 250.",
+            tr: "Ücretsiz sabah pratiğin ücretsiz kalır. Tüm kütüphaneyi istersen All-Access 250 rutini açar.",
+            es: "Tu práctica matutina gratuita sigue siendo gratis. Si quieres la biblioteca completa, All-Access abre las 250."
         ),
         features: sharedFeatures,
         secondaryCTA: L10n.text(en: "Keep using the free reset", tr: "Ücretsiz reset'i kullanmaya devam et", es: "Sigue usando el reset gratuito")

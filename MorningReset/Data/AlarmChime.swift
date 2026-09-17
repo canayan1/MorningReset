@@ -22,8 +22,13 @@ final class AlarmChime {
     private var player: AVAudioPlayer?
     private var fade: Timer?
 
-    /// Roughly seventy percent quieter than the alarm — present, not insistent.
-    private static let level: Float = 0.3
+    /// Under the voice, but actually there.
+    ///
+    /// The first attempt at this sat at 0.3 and was inaudible on the phone —
+    /// a bell nobody can hear is not a quiet bell, it is a missing one. The
+    /// voice is the thing being followed, so this stays below it, and the
+    /// two were set by ear against each other rather than by arithmetic.
+    private static let level: Float = 0.55
 
     func startSoftly() {
         guard player == nil,

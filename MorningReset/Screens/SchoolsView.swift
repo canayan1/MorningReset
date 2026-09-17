@@ -72,7 +72,11 @@ struct SchoolsView: View {
                     HStack(spacing: 6) {
                         Text(school.name).font(.body.weight(.semibold)).foregroundStyle(DS.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
-                        if !unlocked {
+                        // Only where there is one. Nine of the ten schools
+                        // have no free routine at all, and the badge was
+                        // printed on every locked school regardless — so nine
+                        // tenths of it was an offer the app could not keep.
+                        if !unlocked, school.routines.contains(where: { $0.free }) {
                             Text("1 FREE")
                                 .font(.system(size: 8, weight: .bold)).tracking(0.4)
                                 .foregroundStyle(DS.background)

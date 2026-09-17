@@ -61,6 +61,13 @@ final class SpeechGuide {
         try? session.setActive(true)
 
         guard let p = try? AVAudioPlayer(contentsOf: url) else { return false }
+        // Slower than recorded. The clips were rendered at 0.78 of Kokoro's
+        // natural pace and that is still brisk for someone who has been awake
+        // for ninety seconds and is being asked to follow along rather than
+        // read. Rate-shifting keeps the pitch, so it is the same voice taking
+        // its time, not a tape slowed down.
+        p.enableRate = true
+        p.rate = 0.8
         p.volume = 0.85
         p.prepareToPlay()
         p.play()
@@ -88,7 +95,7 @@ final class SpeechGuide {
         for (i, sentence) in sentences.enumerated() {
             let u = AVSpeechUtterance(string: sentence)
             u.voice = voice
-            u.rate = AVSpeechUtteranceDefaultSpeechRate * 0.82   // unhurried
+            u.rate = AVSpeechUtteranceDefaultSpeechRate * 0.66   // unhurried, matched to the clips
             u.pitchMultiplier = 0.95                             // a touch lower
             u.volume = 0.52                                      // quiet over the bed
             u.preUtteranceDelay = i == 0 ? 0.25 : 0

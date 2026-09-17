@@ -49,6 +49,13 @@ CUES = [
     "That one settled. Going on in a moment.",
     "Good. That's yours. Going on in a moment.",
     "Something softened. Going on in a moment.",
+    # The morning check-up, spoken end to end. Somebody two minutes out of
+    # sleep should be able to follow this with their eyes shut; anything only
+    # written on the screen is asking them to read and adapt instead.
+    "Good morning. Let yourself smile.",
+    "There it is. Now a finger on the camera.",
+    "Now the breath. Breathe out towards the phone.",
+    "That's your morning check-up. The day is yours.",
 ]
 
 def key(text):
