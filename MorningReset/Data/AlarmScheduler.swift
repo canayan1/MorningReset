@@ -15,6 +15,45 @@ import UserNotifications
 //   To bypass: use .defaultCritical — requires critical-alerts entitlement
 //   (Apple review required, not yet applied for).
 
+// MARK: - What will actually happen
+//
+// Asked for and delivered are two different things, and the gap between them
+// is silent. An alarm the person set in good faith can come back as an
+// ordinary notification — AlarmKit declined in Settings, or never asked — and
+// an ordinary notification is exactly what Sleep Focus is for suppressing. The
+// app used to report success either way. Now it records which one it got, so
+// the screen that promises a morning can say what it actually arranged.
+
+enum WakeDelivery: String, Codable {
+    /// AlarmKit. Rings through Silent mode and Sleep Focus.
+    case alarm
+    /// A notification. Sleep Focus can hold it back.
+    case notification
+    case none
+}
+
+enum WakeDeliveryStore {
+    private static let key = "wake_delivery_v1"
+    private static let reasonKey = "wake_delivery_reason_v1"
+
+    static var current: WakeDelivery {
+        get { WakeDelivery(rawValue: UserDefaults.standard.string(forKey: key) ?? "") ?? .none }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: key) }
+    }
+
+    /// Why it is not an alarm, when it is not. Kept for the screen to explain
+    /// itself with, and for working out afterwards what a quiet morning was.
+    static var reason: String? {
+        get { UserDefaults.standard.string(forKey: reasonKey) }
+        set { UserDefaults.standard.set(newValue, forKey: reasonKey) }
+    }
+
+    static func record(_ delivery: WakeDelivery, reason: String? = nil) {
+        current = delivery
+        self.reason = reason
+    }
+}
+
 final class LocalNotificationWakeScheduler: WakeScheduling {
 
     private let idPrefix = "mr_ping_"
@@ -44,6 +83,11 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
         )
         content.sound    = .default
         content.userInfo = ["action": "startWakeFlow"]
+        // Without this a Focus simply swallows it, which is the whole failure
+        // this path exists to avoid. Time-sensitive still asks the person's
+        // permission — it is not a way around their settings — but a morning
+        // alarm is the case the level was made for.
+        content.interruptionLevel = .timeSensitive
 
         for weekday in 1...7 {
             var components     = DateComponents()
@@ -64,6 +108,7 @@ final class LocalNotificationWakeScheduler: WakeScheduling {
                 // Scheduling failure for a single slot is non-fatal; continue remaining days.
             }
         }
+        WakeDeliveryStore.current = .notification
 
         // Reconcile the Live Activity so the morning ritual is the first
         // thing the user sees on the lock screen when they pick up their
@@ -193,9 +238,20 @@ final class AlarmKitWakeScheduler: WakeScheduling {
 
         // AlarmKit rings through Sleep Focus and Silent. If scheduling fails —
         // alarms declined in Settings, say — fall back to notifications.
+        // Ask first and say so. Scheduling into a manager that has not been
+        // authorized throws, and the throw used to be swallowed into a
+        // notification the person was never told about.
+        guard AlarmManager.shared.authorizationState == .authorized else {
+            Self.log.error("AlarmKit not authorized (\(String(describing: AlarmManager.shared.authorizationState), privacy: .public)); using notifications")
+            await base.schedule(wakeSchedule)
+            WakeDeliveryStore.record(.notification, reason: "alarms-not-allowed")
+            return
+        }
+
         do {
             try await AlarmManager.shared.schedule(id: Self.weekdayAlarmID, configuration: weekdayConfig)
             try await AlarmManager.shared.schedule(id: Self.weekendAlarmID, configuration: weekendConfig)
+            WakeDeliveryStore.record(.alarm)
             if wakeSchedule.insistUntilRitual {
                 await Self.armFollowUps(for: wakeSchedule, attributes: attrs, begin: begin)
             }
@@ -216,6 +272,7 @@ final class AlarmKitWakeScheduler: WakeScheduling {
             // morning still arrives.
             Self.log.error("AlarmKit schedule failed, using notifications: \(error.localizedDescription, privacy: .public)")
             await base.schedule(wakeSchedule)
+            WakeDeliveryStore.record(.notification, reason: error.localizedDescription)
         }
         Self.log.notice("AlarmKit alarms scheduled for \(wakeSchedule.weekdayHour):\(wakeSchedule.weekdayMinute) / \(wakeSchedule.weekendHour):\(wakeSchedule.weekendMinute)")
     }
@@ -271,6 +328,20 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// the rest of the chain has nothing left to insist about.
     static func cancelFollowUps() {
         for id in followUpIDs { try? AlarmManager.shared.cancel(id: id) }
+    }
+
+    /// Whether the system will actually ring, checked live rather than
+    /// remembered — alarms can be turned off in Settings long after the
+    /// morning was set up.
+    static var isAuthorized: Bool {
+        AlarmManager.shared.authorizationState == .authorized
+    }
+
+    /// How many alarms the system is holding for this app. The honest answer
+    /// to "is my alarm set", and the one thing worth trusting over anything
+    /// the app itself has written down.
+    static var scheduledCount: Int {
+        (try? AlarmManager.shared.alarms.count) ?? 0
     }
 
     func cancel() {

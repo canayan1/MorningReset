@@ -8,6 +8,10 @@ struct ScheduleSetupView: View {
     @State private var weekendDate: Date
     @State private var authDenied = false
     @State private var insist: Bool
+    /// Set once scheduling has run and what came back was not an alarm. The
+    /// screen stays put in that case rather than closing on a promise it
+    /// cannot keep.
+    @State private var deliveredAsNotification = false
 
     init() {
         let s   = WakeScheduleStore.load()
@@ -75,7 +79,11 @@ struct ScheduleSetupView: View {
 
                 lockScreenPreview
 
-                Spacer().frame(height: 40)
+                Spacer().frame(height: DS.Space.sm)
+
+                nextRingLine
+
+                Spacer().frame(height: 32)
 
                 timeBlock(
                     label: L10n.text(en: "WEEKDAYS  MON – FRI", tr: "HAFTA İÇİ  PZT – CUM", es: "ENTRE SEMANA  LUN – VIE"),
@@ -92,6 +100,35 @@ struct ScheduleSetupView: View {
                 Spacer().frame(height: DS.Space.md)
 
                 insistToggle
+
+                if deliveredAsNotification {
+                    VStack(alignment: .center, spacing: DS.Space.sm) {
+                        Text(L10n.text(
+                            en: "This will arrive as a notification, and Sleep Focus can hold one back. Allow alarms for Inner Light to be woken through Silent mode.",
+                            tr: "Bu bir bildirim olarak gelecek ve Uyku Odağı bildirimi tutabilir. Sessiz modda da uyandırılmak için Inner Light'a alarm izni ver.",
+                            es: "Esto llegará como una notificación, y la Concentración de sueño puede retenerla. Permite alarmas para Inner Light y despierta incluso en modo Silencio."
+                        ))
+                            .font(.caption)
+                            .foregroundStyle(DS.accent)
+                            .frame(maxWidth: .infinity)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        HStack(spacing: DS.Space.lg) {
+                            Button(L10n.text(en: "Open Settings", tr: "Ayarları aç", es: "Abrir ajustes")) {
+                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(url)
+                                }
+                            }
+                            Button(L10n.text(en: "Keep it anyway", tr: "Yine de kalsın", es: "Dejarlo así")) {
+                                appState.finishScheduleSetup()
+                            }
+                        }
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(DS.accent)
+                    }
+                    .padding(.top, DS.Space.md)
+                }
 
                 if authDenied {
                     VStack(alignment: .center, spacing: DS.Space.sm) {
@@ -125,6 +162,51 @@ struct ScheduleSetupView: View {
         }
         // No identifier on the container: SwiftUI would stamp it onto every
         // child and erase the save button's own.
+    }
+
+    // MARK: - When it rings
+
+    /// The one thing the screen never said.
+    ///
+    /// Setting 10:10 at 10:11 schedules tomorrow, which is correct and reads
+    /// exactly like a broken alarm: you wait, and nothing happens. It costs a
+    /// line to say which morning this is for, and the line moves as the
+    /// pickers move, so the case announces itself before it is saved.
+    private var nextRingLine: some View {
+        HStack(spacing: DS.Space.xs) {
+            Image(systemName: "bell")
+                .font(.system(size: 10, weight: .medium))
+            Text(nextRingText)
+                .font(.caption.weight(.medium))
+        }
+        .foregroundStyle(DS.accent)
+        .frame(maxWidth: .infinity)
+        .animation(.easeOut(duration: 0.2), value: nextRingText)
+    }
+
+    private var nextRingText: String {
+        let cal = Calendar.current
+        let wd = cal.dateComponents([.hour, .minute], from: weekdayDate)
+        let we = cal.dateComponents([.hour, .minute], from: weekendDate)
+        var preview = WakeScheduleStore.load()
+        preview.weekdayHour = wd.hour ?? 7;   preview.weekdayMinute = wd.minute ?? 0
+        preview.weekendHour = we.hour ?? 8;   preview.weekendMinute = we.minute ?? 0
+        preview.isEnabled = true
+
+        guard let fire = WakeNotificationManager.current.nextFireDate(for: preview) else {
+            return L10n.text(en: "No morning set", tr: "Kurulu sabah yok", es: "Sin mañana fijada")
+        }
+        let time = fire.formatted(date: .omitted, time: .shortened)
+        let when: String
+        if cal.isDateInToday(fire) {
+            when = L10n.text(en: "Rings today", tr: "Bugün çalar", es: "Suena hoy")
+        } else if cal.isDateInTomorrow(fire) {
+            when = L10n.text(en: "Rings tomorrow", tr: "Yarın çalar", es: "Suena mañana")
+        } else {
+            let day = fire.formatted(.dateTime.weekday(.wide))
+            when = L10n.text(en: "Rings \(day)", tr: "\(day) çalar", es: "Suena el \(day)")
+        }
+        return "\(when) · \(time)"
     }
 
     // MARK: - Time block
@@ -246,6 +328,15 @@ struct ScheduleSetupView: View {
         authDenied = false
         WakeScheduleStore.save(updated)
         await backend.schedule(updated)
-        appState.finishScheduleSetup()
+
+        // Close only on a morning that will actually arrive. Anything else
+        // stays here and says what it got instead — the failure this is for
+        // is silent by nature, and a screen that closes on it is the app
+        // agreeing that everything is fine.
+        if WakeDeliveryStore.current == .alarm {
+            appState.finishScheduleSetup()
+        } else {
+            withAnimation(.easeOut(duration: 0.25)) { deliveredAsNotification = true }
+        }
     }
 }

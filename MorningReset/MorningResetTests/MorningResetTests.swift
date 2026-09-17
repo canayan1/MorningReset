@@ -626,6 +626,66 @@ final class MorningResetTests: XCTestCase {
         XCTAssertEqual(r.bpm, 66, accuracy: 3)
     }
 
+    // MARK: - When the alarm rings
+
+    /// A time that has already gone past today is scheduled for tomorrow.
+    ///
+    /// Which is correct, and reads exactly like a broken alarm: you set 10:10
+    /// at 10:11, put the phone down, and nothing happens. The behaviour is
+    /// right and the silence about it was the bug — the setup screen now says
+    /// which morning it means, and this pins the arithmetic behind that line.
+    func testAPassedTimeRingsTheFollowingDay() {
+        let cal = Calendar.current
+        let scheduler = LocalNotificationWakeScheduler()
+        var schedule = WakeSchedule()
+        schedule.isEnabled = true
+
+        // Every day set to one minute ago, so today's slot is always past.
+        let aMinuteAgo = cal.date(byAdding: .minute, value: -1, to: Date())!
+        let c = cal.dateComponents([.hour, .minute], from: aMinuteAgo)
+        schedule.weekdayHour = c.hour!;  schedule.weekdayMinute = c.minute!
+        schedule.weekendHour = c.hour!;  schedule.weekendMinute = c.minute!
+
+        guard let fire = scheduler.nextFireDate(for: schedule) else {
+            return XCTFail("an enabled schedule must have a next morning")
+        }
+        XCTAssertGreaterThan(fire, Date(), "never in the past")
+        XCTAssertTrue(cal.isDateInTomorrow(fire) || cal.isDateInToday(fire),
+                      "the next one is today or tomorrow, never a week out")
+        if cal.component(.hour, from: aMinuteAgo) == cal.component(.hour, from: Date()) {
+            XCTAssertTrue(cal.isDateInTomorrow(fire), "a time already gone means tomorrow")
+        }
+    }
+
+    /// A time still to come today rings today.
+    func testAComingTimeRingsToday() {
+        let cal = Calendar.current
+        let scheduler = LocalNotificationWakeScheduler()
+        var schedule = WakeSchedule()
+        schedule.isEnabled = true
+
+        let soon = cal.date(byAdding: .minute, value: 30, to: Date())!
+        let c = cal.dateComponents([.hour, .minute], from: soon)
+        schedule.weekdayHour = c.hour!;  schedule.weekdayMinute = c.minute!
+        schedule.weekendHour = c.hour!;  schedule.weekendMinute = c.minute!
+
+        guard let fire = scheduler.nextFireDate(for: schedule) else {
+            return XCTFail("an enabled schedule must have a next morning")
+        }
+        // Unless the half hour crosses midnight, in which case tomorrow is right.
+        if cal.isDate(soon, inSameDayAs: Date()) {
+            XCTAssertTrue(cal.isDateInToday(fire), "a time still to come is today's")
+        }
+    }
+
+    /// A morning that is off has no next morning, and nothing downstream may
+    /// invent one.
+    func testADisabledScheduleHasNoNextMorning() {
+        var schedule = WakeSchedule()
+        schedule.isEnabled = false
+        XCTAssertNil(LocalNotificationWakeScheduler().nextFireDate(for: schedule))
+    }
+
     // MARK: - The morning log
 
     private func day(_ offset: Int) -> Date {
