@@ -43,11 +43,16 @@ final class AlarmChime {
 
         guard let p = try? AVAudioPlayer(contentsOf: url) else { return }
         p.numberOfLoops = -1
-        p.volume = 0
+        // Start loud and recede, rather than start from nothing. The system
+        // alarm has just cut out — that edge is the system's and cannot be
+        // softened — so the bell comes straight back in at something near
+        // alarm level and then draws away over a few seconds. What is heard
+        // is one bell moving off, not one stopping and another starting.
+        p.volume = 0.6
         p.prepareToPlay()
         p.play()
         player = p
-        ramp(to: Self.level, over: 1.2)
+        ramp(to: Self.level, over: Pace.bellEase)
     }
 
     /// Let it go. Called when the smile lands, so the room goes quiet as a

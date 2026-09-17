@@ -69,6 +69,20 @@ CUES = [
     "Breathe out.",
     "Breathe out, towards the phone.",
     "Now a little longer.",
+    # The slower morning: a line, then a silence for it to land in.
+    "Good morning.",
+    "There's no hurry.",
+    "Your morning is starting. Stay where you are for a moment.",
+    "When you're ready — let yourself smile.",
+    "There it is.",
+    "Next, your pulse.",
+    "Place your finger over the camera on the back of the phone.",
+    "And cover the little light beside it.",
+    "Next, your breath.",
+    "You've found it. Let it carry you.",
+    "That's your morning check-up.",
+    "The day is yours.",
+    "Breathe out towards the phone, slowly, and let it be heard.",
 ]
 
 def key(text):

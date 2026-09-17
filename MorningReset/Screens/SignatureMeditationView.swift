@@ -19,6 +19,10 @@ struct SignatureMeditationView: View {
     @Environment(AppState.self) private var appState
 
     var onComplete: () -> Void = {}
+    /// Whether to explain the practice on opening. The morning ritual has
+    /// already said it in the handover, and saying it twice is the sound of
+    /// an app that does not know it is one app.
+    var spokenIntro: Bool = true
 
     /// One side of the box. Five short rounds to find the shape, then ten at
     /// the longer count.
@@ -248,7 +252,9 @@ struct SignatureMeditationView: View {
         guard !started else { return }
         started = true
         breath.start()
-        SpeechGuide.shared.speak("Breathe out towards the phone, and let it be heard. The tree does the rest.")
+        if spokenIntro {
+            SpeechGuide.shared.speak("Breathe out towards the phone, and let it be heard. The tree does the rest.")
+        }
         cue()
         ticker = Timer.scheduledTimer(withTimeInterval: Self.tick, repeats: true) { _ in advance() }
     }
@@ -286,6 +292,17 @@ struct SignatureMeditationView: View {
     /// the hold is the part where nothing is being asked of you — the label on
     /// screen is there for anyone who opens their eyes.
     private func cue() {
+        // The voice teaches the shape and then withdraws. Through the five
+        // short rounds every breath is spoken; when the sides lengthen, it
+        // says so once and goes quiet, and the tree and the beat carry the
+        // rest. Being talked through all fifteen rounds is being supervised,
+        // and the second half is where someone is meant to be left alone with it.
+        let guided = index < Self.rounds[0].count * 4
+        if index == Self.rounds[0].count * 4 {
+            SpeechGuide.shared.speak("You've found it. Let it carry you.")
+            return
+        }
+        guard guided else { return }
         switch phase {
         case .inhale:
             SpeechGuide.shared.speak("Breathe in.")
@@ -294,11 +311,6 @@ struct SignatureMeditationView: View {
             SpeechGuide.shared.speak(exhalesDone == 0 ? "Breathe out, towards the phone." : "Breathe out.")
         case .holdIn, .holdOut:
             break
-        }
-        // The sides get longer once, a third of the way in, and that change is
-        // worth a word — it arrives as a surprise otherwise.
-        if index == Self.rounds[0].count * 4 {
-            SpeechGuide.shared.speak("Now a little longer.")
         }
     }
 

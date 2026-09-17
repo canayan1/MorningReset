@@ -21,9 +21,9 @@ struct MorningRitualView: View {
     @Environment(AppState.self) private var appState
 
     private enum Step: Equatable {
-        case opening          // "your morning routine is starting", five seconds
+        case arrival          // the bell recedes, the voice says there is no hurry
         case smile
-        case toPulse          // and again before each new thing
+        case toPulse          // one breath, and the voice says what is next
         case pulse
         case toBreath
         case breath
@@ -31,7 +31,7 @@ struct MorningRitualView: View {
     }
 
     @StateObject private var camera = CameraSession()
-    @State private var step: Step = .opening
+    @State private var step: Step = .arrival
     @State private var reading: PulseReading?
     @State private var energy: EnergyReading?
     @State private var glow = false
@@ -40,53 +40,64 @@ struct MorningRitualView: View {
     /// one. Someone smiling at a phone that will not respond stops smiling.
     @State private var showsShutter = false
     @State private var showsCalendar = false
+    @State private var previewIn = false
+    @State private var doneButtonIn = false
 
     var body: some View {
         ZStack {
             AppBackground(intensity: 0.4)
 
             switch step {
-            case .opening:
-                MorningHandoff(
-                    label: L10n.text(en: "GOOD MORNING", tr: "GÜNAYDIN", es: "BUENOS DÍAS"),
-                    title: L10n.text(en: "Your morning routine\nis starting.",
-                                     tr: "Sabah rutinin\nbaşlıyor.",
-                                     es: "Tu rutina matutina\nestá empezando."),
-                    spoken: "Good morning. Your morning routine is starting.",
-                    seconds: 5
-                ) { withAnimation(.easeOut(duration: 0.4)) { step = .smile } }
+            case .arrival:
+                MorningBreathTransition(lines: [
+                    "Good morning.",
+                    "There's no hurry.",
+                    "Your morning is starting. Stay where you are for a moment."
+                ]) { go(.smile) }
+                .transition(.opacity)
 
-            case .smile: smileStep
+            case .smile:
+                smileStep.transition(.opacity)
 
             case .toPulse:
-                MorningHandoff(
-                    label: L10n.text(en: "NEXT", tr: "SIRADA", es: "SIGUIENTE"),
-                    title: L10n.text(en: "Your pulse.", tr: "Nabzın.", es: "Tu pulso."),
-                    spoken: "Next, your pulse. Place your finger over the camera on the back of the phone, and cover the light beside it.",
-                    seconds: 5
-                ) { withAnimation(.easeOut(duration: 0.4)) { step = .pulse } }
+                MorningBreathTransition(lines: [
+                    "Next, your pulse.",
+                    "Place your finger over the camera on the back of the phone.",
+                    "And cover the little light beside it."
+                ]) { go(.pulse) }
+                .transition(.opacity)
 
             case .toBreath:
-                MorningHandoff(
-                    label: L10n.text(en: "NEXT", tr: "SIRADA", es: "SIGUIENTE"),
-                    title: L10n.text(en: "Your breath.", tr: "Nefesin.", es: "Tu respiración."),
-                    spoken: "Next, your breath. Breathe out towards the phone, slowly, and let it be heard.",
-                    seconds: 5
-                ) { withAnimation(.easeOut(duration: 0.4)) { step = .breath } }
+                MorningBreathTransition(lines: [
+                    "Next, your breath.",
+                    "Breathe out towards the phone, slowly, and let it be heard."
+                ]) { go(.breath) }
+                .transition(.opacity)
 
-            case .pulse, .breath: Color.clear
-            case .done:  doneStep
+            case .pulse, .breath:
+                Color.clear
+
+            case .done:
+                doneStep.transition(.opacity)
             }
         }
         .accessibilityIdentifier("ritual.screen")
+        .onAppear {
+            // Silence the alarm here as well as in the intent — whether the
+            // intent's stop reaches it is not a thing to discover at six in the
+            // morning — and bring the same bell back underneath, receding.
+            if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
+            AlarmChime.shared.startSoftly()
+        }
         .fullScreenCover(isPresented: .constant(step == .pulse)) {
-            PulseCheckView(moment: .before, affirmations: true, showsSkip: false) { result in
+            PulseCheckView(moment: .before, affirmations: true,
+                           affirmationGap: Pace.affirmationGap, showsSkip: false) { result in
                 reading = result
-                withAnimation(.easeOut(duration: 0.35)) { step = .toBreath }
+                go(.toBreath)
             }
         }
         .fullScreenCover(isPresented: .constant(step == .breath)) {
-            SignatureMeditationView { finish() }
+            SignatureMeditationView(onComplete: { finish() }, spokenIntro: false)
         }
         .sheet(isPresented: $showsCalendar) { MorningCalendarView() }
         .onDisappear {
@@ -141,6 +152,7 @@ struct MorningRitualView: View {
                     CameraPreview(session: camera.session)
                         .frame(width: 250, height: 250)
                         .clipShape(Circle())
+                        .opacity(previewIn ? 1 : 0)
                         .overlay(Circle().stroke(camera.smiling ? DS.accent : DS.border, lineWidth: 3))
                         .animation(.easeOut(duration: 0.25), value: camera.smiling)
                 } else {
@@ -183,7 +195,7 @@ struct MorningRitualView: View {
             Button(L10n.text(en: "Skip this", tr: "Bunu geç", es: "Saltar esto")) {
                 camera.stop()
                 AlarmChime.shared.fadeOut(over: 1.0)
-                withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
+                go(.toPulse)
             }
             .font(.footnote)
             .foregroundStyle(DS.textDim)
@@ -216,16 +228,15 @@ struct MorningRitualView: View {
     private func startSmileCapture() {
         glow = true
         showsShutter = false
-        // Silence it here as well as in the intent. The intent may run in the
-        // extension's process, and whether its stop reaches the alarm is not
-        // something to find out at six in the morning; this runs in the app,
-        // every time, and stopping an alarm that has already stopped costs
-        // nothing.
-        if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
-        // Then the same bell underneath, at a third of the level, going out
-        // when the smile lands.
-        AlarmChime.shared.startSoftly()
-        SpeechGuide.shared.speak("Let yourself smile.")
+        previewIn = false
+        // The voice first; the lens after. A camera opening on your face
+        // before anyone has said why is the single most startling thing the
+        // old flow did. The preview now comes up out of the glow over three
+        // seconds, once the invitation has been made.
+        SpeechGuide.shared.speak("When you're ready — let yourself smile.")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation(.easeInOut(duration: 3)) { previewIn = true }
+        }
         camera.setAutoCapture(true)
         // Held, not glimpsed. Two seconds is long enough to be a smile and
         // short enough that nobody feels held there.
@@ -237,14 +248,19 @@ struct MorningRitualView: View {
             camera.stop()
             // The room goes quiet because of the smile, not because of a timer.
             AlarmChime.shared.fadeOut()
-            withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
+            SpeechGuide.shared.speak("There it is.")
+            // And then nothing, for a moment. The smile is allowed to be the
+            // last thing that happened before the next thing starts.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 + Pace.afterLine) {
+                go(.toPulse)
+            }
         }
         camera.configureAndStart()
         // A phone with no camera must not hold the morning hostage.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !camera.available, step == .smile {
                 AlarmChime.shared.fadeOut(over: 1.0)
-                withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
+                go(.toPulse)
             }
         }
         // Eight seconds is long enough for a real smile to be found and short
@@ -318,7 +334,13 @@ struct MorningRitualView: View {
             }
             .padding(.horizontal, DS.Space.lg)
             .padding(.bottom, DS.Space.xl)
+            .opacity(doneButtonIn ? 1 : 0)
         }
+    }
+
+    /// Every change of screen takes the same unhurried moment.
+    private func go(_ next: Step) {
+        withAnimation(.easeInOut(duration: Pace.crossfade)) { step = next }
     }
 
     // MARK: - Finish
@@ -333,8 +355,17 @@ struct MorningRitualView: View {
         let trusted = reading.flatMap { $0.isTrustworthy && $0.bpm > 0 ? $0.bpm : nil }
         MorningLogStore.record(bpm: trusted, smiled: smiled)
         MorningRitual.markCompleted()
-        SpeechGuide.shared.speak("That's your morning check-up. The day is yours.")
-        withAnimation(.easeOut(duration: 0.4)) { step = .done }
+        doneButtonIn = false
+        Task {
+            await SpeechGuide.shared.say(["That's your morning check-up.", "The day is yours."],
+                                         pause: Pace.afterLine)
+        }
+        // The button arrives after the words have. Nothing on this screen
+        // should look like it is waiting for you.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            withAnimation(.easeInOut(duration: Pace.crossfade)) { doneButtonIn = true }
+        }
+        go(.done)
     }
 }
 
@@ -363,90 +394,81 @@ enum MorningRitual {
     }
 }
 
-// MARK: - The handover between two things
+// MARK: - Pace
 
-/// Says what is about to happen, and gives you five seconds before it does.
+/// How fast the morning moves. All of it, in one place.
 ///
-/// The camera used to open the instant the alarm handed over, which is
-/// startling at any hour and genuinely unpleasant at six in the morning — a
-/// lens opening on your face before you have agreed to be looked at. Every
-/// change of activity is now announced first, in the voice, and then counted
-/// down on screen, so nothing in the morning arrives without warning.
+/// Time here is measured in breaths, not seconds. When something feels
+/// rushed the answer is one of these numbers, not a new screen.
+enum Pace {
+    /// One breath: the length of a transition. In for half of it, out for
+    /// the rest.
+    static let breath: Double = 8
+    /// Silence after a spoken line, before the next one. This is where the
+    /// line lands.
+    static let afterLine: Double = 3
+    /// Every change of screen.
+    static let crossfade: Double = 1.5
+    /// How long the bell takes to draw away after the alarm.
+    static let bellEase: Double = 6
+    /// Between one affirmation and the next, over the pulse.
+    static let affirmationGap: Double = 11
+}
+
+// MARK: - The breath between two things
+
+/// Says what is about to happen, and takes one breath before it does.
 ///
-/// The count is quiet on purpose. It is not urgency — it is the opposite, a
-/// held breath before a door opens — so the numbers are large and thin, the
-/// ring fills rather than drains, and the voice says what is coming rather
-/// than reading the numbers out.
-struct MorningHandoff: View {
-    let label: String
-    let title: String
-    /// Spoken once, as the screen appears.
-    let spoken: String
-    var seconds: Int = 5
+/// This replaced a countdown. Numbers ticking down are a timer however
+/// gently they are drawn, and a timer is a demand. What sits between two
+/// parts of the morning now is the thing the whole app is about: a circle
+/// that fills as if breathing in and settles as if breathing out, while the
+/// voice names what comes next and then leaves a silence for it to land in.
+/// The next screen fades in on the out-breath.
+///
+/// It lasts as long as the words need, and never less than one full breath.
+struct MorningBreathTransition: View {
+    /// Spoken in order, with a pause after each.
+    let lines: [String]
     var onDone: () -> Void
 
-    @State private var remaining: Int = 0
-    @State private var progress: Double = 0
-    @State private var ticker: Timer?
+    @State private var swell = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
+        ZStack {
+            Circle()
+                .fill(DS.accentSoft.opacity(0.20))
+                .frame(width: 240, height: 240)
+                .blur(radius: 40)
+                .scaleEffect(swell ? 1.18 : 0.78)
 
-            Text(label)
-                .font(DS.Typo.label).kerning(1.6)
-                .foregroundStyle(DS.accent)
+            Circle()
+                .fill(DS.accent.opacity(0.10))
+                .frame(width: 150, height: 150)
+                .scaleEffect(swell ? 1.0 : 0.70)
 
-            Spacer().frame(height: DS.Space.sm)
-
-            Text(title)
-                .font(.system(size: 30, weight: .regular, design: .serif))
-                .foregroundStyle(DS.textPrimary)
-                .multilineTextAlignment(.center)
-                .lineSpacing(5)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Spacer().frame(height: DS.Space.xl)
-
-            ZStack {
-                Circle()
-                    .fill(DS.accentSoft.opacity(0.16))
-                    .frame(width: 190, height: 190)
-                    .blur(radius: 26)
-
-                Circle()
-                    .stroke(DS.border, lineWidth: 2)
-                    .frame(width: 128, height: 128)
-
-                Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(DS.accent, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-                    .frame(width: 128, height: 128)
-                    .rotationEffect(.degrees(-90))
-
-                Text("\(max(remaining, 1))")
-                    .font(.system(size: 54, weight: .thin, design: .serif))
-                    .monospacedDigit()
-                    .foregroundStyle(DS.textPrimary)
-                    .contentTransition(.numericText(countsDown: true))
-            }
-
-            Spacer()
+            Circle()
+                .stroke(DS.accentSoft.opacity(swell ? 0.55 : 0.25), lineWidth: 1.5)
+                .frame(width: 150, height: 150)
+                .scaleEffect(swell ? 1.0 : 0.70)
         }
-        .padding(.horizontal, DS.Space.lg)
+        .animation(.easeInOut(duration: Pace.breath / 2).repeatForever(autoreverses: true), value: swell)
         .accessibilityIdentifier("ritual.handoff")
+        .accessibilityLabel(lines.joined(separator: " "))
         .onAppear {
-            remaining = seconds
-            SpeechGuide.shared.speak(spoken)
-            withAnimation(.linear(duration: Double(seconds))) { progress = 1 }
-            ticker = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
-                withAnimation(.easeOut(duration: 0.25)) { remaining -= 1 }
-                if remaining <= 0 {
-                    t.invalidate()
-                    onDone()
-                }
+            swell = true
+            Task {
+                let started = Date()
+                await SpeechGuide.shared.say(lines, pause: Pace.afterLine)
+                // Finish on an out-breath: however long the words took, wait
+                // out the remainder of the current breath, then one more
+                // moment of nothing.
+                let elapsed = Date().timeIntervalSince(started)
+                let intoBreath = elapsed.truncatingRemainder(dividingBy: Pace.breath)
+                let untilSettled = max(Pace.breath - elapsed, Pace.breath - intoBreath)
+                try? await Task.sleep(nanoseconds: UInt64((untilSettled + Pace.afterLine) * 1_000_000_000))
+                onDone()
             }
         }
-        .onDisappear { ticker?.invalidate(); ticker = nil }
     }
 }

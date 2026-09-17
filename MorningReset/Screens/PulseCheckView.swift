@@ -17,6 +17,9 @@ struct PulseCheckView: View {
     /// Speak over the reading. The morning ritual does; a reading taken either
     /// side of a practice does not, because the practice has its own voice.
     var affirmations: Bool = false
+    /// Seconds between one affirmation and the next. The reading itself is
+    /// done in about ten; what fills the rest is the reason to keep still.
+    var affirmationGap: Double = 7
     /// Hidden during the morning ritual, where the whole point is that it is
     /// the thing you get up for.
     var showsSkip: Bool = true
@@ -27,6 +30,11 @@ struct PulseCheckView: View {
     @State private var pulseScale: CGFloat = 1
     @State private var affirmationTimer: Timer?
     @State private var affirmationIndex = 0
+    /// The reading is in but the voice has not finished. With affirmations
+    /// on, the screen waits for the last line rather than leaving mid-sentence
+    /// — the number is not the point of this minute, the minute is.
+    @State private var result: PulseReading?? = nil
+    @State private var linesDone = false
 
     /// Said over the reading, in the guide's own voice. Nothing is asked of the
     /// person here — they are holding a finger still, and these are the only
@@ -122,15 +130,15 @@ struct PulseCheckView: View {
             case .done(let reading):
                 // Let the final number land before leaving.
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
-                    onFinish(reading.bpm > 0 && reading.isTrustworthy ? reading : nil)
-                    dismiss()
+                    result = .some(reading.bpm > 0 && reading.isTrustworthy ? reading : nil)
+                    leaveIfReady()
                 }
             case .unavailable:
                 // No camera, or the person said no. Never hold the practice
                 // hostage to a reading — show the reason, then get out of the way.
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-                    onFinish(nil)
-                    dismiss()
+                    result = .some(nil)
+                    leaveIfReady()
                 }
             default:
                 break
@@ -141,11 +149,25 @@ struct PulseCheckView: View {
     private func speakAffirmations() {
         SpeechGuide.shared.speak(Self.lines[0])
         affirmationIndex = 1
-        affirmationTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
-            guard affirmationIndex < Self.lines.count else { return }
+        affirmationTimer = Timer.scheduledTimer(withTimeInterval: affirmationGap, repeats: true) { t in
+            guard affirmationIndex < Self.lines.count else {
+                // One more gap after the last line, so it is heard out and
+                // sat with, then the screen is free to go.
+                t.invalidate()
+                linesDone = true
+                leaveIfReady()
+                return
+            }
             SpeechGuide.shared.speak(Self.lines[affirmationIndex])
             affirmationIndex += 1
         }
+    }
+
+    private func leaveIfReady() {
+        guard let result else { return }
+        guard !affirmations || linesDone else { return }
+        onFinish(result)
+        dismiss()
     }
 
     // MARK: - Dial

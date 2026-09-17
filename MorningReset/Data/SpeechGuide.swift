@@ -21,6 +21,8 @@ final class SpeechGuide {
     /// Bumped on every new line, so a duck left over from the previous one
     /// cannot lift the ambient bed in the middle of this one.
     private var token = 0
+    /// How long the line now playing will take, at the rate it is played at.
+    private(set) var currentLength: Double = 0
 
     private init() {}
 
@@ -35,6 +37,25 @@ final class SpeechGuide {
         token += 1
         if playRecording(of: text) { return }
         synthesise(text)
+    }
+
+    /// Says several things, one after another, with silence between them.
+    ///
+    /// The silence is the point. A guide who has just said "there's no
+    /// hurry" and then immediately says the next thing has contradicted
+    /// herself; the gap after a line is where the line lands. Returns false
+    /// if something newer started speaking part-way through, so a caller
+    /// waiting on the last word knows it never came.
+    @discardableResult
+    func say(_ lines: [String], pause: Double) async -> Bool {
+        for (i, line) in lines.enumerated() {
+            speak(line)
+            let mine = token
+            let gap = i < lines.count - 1 ? pause : 0
+            try? await Task.sleep(nanoseconds: UInt64((currentLength + gap) * 1_000_000_000))
+            guard mine == token else { return false }
+        }
+        return true
     }
 
     // MARK: - Recorded voice
@@ -73,8 +94,10 @@ final class SpeechGuide {
         p.play()
         player = p
 
+        // At 0.8 the clip takes a quarter longer than its file says.
+        currentLength = p.duration / Double(p.rate)
         AmbientPlayer.shared.duck(true)
-        unduck(after: p.duration + 0.3)
+        unduck(after: currentLength + 0.3)
         return true
     }
 
@@ -103,7 +126,8 @@ final class SpeechGuide {
             synth.speak(u)
             spoken += Double(sentence.count) / 11.0 + 0.55
         }
-        unduck(after: max(2.0, spoken))
+        currentLength = max(2.0, spoken)
+        unduck(after: currentLength)
     }
 
     /// Preferred calm female voices, best first. Falls back to any female en voice.
