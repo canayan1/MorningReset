@@ -29,6 +29,12 @@ struct RoutinePlayerView: View {
     @State private var fedOrb = true
     @State private var started = false
     @State private var session: PracticeSession?
+    /// Between steps, the practice stops and says something. Nothing here is a
+    /// gate — the only reason to pause is that arriving somewhere is worth
+    /// noticing, and a practice that never stops to say so is just a list.
+    @State private var resting = false
+    @State private var restLine = ""
+    @State private var restsTaken = 0
     @State private var pulseBefore: PulseReading?
     @State private var pulseAfter: PulseReading?
     @State private var showPulseBefore = false
@@ -81,6 +87,18 @@ struct RoutinePlayerView: View {
         "Stay with the rhythm."
     ]
 
+    /// Said at each step's end. Every one names what happened, never how much
+    /// is left — the whole point of taking the counter off the screen is lost
+    /// if the celebration puts it back.
+    private static let restLines = [
+        (en: "That's one.",          tr: "Bir tane oldu.",        es: "Ahí va una."),
+        (en: "You stayed with it.",  tr: "Onunla kaldın.",        es: "Te quedaste con ello."),
+        (en: "Still here.",          tr: "Hâlâ buradasın.",       es: "Sigues aquí."),
+        (en: "That one settled.",    tr: "Bu oturdu.",            es: "Esa se asentó."),
+        (en: "Good. That's yours.",  tr: "Güzel. Bu senin.",      es: "Bien. Esa es tuya."),
+        (en: "Something softened.",  tr: "Bir şey yumuşadı.",     es: "Algo se ablandó.")
+    ]
+
     private var cuePool: [String] {
         (school.id == "breathing" || school.id == "sound") ? Self.breathCues + Self.generalCues : Self.generalCues
     }
@@ -123,6 +141,7 @@ struct RoutinePlayerView: View {
                 controls
             }
         }
+        .sensoryFeedback(.success, trigger: restsTaken)
         .onAppear {
             pulse = true
             showSafety = hasSafety
@@ -216,11 +235,16 @@ struct RoutinePlayerView: View {
                     .monospacedDigit().foregroundStyle(DS.textPrimary)
             }
 
-            // Current step
-            VStack(spacing: DS.Space.xs) {
-                Text("STEP \(stepIndex + 1) OF \(steps.count)")
-                    .font(.system(size: 10, weight: .semibold)).tracking(1.4)
-                    .foregroundStyle(color)
+            // The step itself, or the moment between two of them.
+            //
+            // No "step 3 of 6". A practice that opens by telling you there are
+            // six of these reads as a list of chores before it has said a
+            // single useful thing, and the number is the part nobody needs:
+            // the ring already shows the time, and the only step that matters
+            // is the one being done.
+            if resting {
+                restView
+            } else {
                 Text(steps.isEmpty ? routine.purpose : steps[min(stepIndex, steps.count - 1)])
                     .font(.callout).foregroundStyle(DS.textSecondary)
                     .multilineTextAlignment(.center).lineSpacing(4)
@@ -228,6 +252,28 @@ struct RoutinePlayerView: View {
                     .id(stepIndex).transition(.opacity)
             }
         }
+    }
+
+    private var restView: some View {
+        VStack(spacing: DS.Space.sm) {
+            Image(systemName: "checkmark")
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(color)
+                .padding(10)
+                .background(color.opacity(0.14), in: Circle())
+
+            Text(restLine)
+                .font(.system(size: 22, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text(L10n.text(en: "Shall we go on?", tr: "Devam edelim mi?", es: "¿Seguimos?"))
+                .font(.callout)
+                .foregroundStyle(DS.textSecondary)
+        }
+        .padding(.horizontal, DS.Space.xl)
+        .transition(.opacity.combined(with: .scale(scale: 0.96)))
+        .accessibilityIdentifier("player.rest")
     }
 
     private var completeView: some View {
@@ -299,13 +345,27 @@ struct RoutinePlayerView: View {
             if finished {
                 Button("Done") { dismiss() }.primaryCTA()
             } else {
-                if stepIndex < steps.count - 1 {
-                    Button("Next step") { advanceStep() }.primaryCTA()
+                if resting {
+                    Button(L10n.text(en: "Go on", tr: "Devam", es: "Seguir")) { goOn() }
+                        .primaryCTA()
+                        .accessibilityIdentifier("player.goOn")
+                    Button(L10n.text(en: "That's enough for today",
+                                     tr: "Bugünlük bu kadar",
+                                     es: "Por hoy es suficiente")) { complete() }
+                        .font(.footnote).foregroundStyle(DS.textSecondary)
+                } else if stepIndex < steps.count - 1 {
+                    Button(L10n.text(en: "Next step", tr: "Sonraki adım", es: "Siguiente paso")) { reachStepEnd() }
+                        .primaryCTA()
+                    Button(running ? L10n.text(en: "Pause", tr: "Duraklat", es: "Pausa")
+                                   : L10n.text(en: "Resume", tr: "Devam et", es: "Reanudar")) { running.toggle() }
+                        .font(.footnote).foregroundStyle(DS.textSecondary)
                 } else {
-                    Button("Finish") { complete() }.primaryCTA()
+                    Button(L10n.text(en: "Finish", tr: "Bitir", es: "Terminar")) { complete() }
+                        .primaryCTA()
+                    Button(running ? L10n.text(en: "Pause", tr: "Duraklat", es: "Pausa")
+                                   : L10n.text(en: "Resume", tr: "Devam et", es: "Reanudar")) { running.toggle() }
+                        .font(.footnote).foregroundStyle(DS.textSecondary)
                 }
-                Button(running ? "Pause" : "Resume") { running.toggle() }
-                    .font(.footnote).foregroundStyle(DS.textSecondary)
             }
         }
         .padding(.horizontal, DS.Space.lg).padding(.bottom, DS.Space.xl)
@@ -313,10 +373,32 @@ struct RoutinePlayerView: View {
 
     private var timeString: String { String(format: "%d:%02d", remaining / 60, remaining % 60) }
 
-    private func advanceStep() {
-        withAnimation(.easeOut(duration: 0.2)) {
+    /// A step has finished. Stop the clock and say so.
+    ///
+    /// The clock stops rather than running through the pause, so lingering
+    /// here never shortens the practice or turns a full one into a partial in
+    /// the log. The minutes the routine asks for are still the minutes it gets.
+    private func reachStepEnd() {
+        guard !resting, !finished else { return }
+        guard stepIndex < steps.count - 1 else { return complete() }
+        let line = Self.restLines[restsTaken % Self.restLines.count]
+        restsTaken += 1
+        restLine = L10n.text(en: line.en, tr: line.tr, es: line.es)
+        running = false
+        withAnimation(.easeOut(duration: 0.3)) { resting = true }
+        // The question is spoken too, not just shown: at this point in a
+        // breathing practice the eyes are usually closed, and a screen asking
+        // something silently is a practice that has quietly stopped.
+        SpeechGuide.shared.speak("\(line.en) Shall we go on?")
+    }
+
+    private func goOn() {
+        guard resting else { return }
+        withAnimation(.easeOut(duration: 0.25)) {
+            resting = false
             stepIndex = min(stepIndex + 1, max(0, steps.count - 1))
         }
+        running = true
         speakCurrentStep()
     }
 
@@ -336,10 +418,7 @@ struct RoutinePlayerView: View {
                     let per = max(1, total / steps.count)
                     let elapsed = total - remaining
                     let target = min(steps.count - 1, elapsed / per)
-                    if target > stepIndex {
-                        withAnimation(.easeOut(duration: 0.2)) { stepIndex = target }
-                        speakCurrentStep()
-                    }
+                    if target > stepIndex { reachStepEnd() }
                     // Keep company in the gap: a couple of soft cues per step,
                     // only when the step is long enough to fall silent.
                     if per >= 24 {

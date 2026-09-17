@@ -40,6 +40,14 @@ CUES = [
     "Breathe with me.", "Let the out-breath be longer.", "Easy in, slow out.",
     "Let the belly move.", "Nothing forced.", "Stay with the rhythm.",
     "Your light is a little brighter now.", "Noted. You can adjust this any time.",
+    # Said at the end of each step, with the question attached, so someone
+    # practising with their eyes closed knows the practice is waiting for them.
+    "That's one. Shall we go on?",
+    "You stayed with it. Shall we go on?",
+    "Still here. Shall we go on?",
+    "That one settled. Shall we go on?",
+    "Good. That's yours. Shall we go on?",
+    "Something softened. Shall we go on?",
 ]
 
 def key(text):

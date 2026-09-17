@@ -15,7 +15,7 @@ final class MorningResetUITests: XCTestCase {
     func testDailyPracticeOpensTheGuidedPlayer() throws {
         let app = launchApp(language: "en", region: "en_US", extraArguments: ["-seedFirstWin"])
         tapButton(app, label: "Start today's practice", timeout: 8)
-        // The player shows the step counter and a way to finish.
+        // The player shows the current step and a way to move on.
         let finish = app.buttons.matching(NSPredicate(format: "label == %@ OR label == %@", "Next step", "Finish")).firstMatch
         XCTAssertTrue(finish.waitForExistence(timeout: 8), "Routine player did not open")
     }
