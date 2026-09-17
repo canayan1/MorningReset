@@ -22,13 +22,13 @@ final class AlarmChime {
     private var player: AVAudioPlayer?
     private var fade: Timer?
 
-    /// Under the voice, but actually there.
+    /// About a third of the alarm — present, and well under the voice.
     ///
-    /// The first attempt at this sat at 0.3 and was inaudible on the phone —
-    /// a bell nobody can hear is not a quiet bell, it is a missing one. The
-    /// voice is the thing being followed, so this stays below it, and the
-    /// two were set by ear against each other rather than by arithmetic.
-    private static let level: Float = 0.55
+    /// This looked wrong twice and both times the fault was elsewhere: the
+    /// system alarm was never actually stopped, so at 0.3 the bell was masked
+    /// and at 0.55 the thing being heard was still the alarm at full volume.
+    /// With the alarm properly silenced, a third is a third.
+    private static let level: Float = 0.3
 
     func startSoftly() {
         guard player == nil,

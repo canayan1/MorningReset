@@ -379,6 +379,17 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// morning alarm or any link of the chain behind it, and there is no way
     /// to ask the system which one is making the noise.
     static func silenceRinging() {
+        // Everything the system is holding, by asking it what that is.
+        //
+        // Stopping a list of ids we believe in is how this failed: the alarm
+        // went on at full volume behind the ritual, which then masked the soft
+        // bell underneath — so the bell looked broken as well. The system knows
+        // which alarms exist and one of them is the one making the noise; the
+        // known ids stay as a fallback for when that list cannot be read.
+        if let live = try? AlarmManager.shared.alarms {
+            for alarm in live { try? AlarmManager.shared.stop(id: alarm.id) }
+            log.notice("silenced \(live.count, privacy: .public) alarm(s)")
+        }
         for id in [weekdayAlarmID, weekendAlarmID, previewID] + followUpIDs {
             try? AlarmManager.shared.stop(id: id)
         }

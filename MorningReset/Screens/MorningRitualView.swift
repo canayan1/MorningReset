@@ -50,7 +50,7 @@ struct MorningRitualView: View {
                 // Spoken, like every other turn in the flow. Nobody should
                 // have to read a screen to know what is being asked of them
                 // two minutes after waking.
-                SpeechGuide.shared.speak("Now the breath. Breathe out towards the phone.")
+                SpeechGuide.shared.speak("Now the breath. Breathe out towards the phone, slowly, and let it be heard.")
                 withAnimation(.easeOut(duration: 0.35)) { step = .breath }
             }
         }
@@ -185,8 +185,14 @@ struct MorningRitualView: View {
     private func startSmileCapture() {
         glow = true
         showsShutter = false
-        // The alarm has been stopped; the same bell comes back underneath at a
-        // third of the level, and goes out when the smile lands.
+        // Silence it here as well as in the intent. The intent may run in the
+        // extension's process, and whether its stop reaches the alarm is not
+        // something to find out at six in the morning; this runs in the app,
+        // every time, and stopping an alarm that has already stopped costs
+        // nothing.
+        if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
+        // Then the same bell underneath, at a third of the level, going out
+        // when the smile lands.
         AlarmChime.shared.startSoftly()
         SpeechGuide.shared.speak("Good morning. Let yourself smile.")
         camera.setAutoCapture(true)
@@ -200,7 +206,7 @@ struct MorningRitualView: View {
             camera.stop()
             // The room goes quiet because of the smile, not because of a timer.
             AlarmChime.shared.fadeOut()
-            SpeechGuide.shared.speak("There it is. Now a finger on the camera.")
+            SpeechGuide.shared.speak("There it is. Now place your finger over the camera on the back of the phone, and cover the light beside it.")
             withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
         }
         camera.configureAndStart()

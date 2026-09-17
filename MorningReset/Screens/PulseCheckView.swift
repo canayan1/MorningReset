@@ -31,9 +31,15 @@ struct PulseCheckView: View {
     /// Said over the reading, in the guide's own voice. Nothing is asked of the
     /// person here — they are holding a finger still, and these are the only
     /// twenty seconds of the day when that is the whole job.
+    /// Said while the finger is still.
+    ///
+    /// Good morning is said once, at the very start of the flow, and never
+    /// again — greeting somebody at every new screen is how an app stops
+    /// sounding like a person. These open with the one thing worth saying to
+    /// someone who got up and did this at all.
     private static let lines = [
-        "Good morning. Stay just as you are for a moment.",
-        "Let the breath be easy. Nothing is asked of you yet.",
+        "I'm proud of you for showing up this morning.",
+        "Stay just as you are. Let the breath be easy.",
         "Let your shoulders drop, and let your jaw soften.",
         "You are already here. That is enough.",
         "Be gentle with yourself today."

@@ -56,6 +56,10 @@ CUES = [
     "There it is. Now a finger on the camera.",
     "Now the breath. Breathe out towards the phone.",
     "That's your morning check-up. The day is yours.",
+    "There it is. Now place your finger over the camera on the back of the phone, and cover the light beside it.",
+    "Now the breath. Breathe out towards the phone, slowly, and let it be heard.",
+    "I'm proud of you for showing up this morning.",
+    "Stay just as you are. Let the breath be easy.",
 ]
 
 def key(text):
