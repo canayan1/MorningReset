@@ -28,7 +28,7 @@ struct SchoolsView: View {
             Text("Ten Traditions")
                 .font(.system(size: 32, weight: .light, design: .serif))
                 .foregroundStyle(DS.textPrimary)
-            Text("Kept whole, named as they are.\nOne practice is free. The rest open with a plan.")
+            Text("Kept whole, named as they are.\nOne practice in each is free. The rest open with a plan.")
                 .font(.callout)
                 .foregroundStyle(DS.textSecondary)
                 .multilineTextAlignment(.center)
@@ -72,10 +72,10 @@ struct SchoolsView: View {
                     HStack(spacing: 6) {
                         Text(school.name).font(.body.weight(.semibold)).foregroundStyle(DS.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
-                        // Only where there is one. Nine of the ten schools
-                        // have no free routine at all, and the badge was
-                        // printed on every locked school regardless — so nine
-                        // tenths of it was an offer the app could not keep.
+                        // Only where there is one — which is every school now,
+                        // but the badge reads the content rather than assuming
+                        // it, because it was once printed on nine schools that
+                        // had nothing behind it.
                         if !unlocked, school.routines.contains(where: { $0.free }) {
                             Text("1 FREE")
                                 .font(.system(size: 8, weight: .bold)).tracking(0.4)

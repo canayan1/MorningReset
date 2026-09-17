@@ -47,10 +47,10 @@ def audit(path):
     ids = [x.get("id") for x in r]
     if len(set(ids)) != len(ids): issues.append("duplicate routine ids")
     free = [x for x in r if x.get("free")]
-    # One routine in the whole app is free — the one the morning alarm wakes you
-    # into — so a school having none is the normal case now. What is checked
-    # app-wide, below, is that exactly one exists anywhere.
-    if len(free) > 1: issues.append(f"free routines: {len(free)} (at most 1 per school)")
+    # Every school gives one routine away — its r01, the short starter — so a
+    # school with none has nothing to try before paying, and a school with two
+    # is giving a tier away.
+    if len(free) != 1: issues.append(f"free routines: {len(free)} (expected exactly 1 per school)")
     counts = {g: 0 for g in GROUPS}
     for x in r:
         g = x.get("group")
@@ -99,14 +99,15 @@ if __name__ == "__main__":
     total = 0
     for f in files:
         iss, _ = audit(f); total += len(iss)
-    # Exactly one free practice ships, app-wide: two would give a tier away,
-    # none would leave nothing to try. It is the one the morning alarm opens.
-    free_ids = [x["id"] for f in files for x in json.loads(f.read_text())["routines"] if x.get("free")]
+    # One free practice per school, ten in all — and the morning alarm's own,
+    # breathing.r01, has to be among them, because the alarm opens into it
+    # for everyone, paying or not.
+    free_ids = sorted(x["id"] for f in files for x in json.loads(f.read_text())["routines"] if x.get("free"))
     print()
-    if free_ids == ["breathing.r01"]:
-        print(f"  ✓ one free practice app-wide: {free_ids[0]}")
+    if len(free_ids) == len(files) and "breathing.r01" in free_ids:
+        print(f"  ✓ one free practice per school ({len(free_ids)}), alarm practice breathing.r01 among them")
     else:
-        print(f"  ✗ app-wide free practices: {free_ids or 'none'} (expected exactly ['breathing.r01'])")
+        print(f"  ✗ free practices: {free_ids or 'none'} (expected one per school incl. breathing.r01)")
         total += 1
 
     print(f"\n{'='*60}\nTOTAL BLOCKING ISSUES: {total} across {len(files)} school(s)")

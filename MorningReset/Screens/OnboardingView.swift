@@ -220,9 +220,12 @@ struct OnboardingView: View {
     // MARK: - First practice (before we ever ask for money)
 
     private var practiceStep: some View {
-        // The first practice is the free one, whatever school drew them in.
-        let school = SchoolContentStore.freePractice?.school
-        let routine = SchoolContentStore.freePractice?.routine
+        // The first practice is the free one *in the tradition that drew them
+        // in* — every school has one now — so the thing they chose is the thing
+        // they get to try. The alarm's own practice is only the fallback.
+        let school = chosenSchool.flatMap { $0.freeRoutine == nil ? nil : $0 }
+            ?? SchoolContentStore.freePractice?.school
+        let routine = school?.freeRoutine ?? SchoolContentStore.freePractice?.routine
         return ZStack {
             AuraBackground(path: recommendedPath, intensity: 0.4)
             VStack(spacing: 0) {

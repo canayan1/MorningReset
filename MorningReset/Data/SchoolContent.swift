@@ -96,9 +96,19 @@ enum SchoolContentStore {
         all.first { $0.id == id }
     }
 
-    /// The one practice that is free for everyone — and the one the alarm
-    /// wakes you into.
+    /// The practice the alarm wakes you into.
+    ///
+    /// Named explicitly rather than "the first free one found": every school
+    /// now has a free routine, so "first found" would be whichever school
+    /// happens to load first, and the morning would open into a different
+    /// practice depending on file order.
+    static let alarmPracticeID = "breathing.r01"
+
     static var freePractice: (school: SchoolContent, routine: Routine)? {
+        if let school = all.first(where: { $0.routines.contains { $0.id == alarmPracticeID } }),
+           let routine = school.routines.first(where: { $0.id == alarmPracticeID && $0.free }) {
+            return (school, routine)
+        }
         for school in all {
             if let routine = school.routines.first(where: \.free) { return (school, routine) }
         }

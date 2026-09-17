@@ -816,10 +816,14 @@ final class MorningResetTests: XCTestCase {
             }
         }
 
-        // One practice is free for everyone, and it is the one the alarm wakes
-        // you into — so its identity is part of the contract, not just its count.
-        let free = schools.flatMap(\.routines).filter(\.free)
-        XCTAssertEqual(free.count, 1, "expected exactly one free routine app-wide, got \(free.map(\.id))")
+        // Every tradition gives one practice away, so there is always something
+        // to try before paying, whichever one drew you in. And the alarm still
+        // wakes everyone into the same one, so its identity is part of the
+        // contract, not just the count.
+        for s in schools {
+            XCTAssertEqual(s.routines.filter(\.free).count, 1,
+                           "\(s.id): expected exactly one free routine, got \(s.routines.filter(\.free).map(\.id))")
+        }
         XCTAssertEqual(SchoolContentStore.freePractice?.routine.id, "breathing.r01")
         XCTAssertEqual(SchoolContentStore.freePractice?.school.id, "breathing")
     }
