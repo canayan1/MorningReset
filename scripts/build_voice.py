@@ -60,6 +60,15 @@ CUES = [
     "Now the breath. Breathe out towards the phone, slowly, and let it be heard.",
     "I'm proud of you for showing up this morning.",
     "Stay just as you are. Let the breath be easy.",
+    # The handover between two things, and the breath itself.
+    "Good morning. Your morning routine is starting.",
+    "Let yourself smile.",
+    "Next, your pulse. Place your finger over the camera on the back of the phone, and cover the light beside it.",
+    "Next, your breath. Breathe out towards the phone, slowly, and let it be heard.",
+    "Breathe in.",
+    "Breathe out.",
+    "Breathe out, towards the phone.",
+    "Now a little longer.",
 ]
 
 def key(text):

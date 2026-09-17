@@ -249,6 +249,7 @@ struct SignatureMeditationView: View {
         started = true
         breath.start()
         SpeechGuide.shared.speak("Breathe out towards the phone, and let it be heard. The tree does the rest.")
+        cue()
         ticker = Timer.scheduledTimer(withTimeInterval: Self.tick, repeats: true) { _ in advance() }
     }
 
@@ -270,7 +271,35 @@ struct SignatureMeditationView: View {
         if phase == .exhale { exhalesDone += 1 }
         inPhase = 0
         index += 1
-        if index >= Self.schedule.count { complete() }
+        if index >= Self.schedule.count { complete(); return }
+        cue()
+    }
+
+    /// Says the breath out loud.
+    ///
+    /// The screen was doing all the work here and the voice said one line at
+    /// the start and then nothing for nearly four minutes — which is a long
+    /// time to be watching a phone for instructions when the whole point is to
+    /// have your eyes closed.
+    ///
+    /// The two holds stay silent. Saying "hold" thirty times is nagging, and
+    /// the hold is the part where nothing is being asked of you — the label on
+    /// screen is there for anyone who opens their eyes.
+    private func cue() {
+        switch phase {
+        case .inhale:
+            SpeechGuide.shared.speak("Breathe in.")
+        case .exhale:
+            // The first one carries the instruction; the rest are just the beat.
+            SpeechGuide.shared.speak(exhalesDone == 0 ? "Breathe out, towards the phone." : "Breathe out.")
+        case .holdIn, .holdOut:
+            break
+        }
+        // The sides get longer once, a third of the way in, and that change is
+        // worth a word — it arrives as a surprise otherwise.
+        if index == Self.rounds[0].count * 4 {
+            SpeechGuide.shared.speak("Now a little longer.")
+        }
     }
 
     private func complete() {

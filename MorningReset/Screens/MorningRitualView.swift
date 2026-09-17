@@ -20,10 +20,18 @@ struct MorningRitualView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
 
-    private enum Step { case smile, pulse, breath, done }
+    private enum Step: Equatable {
+        case opening          // "your morning routine is starting", five seconds
+        case smile
+        case toPulse          // and again before each new thing
+        case pulse
+        case toBreath
+        case breath
+        case done
+    }
 
     @StateObject private var camera = CameraSession()
-    @State private var step: Step = .smile
+    @State private var step: Step = .opening
     @State private var reading: PulseReading?
     @State private var energy: EnergyReading?
     @State private var glow = false
@@ -38,7 +46,34 @@ struct MorningRitualView: View {
             AppBackground(intensity: 0.4)
 
             switch step {
+            case .opening:
+                MorningHandoff(
+                    label: L10n.text(en: "GOOD MORNING", tr: "GÜNAYDIN", es: "BUENOS DÍAS"),
+                    title: L10n.text(en: "Your morning routine\nis starting.",
+                                     tr: "Sabah rutinin\nbaşlıyor.",
+                                     es: "Tu rutina matutina\nestá empezando."),
+                    spoken: "Good morning. Your morning routine is starting.",
+                    seconds: 5
+                ) { withAnimation(.easeOut(duration: 0.4)) { step = .smile } }
+
             case .smile: smileStep
+
+            case .toPulse:
+                MorningHandoff(
+                    label: L10n.text(en: "NEXT", tr: "SIRADA", es: "SIGUIENTE"),
+                    title: L10n.text(en: "Your pulse.", tr: "Nabzın.", es: "Tu pulso."),
+                    spoken: "Next, your pulse. Place your finger over the camera on the back of the phone, and cover the light beside it.",
+                    seconds: 5
+                ) { withAnimation(.easeOut(duration: 0.4)) { step = .pulse } }
+
+            case .toBreath:
+                MorningHandoff(
+                    label: L10n.text(en: "NEXT", tr: "SIRADA", es: "SIGUIENTE"),
+                    title: L10n.text(en: "Your breath.", tr: "Nefesin.", es: "Tu respiración."),
+                    spoken: "Next, your breath. Breathe out towards the phone, slowly, and let it be heard.",
+                    seconds: 5
+                ) { withAnimation(.easeOut(duration: 0.4)) { step = .breath } }
+
             case .pulse, .breath: Color.clear
             case .done:  doneStep
             }
@@ -47,11 +82,7 @@ struct MorningRitualView: View {
         .fullScreenCover(isPresented: .constant(step == .pulse)) {
             PulseCheckView(moment: .before, affirmations: true, showsSkip: false) { result in
                 reading = result
-                // Spoken, like every other turn in the flow. Nobody should
-                // have to read a screen to know what is being asked of them
-                // two minutes after waking.
-                SpeechGuide.shared.speak("Now the breath. Breathe out towards the phone, slowly, and let it be heard.")
-                withAnimation(.easeOut(duration: 0.35)) { step = .breath }
+                withAnimation(.easeOut(duration: 0.35)) { step = .toBreath }
             }
         }
         .fullScreenCover(isPresented: .constant(step == .breath)) {
@@ -152,7 +183,7 @@ struct MorningRitualView: View {
             Button(L10n.text(en: "Skip this", tr: "Bunu geç", es: "Saltar esto")) {
                 camera.stop()
                 AlarmChime.shared.fadeOut(over: 1.0)
-                withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
+                withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
             }
             .font(.footnote)
             .foregroundStyle(DS.textDim)
@@ -194,7 +225,7 @@ struct MorningRitualView: View {
         // Then the same bell underneath, at a third of the level, going out
         // when the smile lands.
         AlarmChime.shared.startSoftly()
-        SpeechGuide.shared.speak("Good morning. Let yourself smile.")
+        SpeechGuide.shared.speak("Let yourself smile.")
         camera.setAutoCapture(true)
         // Held, not glimpsed. Two seconds is long enough to be a smile and
         // short enough that nobody feels held there.
@@ -206,15 +237,14 @@ struct MorningRitualView: View {
             camera.stop()
             // The room goes quiet because of the smile, not because of a timer.
             AlarmChime.shared.fadeOut()
-            SpeechGuide.shared.speak("There it is. Now place your finger over the camera on the back of the phone, and cover the light beside it.")
-            withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
+            withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
         }
         camera.configureAndStart()
         // A phone with no camera must not hold the morning hostage.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !camera.available, step == .smile {
                 AlarmChime.shared.fadeOut(over: 1.0)
-                withAnimation(.easeOut(duration: 0.4)) { step = .pulse }
+                withAnimation(.easeOut(duration: 0.4)) { step = .toPulse }
             }
         }
         // Eight seconds is long enough for a real smile to be found and short
@@ -330,5 +360,93 @@ enum MorningRitual {
     private static func dayStamp(_ date: Date = Date()) -> String {
         let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
         return "\(c.year ?? 0)-\(c.month ?? 0)-\(c.day ?? 0)"
+    }
+}
+
+// MARK: - The handover between two things
+
+/// Says what is about to happen, and gives you five seconds before it does.
+///
+/// The camera used to open the instant the alarm handed over, which is
+/// startling at any hour and genuinely unpleasant at six in the morning — a
+/// lens opening on your face before you have agreed to be looked at. Every
+/// change of activity is now announced first, in the voice, and then counted
+/// down on screen, so nothing in the morning arrives without warning.
+///
+/// The count is quiet on purpose. It is not urgency — it is the opposite, a
+/// held breath before a door opens — so the numbers are large and thin, the
+/// ring fills rather than drains, and the voice says what is coming rather
+/// than reading the numbers out.
+struct MorningHandoff: View {
+    let label: String
+    let title: String
+    /// Spoken once, as the screen appears.
+    let spoken: String
+    var seconds: Int = 5
+    var onDone: () -> Void
+
+    @State private var remaining: Int = 0
+    @State private var progress: Double = 0
+    @State private var ticker: Timer?
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            Text(label)
+                .font(DS.Typo.label).kerning(1.6)
+                .foregroundStyle(DS.accent)
+
+            Spacer().frame(height: DS.Space.sm)
+
+            Text(title)
+                .font(.system(size: 30, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(5)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer().frame(height: DS.Space.xl)
+
+            ZStack {
+                Circle()
+                    .fill(DS.accentSoft.opacity(0.16))
+                    .frame(width: 190, height: 190)
+                    .blur(radius: 26)
+
+                Circle()
+                    .stroke(DS.border, lineWidth: 2)
+                    .frame(width: 128, height: 128)
+
+                Circle()
+                    .trim(from: 0, to: progress)
+                    .stroke(DS.accent, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .frame(width: 128, height: 128)
+                    .rotationEffect(.degrees(-90))
+
+                Text("\(max(remaining, 1))")
+                    .font(.system(size: 54, weight: .thin, design: .serif))
+                    .monospacedDigit()
+                    .foregroundStyle(DS.textPrimary)
+                    .contentTransition(.numericText(countsDown: true))
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, DS.Space.lg)
+        .accessibilityIdentifier("ritual.handoff")
+        .onAppear {
+            remaining = seconds
+            SpeechGuide.shared.speak(spoken)
+            withAnimation(.linear(duration: Double(seconds))) { progress = 1 }
+            ticker = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
+                withAnimation(.easeOut(duration: 0.25)) { remaining -= 1 }
+                if remaining <= 0 {
+                    t.invalidate()
+                    onDone()
+                }
+            }
+        }
+        .onDisappear { ticker?.invalidate(); ticker = nil }
     }
 }
