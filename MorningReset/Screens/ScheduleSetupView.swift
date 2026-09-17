@@ -361,9 +361,9 @@ struct ScheduleSetupView: View {
                     .font(.body.weight(.medium))
                     .foregroundStyle(DS.textPrimary)
                 Text(L10n.text(
-                    en: "It rings again every three minutes until the morning is done.",
-                    tr: "Sabah tamamlanana kadar üç dakikada bir tekrar çalar.",
-                    es: "Suena otra vez cada tres minutos hasta terminar la mañana."
+                    en: "It comes back every thirty seconds until the morning is done.",
+                    tr: "Sabah tamamlanana kadar otuz saniyede bir geri gelir.",
+                    es: "Vuelve cada treinta segundos hasta terminar la mañana."
                 ))
                 .font(.caption)
                 .foregroundStyle(DS.textSecondary)

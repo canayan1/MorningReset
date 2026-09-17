@@ -206,13 +206,12 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     static let weekdayAlarmID = UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!
     static let weekendAlarmID  = UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!
 
-    /// The chain behind the first alarm, at three-minute steps. One-shot, so
+    /// The chain behind the first alarm, at thirty-second steps. One-shot, so
     /// finishing the ritual can clear what is left of today without touching
     /// tomorrow; they are re-armed whenever the app comes forward.
-    static let followUpIDs = (0..<4).map {
-        UUID(uuidString: String(format: "A0000000-0000-0000-0000-0000000000%02d", $0 + 16))!
+    static let followUpIDs = (0..<MorningAlarmChain.count).map {
+        UUID(uuidString: String(format: "A0000000-0000-0000-0000-0000000000%02x", $0 + 16))!
     }
-    private static let followUpStep = 3
 
     /// The alarm you can ask to hear now.
     ///
@@ -332,21 +331,18 @@ final class AlarmKitWakeScheduler: WakeScheduling {
         guard schedule.isEnabled, schedule.insistUntilRitual, !MorningRitual.completedToday else { return }
         let cal = Calendar.current
         let weekday = cal.component(.weekday, from: Date())
-        let times = MorningAlarmChain.times(hour: schedule.hour(forWeekday: weekday),
+        let dates = MorningAlarmChain.dates(hour: schedule.hour(forWeekday: weekday),
                                             minute: schedule.minute(forWeekday: weekday))
-        for (id, time) in zip(followUpIDs, times) {
+        for (id, date) in zip(followUpIDs, dates) {
             let config = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
-                schedule: .relative(Alarm.Schedule.Relative(
-                    time: .init(hour: time.hour, minute: time.minute),
-                    repeats: .never
-                )),
+                schedule: .fixed(date),
                 attributes: attributes,
                 secondaryIntent: begin,
                 sound: .named("inner_light_alarm.caf")
             )
             try? await AlarmManager.shared.schedule(id: id, configuration: config)
         }
-        log.notice("follow-up chain armed: \(times.count, privacy: .public) alarms")
+        log.notice("follow-up chain armed: \(dates.count, privacy: .public) alarms, 30s apart")
     }
 
     /// Build the chain from nothing — for the app coming forward, when the
@@ -543,13 +539,28 @@ enum ReEngagementNotifier {
 /// late at night pushes its chain past midnight, and a chain that silently
 /// landed at hour 24 would never ring at all.
 enum MorningAlarmChain {
-    static let count = 4
-    static let stepMinutes = 3
+    static let count = 20
+    static let stepSeconds = 30.0
 
-    static func times(hour: Int, minute: Int) -> [(hour: Int, minute: Int)] {
-        (1...count).map { i in
-            let total = hour * 60 + minute + i * stepMinutes
-            return ((total / 60) % 24, total % 60)
-        }
+    /// The chain behind the first alarm, as instants rather than clock times.
+    ///
+    /// Thirty seconds apart, which a clock time cannot express: AlarmKit's
+    /// relative schedules carry an hour and a minute and nothing smaller, so
+    /// the old three-minute chain was three minutes because that was the
+    /// tightest round number, not because three was the right answer. A fixed
+    /// schedule takes a Date, and a Date has seconds in it.
+    ///
+    /// Twenty links is ten minutes of asking. They are one-shot, so finishing
+    /// the morning clears what is left of today without touching tomorrow.
+    static func dates(hour: Int, minute: Int, from now: Date = Date(),
+                      calendar: Calendar = .current) -> [Date] {
+        // The next time that clock time comes round — today if it is still
+        // ahead, tomorrow if it has gone. Scheduling into the past is the one
+        // way a chain silently does nothing.
+        guard let todays = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: now)
+        else { return [] }
+        let start = todays > now ? todays
+                                 : (calendar.date(byAdding: .day, value: 1, to: todays) ?? todays)
+        return (1...count).map { start.addingTimeInterval(Double($0) * stepSeconds) }
     }
 }

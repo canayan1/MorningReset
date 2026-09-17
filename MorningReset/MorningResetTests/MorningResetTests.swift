@@ -363,24 +363,55 @@ final class MorningResetTests: XCTestCase {
 
     // MARK: - The alarm chain
 
-    /// The follow-ups sit three minutes apart behind the first alarm.
-    func testAlarmChainStepsEveryThreeMinutes() {
-        let times = MorningAlarmChain.times(hour: 7, minute: 0)
-        XCTAssertEqual(times.count, 4)
-        XCTAssertEqual(times.map(\.hour), [7, 7, 7, 7])
-        XCTAssertEqual(times.map(\.minute), [3, 6, 9, 12])
+    /// The follow-ups sit thirty seconds apart behind the first alarm.
+    ///
+    /// Thirty is the number because a clock time cannot hold it: AlarmKit's
+    /// relative schedules carry an hour and a minute and nothing smaller, so
+    /// the chain this replaced was three minutes apart because that was the
+    /// tightest round number available, not because three was right.
+    func testAlarmChainStepsEveryThirtySeconds() {
+        let cal = Calendar.current
+        let now = cal.date(from: DateComponents(year: 2026, month: 3, day: 10, hour: 5, minute: 0))!
+        let dates = MorningAlarmChain.dates(hour: 7, minute: 0, from: now, calendar: cal)
+
+        XCTAssertEqual(dates.count, 20, "twenty links is ten minutes of asking")
+        let first = cal.date(from: DateComponents(year: 2026, month: 3, day: 10, hour: 7, minute: 0))!
+        XCTAssertEqual(dates[0].timeIntervalSince(first), 30, accuracy: 0.001)
+        for i in 1..<dates.count {
+            XCTAssertEqual(dates[i].timeIntervalSince(dates[i - 1]), 30, accuracy: 0.001,
+                           "link \(i) is not thirty seconds behind the one before it")
+        }
     }
 
-    /// A chain set late at night runs past midnight. An hour of 24 is not a
-    /// time, and an alarm scheduled at one would simply never ring.
-    func testAlarmChainWrapsPastMidnight() {
-        let times = MorningAlarmChain.times(hour: 23, minute: 55)
-        XCTAssertEqual(times.map { "\($0.hour):\($0.minute)" },
-                       ["23:58", "0:1", "0:4", "0:7"])
-        for t in times {
-            XCTAssertTrue((0..<24).contains(t.hour), "hour \(t.hour) is not a time of day")
-            XCTAssertTrue((0..<60).contains(t.minute), "minute \(t.minute) is not a minute")
+    /// Every link is in the future. A fixed schedule takes an instant, and an
+    /// instant that has gone is the one way a chain silently does nothing —
+    /// which is exactly the case a chain armed after the wake time runs into.
+    func testAlarmChainNeverSchedulesIntoThePast() {
+        let cal = Calendar.current
+        // Armed at 07:05, for a 07:00 morning that has already gone.
+        let now = cal.date(from: DateComponents(year: 2026, month: 3, day: 10, hour: 7, minute: 5))!
+        let dates = MorningAlarmChain.dates(hour: 7, minute: 0, from: now, calendar: cal)
+
+        XCTAssertEqual(dates.count, 20)
+        for date in dates {
+            XCTAssertGreaterThan(date, now, "a link in the past never rings")
         }
+        XCTAssertTrue(cal.isDate(dates[0], inSameDayAs: cal.date(byAdding: .day, value: 1, to: now)!),
+                      "a morning already gone means tomorrow's")
+    }
+
+    /// A chain set just before midnight runs into the next day, and the dates
+    /// carry that on their own — which is the whole reason for moving off
+    /// hour-and-minute arithmetic, where 24:01 is not a time and never rings.
+    func testAlarmChainCrossesMidnight() {
+        let cal = Calendar.current
+        let now = cal.date(from: DateComponents(year: 2026, month: 3, day: 10, hour: 20, minute: 0))!
+        let dates = MorningAlarmChain.dates(hour: 23, minute: 55, from: now, calendar: cal)
+
+        guard let last = dates.last else { return XCTFail("no chain") }
+        XCTAssertEqual(cal.component(.day, from: last), 11, "the tail is tomorrow")
+        XCTAssertEqual(cal.component(.hour, from: last), 0)
+        XCTAssertEqual(cal.component(.minute, from: last), 5)
     }
 
     // MARK: - The signature session
