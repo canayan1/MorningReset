@@ -1,0 +1,12 @@
+{
+ "type": "cinematic_avatar",
+ "title": "Inner Light · morning promo · 05-pulse-finger",
+ "prompt": "Cinematic vertical 9:16 film, 35mm look, soft natural grain, natural light only. Muted palette with periwinkle and slate-blue tones, warm haze, never clinical white. One person alone, unhurried, eyes closed or turned from the lens, never smiling at camera. Camera barely moves: a slow push-in or a held frame, no whip pans. Any phone in shot is an ordinary smartphone with a dim, unreadable screen. No text, no logos, no subtitles. Close on the same woman's hands holding a smartphone face-down in her lap, one fingertip resting still over the small camera lens on the back of the phone; the lens glows a soft red through the edge of her fingertip. Her hand is completely still. Held frame, shallow depth of field.",
+ "avatar_id": [
+  "fd878e6e6c0e4e8aae0bbf7e77935a1d"
+ ],
+ "aspect_ratio": "9:16",
+ "resolution": "1080p",
+ "duration": 6,
+ "enhance_prompt": false
+}

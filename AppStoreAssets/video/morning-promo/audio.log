@@ -1,0 +1,14 @@
+· tts: kokoro · voice af_heart · 5 line(s)
+  bgm: assets/bgm/track.mp3 (retrieve "quiet ambient dawn, no percussion, enters under Frame 2 and never competes with the voice")
+✓ audio engine → /Users/can/Projects/MorningReset/AppStoreAssets/video/morning-promo/audio_engine_meta.json
+  heygen: yes  ·  ran: tts,bgm
+  voices: 0  ·  bgm: heygen  ·  sfx: 0
+  total voice duration: 0s
+
+anomalies (non-fatal):
+  - line 03: TTS failed — omitted (kokoro (npx hyperframes tts) exited with status 1)
+  - line 05: TTS failed — omitted (kokoro (npx hyperframes tts) exited with status 1)
+  - line 02: TTS failed — omitted (kokoro (npx hyperframes tts) exited with status 1)
+  - line 04: TTS failed — omitted (kokoro (npx hyperframes tts) exited with status 1)
+  - line 06: TTS failed — omitted (kokoro (npx hyperframes tts) exited with status 1)
+✓ audio generate: 0 voice + 1 bgm → /Users/can/Projects/MorningReset/AppStoreAssets/video/morning-promo/audio_meta.json

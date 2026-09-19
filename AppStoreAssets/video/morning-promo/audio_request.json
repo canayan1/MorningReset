@@ -1,0 +1,33 @@
+{
+  "provider": "kokoro",
+  "speed": 1,
+  "lines": [
+    {
+      "id": "02",
+      "text": "Your alarm asks one thing of you this morning."
+    },
+    {
+      "id": "03",
+      "text": "A smile. And the bell lets go."
+    },
+    {
+      "id": "04",
+      "text": "Your practice is here whenever you want it."
+    },
+    {
+      "id": "05",
+      "text": "Your breath. Then your pulse. And a month of your own mornings."
+    },
+    {
+      "id": "06",
+      "text": "Inner Light. Daily practice."
+    }
+  ],
+  "bgm": {
+    "mode": "retrieve",
+    "query": "quiet ambient dawn, no percussion, enters under Frame 2 and never competes with the voice",
+    "blob": "The alarm asks for one smile. The practice waits until you want it.",
+    "arc": "Future Pacing — imagine → name it → the mechanism → the offer → what it keeps → CTA"
+  },
+  "voice": "af_heart"
+}

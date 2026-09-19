@@ -121,6 +121,30 @@ private struct LaunchConfiguration {
         seedGoalIfNeeded()
         seedFirstWinIfNeeded()
         seedPracticeIfNeeded()
+        seedMorningsIfNeeded()
+    }
+
+    /// A month of mornings, for photographing the calendar.
+    ///
+    /// Waking pulses that read like one person's: a slow drift across the
+    /// month, a couple of livelier days, two mornings where the reading did
+    /// not settle, and three days simply not there — because a real month has
+    /// gaps in it and a calendar with every square filled is an advertisement,
+    /// not a record.
+    private func seedMorningsIfNeeded() {
+        guard arguments.contains("-seedMornings") else { return }
+        let cal = Calendar.current
+        let bpms: [Int?] = [58, 61, 57, 60, nil, 59, 63, 71, 66, 60,
+                            58, 57, nil, 62, 59, 61, 58, 69, 64, 59,
+                            57, 58, 60, 56, 58, 61, 57]
+        var records: [MorningRecord] = []
+        for (i, bpm) in bpms.enumerated() {
+            // Three gaps, spread rather than clustered.
+            if [4, 12, 19].contains(i) && bpm == nil { continue }
+            guard let date = cal.date(byAdding: .day, value: -i, to: Date()) else { continue }
+            records.append(MorningRecord(date: date, bpm: bpm, smiled: true))
+        }
+        MorningLogStore.replaceAll(records)
     }
 
     private func resetPersistentStateIfNeeded() {

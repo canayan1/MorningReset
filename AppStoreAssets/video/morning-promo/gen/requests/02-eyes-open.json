@@ -1,0 +1,12 @@
+{
+ "type": "cinematic_avatar",
+ "title": "Inner Light · morning promo · 02-eyes-open",
+ "prompt": "Cinematic vertical 9:16 film, 35mm look, soft natural grain, natural light only. Muted palette with periwinkle and slate-blue tones, warm haze, never clinical white. One person alone, unhurried, eyes closed or turned from the lens, never smiling at camera. Camera barely moves: a slow push-in or a held frame, no whip pans. Any phone in shot is an ordinary smartphone with a dim, unreadable screen. No text, no logos, no subtitles. The same woman in the same bed opens her eyes and looks at the ceiling, unhurried, still lying down. Her hand stays where it is on the duvet and does not reach for the phone. Morning light climbing the wall behind her. Held frame.",
+ "avatar_id": [
+  "fd878e6e6c0e4e8aae0bbf7e77935a1d"
+ ],
+ "aspect_ratio": "9:16",
+ "resolution": "1080p",
+ "duration": 6,
+ "enhance_prompt": false
+}

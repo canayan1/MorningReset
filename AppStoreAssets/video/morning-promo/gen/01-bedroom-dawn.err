@@ -1,0 +1,1 @@
+{"error":{"code":"forbidden","doc_url":"https://developers.heygen.com/docs/error-codes#forbidden","hint":"Your credentials are valid but not permitted for this. Check your plan, permissions, or workspace — re-authenticating will not help. Contact support if this is unexpected.","message":"Cinematic Shots requires a Pro plan. Please upgrade to continue."}}

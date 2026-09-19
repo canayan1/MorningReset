@@ -1,0 +1,42 @@
+{
+  "bgm": {
+    "path": "assets/bgm/track.mp3",
+    "volume": 0.12,
+    "query": "quiet ambient dawn, no percussion, enters under Frame 2 and never competes with the voice",
+    "duration_s": 13
+  },
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 2.325,
+      "words": []
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 1.941,
+      "words": []
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 2.325,
+      "words": []
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.051,
+      "words": []
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 1.643,
+      "words": []
+    }
+  ],
+  "sfx": []
+}

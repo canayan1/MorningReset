@@ -16,6 +16,15 @@ struct AlarmView: View {
     /// that a simulator will not hand out.
     @State private var showAlarmGuide = ProcessInfo.processInfo.arguments.contains("-uiTesting")
         && ProcessInfo.processInfo.arguments.contains("-showAlarmGuide")
+    /// Opens the month of mornings straight away, for capturing it. Same
+    /// reason as the alarm guide: the screen is several taps in and behind a
+    /// month of data that a fresh install does not have.
+    @State private var showMornings = ProcessInfo.processInfo.arguments.contains("-uiTesting")
+        && ProcessInfo.processInfo.arguments.contains("-showMornings")
+    /// Opens the morning ritual straight away, for capturing its screens. It
+    /// normally only opens from an alarm, which a screenshot run cannot ring.
+    @State private var showRitualForCapture = ProcessInfo.processInfo.arguments.contains("-uiTesting")
+        && ProcessInfo.processInfo.arguments.contains("-showRitual")
     @State private var orbTotal = 0
 
     private let language = AppLanguage.current
@@ -148,6 +157,8 @@ struct AlarmView: View {
         .sensoryFeedback(.success, trigger: isMilestone)
         .sheet(isPresented: $showAbout) { AboutView() }
         .sheet(isPresented: $showAlarmGuide) { AlarmPermissionGuideView() }
+        .sheet(isPresented: $showMornings) { MorningCalendarView() }
+        .fullScreenCover(isPresented: $showRitualForCapture) { MorningRitualView() }
         .sheet(isPresented: $playSession, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
             RoutinePlayerView(school: appState.todaysPractice.school,
                               routine: appState.todaysPractice.routine)
