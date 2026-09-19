@@ -198,7 +198,7 @@
       var rings = ["#frame02-ring-1", "#frame02-ring-2"];
       var lineRows = ["#frame02-line-a", "#frame02-line-b"];
 
-      /* ---- THE GROUND (0.0 -> 4.8s, the frame's main event) ----
+      /* ---- THE GROUND (0.0 -> 5.3s, the frame's main event) ----
          near-black -> the blue hour -> a desaturated dawn haze -> the app's
          dawn mist. The transit through the mid-luminance band is the
          shortest leg, so the type's own lift (below) crosses it in ~2
@@ -222,7 +222,7 @@
       tl.fromTo(
         ground,
         { backgroundColor: "#AEB5C9" },
-        { backgroundColor: "#F4F6FC", duration: 1.7, ease: "sine.out", immediateRender: false },
+        { backgroundColor: "#F4F6FC", duration: 2.2, ease: "sine.out", immediateRender: false },
         3.1
       );
 
@@ -256,9 +256,10 @@
       );
 
       /* ---- THE CARD: drift (down and back), continuous across the shot ----
-         settles 72% -> 62% while travelling 998.4px -> 1101.6px, then keeps
-         drifting linearly at exactly 6px/s for the last 2.0s so it hands off
-         to frame 3 mid-drift: centre 540 / 1113.6, scale 0.62, opacity 1. */
+         settles 72% -> 62% while travelling down to 1098.6px, then keeps
+         drifting linearly at exactly 6px/s for the last 2.5s so it hands off
+         to frame 3 mid-drift, at the frame's own end (5.5s): centre
+         540 / 1113.6 (x 50% / y 58%), scale 0.62, opacity 1. */
       /* The seam. Frame 1's card is still on screen through the crossfade,
          and two cards at full strength a few pixels apart read as a printing
          error rather than a dissolve. This one comes up from nothing across
@@ -276,13 +277,13 @@
         // Starting anywhere else makes the crossfade show two cards at two
         // heights for half a second — which is exactly what it did.
         { y: 754, scale: 0.72 },
-        { y: 1101.6, scale: 0.62, duration: 3.0, ease: "power2.out" },
+        { y: 1098.6, scale: 0.62, duration: 3.0, ease: "power2.out" },
         0
       );
       tl.fromTo(
         cardGroup,
-        { y: 1101.6 },
-        { y: 1113.6, duration: 2.0, ease: "none", immediateRender: false },
+        { y: 1098.6 },
+        { y: 1113.6, duration: 2.5, ease: "none", immediateRender: false },
         3.0
       );
 
@@ -311,9 +312,13 @@
       );
 
       /* ---- THE LIGHT REACHES THE TYPE ----
-         as the ground crosses out of the dark the line lifts from cream to
-         ink, and the emphasis word warms last, from the pale periwinkle to
-         the accent itself. The rings turn with it. */
+         as the ground crosses out of the dark, the line lifts from cream to
+         ink and the rings turn with it. The accent word cannot hold still
+         through that: the ground sweeps through #6F73C7's own luminance
+         around t=2.4, so the word deepens to the accent's dark shade for the
+         crossing and warms back to the accent as the mist reaches full
+         strength. Measured: the whole line is under 2:1 for 0.07s, the word
+         for 0.23s — inside the same wash, so it reads as one event. */
       tl.fromTo(
         lineRows,
         { color: "#F4F6FC" },
@@ -333,9 +338,9 @@
       );
       tl.fromTo(
         "#frame02-one",
-        { color: "#9CA5E0" },
-        { color: "#44478F", duration: 0.3, ease: "power2.inOut", immediateRender: false },
-        2.45
+        { color: "#6F73C7" },
+        { color: "#44478F", duration: 0.25, ease: "power2.inOut", immediateRender: false },
+        2.3
       );
       tl.fromTo(
         "#frame02-one",
@@ -345,12 +350,12 @@
       );
 
       /* ---- BLOOM 2: the second ring, settled before the frame hands off ---- */
-      tl.fromTo(rings[1], { scale: 0.42 }, { scale: 1.62, duration: 1.8, ease: "sine.out" }, 2.85);
+      tl.fromTo(rings[1], { scale: 0.42 }, { scale: 1.62, duration: 2.1, ease: "sine.out" }, 2.85);
       tl.fromTo(rings[1], { opacity: 0 }, { opacity: 0.28, duration: 0.45, ease: "sine.out" }, 2.85);
       tl.fromTo(
         rings[1],
         { opacity: 0.28 },
-        { opacity: 0, duration: 1.35, ease: "sine.in", immediateRender: false },
+        { opacity: 0, duration: 1.6, ease: "sine.in", immediateRender: false },
         3.3
       );
 
