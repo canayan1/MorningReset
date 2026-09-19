@@ -1,0 +1,178 @@
+<template>
+  <style>
+/* — the app's own faces, bound once for every frame — */
+@font-face { font-family: "New York"; src: local("New York"), local("NewYork"); }
+@font-face { font-family: "SF Pro Text"; src: local("SF Pro Text"), local("SFProText-Regular"); }
+/* 04-the-offer — the real app screen, held.
+       Design truth: frame.md (Code editorial — Frame). Ground is the warm cream
+       floor; elevation is a single ink hairline, never a shadow. No type is set
+       here: the spoken line is already printed inside the captured screen, so
+       the frame carries no authored copy and names no font. */
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+    }
+
+    /* Full-bleed ground — a dedicated clip layer, never a background on #root. */
+    #root .offer-ground {
+      position: absolute;
+      inset: 0;
+      background-color: #f4f6fc;
+    }
+
+    /* Dawn mist — the periwinkle light that blooms behind the screen.
+       Ambient light on the ground, not a gradient on content. */
+    #root .offer-mist {
+      position: absolute;
+      inset: -6%;
+      background-image:
+        radial-gradient(
+          62% 40% at 50% 26%,
+          rgba(111, 115, 199, 0.22) 0%,
+          rgba(111, 115, 199, 0.09) 46%,
+          rgba(111, 115, 199, 0) 72%
+        ),
+        radial-gradient(
+          78% 46% at 50% 92%,
+          rgba(156, 165, 224, 0.20) 0%,
+          rgba(156, 165, 224, 0) 70%
+        );
+      transform-origin: 50% 34%;
+    }
+
+    /* The screen, presented as a screen: inset in the film's own ground with a
+       generous mist margin on every side, so nothing of it is ever cropped. */
+    #root .offer-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* The animated wrapper — the push-in lives here, never on the timed clip. */
+    #root .offer-push {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    #root .offer-screen {
+      height: 1600px;
+      aspect-ratio: 1206 / 2622;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #edf1fa;
+      /* hairline elevation — frame.md has no shadow anywhere */
+      outline: 1px solid rgba(39, 43, 66, 0.12);
+      outline-offset: -1px;
+    }
+
+    #root .offer-screen img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="04-the-offer"
+    data-width="1080"
+    data-height="1920" data-duration="6"
+  >
+    <div
+      id="frame-04-the-offer-ground"
+      class="clip offer-ground"
+      data-start="0"
+      data-duration="6"
+      data-track-index="0"
+    ></div>
+
+    <div
+      id="frame-04-the-offer-mist"
+      class="clip offer-mist"
+      data-start="0"
+      data-duration="6"
+      data-track-index="1"
+    ></div>
+
+    <div
+      id="frame-04-the-offer-stage"
+      class="clip offer-stage"
+      data-start="0"
+      data-duration="6"
+      data-track-index="2"
+    >
+      <div id="frame-04-the-offer-push" class="offer-push">
+        <div id="frame-04-the-offer-screen" class="offer-screen">
+          <img src="assets/r_offer.png" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var self = document.currentScript;
+      var root =
+        (self && self.closest && self.closest('[data-composition-id="04-the-offer"]')) ||
+        document.querySelector('[data-composition-id="04-the-offer"]');
+      var q = function (sel) { return root.querySelector(sel); };
+
+      var mist = q(".offer-mist");
+      var push = q(".offer-push");
+
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      /* Scene 1 (0.0-1.5s) — the surface ESTABLISHES.
+         The screen is already present and legible well before 0.5s; it settles
+         rather than arrives, because the alarm's demand has just ended. */
+      tl.fromTo(
+        push,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: "power1.out" },
+        0
+      );
+
+      /* The dawn mist blooms up behind it. */
+      tl.fromTo(
+        mist,
+        { opacity: 0, scale: 1.05 },
+        { opacity: 1, scale: 1, duration: 2.2, ease: "power2.out" },
+        0.1
+      );
+
+      /* Scene 2-3 (1.5s-end) — the showcase camera: ONE slow push-in that
+         decelerates and comes to rest at 4.1s, so the picture is already still
+         while the line lands and `Later` is read. Nothing over 1.06. */
+      tl.fromTo(
+        push,
+        { scale: 1 },
+        { scale: 1.06, duration: 4.1, ease: "power3.out" },
+        0
+      );
+
+      /* The mist drifts down under the push for the whole shot — the frame is
+         held, not frozen. Deterministic, no repeat, no yoyo. */
+      tl.fromTo(
+        mist,
+        { y: -10 },
+        { y: 12, duration: 5.5, ease: "none" },
+        0
+      );
+
+      window.__timelines["04-the-offer"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

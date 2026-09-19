@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#666;}
+#wrap{position:relative;width:1080px;height:1920px;transform:scale(0.35);transform-origin:0 0;}
+</style></head><body>
+<div id="wrap"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+window.__timelines = window.__timelines || {};
+(async () => {
+  const html = await (await fetch('compositions/frames/02-one-thing.html')).text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const tpl = doc.querySelector('template');
+  const frag = tpl.content.cloneNode(true);
+  const wrap = document.getElementById('wrap');
+  const scripts = [];
+  frag.querySelectorAll('script').forEach(s => { scripts.push(s); s.remove(); });
+  wrap.appendChild(frag);
+  for (const s of scripts) {
+    if (s.src) continue; // gsap already loaded
+    const n = document.createElement('script'); n.textContent = s.textContent; document.body.appendChild(n);
+  }
+  window.__seek = t => window.__timelines['02-one-thing'].seek(t);
+  window.__ready = true;
+})();
+</script></body></html>

@@ -1,0 +1,253 @@
+<template>
+  <style>
+/* — the app's own faces, bound once for every frame — */
+@font-face { font-family: "New York"; src: local("New York"), local("NewYork"); }
+@font-face { font-family: "SF Pro Text"; src: local("SF Pro Text"), local("SFProText-Regular"); }
+/* ── 03-the-smile — the payoff.
+       Ground is the app's own dawn mist; the lock-screen card dissolves and the
+       breath circle takes its place, swells once, and settles.
+       Motion vocabulary: bloom · drift · breathe. Nothing else. ───────────── */
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "SF Pro Text", -apple-system, system-ui, sans-serif;
+      color: #272b42;
+    }
+
+    .fr03-smile-layer {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      pointer-events: none;
+    }
+
+    /* ── ground: dawn mist, full bleed, full duration ───────────────────── */
+    .fr03-smile-ground {
+      background:
+        radial-gradient(86% 52% at 50% 58%, #e9edf9 0%, #eff2fb 48%, #f4f6fc 100%);
+    }
+
+    /* ── the breath circle + its halo ───────────────────────────────────── */
+    .fr03-smile-halo-el {
+      position: absolute;
+      left: 50%;
+      top: 1113px;
+      width: 1040px;
+      height: 1040px;
+      margin-left: -520px;
+      margin-top: -520px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(156, 165, 224, 0.4) 0%,
+        rgba(156, 165, 224, 0.2) 42%,
+        rgba(156, 165, 224, 0.06) 62%,
+        rgba(244, 246, 252, 0) 74%
+      );
+      filter: blur(56px);
+    }
+
+    .fr03-smile-circle-el {
+      position: absolute;
+      left: 50%;
+      top: 1113px;
+      width: 560px;
+      height: 560px;
+      margin-left: -280px;
+      margin-top: -280px;
+      border-radius: 50%;
+      background: rgba(156, 165, 224, 0.26);
+      border: 1px solid rgba(111, 115, 199, 0.34);
+    }
+
+    /* ── the handed-off lock-screen card ────────────────────────────────── */
+    .fr03-smile-card-el {
+      position: absolute;
+      left: 50%;
+      top: 1113px;
+      width: 860px;
+      height: 248px;
+      margin-left: -430px;
+      margin-top: -124px;
+      padding: 34px 38px;
+      border-radius: 12px;
+      background: #e5eaf6;
+      border: 1px solid rgba(39, 43, 66, 0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .fr03-smile-card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .fr03-smile-card-mark {
+      font-family: "SF Pro Text", -apple-system, system-ui, sans-serif;
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(39, 43, 66, 0.75);
+    }
+
+    .fr03-smile-card-time {
+      font-family: "SF Pro Text", -apple-system, system-ui, sans-serif;
+      font-size: 56px;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: rgba(39, 43, 66, 0.7);
+    }
+
+    .fr03-smile-card-line {
+      font-family: "New York", Georgia, serif;
+      font-size: 52px;
+      font-weight: 400;
+      letter-spacing: -0.014em;
+      line-height: 1.1;
+      color: #272b42;
+    }
+
+    /* ── the two beats of type ──────────────────────────────────────────── */
+    .fr03-smile-type {
+      position: absolute;
+      left: 88px;
+      right: 88px;
+      text-align: center;
+    }
+
+    .fr03-smile-line-a {
+      top: 372px;
+      font-family: "New York", Georgia, serif;
+      font-size: 152px;
+      font-weight: 400;
+      letter-spacing: -0.028em;
+      line-height: 1.02;
+      color: #272b42;
+    }
+
+    .fr03-smile-line-b {
+      top: 586px;
+      font-family: "New York", Georgia, serif;
+      font-size: 52px;
+      font-weight: 400;
+      letter-spacing: -0.012em;
+      line-height: 1.3;
+      color: rgba(39, 43, 66, 0.68);
+    }
+  </style>
+
+  <div id="root" data-composition-id="03-the-smile" data-width="1080" data-height="1920" data-duration="5.5">
+    <!-- ground: the app's dawn mist, full bleed, full duration -->
+    <div
+      id="fr03-smile-ground"
+      class="clip fr03-smile-layer fr03-smile-ground"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="0"
+    ></div>
+
+    <!-- halo behind the breath circle -->
+    <div id="fr03-smile-halo-layer" class="clip fr03-smile-layer" data-start="0" data-duration="5.5" data-track-index="1">
+      <div class="fr03-smile-halo-el" id="fr03-smile-halo"></div>
+    </div>
+
+    <!-- the breath circle -->
+    <div id="fr03-smile-circle-layer" class="clip fr03-smile-layer" data-start="0" data-duration="5.5" data-track-index="2">
+      <div class="fr03-smile-circle-el" id="fr03-smile-circle"></div>
+    </div>
+
+    <!-- handoff_in: the lock-screen card, 62% scale, centred x50%/y58%, drifting down -->
+    <div id="fr03-smile-card-layer" class="clip fr03-smile-layer" data-start="0" data-duration="0.9" data-track-index="3">
+      <div class="fr03-smile-card-el" id="fr03-smile-card">
+        <div class="fr03-smile-card-head">
+          <span class="fr03-smile-card-mark">Inner Light</span>
+          <span class="fr03-smile-card-time">06:40</span>
+        </div>
+        <div class="fr03-smile-card-line">Your morning is ready.</div>
+      </div>
+    </div>
+
+    <!-- beat one -->
+    <div id="fr03-smile-line-a-layer" class="clip fr03-smile-layer" data-start="0.8" data-duration="4.7" data-track-index="4">
+      <div class="fr03-smile-type fr03-smile-line-a" id="fr03-smile-line-a">A smile.</div>
+    </div>
+
+    <!-- beat two, landing in the last third as the melody lets go -->
+    <div id="fr03-smile-line-b-layer" class="clip fr03-smile-layer" data-start="3.3" data-duration="2.2" data-track-index="5">
+      <div class="fr03-smile-type fr03-smile-line-b" id="fr03-smile-line-b">
+        And the bell lets go.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      /* Scene 1 (0.0–0.8s) — the card keeps its drift and dissolves.
+         handoff_in: 62% scale, centred x50%/y58%, opacity 1, ~6px/s downward.
+         Linear ease keeps the drift at exactly the handed-off velocity. */
+      tl.fromTo(
+        "#fr03-smile-card",
+        { opacity: 1, y: 0, scale: 0.62 },
+        { opacity: 0, y: 4.8, scale: 0.62, duration: 0.8, ease: "none" },
+        0
+      );
+
+      /* Scene 1 (cont.) — the breath circle blooms into the space the card leaves.
+         Hero is legible well before 0.5s. */
+      tl.fromTo(
+        "#fr03-smile-circle",
+        { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" },
+        0.15
+      );
+      tl.fromTo(
+        "#fr03-smile-halo",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 0.85, scale: 1, duration: 1.3, ease: "power2.out" },
+        0.2
+      );
+
+      /* Scene 2 (0.85–1.8s) — "A smile." sets. */
+      tl.fromTo(
+        "#fr03-smile-line-a",
+        { opacity: 0, y: 26, scale: 0.985 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.95, ease: "power2.out" },
+        0.85
+      );
+
+      /* Scene 3 (1.7–3.95s) — the circle breathes once, in and out, the halo with it. */
+      tl.to("#fr03-smile-circle", { scale: 1.075, duration: 1, ease: "sine.inOut" }, 1.7);
+      tl.to("#fr03-smile-halo", { scale: 1.06, opacity: 1, duration: 1, ease: "sine.inOut" }, 1.7);
+      tl.to("#fr03-smile-circle", { scale: 1, duration: 1.25, ease: "sine.inOut" }, 2.7);
+      tl.to(
+        "#fr03-smile-halo",
+        { scale: 1, opacity: 0.85, duration: 1.25, ease: "sine.inOut" },
+        2.7
+      );
+
+      /* Scene 4 (3.35–4.35s) — the quieter clause arrives as the melody goes.
+         handoff_out: the circle rests at 100% scale, centred, opacity 1, no drift. */
+      tl.fromTo(
+        "#fr03-smile-line-b",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+        3.35
+      );
+
+      window.__timelines["03-the-smile"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

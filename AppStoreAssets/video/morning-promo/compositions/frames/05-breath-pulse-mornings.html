@@ -1,0 +1,262 @@
+<template>
+  <style>
+/* — the app's own faces, bound once for every frame — */
+@font-face { font-family: "New York"; src: local("New York"), local("NewYork"); }
+@font-face { font-family: "SF Pro Text"; src: local("SF Pro Text"), local("SFProText-Regular"); }
+/* ── 05-breath-pulse-mornings ──────────────────────────────────────────
+       Ground / type tokens from frame.md:
+         cream #F4F6FC · tile #E5EAF6 · tile-strong #9CA5E0 · ink #272B42
+         coral (the one voltage moment) #6F73C7
+       Display face: the project's "Inner Serif" binding (above), falling back
+       to Georgia — frame.md's Known Gaps name Georgia as the sanctioned
+       fall-back for the display serif, and the renderer resolves it to a warm
+       old-style serif. "New York" is never named in a font-family stack: it
+       ships no file and no renderer alias, so naming it would silently drop
+       the typography in the MP4.
+       ------------------------------------------------------------------- */
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      color: #272B42;
+      font-family: "New York", Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── full-bleed ground (a clip layer, never a background on #root) ───── */
+    #root .ilbp-ground {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      background-color: #F4F6FC;
+    }
+
+    /* Beats that arrive after t=0 rest hidden in CSS, so frame 0 is correct
+       under a seek. The hero (the practice plate) is NOT hidden this way —
+       it enters with a fromTo and is fully up by 0.45s. */
+    #root .ilbp-clause,
+    #root .ilbp-breath,
+    #root #ilbp-mornings {
+      opacity: 0;
+    }
+    #root .ilbp-mist {
+      position: absolute;
+      left: -120px;
+      top: -200px;
+      width: 1320px;
+      height: 2320px;
+      background:
+        radial-gradient(58% 34% at 50% 26%, rgba(229, 234, 246, 0.95) 0%, rgba(229, 234, 246, 0) 72%),
+        radial-gradient(46% 26% at 50% 78%, rgba(156, 165, 224, 0.12) 0%, rgba(156, 165, 224, 0) 74%);
+    }
+
+    /* ── the inset screen plate (dawn-mist margin all round) ─────────────── */
+    #root .ilbp-plate {
+      position: absolute;
+      left: 251px;
+      top: 150px;
+      width: 578px;
+      height: 1257px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(39, 43, 66, 0.12);
+      background-color: #E5EAF6;
+      box-shadow: 0 1px 3px rgba(39, 43, 66, 0.08), 0 4px 16px rgba(39, 43, 66, 0.04);
+      transform-origin: 50% 52%;
+    }
+    #root .ilbp-plate img {
+      display: block;
+      width: 578px;
+      height: 1257px;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
+    /* ── beat 2: the built breath circle (no invented interface) ─────────── */
+    #root .ilbp-breath {
+      position: absolute;
+      left: 260px;
+      top: 590px;
+      width: 560px;
+      height: 560px;
+      transform-origin: 50% 50%;
+    }
+    #root .ilbp-breath-halo {
+      position: absolute;
+      left: -150px;
+      top: -150px;
+      width: 860px;
+      height: 860px;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(111, 115, 199, 0.30) 0%, rgba(111, 115, 199, 0.12) 46%, rgba(111, 115, 199, 0) 72%);
+      filter: blur(36px);
+    }
+    #root .ilbp-breath-ring {
+      position: absolute;
+      left: -66px;
+      top: -66px;
+      width: 692px;
+      height: 692px;
+      border-radius: 9999px;
+      border: 1px solid rgba(111, 115, 199, 0.22);
+    }
+    #root .ilbp-breath-core {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 560px;
+      height: 560px;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 44%, rgba(111, 115, 199, 0.34) 0%, rgba(111, 115, 199, 0.22) 58%, rgba(111, 115, 199, 0.13) 100%);
+      border: 1px solid rgba(111, 115, 199, 0.26);
+    }
+
+    /* ── the spoken clause, set as type, one at a time ───────────────────── */
+    #root .ilbp-clause {
+      position: absolute;
+      left: 140px;
+      top: 1455px;
+      width: 800px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: "New York", Georgia, serif;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 1.3;
+      letter-spacing: -0.012em;
+      color: #272B42;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="05-breath-pulse-mornings"
+    data-start="0"
+    data-duration="6"
+    data-width="1080"
+    data-height="1920"
+  >
+    <!-- ground -->
+    <div class="ilbp-ground clip" id="ilbp-ground" data-start="0" data-duration="6" data-track-index="0">
+      <div class="ilbp-mist" id="ilbp-mist"></div>
+    </div>
+
+    <!-- beat 1 — the guided practice player, a real capture -->
+    <div class="ilbp-plate clip" id="ilbp-practice" data-start="0" data-duration="1.5" data-track-index="1">
+      <img src="assets/04_Practice.png" alt="" />
+    </div>
+
+    <!-- beat 2 — a built breath circle; the pulse screen has no honest capture -->
+    <div class="ilbp-breath clip" id="ilbp-breath" data-start="0.8" data-duration="1.9" data-track-index="2">
+      <div class="ilbp-breath-halo"></div>
+      <div class="ilbp-breath-ring"></div>
+      <div class="ilbp-breath-core"></div>
+    </div>
+
+    <!-- beat 3 — the month of mornings, a real capture; the frame ends here -->
+    <div class="ilbp-plate clip" id="ilbp-mornings" data-start="2.0" data-duration="4" data-track-index="3">
+      <img src="assets/07_Mornings.png" alt="" />
+    </div>
+
+    <!-- the three clauses, never two at once -->
+    <div class="ilbp-clause clip" id="ilbp-clause-1" data-start="0" data-duration="1.25" data-track-index="4">Your breath.</div>
+    <div class="ilbp-clause clip" id="ilbp-clause-2" data-start="1.1" data-duration="1.25" data-track-index="5">Then your pulse.</div>
+    <div class="ilbp-clause clip" id="ilbp-clause-3" data-start="2.2" data-duration="3.8" data-track-index="6">And a month of your own mornings.</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      /* ground — a barely-there mist drift so the long hold breathes
+         without anything arriving in it */
+      tl.fromTo("#ilbp-mist", { y: 0 }, { y: -26, duration: 5.5, ease: "none" }, 0);
+
+      /* ── Beat 1 · 0.0–1.1s — "Your breath." · the practice player ─────── */
+      tl.fromTo(
+        "#ilbp-practice",
+        { opacity: 0.18, scale: 0.988, y: 12 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0
+      );
+      tl.fromTo(
+        "#ilbp-practice",
+        { y: 0 },
+        { y: -10, duration: 1.0, ease: "none", immediateRender: false },
+        0.45
+      );
+      /* slow crossfade out of beat 1 (never a cut) */
+      tl.to("#ilbp-practice", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, 1.0);
+
+      tl.fromTo(
+        "#ilbp-clause-1",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        0.12
+      );
+      tl.to("#ilbp-clause-1", { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 0.85);
+
+      /* ── Beat 2 · 1.1–2.1s — "Then your pulse." · the breath circle ───── */
+      /* blooms out of exactly where the practice screen's own circle sat, so
+         the interface dissolves and the circle is what remains */
+      tl.fromTo(
+        "#ilbp-breath",
+        { opacity: 0, scale: 0.516, y: -126 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "power2.out" },
+        0.9
+      );
+      /* one slow breath in, one out — written out, never repeated */
+      tl.to("#ilbp-breath", { scale: 1.035, duration: 0.5, ease: "sine.inOut" }, 1.6);
+      tl.to("#ilbp-breath", { scale: 1.0, duration: 0.5, ease: "sine.inOut" }, 2.18);
+      tl.to("#ilbp-breath", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 2.1);
+
+      tl.fromTo(
+        "#ilbp-clause-2",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" },
+        1.18
+      );
+      tl.to("#ilbp-clause-2", { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 1.95);
+
+      /* ── Beat 3 · 2.1–3.1s + hold — "And a month of your own mornings." ─ */
+      tl.fromTo(
+        "#ilbp-mornings",
+        { opacity: 0, scale: 0.985, y: 16 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "power2.out" },
+        2.1
+      );
+      /* the long settle: it comes to rest at ~4.0s and is then perfectly
+         still to the end — the hold is the point of the frame */
+      tl.fromTo(
+        "#ilbp-mornings",
+        { y: 0, scale: 1 },
+        { y: -9, scale: 1.006, duration: 1.2, ease: "power1.out", immediateRender: false },
+        2.8
+      );
+
+      tl.fromTo(
+        "#ilbp-clause-3",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+        2.28
+      );
+
+      /* pads the timeline to the frame's full length; the last state is held
+         perfectly still from ~4.0s to the end */
+      tl.set("#ilbp-mornings", { opacity: 1 }, 5.5);
+
+      window.__timelines["05-breath-pulse-mornings"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

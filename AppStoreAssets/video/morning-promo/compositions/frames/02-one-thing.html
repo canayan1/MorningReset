@@ -1,0 +1,362 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+  <style>
+    /* New York is the app's display face and ships with the OS, not as a file in
+       this project (assets/fonts/ is empty). local() satisfies the renderer's
+       font contract; frame.md's documented fallback (Georgia, an old-style
+       serif — never a sans) carries the register if the face is unavailable. */
+    @font-face { font-family: "New York"; src: local("New York"), local("NewYork"); }
+@font-face { font-family: "SF Pro Text"; src: local("SF Pro Text"), local("SFProText-Regular"); }
+/* — the app's own faces, bound once for every frame — */
+/* ------------------------------------------------------------------
+       02-one-thing — "Your alarm asks one thing of you this morning."
+       1080x1920. The frame's main event is the GROUND: a full-duration,
+       full-bleed clip layer lifting from frame 1's near-black through the
+       blue hour into the app's dawn mist (#F4F6FC). Motion vocabulary is
+       only bloom / drift / breathe.
+       Tokens: frame.md — ink #272B42 · cream #F4F6FC · tile #E5EAF6 ·
+       tile-strong #9CA5E0 · accent #6F73C7 · navy #151718 / soft #1B1D1F.
+       ------------------------------------------------------------------ */
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      container-type: size;
+      background: transparent;
+    }
+
+    /* --- the ground: full-bleed, full-duration clip layer (never #root) --- */
+    .frame02-ground {
+      position: absolute;
+      inset: 0;
+      background-color: #151718;
+    }
+
+    /* --- stage: full-bleed clip that carries the positioned content --- */
+    .frame02-stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* --- the spoken line, set as designed type (no caption track) --- */
+    .frame02-line {
+      position: absolute;
+      top: 430px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: "New York", Georgia, serif;
+      font-weight: 400;
+      font-size: 6.48cqw;
+      line-height: 1.14;
+      letter-spacing: -0.018em;
+      color: #f4f6fc;
+    }
+
+    .frame02-line-row {
+      display: block;
+      white-space: nowrap;
+      color: inherit;
+    }
+
+    .frame02-one {
+      /* The accent proper, not its soft tint. At 9ca5e0 the emphasised word
+         sat at 2.5:1 on the dawn ground — below legible, and the one word in
+         the line that has to be read. */
+      color: #6f73c7;
+    }
+
+    /* --- the lock-screen card, continued from frame 1 --- */
+    .frame02-card-group {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1240px;
+      height: 320px;
+      margin-top: -160px;
+      margin-left: -620px;
+      transform-origin: 50% 50%;
+    }
+
+    /* bloom rings — the melody's second pass, made visible */
+    .frame02-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 900px;
+      height: 900px;
+      margin: -450px 0 0 -450px;
+      border: 2px solid rgba(244, 246, 252, 0.8);
+      border-radius: 50%;
+      opacity: 0;
+      transform-origin: 50% 50%;
+      pointer-events: none;
+    }
+
+    .frame02-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 56px;
+      padding: 44px 56px;
+      background-color: #1b1d1f;
+      border: 1.5px solid rgba(244, 246, 252, 0.14);
+      border-radius: 22px;
+    }
+
+    .frame02-card-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .frame02-card-label {
+      font-family: "SF Pro Text", -apple-system, system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 3.15cqw;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(244, 246, 252, 0.62);
+      line-height: 1;
+    }
+
+    .frame02-card-line {
+      font-family: "New York", Georgia, serif;
+      font-weight: 400;
+      font-size: 5.74cqw;
+      letter-spacing: -0.014em;
+      line-height: 1.2;
+      color: #f4f6fc;
+    }
+
+    .frame02-card-time {
+      font-family: "New York", Georgia, serif;
+      font-weight: 400;
+      font-size: 10.93cqw;
+      letter-spacing: -0.028em;
+      line-height: 1;
+      color: #f4f6fc;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="02-one-thing"
+    data-width="1080"
+    data-height="1920"
+    data-duration="5.5"
+  >
+    <!-- the room getting light, expressed as canvas -->
+    <div
+      id="frame02-ground"
+      class="clip frame02-ground"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="0"
+    ></div>
+
+    <div
+      id="frame02-stage"
+      class="clip frame02-stage"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="1"
+    >
+      <div id="frame02-card-group" class="frame02-card-group">
+        <div id="frame02-ring-1" class="frame02-ring" data-layout-allow-overflow="true"></div>
+        <div id="frame02-ring-2" class="frame02-ring" data-layout-allow-overflow="true"></div>
+
+        <div id="frame02-card" class="frame02-card">
+          <div class="frame02-card-copy">
+            <div class="frame02-card-label">Inner Light</div>
+            <div class="frame02-card-line">Your morning is ready.</div>
+          </div>
+          <div class="frame02-card-time">06:40</div>
+        </div>
+      </div>
+
+      <div id="frame02-line" class="frame02-line">
+        <span id="frame02-line-a" class="frame02-line-row"
+          >Your alarm asks <span id="frame02-one" class="frame02-one">one</span> thing</span
+        >
+        <span id="frame02-line-b" class="frame02-line-row">of you this morning.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      var ground = "#frame02-ground";
+      var cardGroup = "#frame02-card-group";
+      var rings = ["#frame02-ring-1", "#frame02-ring-2"];
+      var lineRows = ["#frame02-line-a", "#frame02-line-b"];
+
+      /* ---- THE GROUND (0.0 -> 4.8s, the frame's main event) ----
+         near-black -> the blue hour -> a desaturated dawn haze -> the app's
+         dawn mist. The transit through the mid-luminance band is the
+         shortest leg, so the type's own lift (below) crosses it in ~2
+         frames rather than going grey-on-grey for a second. */
+      tl.fromTo(
+        ground,
+        { backgroundColor: "#151718" },
+        { backgroundColor: "#272B42", duration: 1.9, ease: "sine.inOut" },
+        0
+      );
+      tl.fromTo(
+        ground,
+        { backgroundColor: "#272B42" },
+        // Not the accent. A saturated periwinkle at full screen is a field of
+        // brand colour, which the design system forbids — one accent, never a
+        // plane of it — and on screen it read as a flat lavender card rather
+        // than a room getting light. A desaturated haze is what dawn does.
+        { backgroundColor: "#AEB5C9", duration: 1.2, ease: "power1.inOut", immediateRender: false },
+        1.9
+      );
+      tl.fromTo(
+        ground,
+        { backgroundColor: "#AEB5C9" },
+        { backgroundColor: "#F4F6FC", duration: 1.7, ease: "sine.out", immediateRender: false },
+        3.1
+      );
+
+      /* ---- THE CARD: it lifts with the room ----
+         It began as a lit card in a dark room; by the end the room is dawn
+         mist and a near-black slab sitting in it reads as a hole, not a
+         notification. Surface and border travel with the ground so the card
+         is the app's own surface by the time frame 3 inherits it. */
+      tl.fromTo(
+        ".frame02-card",
+        { backgroundColor: "#1b1d1f", borderColor: "rgba(244,246,252,0.14)" },
+        { backgroundColor: "#E5EAF6", borderColor: "rgba(39,43,66,0.12)",
+          duration: 2.2, ease: "sine.inOut", immediateRender: false },
+        2.1
+      );
+      // The copy turns WITH the surface but not AT ITS PACE: lerped in
+      // lockstep, copy and surface pass through mid-grey together and the
+      // card is unreadable for ~0.36s. The copy turns over in 0.3s at the
+      // crossing instead (t~3.18), which costs ~2 frames.
+      tl.fromTo(
+        ".frame02-card-label",
+        { color: "rgba(244,246,252,0.62)" },
+        { color: "rgba(39,43,66,0.55)", duration: 0.3, ease: "power2.inOut", immediateRender: false },
+        3.03
+      );
+      tl.fromTo(
+        [".frame02-card-line", ".frame02-card-time"],
+        { color: "#f4f6fc" },
+        { color: "#272B42", duration: 0.3, ease: "power2.inOut", immediateRender: false },
+        3.03
+      );
+
+      /* ---- THE CARD: drift (down and back), continuous across the shot ----
+         settles 72% -> 62% while travelling 998.4px -> 1101.6px, then keeps
+         drifting linearly at exactly 6px/s for the last 2.0s so it hands off
+         to frame 3 mid-drift: centre 540 / 1113.6, scale 0.62, opacity 1. */
+      /* The seam. Frame 1's card is still on screen through the crossfade,
+         and two cards at full strength a few pixels apart read as a printing
+         error rather than a dissolve. This one comes up from nothing across
+         the overlap, so only ever one card is fully present. */
+      tl.fromTo(
+        cardGroup,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.55, ease: "sine.out" },
+        0
+      );
+
+      tl.fromTo(
+        cardGroup,
+        // Frame 1 leaves its card centred at y 754 (top 662 + half of 184).
+        // Starting anywhere else makes the crossfade show two cards at two
+        // heights for half a second — which is exactly what it did.
+        { y: 754, scale: 0.72 },
+        { y: 1101.6, scale: 0.62, duration: 3.0, ease: "power2.out" },
+        0
+      );
+      tl.fromTo(
+        cardGroup,
+        { y: 1101.6 },
+        { y: 1113.6, duration: 2.0, ease: "none", immediateRender: false },
+        3.0
+      );
+
+      /* ---- THE LINE: a quiet set-and-hold, one clause, on the voice ---- */
+      tl.fromTo(
+        lineRows[0],
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.95, ease: "power2.out" },
+        0.4
+      );
+      tl.fromTo(
+        lineRows[1],
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.95, ease: "power2.out" },
+        0.95
+      );
+
+      /* ---- BLOOM 1: the melody's second pass, rings out of the card ---- */
+      tl.fromTo(rings[0], { scale: 0.42 }, { scale: 1.45, duration: 2.1, ease: "sine.out" }, 1.35);
+      tl.fromTo(rings[0], { opacity: 0 }, { opacity: 0.34, duration: 0.45, ease: "sine.out" }, 1.35);
+      tl.fromTo(
+        rings[0],
+        { opacity: 0.34 },
+        { opacity: 0, duration: 1.65, ease: "sine.in", immediateRender: false },
+        1.8
+      );
+
+      /* ---- THE LIGHT REACHES THE TYPE ----
+         as the ground crosses out of the dark the line lifts from cream to
+         ink, and the emphasis word warms last, from the pale periwinkle to
+         the accent itself. The rings turn with it. */
+      tl.fromTo(
+        lineRows,
+        { color: "#F4F6FC" },
+        { color: "#272B42", duration: 0.42, ease: "power2.inOut", immediateRender: false },
+        2.35
+      );
+      tl.fromTo(
+        rings,
+        { borderColor: "rgba(244,246,252,0.8)" },
+        {
+          borderColor: "rgba(39,43,66,0.6)",
+          duration: 0.42,
+          ease: "power2.inOut",
+          immediateRender: false,
+        },
+        2.35
+      );
+      tl.fromTo(
+        "#frame02-one",
+        { color: "#9CA5E0" },
+        { color: "#44478F", duration: 0.3, ease: "power2.inOut", immediateRender: false },
+        2.45
+      );
+      tl.fromTo(
+        "#frame02-one",
+        { color: "#44478F" },
+        { color: "#6F73C7", duration: 0.6, ease: "power2.inOut", immediateRender: false },
+        4.05
+      );
+
+      /* ---- BLOOM 2: the second ring, settled before the frame hands off ---- */
+      tl.fromTo(rings[1], { scale: 0.42 }, { scale: 1.62, duration: 1.8, ease: "sine.out" }, 2.85);
+      tl.fromTo(rings[1], { opacity: 0 }, { opacity: 0.28, duration: 0.45, ease: "sine.out" }, 2.85);
+      tl.fromTo(
+        rings[1],
+        { opacity: 0.28 },
+        { opacity: 0, duration: 1.35, ease: "sine.in", immediateRender: false },
+        3.3
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-one-thing"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

@@ -39,3 +39,34 @@ system fonts need a `@font-face { src: local(...) }` declaration.
 
 HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash`, then
 `heygen auth login --oauth` (subscription credits; an API key bills separately).
+
+## Morning promo (`morning-promo/`)
+
+The 29 s vertical promo for the morning flow: the lock screen at 06:40 and the
+app's real melody, the light rising, the bell drawing away as the smile line
+lands, the practice offered with `Later` beside it, then the breath, the month
+of mornings, and the end card. Narration is the app's own voice — Kokoro
+`af_heart`, the same pipeline as `scripts/build_voice.py`.
+
+Built with the `product-launch-video` workflow: `BRIEF.md` → `STORYBOARD.md` +
+`SCRIPT.md` → `frame.md` → `compositions/frames/*.html` → `renders/video.mp4`.
+
+Two things a future run needs to know:
+
+- **Generated footage was refused.** `cinematic_avatar` returns *"Cinematic
+  Shots requires a Pro plan"* on a `creator` account, so the film is built from
+  the product's own surface. The five shot prompts are kept in
+  `gen/requests/*.json` — one woman pinned across all five, the house style from
+  `../heygen/ai_shots.json` — and can be fired unchanged the day the plan allows
+  it. The story and the narration do not change; the footage layers behind
+  frames 1–3.
+- **Do not re-run `sync-durations`.** It sets each frame to the length of its
+  spoken line, which collapses this film from 29 s to about 15 s. Every line
+  here is written to land and then stop; the silence after it is the thing being
+  sold. Frame durations are the measured voice length plus a designed pause, and
+  `STORYBOARD.md` says so at the top.
+
+The two screens the film needed and the screenshot set did not have are
+capturable from the simulator with the app's own test flags:
+`-uiTesting -seedMornings -showMornings` (the month calendar) and
+`-uiTesting -showRitual` (the morning ritual, including the offer screen).
