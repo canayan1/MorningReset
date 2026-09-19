@@ -20,13 +20,27 @@ struct MorningRitualView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
 
+    /// The morning in two halves, and the join between them matters.
+    ///
+    /// Everything up to `offer` is what the alarm asks for, and it comes to
+    /// about a minute and one gesture. Everything after it is offered, not
+    /// required — the alarm has already been put down by then.
+    ///
+    /// The split is the answer to the morning feeling heavy. Sleep inertia
+    /// runs fifteen to thirty minutes and nothing yet found shortens the first
+    /// fifteen; decision-making sits about half its daytime level in the first
+    /// few minutes. Holding a fingertip still on a lens and keeping time in a
+    /// box breath are precision asked for at exactly the wrong moment. So the
+    /// waking half asks for the one thing a half-asleep face can do, and the
+    /// practice waits until someone is actually there for it.
     private enum Step: Equatable {
         case arrival          // the bell recedes, the voice says there is no hurry
-        case smile
-        case toPulse          // one breath, and the voice says what is next
-        case pulse
+        case smile            // the only thing the alarm asks for
+        case offer            // the alarm is done; the practice is on the table
         case toBreath
         case breath
+        case toPulse
+        case pulse
         case done
     }
 
@@ -42,6 +56,7 @@ struct MorningRitualView: View {
     @State private var showsCalendar = false
     @State private var previewIn = false
     @State private var doneButtonIn = false
+    @State private var offerIn = false
 
     var body: some View {
         ZStack {
@@ -52,26 +67,29 @@ struct MorningRitualView: View {
                 MorningBreathTransition(lines: [
                     "Good morning.",
                     "There's no hurry.",
-                    "Your morning is starting. Stay where you are for a moment."
+                    "Let your eyes open when they want to."
                 ]) { go(.smile) }
                 .transition(.opacity)
 
             case .smile:
                 smileStep.transition(.opacity)
 
-            case .toPulse:
-                MorningBreathTransition(lines: [
-                    "Next, your pulse.",
-                    "Place your finger over the camera on the back of the phone.",
-                    "And cover the little light beside it."
-                ]) { go(.pulse) }
-                .transition(.opacity)
+            case .offer:
+                offerStep.transition(.opacity)
 
             case .toBreath:
                 MorningBreathTransition(lines: [
-                    "Next, your breath.",
+                    "First, your breath.",
                     "Breathe out towards the phone, slowly, and let it be heard."
                 ]) { go(.breath) }
+                .transition(.opacity)
+
+            case .toPulse:
+                MorningBreathTransition(lines: [
+                    "And now your pulse.",
+                    "Place your finger over the camera on the back of the phone.",
+                    "And cover the little light beside it."
+                ]) { go(.pulse) }
                 .transition(.opacity)
 
             case .pulse, .breath:
@@ -89,15 +107,15 @@ struct MorningRitualView: View {
             if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
             AlarmChime.shared.startSoftly()
         }
+        .fullScreenCover(isPresented: .constant(step == .breath)) {
+            SignatureMeditationView(onComplete: { go(.toPulse) }, spokenIntro: false)
+        }
         .fullScreenCover(isPresented: .constant(step == .pulse)) {
             PulseCheckView(moment: .before, affirmations: true,
                            affirmationGap: Pace.affirmationGap, showsSkip: false) { result in
                 reading = result
-                go(.toBreath)
+                finish()
             }
-        }
-        .fullScreenCover(isPresented: .constant(step == .breath)) {
-            SignatureMeditationView(onComplete: { finish() }, spokenIntro: false)
         }
         .sheet(isPresented: $showsCalendar) { MorningCalendarView() }
         .onDisappear {
@@ -114,7 +132,7 @@ struct MorningRitualView: View {
             // silenced the chain, so walking away without the morning having
             // happened has to put it back, or the one escape route in the whole
             // design is to start and then not finish.
-            if step != .done, !MorningRitual.completedToday {
+            if !MorningRitual.completedToday {
                 if #available(iOS 26.1, *) {
                     Task { await AlarmKitWakeScheduler.reconcileFollowUps() }
                 }
@@ -195,7 +213,7 @@ struct MorningRitualView: View {
             Button(L10n.text(en: "Skip this", tr: "Bunu geç", es: "Saltar esto")) {
                 camera.stop()
                 AlarmChime.shared.fadeOut(over: 1.0)
-                go(.toPulse)
+                completeMorning()
             }
             .font(.footnote)
             .foregroundStyle(DS.textDim)
@@ -252,7 +270,7 @@ struct MorningRitualView: View {
             // And then nothing, for a moment. The smile is allowed to be the
             // last thing that happened before the next thing starts.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 + Pace.afterLine) {
-                go(.toPulse)
+                completeMorning()
             }
         }
         camera.configureAndStart()
@@ -260,7 +278,7 @@ struct MorningRitualView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !camera.available, step == .smile {
                 AlarmChime.shared.fadeOut(over: 1.0)
-                go(.toPulse)
+                completeMorning()
             }
         }
         // Eight seconds is long enough for a real smile to be found and short
@@ -345,19 +363,106 @@ struct MorningRitualView: View {
 
     // MARK: - Finish
 
+    // MARK: - The offer
+
+    private var offerStep: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            ZStack {
+                Circle()
+                    .fill(DS.accentSoft.opacity(0.20))
+                    .frame(width: 220, height: 220)
+                    .blur(radius: 36)
+                EnergyTreeView(progress: 0.32, tint: DS.accent, size: 210)
+                    .opacity(0.5)
+            }
+
+            Spacer().frame(height: DS.Space.lg)
+
+            Text(L10n.text(en: "THAT'S THE MORNING", tr: "SABAH BU KADAR", es: "ESO ES LA MAÑANA"))
+                .font(DS.Typo.label).kerning(1.6)
+                .foregroundStyle(DS.accent)
+
+            Spacer().frame(height: DS.Space.sm)
+
+            Text(L10n.text(en: "Your practice is here\nwhenever you want it.",
+                           tr: "Pratiğin, istediğin an\nburada.",
+                           es: "Tu práctica está aquí\ncuando la quieras."))
+                .font(.system(size: 28, weight: .regular, design: .serif))
+                .foregroundStyle(DS.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(5)
+
+            Spacer().frame(height: DS.Space.sm)
+
+            Text(L10n.text(en: "Six minutes: your breath, then your pulse.",
+                           tr: "Altı dakika: nefesin, sonra nabzın.",
+                           es: "Seis minutos: tu respiración, luego tu pulso."))
+                .font(.callout)
+                .foregroundStyle(DS.textSecondary)
+
+            Spacer()
+
+            VStack(spacing: DS.Space.sm) {
+                Button(L10n.text(en: "I'm ready", tr: "Hazırım", es: "Estoy listo")) {
+                    go(.toBreath)
+                }
+                .primaryCTA()
+                .accessibilityIdentifier("ritual.beginPractice")
+
+                Button(L10n.text(en: "Later", tr: "Sonra", es: "Más tarde")) { dismiss() }
+                    .font(.footnote)
+                    .foregroundStyle(DS.textDim)
+                    .accessibilityIdentifier("ritual.practiceLater")
+            }
+            .padding(.horizontal, DS.Space.lg)
+            .padding(.bottom, DS.Space.xl)
+            .opacity(offerIn ? 1 : 0)
+        }
+        .padding(.horizontal, DS.Space.lg)
+    }
+
+    // MARK: - Finish
+
+    /// The alarm's half is over.
+    ///
+    /// This is the moment the morning counts as done — one gesture, about a
+    /// minute in — not the end of the practice. Everything after it is
+    /// offered. Putting the alarm down here is the whole point: the thing
+    /// that insists should ask for the least, and what asks for more should
+    /// not be able to insist.
+    private func completeMorning() {
+        guard step == .smile else { return }
+        camera.stop()
+        MorningLogStore.record(bpm: nil, smiled: smiled)
+        MorningRitual.markCompleted()
+        offerIn = false
+        Task {
+            await SpeechGuide.shared.say(["That's the morning.",
+                                          "Your practice is here whenever you want it."],
+                                         pause: Pace.afterLine)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            withAnimation(.easeInOut(duration: Pace.crossfade)) { offerIn = true }
+        }
+        go(.offer)
+    }
+
     private func finish() {
         guard step != .done else { return }
         camera.stop()
         AlarmChime.shared.stop()
-        // One line in the log for this morning. A reading the app did not
-        // trust goes in as nothing, so the calendar never shows a number that
-        // was really a shrug.
+        // The day's line, filled in now that there is a number for it. The
+        // store keeps one record per day, so this replaces the one written
+        // when the morning was put down. A reading the app did not trust goes
+        // in as nothing, so the calendar never shows a number that was really
+        // a shrug.
         let trusted = reading.flatMap { $0.isTrustworthy && $0.bpm > 0 ? $0.bpm : nil }
         MorningLogStore.record(bpm: trusted, smiled: smiled)
-        MorningRitual.markCompleted()
         doneButtonIn = false
         Task {
-            await SpeechGuide.shared.say(["That's your morning check-up.", "The day is yours."],
+            await SpeechGuide.shared.say(["That's your practice done.", "The day is yours."],
                                          pause: Pace.afterLine)
         }
         // The button arrives after the words have. Nothing on this screen

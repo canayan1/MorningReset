@@ -83,6 +83,13 @@ CUES = [
     "That's your morning check-up.",
     "The day is yours.",
     "Breathe out towards the phone, slowly, and let it be heard.",
+    # The morning put down after one gesture; the practice offered, not required.
+    "Let your eyes open when they want to.",
+    "That's the morning.",
+    "Your practice is here whenever you want it.",
+    "First, your breath.",
+    "And now your pulse.",
+    "That's your practice done.",
 ]
 
 def key(text):

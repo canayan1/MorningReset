@@ -1,63 +1,71 @@
 #!/usr/bin/env python3
-"""Synthesise the alarm — Inner Light's own, rather than a stock tone.
+"""Synthesise the alarm — a phrase you could hum, with the bell behind it.
 
-A struck bowl, not a beep. The partials are inharmonic in the way a real bell's
-are (1, 2, 2.76, 5.4 of the fundamental), and the higher ones decay faster than
-the lower, which is the whole of why a bell sounds like metal and a stack of
-sines sounds like an organ.
+Why a melody and not just the bell. Sounds people rate as melodic are linked to
+*less* grogginess on waking; sounds rated neutral — a tone, a metronomic beep,
+an unpitched strike — are linked to more of it (McFarlane et al., PLOS One
+2019; bioRxiv 2020). The bell this replaces was inharmonic strikes alternating
+two notes: lovely, and squarely in the neutral half. So the alarm now opens
+with a five-note phrase in D major pentatonic, the safest interval set there
+is — no semitones, nothing that can sound like a warning — played on a
+music-box timbre, and the familiar bell arrives underneath it as the tail.
 
-It escalates. Six strikes over ten seconds, each louder and closer than the
-last, so the first one is something you could sleep through and the last one is
-not. The loop then restarts quiet, which makes the alarm breathe rather than
-nag — someone waking on the second wave is woken by something that sounds like
-the app, and someone who needs eight waves gets them.
+It escalates the way it did: the phrase comes in twice, quiet then present,
+before the bell. The first pass is something you could sleep through; the last
+strike is not.
 
     python3 scripts/build_alarm_sound.py
 """
 import math, os, struct, subprocess, tempfile, wave
 
-# 44.1 kHz, not the 24 kHz the voice clips use.
-#
-# The system plays this one, not the app, and what the system will accept is
-# narrower than what an audio file can be. The alarm that fired silently on the
-# phone — vibration and a lock-screen banner, no sound — was a 24 kHz file, and
-# so was the one before it, so nothing here has ever been shown to play. 44.1
-# kHz linear PCM is what Apple's own examples use, and there is no reason to be
-# the interesting case.
 RATE, SECONDS = 44100, 10.0
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "MorningReset", "Resources", "inner_light_alarm.caf")
 
-# ratio, decay seconds, weight — higher partials shorter and quieter
-PARTIALS = [(1.00, 3.4, 1.00), (2.00, 2.3, 0.42), (2.76, 1.5, 0.26), (5.40, 0.8, 0.11)]
+# D major pentatonic: D E F# A B. No semitones anywhere in it, which is why it
+# is the scale that cannot accidentally sound like an alert.
+D4, E4, FS4, A4, B4, D5 = 293.66, 329.63, 369.99, 440.00, 493.88, 587.33
 
-# time, fundamental, amplitude. D4 and A4 alternating: a two-note motif rather
-# than one repeated note, so it reads as a phrase and not an alert.
-STRIKES = [(0.00, 293.66, 0.34), (2.55, 440.00, 0.46), (4.70, 293.66, 0.60),
-           (6.45, 440.00, 0.74), (7.95, 293.66, 0.88), (9.05, 440.00, 1.00)]
+# A rising phrase that settles rather than ending high — up to the fifth, a
+# step past it, and home. Hummable in one breath, which is the whole test.
+PHRASE = [(0.00, D4), (0.52, FS4), (1.04, A4), (1.62, B4), (2.24, A4), (3.00, FS4)]
+
+# Music box: fundamental plus a couple of quick, quiet overtones.
+VOICE = [(1.0, 2.6, 1.00), (2.0, 1.3, 0.30), (3.0, 0.7, 0.12)]
+# The bell keeps its own inharmonic partials — that is what makes it metal.
+BELL = [(1.00, 3.4, 1.00), (2.00, 2.3, 0.42), (2.76, 1.5, 0.26), (5.40, 0.8, 0.11)]
+
+STRIKES = [(6.50, D4, 0.62), (7.75, A4, 0.78), (8.75, D4, 0.90), (9.40, A4, 1.00)]
 
 n = int(RATE * SECONDS)
 buf = [0.0] * n
 
-for start, f0, amp in STRIKES:
-    i0 = int(start * RATE)
-    for ratio, decay, weight in PARTIALS:
+def voice(at, f0, amp, partials):
+    i0 = int(at * RATE)
+    for ratio, decay, weight in partials:
         f = f0 * ratio
         w = 2 * math.pi * f / RATE
-        # Run each partial until it is inaudible rather than to the end.
         length = min(n - i0, int(decay * 5 * RATE))
         for i in range(length):
             env = math.exp(-i / (decay * RATE))
-            if i < 88:                      # 2 ms attack, no click
+            if i < 88:                       # 2 ms attack, no click
                 env *= i / 88
             buf[i0 + i] += amp * weight * env * math.sin(w * i)
 
-# A low drone under it, swelling as the strikes do: the room the bell is in.
+# The phrase twice: once at the edge of hearing, once present.
+for pass_at, amp in [(0.00, 0.30), (3.30, 0.52)]:
+    for t, f in PHRASE:
+        voice(pass_at + t, f, amp, VOICE)
+
+for at, f0, amp in STRIKES:
+    voice(at, f0, amp, BELL)
+
+# A low drone under it, swelling as the phrase does: the room the bell is in.
 for i in range(n):
     t = i / RATE
     swell = 0.5 - 0.5 * math.cos(2 * math.pi * t / SECONDS)
-    buf[i] += swell * (0.055 * math.sin(2 * math.pi * 146.83 * t)
-                       + 0.025 * math.sin(2 * math.pi * 220.00 * t))
+    buf[i] += swell * (0.050 * math.sin(2 * math.pi * 146.83 * t)
+                       + 0.022 * math.sin(2 * math.pi * 220.00 * t))
 
 # Loop seams: the file restarts, so neither end may have an edge on it.
 for i in range(int(0.006 * RATE)):
@@ -67,7 +75,7 @@ for i in range(tail):
     buf[n - 1 - i] *= i / tail
 
 peak = max(abs(x) for x in buf)
-gain = 0.89 / peak                          # leave headroom; never clip
+gain = 0.89 / peak                           # leave headroom; never clip
 pcm = b"".join(struct.pack("<h", int(max(-32767, min(32767, x * gain * 32767)))) for x in buf)
 
 with tempfile.TemporaryDirectory() as tmp:
