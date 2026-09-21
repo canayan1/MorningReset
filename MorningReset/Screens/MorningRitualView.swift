@@ -34,7 +34,7 @@ struct MorningRitualView: View {
     /// waking half asks for the one thing a half-asleep face can do, and the
     /// practice waits until someone is actually there for it.
     private enum Step: Equatable {
-        case arrival          // the bell recedes, the voice says there is no hurry
+        case waking           // a minute where nothing at all is asked
         case smile            // the only thing the alarm asks for
         case offer            // the alarm is done; the practice is on the table
         case toBreath
@@ -45,7 +45,7 @@ struct MorningRitualView: View {
     }
 
     @StateObject private var camera = CameraSession()
-    @State private var step: Step = .arrival
+    @State private var step: Step = .waking
     @State private var reading: PulseReading?
     @State private var energy: EnergyReading?
     @State private var glow = false
@@ -63,13 +63,9 @@ struct MorningRitualView: View {
             AppBackground(intensity: 0.4)
 
             switch step {
-            case .arrival:
-                MorningBreathTransition(lines: [
-                    "Good morning.",
-                    "There's no hurry.",
-                    "Let your eyes open when they want to."
-                ]) { go(.smile) }
-                .transition(.opacity)
+            case .waking:
+                MorningWaking { go(.smile) }
+                    .transition(.opacity)
 
             case .smile:
                 smileStep.transition(.opacity)
@@ -518,6 +514,101 @@ enum Pace {
     static let bellEase: Double = 6
     /// Between one affirmation and the next, over the pulse.
     static let affirmationGap: Double = 11
+    /// Between two lines while somebody is still coming round. Much longer
+    /// than `afterLine`, because at this point in the morning a three-second
+    /// gap is still a conversation and what is wanted is company.
+    static let wakingGap: Double = 8
+    /// How long the room takes to get light. The whole waking layer.
+    static let wakingLight: Double = 62
+}
+
+// MARK: - Waking
+
+/// The minute before anything is asked.
+///
+/// Somebody who has just been woken has their eyes shut, and the flow this
+/// replaced started talking to them about ten seconds in and wanted a smile at
+/// twenty-five. Sleep inertia runs fifteen to thirty minutes; asking for
+/// anything inside the first minute is asking at the worst moment there is.
+///
+/// So this layer asks for nothing and cannot be failed. The ground comes up
+/// from near-black to dawn mist over a full minute — the room getting light,
+/// which is the one part of a real waking the phone can actually supply — and
+/// the voice says four things with eight seconds of nothing between them, none
+/// of which is an instruction. The last one names what comes next so the smile
+/// is not a surprise.
+///
+/// There is one control, and it is for people who are already up: a quiet line
+/// that skips ahead. Nothing anywhere asks them to use it.
+struct MorningWaking: View {
+    var onDone: () -> Void
+
+    @State private var light: Double = 0
+    @State private var skipIn = false
+    @State private var breathing = false
+    @State private var finished = false
+
+    private static let lines = [
+        "Good morning.",
+        "You don't have to open your eyes yet.",
+        "I'll wait. There's nothing to do.",
+        "When you're ready, we'll start with a smile."
+    ]
+
+    var body: some View {
+        ZStack {
+            // The room getting light. Its own layer, so it is the frame's
+            // ground rather than a tint over one.
+            Color(red: 0.055, green: 0.059, blue: 0.086)
+                .overlay(DS.background.opacity(light))
+                .ignoresSafeArea()
+
+            Circle()
+                .fill(DS.accentSoft.opacity(0.10 + light * 0.10))
+                .frame(width: 300, height: 300)
+                .blur(radius: 60)
+                .scaleEffect(breathing ? 1.12 : 0.88)
+                .animation(.easeInOut(duration: 7).repeatForever(autoreverses: true), value: breathing)
+
+            VStack {
+                Spacer()
+                Button(L10n.text(en: "I'm awake", tr: "Uyandım", es: "Estoy despierto")) { finish() }
+                    .font(.footnote)
+                    // Turns over with the ground. A fixed colour cannot work at
+                    // both ends of a minute that starts near-black and finishes
+                    // in dawn mist — held at one, it vanished into the mid-grey
+                    // in the middle, which is exactly when somebody who is
+                    // already awake goes looking for it.
+                    .foregroundStyle(
+                        Color(white: 1 - light * 0.62).opacity(0.55 + light * 0.15)
+                    )
+                    .padding(.bottom, DS.Space.xl)
+                    .opacity(skipIn ? 1 : 0)
+                    .accessibilityIdentifier("ritual.skipWaking")
+            }
+        }
+        .accessibilityIdentifier("ritual.waking")
+        .onAppear {
+            breathing = true
+            withAnimation(.easeInOut(duration: Pace.wakingLight)) { light = 1 }
+            // Offered late and quietly. Putting it on screen at second zero
+            // would turn a minute of company into a thing to get past.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
+                withAnimation(.easeInOut(duration: 2)) { skipIn = true }
+            }
+            Task {
+                await SpeechGuide.shared.say(Self.lines, pause: Pace.wakingGap)
+                try? await Task.sleep(nanoseconds: UInt64(Pace.wakingGap * 1_000_000_000))
+                finish()
+            }
+        }
+    }
+
+    private func finish() {
+        guard !finished else { return }
+        finished = true
+        onDone()
+    }
 }
 
 // MARK: - The breath between two things

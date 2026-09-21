@@ -90,6 +90,10 @@ CUES = [
     "First, your breath.",
     "And now your pulse.",
     "That's your practice done.",
+    # The waking layer: a minute in which nothing is asked.
+    "You don't have to open your eyes yet.",
+    "I'll wait. There's nothing to do.",
+    "When you're ready, we'll start with a smile.",
 ]
 
 def key(text):
