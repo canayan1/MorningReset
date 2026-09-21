@@ -4,6 +4,16 @@ import UIKit
 struct ScheduleSetupView: View {
     @Environment(AppState.self) private var appState
 
+    /// Shown as a step inside first-run rather than on its own.
+    ///
+    /// The alarm is what the app is for, and the old first run neither
+    /// explained it nor set one — somebody could finish onboarding and own an
+    /// alarm clock with no alarm in it. In that mode this screen has no close
+    /// button, hands control back through `onDone` instead of dismissing, and
+    /// offers a way past for anyone who does not want one.
+    let isOnboarding: Bool
+    let onDone: () -> Void
+
     @State private var weekdayDate: Date
     @State private var weekendDate: Date
     @State private var authDenied = false
@@ -16,7 +26,9 @@ struct ScheduleSetupView: View {
     @State private var showsGuide = false
     @State private var previewing = false
 
-    init() {
+    init(isOnboarding: Bool = false, onDone: @escaping () -> Void = {}) {
+        self.isOnboarding = isOnboarding
+        self.onDone = onDone
         let s   = WakeScheduleStore.load()
         let cal = Calendar.current
         let wd  = cal.date(bySettingHour: s.weekdayHour, minute: s.weekdayMinute, second: 0, of: .now) ?? .now
@@ -34,15 +46,23 @@ struct ScheduleSetupView: View {
 
                 // Nav
                 HStack {
-                    Button {
-                        appState.showWakeHome()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundStyle(DS.textSecondary)
+                    if isOnboarding {
+                        Spacer()
+                        Button(L10n.text(en: "Not now", tr: "Şimdi değil", es: "Ahora no")) { onDone() }
+                            .font(.footnote)
+                            .foregroundStyle(DS.textDim)
+                            .accessibilityIdentifier("schedule.skip")
+                    } else {
+                        Button {
+                            appState.showWakeHome()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(DS.textSecondary)
+                        }
+                        .accessibilityLabel(L10n.text(en: "Close", tr: "Kapat", es: "Cerrar"))
+                        Spacer()
                     }
-                    .accessibilityLabel(L10n.text(en: "Close", tr: "Kapat", es: "Cerrar"))
-                    Spacer()
                 }
                 .padding(.top, 20)
                 .padding(.bottom, DS.Space.lg)
@@ -62,6 +82,12 @@ struct ScheduleSetupView: View {
                     .lineSpacing(6)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
+                    // Inside onboarding this sits in a shorter column and was
+                    // being clipped to "Wake up into…". An ellipsis is banned
+                    // copy here, and a headline that truncates is the app
+                    // trailing off mid-sentence at the one moment it is making
+                    // its case.
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer().frame(height: DS.Space.sm)
 
@@ -77,6 +103,9 @@ struct ScheduleSetupView: View {
                     .lineSpacing(3)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
+                    // Same reason as the headline above: in onboarding's
+                    // shorter column this was clipping to "Change it or…".
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer().frame(height: DS.Space.md)
 
@@ -126,7 +155,7 @@ struct ScheduleSetupView: View {
                                 showsGuide = true
                             }
                             Button(L10n.text(en: "Keep it anyway", tr: "Yine de kalsın", es: "Dejarlo así")) {
-                                appState.finishScheduleSetup()
+                                if isOnboarding { onDone() } else { appState.finishScheduleSetup() }
                             }
                         }
                         .font(.caption.weight(.semibold))
@@ -428,7 +457,7 @@ struct ScheduleSetupView: View {
         // is silent by nature, and a screen that closes on it is the app
         // agreeing that everything is fine.
         if WakeDeliveryStore.current == .alarm {
-            appState.finishScheduleSetup()
+            if isOnboarding { onDone() } else { appState.finishScheduleSetup() }
         } else {
             withAnimation(.easeOut(duration: 0.25)) { deliveredAsNotification = true }
         }
