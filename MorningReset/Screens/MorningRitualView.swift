@@ -514,12 +514,17 @@ enum Pace {
     static let bellEase: Double = 6
     /// Between one affirmation and the next, over the pulse.
     static let affirmationGap: Double = 11
-    /// Between two lines while somebody is still coming round. Much longer
-    /// than `afterLine`, because at this point in the morning a three-second
-    /// gap is still a conversation and what is wanted is company.
-    static let wakingGap: Double = 8
-    /// How long the room takes to get light. The whole waking layer.
-    static let wakingLight: Double = 62
+    /// Between two lines while somebody is still coming round. Longer than
+    /// `afterLine`, because at this point in the morning a three-second gap is
+    /// still a conversation and what is wanted is company — but not so long
+    /// that a minute of being accompanied turns into a minute of waiting.
+    static let wakingGap: Double = 5.5
+    /// How long the room takes to get light. Matched to the layer's real
+    /// length — the four measured lines plus their gaps come to about 33s —
+    /// so the ground reaches dawn mist exactly as the smile takes over. Set
+    /// longer and it hands over part-lit, which the next screen corrects in
+    /// one frame and reads as a jump.
+    static let wakingLight: Double = 33
 }
 
 // MARK: - Waking
