@@ -65,6 +65,31 @@ final class CameraSession: NSObject, ObservableObject, AVCaptureVideoDataOutputS
     private var autoCapture = true
 
     func configureAndStart() {
+        // Ask the system, not the session. An AVCaptureDeviceInput builds
+        // happily for a camera the app is not allowed to use, so `inputs` is
+        // non-empty and the old check thought the camera was fine — leaving a
+        // black circle, "Bring your face into the circle", and a shutter button
+        // that could never fire because no frames were coming. The screens that
+        // use this have an escape hatch keyed on `available`; it only works if
+        // this is honest.
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .denied, .restricted:
+            DispatchQueue.main.async { self.available = false }
+            return
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                guard let self else { return }
+                if granted { self.configureAndStart() }
+                else { DispatchQueue.main.async { self.available = false } }
+            }
+            return
+        default:
+            break
+        }
+        start()
+    }
+
+    private func start() {
         // Starting again means starting again. Without this the second run is
         // deaf: `captured` stays true from the first capture and every frame
         // returns at the guard, so "Read again" restarts the camera onto a

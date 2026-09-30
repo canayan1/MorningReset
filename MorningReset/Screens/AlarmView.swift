@@ -19,8 +19,9 @@ struct AlarmView: View {
     /// Opens the month of mornings straight away, for capturing it. Same
     /// reason as the alarm guide: the screen is several taps in and behind a
     /// month of data that a fresh install does not have.
-    @State private var showMornings = ProcessInfo.processInfo.arguments.contains("-uiTesting")
-        && ProcessInfo.processInfo.arguments.contains("-showMornings")
+    /// The month of mornings. It used to open only under a capture flag, which
+    /// left the app's best-built screen with no route from Today at all.
+    @State private var showMornings = false
     /// Opens the morning ritual straight away, for capturing its screens. It
     /// normally only opens from an alarm, which a screenshot run cannot ring.
     @State private var showRitualForCapture = ProcessInfo.processInfo.arguments.contains("-uiTesting")
@@ -29,6 +30,21 @@ struct AlarmView: View {
 
     private let language = AppLanguage.current
     private var streak: Int { appState.streakCount }
+
+    /// The morning's own numbers, kept apart from the practice log on purpose.
+    ///
+    /// The app woke you up, you answered it, and until now the home screen said
+    /// nothing — every counter here was wired to the optional paid practice, so
+    /// finishing the thing the alarm bought reported zero. That is a
+    /// reinforcement error, not a taste one: the cue triggers one behaviour and
+    /// the reward measures a different one.
+    ///
+    /// Fixed by giving the morning its own count rather than by merging the two
+    /// logs. A morning has no school and no routine; folding it into the orb
+    /// would inflate a number that is supposed to mean "practices run".
+    @State private var morningStreak = 0
+    @State private var morningsTotal = 0
+    @State private var morningDoneToday = false
     private var notificationIsSet: Bool { schedule.isEnabled }
 
     var body: some View {
@@ -146,6 +162,7 @@ struct AlarmView: View {
             schedule = WakeScheduleStore.load()
             entries  = DailyEntryStore.load()
             orbTotal = EnergyOrb.totalSessions
+            refreshMornings()
             withAnimation(.spring(response: 0.55, dampingFraction: 0.7)) {
                 numberScale = 1.0
             }
@@ -166,7 +183,7 @@ struct AlarmView: View {
         .sheet(isPresented: $playSignature, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
             SignatureMeditationView()
         }
-        .fullScreenCover(isPresented: $showRitual, onDismiss: { orbTotal = EnergyOrb.totalSessions }) {
+        .fullScreenCover(isPresented: $showRitual, onDismiss: { orbTotal = EnergyOrb.totalSessions; refreshMornings() }) {
             MorningRitualView()
         }
     }
@@ -224,6 +241,55 @@ struct AlarmView: View {
         LocalNotificationWakeScheduler().nextFireDate(for: schedule)
     }
 
+    /// What the morning earned, said before anything about practices.
+    ///
+    /// Today's morning is named on the day it happens — the reward has to land
+    /// the same morning as the behaviour, not accumulate somewhere quiet — and
+    /// the count underneath is what it is building toward. Tapping it opens the
+    /// month, which until now had no route from this screen at all.
+    private var morningLine: some View {
+        Button { showMornings = true } label: {
+            HStack(spacing: DS.Space.xs) {
+                Image(systemName: morningDoneToday ? "checkmark.circle.fill" : "sun.horizon")
+                    .font(.system(size: 12))
+                Text(morningText)
+                    .font(.caption.weight(.medium))
+            }
+            .foregroundStyle(morningDoneToday ? DS.calm : DS.accent)
+            .multilineTextAlignment(.center)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("alarm.morningLine")
+    }
+
+    private var morningText: String {
+        if morningDoneToday {
+            return morningStreak > 1
+                ? L10n.text(language: language,
+                            en: "Morning done · \(morningStreak) in a row",
+                            tr: "Sabah tamam · üst üste \(morningStreak)",
+                            es: "Mañana hecha · \(morningStreak) seguidas")
+                : L10n.text(language: language,
+                            en: "Morning done", tr: "Sabah tamam", es: "Mañana hecha")
+        }
+        if morningsTotal > 0 {
+            return L10n.text(language: language,
+                             en: "\(morningsTotal) morning\(morningsTotal == 1 ? "" : "s") so far",
+                             tr: "şimdiye kadar \(morningsTotal) sabah",
+                             es: "\(morningsTotal) mañana\(morningsTotal == 1 ? "" : "s") hasta ahora")
+        }
+        return L10n.text(language: language,
+                         en: "Your mornings start here",
+                         tr: "Sabahların burada başlıyor",
+                         es: "Tus mañanas empiezan aquí")
+    }
+
+    private func refreshMornings() {
+        morningStreak = MorningLogStore.currentStreak()
+        morningsTotal = MorningLogStore.all().count
+        morningDoneToday = MorningRitual.completedToday
+    }
+
     // MARK: - Hero states
 
     private var orbHero: some View {
@@ -234,6 +300,8 @@ struct AlarmView: View {
             Text(EnergyOrb.title(EnergyOrb.level(orbTotal)).uppercased())
                 .font(.system(size: 10, weight: .semibold)).tracking(1.8)
                 .foregroundStyle(SchoolPalette.color(appState.activeSchoolID))
+            morningLine
+
             Text(streak > 0
                  ? L10n.text(language: language,
                              en: "\(streak) day\(streak == 1 ? "" : "s") in a row · \(orbTotal) practices",

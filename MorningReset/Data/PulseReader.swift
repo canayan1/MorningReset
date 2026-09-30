@@ -52,8 +52,12 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private static let windowSeconds = 6.0
     private static let hopSeconds = 0.5
     private static let gridRate = 30.0
-    /// Give up rather than hold someone there forever.
+    /// Give up rather than hold someone there forever, once reading has begun.
     private static let patience = 40.0
+    /// The outer limit, measured from the moment the screen opened rather than
+    /// from the moment a finger landed. Without this a screen that never sees a
+    /// finger never gives up.
+    private static let overallPatience = 75.0
     /// Frames thrown away while the sensor and torch come up.
     private static let warmUpFrames = 30
 
@@ -78,6 +82,15 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private var candidates: [Double] = []
     private var frameNumber = 0
     private var finished = false
+    /// When the reader was switched on, in wall-clock time.
+    ///
+    /// The give-up deadline used to be measured from `startedAt`, which is only
+    /// set once a fingertip has actually been detected — so a person who never
+    /// gets the finger placed, or puts the phone down, waited forever. In the
+    /// morning ritual that screen has no Skip and no close, so the only way out
+    /// was to force-quit the app, at six in the morning. One of those ends the
+    /// relationship.
+    private var openedAt: Date?
     /// Once the analysed trace is being drawn, the raw one stops writing over
     /// it — the filtered signal is the better picture and it should not flicker
     /// back to the rough one between windows.
@@ -111,6 +124,7 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
     private func reset() {
         finished = false
         settled = false
+        openedAt = Date()
         times.removeAll(); reds.removeAll(); candidates.removeAll()
         startedAt = nil; lastEstimateAt = 0; frameNumber = 0
         publish {
@@ -206,6 +220,11 @@ final class PulseReader: NSObject, ObservableObject, AVCaptureVideoDataOutputSam
         guard now.isFinite else { return }
 
         guard PulseSignal.fingerPresent(sample) else {
+            // The deadline runs whether or not a finger ever arrives.
+            if let openedAt, Date().timeIntervalSince(openedAt) >= Self.overallPatience {
+                finish(with: nil)
+                return
+            }
             times.removeAll(); reds.removeAll(); candidates.removeAll()
             startedAt = nil
             publish {
