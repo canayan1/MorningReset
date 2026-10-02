@@ -1,8 +1,8 @@
-# Energy Reset — Privacy Policy
+# Inner Light — Privacy Policy
 
 **Effective 21 August 2026**
 
-Energy Reset collects nothing. There is no account, no sign-up, no server, no
+Inner Light collects nothing. There is no account, no sign-up, no server, no
 analytics, no advertising, and no cross-app tracking. Everything the app knows
 about you stays on your iPhone.
 
@@ -20,16 +20,28 @@ about you stays on your iPhone.
 
 This lives in the app's own sandbox and in a shared App Group container, so the
 home-screen widget can read your streak. It never leaves your phone through
-Energy Reset.
+Inner Light.
 
 ## The camera
 
-The energy check-in is entirely optional — the whole app works without ever
-granting camera access. If you use it, the front camera captures a single still
-frame, that frame is analysed on device with Core Image, and it is then
-discarded from memory. It is never written to disk, never added to your photo
-library, never uploaded, and never seen by anyone. Only the resulting reading is
-saved. There is no face recognition and no biometric template.
+Both uses are optional — the whole app works without ever granting camera
+access, and every screen that asks can be skipped.
+
+**The smile.** The front camera runs a live preview while the morning waits for
+a smile, and captures a single frame when it sees one. That frame is analysed on
+device with Core Image and then discarded from memory. Only the resulting
+reading — a colour and a short label — is saved.
+
+**The pulse.** If you take a waking pulse, the back camera runs for up to a
+minute with the torch on while a fingertip rests over the lens. Each frame is
+reduced to four numbers and thrown away; no image is kept at any point. What is
+saved is one number of beats per minute, and only when the reading settles. It
+is a wellness reading, not a medical measurement, and the app says so wherever
+the number appears.
+
+Nothing either camera sees is ever written to disk, added to your photo library,
+uploaded, or seen by anyone. There is no face recognition and no biometric
+template.
 
 ## Notifications and the lock screen
 
@@ -40,10 +52,23 @@ generated on device. No remote push, no server, no background upload.
 ## Sound and voice
 
 Routines play an ambient soundscape and a quiet spoken guide, both produced on
-device. The voice is Apple's built-in speech synthesiser. The background audio
-capability exists so a routine keeps playing when the screen locks mid-practice;
-the session starts only after a routine begins and stops when it ends. Energy
-Reset never requests microphone access.
+device. The guide is a set of recordings shipped inside the app; a line with no
+recording is read by Apple's built-in speech synthesiser, also locally. The
+background audio capability exists so a routine keeps playing when the screen
+locks mid-practice; the session starts only after a routine begins and stops
+when it ends.
+
+## The microphone
+
+One practice uses it. In *The Tree You Breathe* the app listens for your
+out-breath so the tree grows as you actually breathe rather than on a timer. It
+asks for permission the first time you open that practice, and the practice is
+optional — declining costs you nothing else in the app.
+
+While it listens the app measures only how loud the sound is, moment to moment.
+It does not recognise speech, does not know what is said, and keeps nothing: no
+audio is recorded, saved, or sent anywhere. The microphone is switched off the
+moment the practice ends.
 
 ## What Apple handles
 
@@ -51,7 +76,7 @@ Reset never requests microphone access.
   receive no payment details, no name and no email address.
 - iCloud backup of the app's local data, if you have it switched on.
 
-## What Energy Reset does not do
+## What Inner Light does not do
 
 - No analytics or crash-reporting SDKs
 - No advertising and no ad identifiers
@@ -62,13 +87,13 @@ Reset never requests microphone access.
 
 ## Deleting your data
 
-Individual sessions can be deleted or edited in the app. Deleting Energy Reset
+Individual sessions can be deleted or edited in the app. Deleting Inner Light
 removes everything else. Because none of it was ever sent anywhere, there is
 nothing left for us to erase on your behalf.
 
 ## Children
 
-Energy Reset is not directed at children under 13 and knowingly collects no
+Inner Light is not directed at children under 13 and knowingly collects no
 personal data from anyone.
 
 ## A note on the practices

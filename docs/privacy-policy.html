@@ -145,18 +145,23 @@
 
       <hr class="rule">
 
-      <h2>The camera, and what happens to the photo</h2>
-      <p>The energy check-in is <strong>entirely optional</strong> — the whole app works without ever granting camera access.</p>
-      <p>If you use it, the front camera captures a single still frame. That frame is analysed on your device using Apple's Core Image framework and is then discarded from memory. It is <strong>never written to disk, never added to your photo library, never uploaded, and never seen by anyone</strong>. Only the resulting reading — a colour and a short label — is saved.</p>
-      <p>There is no face recognition and no facial identity profile. We do not use the camera to identify you, and we do not build a biometric template of any kind.</p>
+      <h2>The camera, and what happens to what it sees</h2>
+      <p>Both uses of the camera are <strong>optional</strong> — the whole app works without ever granting camera access, and every screen that asks can be skipped.</p>
+      <p><strong>The smile.</strong> The front camera runs a live preview while the morning waits for a smile, and captures a single frame when it sees one. That frame is analysed on your device using Apple's Core Image framework and then discarded from memory. Only the resulting reading — a colour and a short label — is saved.</p>
+      <p><strong>The pulse.</strong> If you take a waking pulse, the back camera runs for up to a minute with the torch on while a fingertip rests over the lens. Each frame is reduced to four numbers — how red it is, how much of the light is red, how much of it is clipped — and is then thrown away. No image is kept from this at any point; what is saved is a single number of beats per minute, and only when the reading settles.</p>
+      <p>Nothing either camera sees is <strong>ever written to disk, added to your photo library, uploaded, or seen by anyone</strong>. There is no face recognition and no facial identity profile. We do not use the camera to identify you, and we do not build a biometric template of any kind.</p>
+      <p>The pulse is a wellness reading, not a medical measurement, and the app says so wherever a number appears.</p>
 
       <h2>Notifications and the lock screen</h2>
       <p>If — and only if — you choose to set a daily reminder, Inner Light schedules a local notification at your chosen time, and may place a single Live Activity on your lock screen shortly beforehand. Both are generated on your device. There is no remote push, no server involvement, and no background upload. If you set no reminder, neither happens.</p>
 
       <h2>Sound and voice</h2>
-      <p>Routines play an ambient soundscape and a quiet spoken guide. The sound is produced on your device and streamed from no server. The voice uses Apple's built-in speech synthesiser, running locally.</p>
+      <p>Routines play an ambient soundscape and a quiet spoken guide. The sound is produced on your device and streamed from no server. The guide is a set of recordings shipped inside the app; where a line has no recording, Apple's built-in speech synthesiser reads it, also locally.</p>
       <p>The app declares the background audio capability for one reason: so a routine keeps playing when your screen locks mid-practice. The audio session starts only after you begin a routine and stops when the routine ends or you close the player.</p>
-      <p><strong>Inner Light never requests microphone access and cannot listen to you.</strong></p>
+
+      <h2>The microphone</h2>
+      <p>One practice uses it. In <em>The Tree You Breathe</em> the app listens for your out-breath so the tree grows as you actually breathe rather than on a timer. It asks for microphone permission the first time you open that practice, and the practice is optional — declining costs you nothing else in the app.</p>
+      <p>While it listens, the app measures <strong>only how loud the sound is</strong>, moment to moment. It does not recognise speech, does not know what is said, and keeps nothing: <strong>no audio is recorded, saved, or sent anywhere</strong>. The microphone is switched off the moment the practice ends.</p>
 
       <hr class="rule">
 

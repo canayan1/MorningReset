@@ -54,9 +54,9 @@ struct AboutView: View {
                         .foregroundStyle(DS.textSecondary)
 
                         Text(L10n.text(
-                            en: "A daily reminder is yours to set, or to leave. Inner Light is not an alarm clock — keep using the one you trust.",
-                            tr: "Günlük hatırlatıcıyı kurmak da kurmamak da sana kalmış. Inner Light bir çalar saat değil — güvendiğini kullanmaya devam et.",
-                            es: "El recordatorio diario es tuyo, para ponerlo o dejarlo. Inner Light no es un despertador — sigue usando el que ya usas."
+                            en: "The morning is yours to set, or to leave. When it is on, the phone rings with the app's own melody and opens into the morning — through Silent mode and Sleep Focus. Switch it off whenever you want it off.",
+                            tr: "Sabah senin — kurarsın ya da bırakırsın. Açıkken telefon uygulamanın kendi ezgisiyle çalar ve sabahın içine açılır; Sessiz modda ve Uyku Odağı'nda da. İstemediğin zaman kapatırsın.",
+                            es: "La mañana es tuya: configúrala o déjala. Cuando está activa, el teléfono suena con la melodía de la app y abre la mañana — en modo Silencio y Concentración de sueño. Desactívala cuando quieras."
                         ))
                         .foregroundStyle(DS.textSecondary)
 
@@ -93,9 +93,9 @@ struct AboutView: View {
                 Spacer()
 
                 Text(L10n.text(
-                    en: "One ping. Five questions. One first win.",
-                    tr: "Bir bildirim. Beş soru. Bir ilk kazanım.",
-                    es: "Un aviso. Cinco preguntas. Un primer logro."
+                    en: "One melody. One smile. One morning.",
+                    tr: "Bir ezgi. Bir gülümseme. Bir sabah.",
+                    es: "Una melodía. Una sonrisa. Una mañana."
                 ))
                 .font(.caption)
                 .italic()
