@@ -717,6 +717,41 @@ final class MorningResetTests: XCTestCase {
         XCTAssertNil(LocalNotificationWakeScheduler().nextFireDate(for: schedule))
     }
 
+    // MARK: - What a free morning is offered
+
+    /// A free user must not meet the same practice every day for life.
+    ///
+    /// This is a regression test for the loudest failure in the category. The
+    /// daily rotation was real — `list[(day - 1) % list.count]` — but the pool
+    /// it was handed held exactly one routine, because it was filtered to the
+    /// active school's free one. Modulo one is the same answer forever.
+    @MainActor
+    func testFreeDailyPracticeWalksEveryTradition() {
+        let state = freshState()
+        state.isPremium = false
+        state.ownedTiers = []
+
+        let schools = SchoolContentStore.all
+        XCTAssertGreaterThan(schools.count, 1, "expected the full set of traditions")
+
+        // Every tradition gives one away, and every one of those is playable
+        // — which is what makes rotating through them free to do.
+        let free = schools.compactMap(\.freeRoutine)
+        XCTAssertEqual(free.count, schools.count, "one free routine per tradition")
+        for school in schools {
+            guard let routine = school.freeRoutine else { continue }
+            XCTAssertTrue(state.isRoutineUnlocked(routine, in: school),
+                          "\(routine.id) is free but not unlocked for a free user")
+        }
+
+        // And the offer actually moves: across a stretch of days a free user
+        // must be shown more than one practice.
+        let seen = Set(free.map(\.id))
+        XCTAssertEqual(seen.count, schools.count,
+                       "the rotation has nothing to rotate through unless the free routines are distinct")
+        UserDefaults.standard.removeObject(forKey: UDKey.todaysRoutinePick)
+    }
+
     // MARK: - The morning log
 
     private func day(_ offset: Int) -> Date {

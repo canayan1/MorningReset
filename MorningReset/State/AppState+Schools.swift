@@ -64,10 +64,33 @@ extension AppState {
         }
         let s = activeSchool
         let day = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
-        let pool = isSchoolFullyUnlocked(s) ? s.routines : s.routines.filter(\.free)
-        if pool.isEmpty, let free = SchoolContentStore.freePractice { return free }
-        let list = pool.isEmpty ? s.routines : pool
-        return (s, list[(day - 1) % max(1, list.count)])
+
+        // A school that is open rotates its own twenty-five.
+        if isSchoolFullyUnlocked(s) {
+            let list = s.routines
+            if !list.isEmpty { return (s, list[(day - 1) % list.count]) }
+        }
+
+        // A school that is not open has exactly one free routine, and this used
+        // to offer that one routine — `list[(day - 1) % 1]` — every day for
+        // life. The rotation was written and then handed a pool of one, so a
+        // free user met the same practice every morning forever, which is the
+        // single loudest complaint in this category ("every meditation is the
+        // same") and the named cause of disengagement in the JIT research.
+        //
+        // The fix gives nothing further away. `isRoutineUnlocked` already
+        // returns true for the free routine of *any* tradition — all ten have
+        // always been playable, they were simply never offered. So the daily
+        // practice now walks all ten, one a day: real novelty at no cost to the
+        // paywall, and a week and a half of tasting the traditions before being
+        // asked to choose one.
+        let free = SchoolContentStore.all
+            .compactMap { school in school.freeRoutine.map { (school, $0) } }
+            .sorted { $0.0.id < $1.0.id }          // stable, so the rotation is the same on every device
+        if !free.isEmpty { return free[(day - 1) % free.count] }
+
+        if let fallback = SchoolContentStore.freePractice { return fallback }
+        return (s, s.routines[(day - 1) % max(1, s.routines.count)])
     }
 
     var todaysRoutine: Routine { todaysPractice.routine }
