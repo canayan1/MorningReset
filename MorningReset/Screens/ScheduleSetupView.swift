@@ -18,6 +18,15 @@ struct ScheduleSetupView: View {
     @State private var weekendDate: Date
     @State private var authDenied = false
     @State private var insist: Bool
+    /// Whether a morning is set at all.
+    ///
+    /// There was no way to answer "can I cancel the alarm I set?" with
+    /// anything but no. Saving wrote `isEnabled = true` unconditionally and
+    /// nothing anywhere wrote false, so the only ways to stop 06:40 were
+    /// revoking alarms in iOS Settings or deleting the app — which is what a
+    /// sick day, a flight or one weekend away turns into. An alarm you cannot
+    /// pause stops being a kindness.
+    @State private var isOn: Bool
     /// Set once scheduling has run and what came back was not an alarm. The
     /// screen stays put in that case rather than closing on a promise it
     /// cannot keep.
@@ -36,6 +45,9 @@ struct ScheduleSetupView: View {
         _weekdayDate = State(initialValue: wd)
         _weekendDate = State(initialValue: we)
         _insist = State(initialValue: s.insistUntilRitual)
+        // On first run there is no morning yet, so the screen opens ready to
+        // set one; afterwards it reflects what is actually armed.
+        _isOn = State(initialValue: isOnboarding ? true : s.isEnabled)
     }
 
     var body: some View {
@@ -135,7 +147,13 @@ struct ScheduleSetupView: View {
 
                 Spacer().frame(height: DS.Space.md)
 
+                if !isOnboarding { onToggle }
+
+                Spacer().frame(height: DS.Space.md)
+
                 insistToggle
+                    .opacity(isOn ? 1 : 0.4)
+                    .disabled(!isOn)
 
                 if deliveredAsNotification {
                     VStack(alignment: .center, spacing: DS.Space.sm) {
@@ -185,7 +203,9 @@ struct ScheduleSetupView: View {
 
                 Spacer()
 
-                Button(L10n.text(en: "Set morning practice", tr: "Sabah pratiğini kur", es: "Configurar práctica matutina")) {
+                Button(isOn
+                       ? L10n.text(en: "Set morning practice", tr: "Sabah pratiğini kur", es: "Configurar práctica matutina")
+                       : L10n.text(en: "Turn the morning off", tr: "Sabahı kapat", es: "Desactivar la mañana")) {
                     Task { await saveAndSchedule() }
                 }
                 .primaryCTA()
@@ -407,6 +427,33 @@ struct ScheduleSetupView: View {
         .accessibilityIdentifier("schedule.insistToggle")
     }
 
+    /// The switch the screen was missing.
+    private var onToggle: some View {
+        Toggle(isOn: $isOn) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(L10n.text(en: "Morning practice", tr: "Sabah pratiği", es: "Práctica matutina"))
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(DS.textPrimary)
+                Text(isOn
+                     ? L10n.text(en: "On. Turn it off and nothing rings.",
+                                 tr: "Açık. Kapatırsan hiçbir şey çalmaz.",
+                                 es: "Activada. Si la apagas, no suena nada.")
+                     : L10n.text(en: "Off. Turn it on whenever you want it back.",
+                                 tr: "Kapalı. İstediğin zaman geri aç.",
+                                 es: "Desactivada. Actívala cuando la quieras de vuelta."))
+                    .font(.caption)
+                    .foregroundStyle(DS.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .tint(DS.accent)
+        .padding(.vertical, DS.Space.md)
+        .padding(.horizontal, DS.Space.md)
+        .background(DS.surface)
+        .overlay(Rectangle().stroke(DS.border, lineWidth: 1))
+        .accessibilityIdentifier("schedule.onToggle")
+    }
+
     private func timeBlock(label: String, date: Binding<Date>) -> some View {
         HStack {
             Text(label)
@@ -438,10 +485,22 @@ struct ScheduleSetupView: View {
         updated.weekdayMinute = wdComps.minute ?? 0
         updated.weekendHour   = weComps.hour   ?? 8
         updated.weekendMinute = weComps.minute ?? 0
-        updated.isEnabled     = true
+        updated.isEnabled     = isOn
         updated.insistUntilRitual = insist
 
-        let backend    = WakeNotificationManager.current
+        let backend = WakeNotificationManager.current
+
+        // Turning it off takes nothing from the person, so it asks for nothing
+        // and cannot fail: cancel what is armed, write it down, and leave.
+        guard isOn else {
+            backend.cancel()
+            WakeScheduleStore.save(updated)
+            WakeDeliveryStore.record(.none)
+            deliveredAsNotification = false
+            if isOnboarding { onDone() } else { appState.finishScheduleSetup() }
+            return
+        }
+
         let authorized = await backend.requestAuthorization()
         guard authorized else {
             authDenied = true
