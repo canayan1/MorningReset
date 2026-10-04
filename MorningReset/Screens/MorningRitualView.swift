@@ -100,7 +100,13 @@ struct MorningRitualView: View {
             // Silence the alarm here as well as in the intent — whether the
             // intent's stop reaches it is not a thing to discover at six in the
             // morning — and bring the same bell back underneath, receding.
-            if #available(iOS 26.1, *) { AlarmKitWakeScheduler.silenceRinging() }
+            if #available(iOS 26.1, *) {
+                AlarmKitWakeScheduler.silenceRinging()
+                // And put the chain back straight away rather than on the way
+                // out. The way out does not always happen: an app swiped up
+                // from the switcher is terminated, and nothing of ours runs.
+                Task { await AlarmKitWakeScheduler.armCatchUp() }
+            }
             AlarmChime.shared.startSoftly()
         }
         .fullScreenCover(isPresented: .constant(step == .breath)) {

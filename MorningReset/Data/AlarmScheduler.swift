@@ -353,6 +353,22 @@ final class AlarmKitWakeScheduler: WakeScheduling {
             cancelFollowUps()
             return
         }
+
+        // If this morning's hour has already gone and the morning still has not
+        // happened, the chain belongs to *today*, running from now — not to
+        // tomorrow. Without this branch the two paths fight: tapping Begin arms
+        // a catch-up chain from now, and the next time the app comes forward
+        // this rebuilt it for tomorrow over the same ids, so glancing at a
+        // message mid-ritual silently cancelled the rest of the morning.
+        let cal = Calendar.current
+        let weekday = cal.component(.weekday, from: Date())
+        if let todays = cal.date(bySettingHour: schedule.hour(forWeekday: weekday),
+                                 minute: schedule.minute(forWeekday: weekday),
+                                 second: 0, of: Date()), todays <= Date() {
+            await armCatchUp()
+            return
+        }
+
         let attrs = AlarmAttributes<MorningAlarmMeta>(
             presentation: AlarmPresentation(alert: AlarmPresentation.Alert(
                 title: "Your morning is ready. Tap Begin.",
@@ -367,6 +383,51 @@ final class AlarmKitWakeScheduler: WakeScheduling {
     /// the rest of the chain has nothing left to insist about.
     static func cancelFollowUps() {
         for id in followUpIDs { try? AlarmManager.shared.cancel(id: id) }
+    }
+
+    /// Re-arms the chain from *now*, for a morning that has been opened but
+    /// not finished.
+    ///
+    /// Tapping Begin silences every alarm the system is holding, the pending
+    /// chain included — it has to, because there is no way to ask which one is
+    /// making the noise. Putting the chain back was then left to the ritual
+    /// screen going away, and a screen that is force-quit never goes away: it
+    /// is terminated, and no lifecycle callback runs. So swiping the app up at
+    /// 6:40 stopped the alarm and took the rest of the morning with it.
+    ///
+    /// The chain is therefore armed here, immediately, rather than on the way
+    /// out. From that moment it exists in the system and needs nothing from
+    /// this process to survive; finishing the morning is the only thing that
+    /// removes it. Killing the app now costs thirty seconds.
+    ///
+    /// `reconcileFollowUps` cannot do this job: it builds from the wake time,
+    /// which has already gone by the time anybody taps Begin, so it would arm
+    /// tomorrow's chain and leave today silent.
+    static func armCatchUp() async {
+        let schedule = WakeScheduleStore.load()
+        guard schedule.isEnabled, schedule.insistUntilRitual,
+              !MorningRitual.completedToday else { return }
+
+        let attrs = AlarmAttributes<MorningAlarmMeta>(
+            presentation: AlarmPresentation(alert: AlarmPresentation.Alert(
+                title: "Your morning is ready. Tap Begin.",
+                secondaryButton: AlarmButton(text: "Begin", textColor: .white, systemImageName: "play.fill"),
+                secondaryButtonBehavior: .custom)),
+            tintColor: DS.accent
+        )
+        let begin = BeginPracticeIntent()
+        let now = Date()
+        for (i, id) in followUpIDs.enumerated() {
+            let at = now.addingTimeInterval(Double(i + 1) * MorningAlarmChain.stepSeconds)
+            let config = AlarmManager.AlarmConfiguration<MorningAlarmMeta>.alarm(
+                schedule: .fixed(at),
+                attributes: attrs,
+                secondaryIntent: begin,
+                sound: .named("inner_light_alarm.caf")
+            )
+            try? await AlarmManager.shared.schedule(id: id, configuration: config)
+        }
+        log.notice("catch-up chain armed from now: \(followUpIDs.count, privacy: .public) alarms")
     }
 
     /// Stops whatever is ringing right now, without touching tomorrow.
